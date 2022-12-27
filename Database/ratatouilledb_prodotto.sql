@@ -30,6 +30,8 @@ CREATE TABLE `prodotto` (
   `descrizione` varchar(45) NOT NULL,
   `unita` varchar(45) NOT NULL,
   `costoAcquisto` varchar(45) NOT NULL,
+  `quantità` double NOT NULL,
+  `soglia` double NOT NULL,
   PRIMARY KEY (`idProdotto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -52,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-27 19:29:36
+-- Dump completed on 2022-12-27 19:34:53
