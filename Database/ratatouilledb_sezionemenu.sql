@@ -25,10 +25,10 @@ DROP TABLE IF EXISTS `sezionemenu`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sezionemenu` (
-  `idSezioneMenu` int NOT NULL,
+  `idSezioneMenu` int NOT NULL AUTO_INCREMENT,
   `titolo` varchar(45) NOT NULL,
   `posizione` int NOT NULL,
-  `idRistorante` int DEFAULT NULL,
+  `idRistorante` int NOT NULL,
   PRIMARY KEY (`idSezioneMenu`),
   KEY `sezioneRistorante_idx` (`idRistorante`),
   CONSTRAINT `sezioneRistorante` FOREIGN KEY (`idRistorante`) REFERENCES `ristorante` (`idRistorante`)
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-27 19:34:53
+-- Dump completed on 2022-12-29 20:17:09

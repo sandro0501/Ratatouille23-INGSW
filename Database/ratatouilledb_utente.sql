@@ -26,17 +26,17 @@ DROP TABLE IF EXISTS `utente`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `utente` (
   `idUtente` int NOT NULL AUTO_INCREMENT,
-  `Nome` varchar(45) NOT NULL,
-  `Cognome` varchar(45) NOT NULL,
-  `Ruolo` varchar(45) NOT NULL,
-  `Email` varchar(45) NOT NULL,
-  `Password` varchar(45) NOT NULL,
-  `idRistorante` int DEFAULT NULL,
+  `nome` varchar(45) NOT NULL,
+  `cognome` varchar(45) NOT NULL,
+  `ruolo` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `password` varchar(45) NOT NULL,
+  `idRistorante` int NOT NULL,
   PRIMARY KEY (`idUtente`),
-  UNIQUE KEY `Email_UNIQUE` (`Email`),
+  UNIQUE KEY `Email_UNIQUE` (`email`),
   KEY `idRistorante_idx` (`idRistorante`),
   CONSTRAINT `lavoro` FOREIGN KEY (`idRistorante`) REFERENCES `ristorante` (`idRistorante`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,6 +45,7 @@ CREATE TABLE `utente` (
 
 LOCK TABLES `utente` WRITE;
 /*!40000 ALTER TABLE `utente` DISABLE KEYS */;
+INSERT INTO `utente` VALUES (1,'Mario','Rossi','AddettoAllaCucina','prova@gmail.com','1234',1);
 /*!40000 ALTER TABLE `utente` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -57,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-27 19:34:53
+-- Dump completed on 2022-12-29 20:17:09

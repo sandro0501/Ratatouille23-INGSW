@@ -34,7 +34,7 @@ CREATE TABLE `ristorante` (
   PRIMARY KEY (`idRistorante`),
   UNIQUE KEY `indirizzo_UNIQUE` (`indirizzo`),
   UNIQUE KEY `telefono_UNIQUE` (`numeroTelefono`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,6 +43,7 @@ CREATE TABLE `ristorante` (
 
 LOCK TABLES `ristorante` WRITE;
 /*!40000 ALTER TABLE `ristorante` DISABLE KEYS */;
+INSERT INTO `ristorante` VALUES (1,'Ciro A Mergellina','Via Cilea 159, Napoli','3209412532',0,NULL);
 /*!40000 ALTER TABLE `ristorante` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-27 19:34:53
+-- Dump completed on 2022-12-29 20:17:09

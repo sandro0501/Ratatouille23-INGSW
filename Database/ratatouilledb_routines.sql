@@ -18,10 +18,6 @@ USE `ratatouilledb`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Dumping events for database 'ratatouilledb'
---
-
---
 -- Dumping routines for database 'ratatouilledb'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -34,4 +30,4 @@ USE `ratatouilledb`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-27 19:34:54
+-- Dump completed on 2022-12-29 20:17:09
