@@ -17,13 +17,12 @@
         android:background="@drawable/login_box_border"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textViewTitolo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
@@ -57,7 +56,7 @@
             app:layout_constraintVertical_bias="0.16000003" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button2"
+            android:id="@+id/buttonAnnulla"
             android:layout_width="118dp"
             android:layout_height="48dp"
             android:background="@drawable/login_box_border"
@@ -66,6 +65,7 @@
             android:text="Annulla"
             android:textAllCaps="false"
             android:textColor="#000000"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.075"
@@ -74,7 +74,7 @@
             app:layout_constraintVertical_bias="0.945" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button3"
+            android:id="@+id/buttonResettaPassword"
             android:layout_width="165dp"
             android:layout_height="48dp"
             android:background="@drawable/login_box_border"
@@ -83,6 +83,7 @@
             android:text="Resetta password"
             android:textAllCaps="false"
             android:textColor="#000000"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -92,14 +93,18 @@
             app:layout_constraintVertical_bias="0.945" />
 
         <EditText
-            android:id="@+id/editTextTextPassword4"
+            android:id="@+id/editTextConfermaPassword"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="50dp"
             android:layout_marginEnd="50dp"
+            android:backgroundTint="#5F5959"
             android:ems="10"
+            android:fontFamily="@font/verdana_font"
             android:inputType="textPassword"
-            android:textColor="#5F5959"
+            android:textColor="#000000"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -107,75 +112,143 @@
             app:layout_constraintVertical_bias="0.768" />
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/textViewPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/verdana_font"
             android:text=" Nuova password"
             android:textColor="#5F5959"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/textView5"
+            app:layout_constraintEnd_toEndOf="@+id/textViewCodice"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/textView5"
+            app:layout_constraintStart_toStartOf="@+id/textViewCodice"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/textViewCodice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/verdana_font"
             android:text="Codice di verifica"
             android:textColor="#5F5959"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/editTextTextPassword3"
+            app:layout_constraintEnd_toEndOf="@+id/editTextCodice"
             app:layout_constraintHorizontal_bias="0.017"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPassword3"
+            app:layout_constraintStart_toStartOf="@+id/editTextCodice"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.309" />
 
         <EditText
-            android:id="@+id/editTextTextPassword"
+            android:id="@+id/editTextPassword"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="50dp"
             android:layout_marginEnd="50dp"
+            android:backgroundTint="#5F5959"
             android:ems="10"
+            android:fontFamily="@font/verdana_font"
+            android:hint="Inserisci la tua nuova password qui..."
             android:inputType="textPassword"
-            android:textColor="#5F5959"
+            android:textColor="#000000"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.565" />
+            app:layout_constraintVertical_bias="0.564" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/textViewConfermaPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/verdana_font"
             android:text=" Conferma la nuova password"
             android:textColor="#5F5959"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/textView7"
+            app:layout_constraintEnd_toEndOf="@+id/textViewPassword"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/textView7"
+            app:layout_constraintStart_toStartOf="@+id/textViewPassword"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.698" />
 
         <EditText
-            android:id="@+id/editTextTextPassword3"
+            android:id="@+id/editTextCodice"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="50dp"
             android:layout_marginEnd="50dp"
+            android:backgroundTint="#5F5959"
             android:ems="10"
+            android:fontFamily="@font/verdana_font"
+            android:hint="Inserisci il codice di verifica qui..."
             android:inputType="textPersonName"
-            android:textColor="#5F5959"
+            android:textColor="#000000"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.362" />
 
+        <ImageView
+            android:id="@+id/iconaLucchettoPassword"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:cropToPadding="false"
+            android:foregroundTint="#5F5959"
+            android:tint="#5F5959"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextPassword"
+            app:layout_constraintEnd_toStartOf="@+id/editTextPassword"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/editTextPassword"
+            app:srcCompat="@android:drawable/ic_lock_lock" />
+
+        <ImageView
+            android:id="@+id/iconaLucchettoConferma"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:tint="#5F5959"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextConfermaPassword"
+            app:layout_constraintEnd_toStartOf="@+id/editTextConfermaPassword"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/editTextConfermaPassword"
+            app:srcCompat="@android:drawable/ic_lock_lock" />
+
+        <ImageView
+            android:id="@+id/iconaOcchioConferma"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:tint="#5F5959"
+            android:onClick="mostraNascondiPassword"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextConfermaPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/editTextConfermaPassword"
+            app:layout_constraintTop_toTopOf="@+id/editTextConfermaPassword"
+            app:layout_constraintVertical_bias="0.768"
+            app:srcCompat="@drawable/occhiopassword" />
+
+        <ImageView
+            android:id="@+id/iconaOcchioPassword"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:tint="#5F5959"
+            android:onClick="mostraNascondiPassword"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/editTextPassword"
+            app:layout_constraintTop_toTopOf="@+id/editTextPassword"
+            app:srcCompat="@drawable/occhiopassword" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
