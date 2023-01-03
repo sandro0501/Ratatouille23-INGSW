@@ -7,9 +7,10 @@ import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-public class Activity_Conferma_Codice extends AppCompatActivity {
+public class ConfermaCodiceActivity extends AppCompatActivity {
     TextView textViewPromptColorato;
     EditText editTextPassword;
     EditText editTextConfermaPassword;
@@ -32,12 +33,12 @@ public class Activity_Conferma_Codice extends AppCompatActivity {
         if (view.getId()==R.id.iconaOcchioPassword) {
             if (editTextPassword.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
 
-                //((ImageView(view)).setImageResource(R.drawable.hide_password);
+                ((ImageView)(view)).setImageResource(R.drawable.occhiosbarrato);
                 editTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
 
             } else {
 
-                //((ImageView)(view)).setImageResource(R.drawable.show_password);
+                ((ImageView)(view)).setImageResource(R.drawable.occhiopassword);
                 editTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
             }
@@ -45,12 +46,12 @@ public class Activity_Conferma_Codice extends AppCompatActivity {
         else {
             if (editTextConfermaPassword.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
 
-                //((ImageView(view)).setImageResource(R.drawable.hide_password);
+                ((ImageView)(view)).setImageResource(R.drawable.occhiosbarrato);
                 editTextConfermaPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
 
             } else {
 
-                //((ImageView)(view)).setImageResource(R.drawable.show_password);
+                ((ImageView)(view)).setImageResource(R.drawable.occhiopassword);
                 editTextConfermaPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
             }
