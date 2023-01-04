@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/opzioneMenuVaiAllaBacheca"
+        android:icon="@drawable/icon_bacheca"
+        android:iconTint="#5F5959"
+        android:title="Vai alla bacheca" />
+
+    <item
+        android:id="@+id/opzioneMenuGestisciRistorante"
+        android:icon="@drawable/icon_ristorante"
+        android:iconTint="#5F5959"
+        android:title="Gestisci ristorante" />
+
+    <item
+        android:id="@+id/opzioneMenuRegistraDipendente"
+        android:icon="@drawable/icon_utenti"
+        android:iconTint="#5F5959"
+        android:title="Registra dipendente" />
+
+    <item
+        android:id="@+id/opzioneMenuiVisualizzaIlMenu"
+        android:icon="@drawable/icon_menu"
+        android:iconTint="#5F5959"
+        android:title="Visualizza il menù" />
+</menu>

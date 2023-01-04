@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Style_item_menu">
+        <item name="fontFamily">@font/verdanab</item>
+    </style>
+
+</resources>
