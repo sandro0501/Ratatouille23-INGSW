@@ -60,14 +60,14 @@ public class LoginActivity extends AppCompatActivity {
                 String email = editTextEmail.getText().toString();
                 String password = editTextPass.getText().toString();
                 Utente utenteCorrente;
-                Intent i = new Intent(getApplicationContext(), PasswordRecoveryActivity.class);
+                Intent i = new Intent(getApplicationContext(), BachecaActivity.class);
                 if (!email.isEmpty() && !password.isEmpty()) {
                     utenteCorrente = Controller.getInstance().bottoneLoginPremuto(email, password);
                     if (utenteCorrente == null) {
                         Controller.getInstance().mostraAlertErrore(LoginActivity.this, "Errore!", "L'email o la password non sono corretti!");
                     }
                     else {
-                        //Accedi alla home
+                        startActivity(i);
                     }
                 }
                 else {

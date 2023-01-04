@@ -15,7 +15,17 @@
 
         <activity
             android:name=".Views.BachecaActivity"
+            android:screenOrientation="landscape"
             android:exported="true" >
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        
+        <activity
+            android:name=".Views.LoginActivity"
+            android:screenOrientation="landscape"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -26,15 +36,8 @@
         </activity>
         
         <activity
-            android:name=".Views.LoginActivity"
-            android:exported="true">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        
-        <activity
             android:name=".Views.PasswordRecoveryActivity"
+            android:screenOrientation="landscape"
             android:exported="true" >
             <meta-data
                 android:name="android.app.lib_name"
@@ -42,6 +45,7 @@
         </activity>
         <activity
             android:name=".Views.ConfermaCodiceActivity"
+            android:screenOrientation="landscape"
             android:exported="true" >
             <meta-data
                 android:name="android.app.lib_name"

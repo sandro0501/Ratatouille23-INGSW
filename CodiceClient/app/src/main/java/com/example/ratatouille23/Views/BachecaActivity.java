@@ -32,8 +32,6 @@ public class BachecaActivity extends AppCompatActivity {
 
         inizializzaMenu();
         iconaMenuPremuta(menuDrawerLayout, iconaMenu);
-        //iconaProfiloUtentePremuta(iconaProfiloUtente);
-
 
     }
 
@@ -51,15 +49,4 @@ public class BachecaActivity extends AppCompatActivity {
             }
         });
     }
-
-    /*private void iconaProfiloUtentePremuta(ImageView iconaProfiloUtente) {
-        iconaProfiloUtente.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-
-            }
-        });
-    }*/
 }
