@@ -20,14 +20,10 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        
         <activity
-<<<<<<< HEAD
-            android:name=".LoginActivity"
-            android:exported="true" >
-=======
             android:name=".Activities.LoginActivity"
             android:exported="true">
->>>>>>> 6c7c017348216707b70e31f4ee1f3e0034d25b38
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -36,6 +32,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        
         <activity
             android:name=".Activities.PasswordRecoveryActivity"
             android:exported="true" >
