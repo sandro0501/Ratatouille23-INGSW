@@ -1,6 +1,4 @@
-package com.example.ratatouille23.Modelli;
-
-import java.util.ArrayList;
+package com.example.ratatouille23.Models;
 
 public class Gestore extends Utente {
 

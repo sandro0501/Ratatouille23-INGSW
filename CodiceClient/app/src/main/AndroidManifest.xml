@@ -14,16 +14,8 @@
         tools:targetApi="31" >
 
         <activity
-            android:name=".BachecaActivity"
+            android:name=".Views.BachecaActivity"
             android:exported="true" >
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        
-        <activity
-            android:name=".Activities.LoginActivity"
-            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -34,14 +26,22 @@
         </activity>
         
         <activity
-            android:name=".Activities.PasswordRecoveryActivity"
+            android:name=".Views.LoginActivity"
+            android:exported="true">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        
+        <activity
+            android:name=".Views.PasswordRecoveryActivity"
             android:exported="true" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Activities.ConfermaCodiceActivity"
+            android:name=".Views.ConfermaCodiceActivity"
             android:exported="true" >
             <meta-data
                 android:name="android.app.lib_name"

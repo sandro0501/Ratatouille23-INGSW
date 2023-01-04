@@ -7,23 +7,28 @@
 
     <fragment
         android:id="@+id/opzioneMenuGestisciRistorante"
-        android:name="com.example.ratatouille23.RistoranteFragment"
+        android:name="com.example.ratatouille23.Views.RistoranteFragment"
         android:label="fragment_ristorante"
         tools:layout="@layout/fragment_ristorante" />
     <fragment
         android:id="@+id/opzioneMenuRegistraDipendente"
-        android:name="com.example.ratatouille23.DipendenteFragment"
+        android:name="com.example.ratatouille23.Views.DipendenteFragment"
         android:label="fragment_dipendente"
         tools:layout="@layout/fragment_dipendente" />
     <fragment
-        android:id="@+id/opzioneMenuiVisualizzaIlMenu"
-        android:name="com.example.ratatouille23.MenuFragment"
+        android:id="@+id/opzioneMenuVisualizzaIlMenu"
+        android:name="com.example.ratatouille23.Views.MenuFragment"
         android:label="fragment_menu"
         tools:layout="@layout/fragment_menu" />
     <fragment
         android:id="@+id/opzioneMenuVaiAllaBacheca"
-        android:name="com.example.ratatouille23.BachecaFragment"
+        android:name="com.example.ratatouille23.Views.BachecaFragment"
         android:label="fragment_bacheca"
         tools:layout="@layout/fragment_bacheca" />
+    <fragment
+        android:id="@+id/opzioneVisualizzaProfilo"
+        android:name="com.example.ratatouille23.Views.ProfiloFragment"
+        android:label="fragment_profilo"
+        tools:layout="@layout/fragment_profilo" />
 
 </navigation>

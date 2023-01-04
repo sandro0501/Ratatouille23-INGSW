@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".BachecaActivity"
+    tools:context=".Views.BachecaActivity"
     tools:ignore="SpeakableTextPresentCheck">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,9 +23,10 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="0dp">
+            android:paddingEnd="64dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/menuIcon"
@@ -37,7 +38,7 @@
 
             <TextView
                 android:id="@+id/textViewDenominazioneRistorante"
-                android:layout_width="1138dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/verdanab"
@@ -46,15 +47,6 @@
                 android:textColor="#5F5959"
                 android:textSize="18dp" />
 
-            <ImageView
-                android:id="@+id/userIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="right"
-                android:layout_marginStart="10dp"
-                android:contentDescription="user"
-                android:src="@drawable/icon_profile"
-                app:tint="#5F5959" />
         </LinearLayout>
 
         <androidx.fragment.app.FragmentContainerView

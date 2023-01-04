@@ -1,4 +1,4 @@
-package com.example.ratatouille23.Activities;
+package com.example.ratatouille23.Views;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.text.HtmlCompat;
@@ -19,7 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ratatouille23.Controller;
-import com.example.ratatouille23.Modelli.Utente;
+import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.R;
 
 public class LoginActivity extends AppCompatActivity {

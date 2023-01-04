@@ -1,4 +1,4 @@
-package com.example.ratatouille23.Activities;
+package com.example.ratatouille23.Views;
 
 import androidx.appcompat.app.AppCompatActivity;
 

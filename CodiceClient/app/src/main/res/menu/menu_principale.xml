@@ -20,8 +20,15 @@
         android:title="Registra dipendente" />
 
     <item
-        android:id="@+id/opzioneMenuiVisualizzaIlMenu"
+        android:id="@+id/opzioneMenuVisualizzaIlMenu"
         android:icon="@drawable/icon_menu"
         android:iconTint="#5F5959"
         android:title="Visualizza il menù" />
+
+    <item
+        android:id="@+id/opzioneVisualizzaProfilo"
+        android:icon="@drawable/icon_user"
+        android:iconTint="#5F5959"
+        android:title="Visualizza il profilo" />
+
 </menu>

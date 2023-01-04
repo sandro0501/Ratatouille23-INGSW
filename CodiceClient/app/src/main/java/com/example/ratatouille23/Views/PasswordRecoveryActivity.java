@@ -1,9 +1,7 @@
-package com.example.ratatouille23.Activities;
+package com.example.ratatouille23.Views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;

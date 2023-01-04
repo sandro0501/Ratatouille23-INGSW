@@ -2,14 +2,10 @@ package com.example.ratatouille23;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.ratatouille23.Activities.ConfermaCodiceActivity;
-import com.example.ratatouille23.Activities.LoginActivity;
-import com.example.ratatouille23.Activities.PasswordRecoveryActivity;
-import com.example.ratatouille23.Modelli.Utente;
+import com.example.ratatouille23.Models.Utente;
 
 public class Controller extends AppCompatActivity {
 
