@@ -1,34 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/opzioneMenuVaiAllaBacheca"
-        android:icon="@drawable/icon_bacheca"
-        android:iconTint="#5F5959"
-        android:title="Vai alla bacheca" />
+    <group android:id="@+id/gruppoMenuPrincipale"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/opzioneMenuVaiAllaBacheca"
+            android:icon="@drawable/icon_bacheca"
+            android:iconTint="#5F5959"
+            android:title="Vai alla bacheca" />
 
-    <item
-        android:id="@+id/opzioneMenuGestisciRistorante"
-        android:icon="@drawable/icon_ristorante"
-        android:iconTint="#5F5959"
-        android:title="Gestisci ristorante" />
+        <item
+            android:id="@+id/opzioneMenuGestisciRistorante"
+            android:icon="@drawable/icon_ristorante"
+            android:iconTint="#5F5959"
+            android:title="Gestisci ristorante" />
 
-    <item
-        android:id="@+id/opzioneMenuRegistraDipendente"
-        android:icon="@drawable/icon_utenti"
-        android:iconTint="#5F5959"
-        android:title="Registra dipendente" />
+        <item
+            android:id="@+id/opzioneMenuRegistraDipendente"
+            android:icon="@drawable/icon_utenti"
+            android:iconTint="#5F5959"
+            android:title="Registra dipendente" />
 
-    <item
-        android:id="@+id/opzioneMenuVisualizzaIlMenu"
-        android:icon="@drawable/icon_menu"
-        android:iconTint="#5F5959"
-        android:title="Visualizza il menù" />
+        <item
+            android:id="@+id/opzioneMenuVisualizzaIlMenu"
+            android:icon="@drawable/icon_menu"
+            android:iconTint="#5F5959"
+            android:title="Visualizza il menù" />
+    </group>
 
-    <item
-        android:id="@+id/opzioneVisualizzaProfilo"
-        android:icon="@drawable/icon_user"
-        android:iconTint="#5F5959"
-        android:title="Visualizza il profilo" />
+
+    <group android:id="@+id/gruppoMenuSecondario"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/opzioneVisualizzaProfilo"
+            android:icon="@drawable/icon_user"
+            android:iconTint="#5F5959"
+            android:title="Visualizza il profilo" />
+    </group>
+
 
 </menu>
