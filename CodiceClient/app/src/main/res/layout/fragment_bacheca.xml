@@ -19,19 +19,19 @@
             android:fontFamily="@font/verdanab"
             android:text="Bacheca avvisi"
             android:textColor="@color/colorGrey"
-            android:textSize="16sp"
+            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.337"
+            app:layout_constraintHorizontal_bias="0.256"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.035" />
+            app:layout_constraintVertical_bias="0.048" />
 
         <ImageView
             android:id="@+id/imageViewIconAddAvviso"
             android:layout_width="110dp"
             android:layout_height="95dp"
-            android:layout_marginStart="376dp"
+            android:layout_marginStart="352dp"
             android:src="@drawable/icon_add_avviso"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textViewBachecaAvvisi"
@@ -49,6 +49,34 @@
             app:layout_constraintStart_toEndOf="@+id/imageViewIconAddAvviso"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_messaggio"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textViewBachecaAvvisi"
+            app:layout_constraintHorizontal_bias="0.929"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.038" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="25dp"
+            android:layout_height="24dp"
+            android:background="@drawable/rounded_corner_message"
+            android:fontFamily="@font/verdanab"
+            android:text="1"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.193"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.037" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
