@@ -43,8 +43,7 @@ public class ConfermaCodiceActivity extends AppCompatActivity {
         bottoneAnnulla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), PasswordRecoveryActivity.class);
-                startActivity(i);
+                finish();
             }
         });
 

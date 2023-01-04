@@ -90,6 +90,13 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStop() {
+        editTextEmail.setText("");
+        editTextPass.setText("");
+        super.onStop();
+    }
+
     public void occhioSchermataLoginpremuto(View v) {
         EditText pass = (EditText) findViewById(R.id.campoPassword);
         if (pass.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
