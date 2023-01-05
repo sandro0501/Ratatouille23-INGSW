@@ -22,6 +22,7 @@
         </activity>
         <activity
             android:name=".Views.BachecaActivity"
+            android:screenOrientation="landscape">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -43,12 +44,14 @@
         </activity>
         <activity
             android:name=".Views.PasswordRecoveryActivity"
+            android:screenOrientation="landscape">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".Views.ConfermaCodiceActivity"
+            android:screenOrientation="landscape">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
