@@ -3,6 +3,7 @@ package com.example.ratatouille23.Views;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -15,11 +16,11 @@ import android.widget.ImageView;
 import com.example.ratatouille23.R;
 import com.google.android.material.navigation.NavigationView;
 
+
 public class BachecaActivity extends AppCompatActivity {
 
     DrawerLayout menuDrawerLayout;
     ImageView iconaMenu;
-    //ImageView iconaProfiloUtente;
     NavigationView menu;
 
     @Override
@@ -33,6 +34,16 @@ public class BachecaActivity extends AppCompatActivity {
 
         inizializzaMenu();
         iconaMenuPremuta(menuDrawerLayout, iconaMenu);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.navHostFragment);
+        if(f instanceof BachecaFragment){}
+        else super.onBackPressed();
+
 
     }
 
