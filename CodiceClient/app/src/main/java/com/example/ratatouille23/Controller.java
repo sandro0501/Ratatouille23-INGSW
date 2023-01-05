@@ -24,7 +24,7 @@ public class Controller extends AppCompatActivity {
 
     public Utente bottoneLoginPremuto (String email, String password) {
 
-        return null;
+        return new Utente();
     }
 
     public boolean bottoneRichiediCodicePremuto(String email) {
