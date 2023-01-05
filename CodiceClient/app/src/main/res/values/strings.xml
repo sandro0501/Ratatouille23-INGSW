@@ -1,5 +1,45 @@
 <resources>
     <string name="app_name">Ratatouille23</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="autore_avviso_xml">
+        <item>Luigi Rossi</item>
+        <item>Vincenzo Bianchi</item>
+        <item>Paolo Verdi</item>
+        <item>Giovanni Esposito</item>
+        <item>Ciro Russo</item>
+    </string-array>
+
+    <string-array name="ruolo_autore_avviso_xml">
+        <item>Supervisore</item>
+        <item>Amministratore</item>
+        <item>Supervisore</item>
+        <item>Supervisore</item>
+        <item>Supervisore</item>
+    </string-array>
+
+    <string-array name="oggetto_avviso_xml">
+        <item>Avviso di prova letto</item>
+        <item>Avviso di prova non letto</item>
+        <item>Avviso di prova test</item>
+        <item>Avviso di prova test</item>
+        <item>Avviso di prova test</item>
+    </string-array>
+
+    <string-array name="corpo_avviso_xml">
+        <item>Questo è un avviso di prova...</item>
+        <item>Questo è un avviso di prova1...</item>
+        <item>Questo è un avviso di prova2...</item>
+        <item>Questo è un avviso di prova3...</item>
+        <item>Questo è un avviso di prova4...</item>
+    </string-array>
+
+    <string-array name="data_avviso_xml">
+        <item>04/01</item>
+        <item>02/01</item>
+        <item>01/01</item>
+        <item>01/01</item>
+        <item>01/01</item>
+    </string-array>
+
+
 </resources>

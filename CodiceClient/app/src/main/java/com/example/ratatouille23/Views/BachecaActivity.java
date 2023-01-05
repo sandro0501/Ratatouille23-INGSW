@@ -4,6 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+<<<<<<< HEAD
+=======
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+>>>>>>> 241d12eb80dd20c8aa393b3f52eeee8d436ac7ee
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -37,6 +42,7 @@ public class BachecaActivity extends AppCompatActivity {
 
     }
 
+<<<<<<< HEAD
     @Override
     public void onBackPressed() {
 
@@ -46,6 +52,8 @@ public class BachecaActivity extends AppCompatActivity {
 
 
     }
+=======
+>>>>>>> 241d12eb80dd20c8aa393b3f52eeee8d436ac7ee
 
     private void inizializzaMenu() {
         NavHostFragment hostFragment =(NavHostFragment)getSupportFragmentManager().findFragmentById(R.id.navHostFragment);

@@ -12,5 +12,6 @@
         <!-- Status bar color. -->
         <!-- Customize your theme here. -->
         <item name="android:listDivider">@color/colorGrey</item>
+        <item name="android:colorEdgeEffect">@color/colorGrey</item>
     </style>
 </resources>

@@ -5,11 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:id="@+id/frameLayoutRecyclerView"
     tools:context=".Views.BachecaFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#F5EDED">
 
         <TextView
             android:id="@+id/textViewBachecaAvvisi"
@@ -22,7 +24,7 @@
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.256"
+            app:layout_constraintHorizontal_bias="0.25"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.048" />
@@ -51,7 +53,7 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <ImageView
-            android:id="@+id/imageView6"
+            android:id="@+id/imageViewAvvisi"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:src="@drawable/icon_messaggio"
@@ -63,20 +65,30 @@
             app:layout_constraintVertical_bias="0.038" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textViewNumeroAvvisi"
             android:layout_width="25dp"
             android:layout_height="24dp"
+            android:layout_marginTop="24dp"
             android:background="@drawable/rounded_corner_message"
             android:fontFamily="@font/verdanab"
             android:text="1"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.182"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewAvvisi"
+            android:layout_width="wrap_content"
+            android:layout_height="550dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.193"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.037" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewBachecaAvvisi"
+            app:layout_constraintVertical_bias="0.62"
+            tools:listitem="@layout/layout_recyclerview_avviso" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
