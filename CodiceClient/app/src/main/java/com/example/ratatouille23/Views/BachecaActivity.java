@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.ratatouille23.Controller;
 import com.example.ratatouille23.R;
 import com.google.android.material.navigation.NavigationView;
 
@@ -43,7 +44,8 @@ public class BachecaActivity extends AppCompatActivity {
     public void onBackPressed() {
 
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.navHostFragment);
-        if(f instanceof BachecaFragment){}
+        if(f instanceof ProfiloFragment){
+        }
         else super.onBackPressed();
 
 
