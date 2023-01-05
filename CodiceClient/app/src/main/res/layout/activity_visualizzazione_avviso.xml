@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Views.VisualizzazioneAvvisoActivity">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/mainYellowAppColor"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            android:navigationIcon="@drawable/icon_back_arrow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/textViewVisualizzazioneAvvisoOggetto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/verdanab"
+            android:text="Titolo avviso"
+            android:textColor="@color/black"
+            android:textSize="34sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.078"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.165" />
+
+        <TextView
+            android:id="@+id/textViewVisualizzazioneAvvisoAutore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/verdanab"
+            android:text="Autore Avviso"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@+id/textViewVisualizzazioneAvvisoOggetto"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textViewVisualizzazioneAvvisoOggetto"
+            app:layout_constraintTop_toBottomOf="@+id/textViewVisualizzazioneAvvisoOggetto" />
+
+        <TextView
+            android:id="@+id/textViewVisualizzazioneAvvisoRuolo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/verdanab"
+            android:text="Ruolo"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="@+id/textViewVisualizzazioneAvvisoAutore"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textViewVisualizzazioneAvvisoAutore"
+            app:layout_constraintTop_toBottomOf="@+id/textViewVisualizzazioneAvvisoAutore" />
+
+
+        <TextView
+            android:id="@+id/textViewVisualizzazioneAvvisoData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="584dp"
+            android:layout_marginTop="124dp"
+            android:fontFamily="@font/verdanab"
+            android:text="01/01"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.194"
+            app:layout_constraintStart_toEndOf="@+id/textViewVisualizzazioneAvvisoOggetto"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ScrollView
+            android:id="@+id/scrollerCorpoAvviso"
+            android:layout_width="909dp"
+            android:layout_height="415dp"
+            android:fillViewport="true"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.53"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewVisualizzazioneAvvisoOggetto"
+            app:layout_constraintVertical_bias="0.761">
+
+            <TextView
+                android:id="@+id/textViewVisualizzazioneAvvisoCorpo"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
+                android:fontFamily="@font/verdana"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum et condimentum nisl.
+                Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                Suspendisse faucibus sed tortor sed ornare. Nullam condimentum lorem neque.
+                Nulla sit amet purus justo. Pellentesque pellentesque mollis urna, vel varius nisl convallis eu.
+                Cras volutpat ante nulla, et molestie lorem luctus sit amet. Sed quis erat velit. Suspendisse sodales dolor sed faucibus fermentum. Ut dignissim vestibulum finibus.
+                Donec condimentum imperdiet rutrum. Morbi lobortis magna quis justo tincidunt, vel eleifend elit imperdiet. Praesent sed luctus nibh. Nunc sit amet odio dolor.
+                Mauris porta nibh vel viverra semper. Phasellus nec maximus dolor. Aliquam blandit ut ligula in tincidunt.
+                Integer sodales nisi eget justo fringilla, eu vulputate velit rutrum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                Nullam volutpat sagittis nunc, ac aliquam orci fringilla vel. Aenean auctor, orci quis vestibulum sollicitudin, dui libero semper tellus, ac ornare nisl ligula in ligula.
+                Nunc id accumsan dui. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Pellentesque eget interdum lectus.
+                Phasellus vulputate vulputate risus, aliquet cursus sapien ornare sit amet. Ut porta ac ligula vel porta.
+                Fusce imperdiet, arcu a egestas ultrices, elit est consectetur est, non malesuada felis turpis sit amet augue.
+                Integer varius, sem sit amet ullamcorper mattis, ex risus faucibus dolor, nec maximus ex risus sed ipsum.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum et condimentum nisl.
+                Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                Suspendisse faucibus sed tortor sed ornare. Nullam condimentum lorem neque.
+                Nulla sit amet purus justo. Pellentesque pellentesque mollis urna, vel varius nisl convallis eu.
+                Cras volutpat ante nulla, et molestie lorem luctus sit amet. Sed quis erat velit. Suspendisse sodales dolor sed faucibus fermentum. Ut dignissim vestibulum finibus.
+                Donec condimentum imperdiet rutrum. Morbi lobortis magna quis justo tincidunt, vel eleifend elit imperdiet. Praesent sed luctus nibh. Nunc sit amet odio dolor.
+                Mauris porta nibh vel viverra semper. Phasellus nec maximus dolor. Aliquam blandit ut ligula in tincidunt.
+                Integer sodales nisi eget justo fringilla, eu vulputate velit rutrum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                Nullam volutpat sagittis nunc, ac aliquam orci fringilla vel. Aenean auctor, orci quis vestibulum sollicitudin, dui libero semper tellus, ac ornare nisl ligula in ligula.
+                Nunc id accumsan dui. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Pellentesque eget interdum lectus.
+                Phasellus vulputate vulputate risus, aliquet cursus sapien ornare sit amet. Ut porta ac ligula vel porta.
+                Fusce imperdiet, arcu a egestas ultrices, elit est consectetur est, non malesuada felis turpis sit amet augue.
+                Integer varius, sem sit amet ullamcorper mattis, ex risus faucibus dolor, nec maximus ex risus sed ipsum."
+                android:textAlignment="textStart"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/textViewVisualizzazioneAvvisoRuolo"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/textViewVisualizzazioneAvvisoRuolo"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.908" />
+
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</RelativeLayout>
