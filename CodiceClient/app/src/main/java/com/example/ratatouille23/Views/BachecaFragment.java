@@ -1,5 +1,6 @@
 package com.example.ratatouille23.Views;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,7 +20,7 @@ import com.example.ratatouille23.R;
 import com.example.ratatouille23.Models.Avviso;
 import java.util.ArrayList;
 
-public class BachecaFragment extends Fragment {
+public class BachecaFragment extends Fragment implements RecyclerViewInterface {
 
     private ArrayList<Avviso> avvisiUtente;
     private RecyclerView recyclerView;
@@ -82,7 +83,7 @@ public class BachecaFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerViewAvvisi);
         setUpAvvisi();
-        avvisoAdapter = new AvvisoRecyclerViewAdapter(getContext(),avvisiUtente);
+        avvisoAdapter = new AvvisoRecyclerViewAdapter(getContext(),avvisiUtente,this);
         //recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(avvisoAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -107,4 +108,19 @@ public class BachecaFragment extends Fragment {
     }
 
 
+    @Override
+    public void onAvvisoClicked(int posizioneAvviso) {
+        Intent intentFromBachecaToVisualizzazioneAvviso = new Intent(getContext(), VisualizzazioneAvvisoActivity.class);
+
+        intentFromBachecaToVisualizzazioneAvviso.putExtra("OGGETTO", avvisiUtente.get(posizioneAvviso).getOggetto());
+        intentFromBachecaToVisualizzazioneAvviso.putExtra("AUTORE", avvisiUtente.get(posizioneAvviso).getAutore());
+        intentFromBachecaToVisualizzazioneAvviso.putExtra("RUOLOAUOTORE", avvisiUtente.get(posizioneAvviso).getAutore());
+        intentFromBachecaToVisualizzazioneAvviso.putExtra("DATACREAZIONE", avvisiUtente.get(posizioneAvviso).getDataCreazione());
+        intentFromBachecaToVisualizzazioneAvviso.putExtra("CORPO", avvisiUtente.get(posizioneAvviso).getCorpo());
+
+        getContext().startActivity(intentFromBachecaToVisualizzazioneAvviso);
+
+
+
+    }
 }

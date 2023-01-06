@@ -17,12 +17,15 @@ import java.util.ArrayList;
 
 public class AvvisoRecyclerViewAdapter extends RecyclerView.Adapter<AvvisoRecyclerViewAdapter.MyViewHolder> {
 
+	private final RecyclerViewInterface recyclerViewInterfaceAvviso;
+
     private Context context;
     private ArrayList<Avviso> avvisi;
 
-    public AvvisoRecyclerViewAdapter(Context context, ArrayList<Avviso> avvisi){
+    public AvvisoRecyclerViewAdapter(Context context, ArrayList<Avviso> avvisi, RecyclerViewInterface recyclerViewInterfaceAvviso){
         this.context = context;
         this.avvisi = avvisi;
+        this.recyclerViewInterfaceAvviso = recyclerViewInterfaceAvviso;
     }
 
     @NonNull
@@ -32,7 +35,7 @@ public class AvvisoRecyclerViewAdapter extends RecyclerView.Adapter<AvvisoRecycl
         //LayoutInflater inflater = LayoutInflater.from(context);
         View view = LayoutInflater.from(context).inflate(R.layout.layout_recyclerview_avviso, parent, false);
 
-        return new AvvisoRecyclerViewAdapter.MyViewHolder(view);
+        return new AvvisoRecyclerViewAdapter.MyViewHolder(view, recyclerViewInterfaceAvviso);
     }
 
     @Override
@@ -59,7 +62,7 @@ public class AvvisoRecyclerViewAdapter extends RecyclerView.Adapter<AvvisoRecycl
         ImageView imageViewAvvisi;
         TextView autoreAvviso, oggettoAvviso, corpoAvviso, dataAvviso, ruoloAutoreAvviso;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterfaceAvviso) {
             super(itemView);
 
             imageViewAvvisi = itemView.findViewById(R.id.imageViewNotifica);
@@ -68,6 +71,19 @@ public class AvvisoRecyclerViewAdapter extends RecyclerView.Adapter<AvvisoRecycl
             corpoAvviso = itemView.findViewById(R.id.textViewCorpoAvviso);
             dataAvviso = itemView.findViewById(R.id.textViewDataAvviso);
             ruoloAutoreAvviso = itemView.findViewById(R.id.textViewRuoloAutoreAvviso);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (recyclerViewInterfaceAvviso != null) {
+                        int posizioneAvviso = getAdapterPosition();
+                        if(posizioneAvviso!=RecyclerView.NO_POSITION){
+                            recyclerViewInterfaceAvviso.onAvvisoClicked(posizioneAvviso);
+                        }
+
+                    }
+                }
+            });
         }
     }
 }

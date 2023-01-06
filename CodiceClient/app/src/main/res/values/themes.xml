@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Ratatouille23" parent="Theme.AppCompat.NoActionBar">
+    <style name="Theme.Ratatouille23" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -13,5 +13,8 @@
         <!-- Customize your theme here. -->
         <item name="android:listDivider">@color/colorGrey</item>
         <item name="android:colorEdgeEffect">@color/colorGrey</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 </resources>
