@@ -1,5 +1,8 @@
 package com.example.ratatouille23.Views;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -22,12 +25,12 @@ import com.example.ratatouille23.R;
  */
 public class ProfiloFragment extends Fragment {
 
-    TextView textViewNome;
-    TextView textViewEmail;
-    TextView textViewRuolo;
-    TextView textViewPassword;
-    ImageView iconaModificaPassword;
-    Button bottoneLogout;
+    private TextView textViewNome;
+    private TextView textViewEmail;
+    private TextView textViewRuolo;
+    private TextView textViewPassword;
+    private ImageView iconaModificaPassword;
+    private Button bottoneLogout;
 
     public ProfiloFragment() {
         // Required empty public constructor
@@ -48,9 +51,9 @@ public class ProfiloFragment extends Fragment {
         bottoneLogout = fragmentCorrente.findViewById(R.id.bottoneLogout);
 
         textViewNome.setText(Html.fromHtml("<b>"+textViewNome.getText()+"</b>"));
-        textViewEmail.setText(Html.fromHtml("<b>"+textViewNome.getText()+"</b>"));
-        textViewRuolo.setText(Html.fromHtml("<b>"+textViewNome.getText()+"</b>"));
-        textViewPassword.setText(Html.fromHtml("<b>"+textViewNome.getText()+"</b>"));
+        textViewEmail.setText(Html.fromHtml("<b>"+textViewEmail.getText()+"</b>"));
+        textViewRuolo.setText(Html.fromHtml("<b>"+textViewRuolo.getText()+"</b>"));
+        textViewPassword.setText(Html.fromHtml("<b>"+textViewPassword.getText()+"</b>"));
 
         iconaModificaPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +67,7 @@ public class ProfiloFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(fragmentCorrente.getContext(), LoginActivity.class);
+                i.addFlags(FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
             }
         });

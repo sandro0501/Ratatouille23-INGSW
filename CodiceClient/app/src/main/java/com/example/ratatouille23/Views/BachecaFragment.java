@@ -8,15 +8,19 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.ratatouille23.Controller;
 import com.example.ratatouille23.R;
 
 import com.example.ratatouille23.Models.Avviso;
 import java.util.ArrayList;
 
 public class BachecaFragment extends Fragment {
+
     private ArrayList<Avviso> avvisiUtente;
     private RecyclerView recyclerView;
     private AvvisoRecyclerViewAdapter avvisoAdapter;
@@ -51,6 +55,18 @@ public class BachecaFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Controller.setBachecaAttiva(true);
+    }
+
+    @Override
+    public void onStop () {
+        Controller.setBachecaAttiva(false);
+        super.onStop();
     }
 
     @Override

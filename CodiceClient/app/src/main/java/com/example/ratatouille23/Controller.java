@@ -11,6 +11,8 @@ public class Controller extends AppCompatActivity {
 
     private static Controller instance;
 
+    static Boolean bachecaAttiva = true;
+
     private Controller() { };
 
     public static Controller getInstance(){
@@ -20,6 +22,14 @@ public class Controller extends AppCompatActivity {
         }
         return instance;
 
+    }
+
+    public static Boolean getBachecaAttiva() {
+        return bachecaAttiva;
+    }
+
+    public static void setBachecaAttiva(Boolean valore) {
+       bachecaAttiva = valore;
     }
 
     public Utente bottoneLoginPremuto (String email, String password) {
@@ -47,4 +57,7 @@ public class Controller extends AppCompatActivity {
         alert.show();
     }
 
+    public Boolean bottoneModificaPasswordPremuto(String vecchiaPassword, String nuovaPassword) {
+        return true;
+    }
 }

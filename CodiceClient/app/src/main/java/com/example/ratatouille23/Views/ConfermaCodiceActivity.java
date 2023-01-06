@@ -1,5 +1,8 @@
 package com.example.ratatouille23.Views;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -18,12 +21,12 @@ import com.example.ratatouille23.R;
 
 public class ConfermaCodiceActivity extends AppCompatActivity {
 
-    TextView textViewPromptColorato;
-    EditText editTextPassword;
-    EditText editTextConfermaPassword;
-    EditText editTextCodice;
-    Button bottoneAnnulla;
-    Button bottoneResettaPassword;
+    private TextView textViewPromptColorato;
+    private EditText editTextPassword;
+    private EditText editTextConfermaPassword;
+    private EditText editTextCodice;
+    private Button bottoneAnnulla;
+    private Button bottoneResettaPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,7 @@ public class ConfermaCodiceActivity extends AppCompatActivity {
                         codiceCorretto = Controller.getInstance().bottoneResettaPasswordConCodicePremuto(codice, password);
                         if (codiceCorretto) {
                             i = new Intent(getApplicationContext(), LoginActivity.class);
+                            i.addFlags(FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
                             startActivity(i);
                         }
                         else Controller.getInstance().mostraAlertErrore(ConfermaCodiceActivity.this, "Errore!", "Il codice inserito è errato!");
@@ -75,33 +79,25 @@ public class ConfermaCodiceActivity extends AppCompatActivity {
 
     public void mostraNascondiPassword(View view) {
 
+        EditText editTextAssociata;
 
-        if (view.getId()==R.id.iconaOcchioPassword) {
-            if (editTextPassword.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
+        if (view.getId()==R.id.iconaOcchioPassword)
+            editTextAssociata = editTextPassword;
+        else
+            editTextAssociata = editTextConfermaPassword;
 
-                ((ImageView)(view)).setImageResource(R.drawable.occhiosbarrato);
-                editTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+        if (editTextAssociata.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
 
-            } else {
+            ((ImageView)(view)).setImageResource(R.drawable.occhiosbarrato);
+            editTextAssociata.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
 
-                ((ImageView)(view)).setImageResource(R.drawable.occhiopassword);
-                editTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        } else {
 
-            }
+            ((ImageView)(view)).setImageResource(R.drawable.occhiopassword);
+            editTextAssociata.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
         }
-        else {
-            if (editTextConfermaPassword.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
 
-                ((ImageView)(view)).setImageResource(R.drawable.occhiosbarrato);
-                editTextConfermaPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-
-            } else {
-
-                ((ImageView)(view)).setImageResource(R.drawable.occhiopassword);
-                editTextConfermaPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-
-            }
-        }
     }
 
 }

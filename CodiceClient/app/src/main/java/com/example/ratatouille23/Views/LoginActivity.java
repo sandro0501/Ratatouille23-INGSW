@@ -24,11 +24,11 @@ import com.example.ratatouille23.R;
 
 public class LoginActivity extends AppCompatActivity {
 
-    Button bottoneLogin;
-    TextView benvenuto;
-    TextView passDimenticata;
-    EditText editTextPass;
-    EditText editTextEmail;
+    private Button bottoneLogin;
+    private TextView benvenuto;
+    private TextView passDimenticata;
+    private EditText editTextPass;
+    private EditText editTextEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +48,10 @@ public class LoginActivity extends AppCompatActivity {
         passDimenticata.setText(HtmlCompat.fromHtml(passDim, HtmlCompat.FROM_HTML_MODE_LEGACY));
 
 
-        editTextPass = (EditText) findViewById(R.id.campoPassword);
+        editTextPass = (EditText) findViewById(R.id.editTextVecchiaPassword);
         editTextPass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
-        bottoneLogin = findViewById(R.id.bottoneLogin);
+        bottoneLogin = findViewById(R.id.bottoneResettaPassword);
         editTextEmail = findViewById(R.id.campoMail);
 
         bottoneLogin.setOnClickListener(new View.OnClickListener() {
@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void occhioSchermataLoginpremuto(View v) {
-        EditText pass = (EditText) findViewById(R.id.campoPassword);
+        EditText pass = (EditText) findViewById(R.id.editTextVecchiaPassword);
         if (pass.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
 
             ((ImageView) (v)).setImageResource(R.drawable.occhiosbarrato);

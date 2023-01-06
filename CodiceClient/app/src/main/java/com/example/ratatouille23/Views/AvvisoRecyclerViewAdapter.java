@@ -16,9 +16,9 @@ import com.example.ratatouille23.R;
 import java.util.ArrayList;
 
 public class AvvisoRecyclerViewAdapter extends RecyclerView.Adapter<AvvisoRecyclerViewAdapter.MyViewHolder> {
-    Context context;
-    ArrayList<Avviso> avvisi;
 
+    private Context context;
+    private ArrayList<Avviso> avvisi;
 
     public AvvisoRecyclerViewAdapter(Context context, ArrayList<Avviso> avvisi){
         this.context = context;

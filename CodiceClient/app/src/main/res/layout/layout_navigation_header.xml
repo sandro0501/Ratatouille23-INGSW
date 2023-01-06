@@ -7,7 +7,7 @@
     android:padding="20dp">
 
     <ImageView
-        android:id="@+id/logoRatatuille"
+        android:id="@+id/logoRatatouille"
         android:layout_width="183dp"
         android:layout_height="90dp"
         android:contentDescription="RatatouilleLogo"

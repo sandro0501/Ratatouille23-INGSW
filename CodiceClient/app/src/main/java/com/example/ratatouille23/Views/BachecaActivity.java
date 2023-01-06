@@ -12,6 +12,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -22,9 +23,9 @@ import com.google.android.material.navigation.NavigationView;
 
 public class BachecaActivity extends AppCompatActivity {
 
-    DrawerLayout menuDrawerLayout;
-    ImageView iconaMenu;
-    NavigationView menu;
+    private DrawerLayout menuDrawerLayout;
+    private ImageView iconaMenu;
+    private NavigationView menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +41,10 @@ public class BachecaActivity extends AppCompatActivity {
 
     }
 
+
     @Override
     public void onBackPressed() {
-
-        Fragment f = getSupportFragmentManager().findFragmentById(R.id.navHostFragment);
-        if(f instanceof ProfiloFragment){
-        }
+        if (Controller.getBachecaAttiva()) { }
         else super.onBackPressed();
 
 
@@ -55,6 +54,7 @@ public class BachecaActivity extends AppCompatActivity {
         NavHostFragment hostFragment =(NavHostFragment)getSupportFragmentManager().findFragmentById(R.id.navHostFragment);
         NavController controllerMenu = hostFragment.getNavController();
         NavigationUI.setupWithNavController(menu, controllerMenu);
+
     }
 
     private void iconaMenuPremuta(DrawerLayout menuDrawerLayout, ImageView iconaMenu) {

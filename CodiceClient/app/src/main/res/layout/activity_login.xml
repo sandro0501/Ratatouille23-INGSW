@@ -45,7 +45,7 @@
             app:layout_constraintTop_toBottomOf="@+id/benvenuto" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/textViewNuovaPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="7dp"
@@ -80,7 +80,7 @@
             android:layout_marginBottom="13dp"
             android:background="@drawable/dummy_for_shadows"
             android:elevation="5dp"
-            app:layout_constraintBottom_toTopOf="@+id/textView5"
+            app:layout_constraintBottom_toTopOf="@+id/textViewNuovaPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4">
@@ -121,10 +121,10 @@
             android:layout_marginBottom="35dp"
             android:background="@drawable/dummy_for_shadows"
             android:elevation="5dp"
-            app:layout_constraintBottom_toTopOf="@+id/bottoneLogin"
+            app:layout_constraintBottom_toTopOf="@+id/bottoneResettaPassword"
             app:layout_constraintEnd_toEndOf="@+id/constraintLayout4"
             app:layout_constraintStart_toStartOf="@+id/constraintLayout4"
-            app:layout_constraintTop_toBottomOf="@+id/textView5">
+            app:layout_constraintTop_toBottomOf="@+id/textViewNuovaPassword">
 
             <ImageView
                 android:id="@+id/imageView3"
@@ -132,7 +132,7 @@
                 android:layout_height="24dp"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toStartOf="@+id/campoPassword"
+                app:layout_constraintEnd_toStartOf="@+id/editTextVecchiaPassword"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -147,12 +147,12 @@
                 android:onClick="occhioSchermataLoginpremuto"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/campoPassword"
+                app:layout_constraintStart_toEndOf="@+id/editTextVecchiaPassword"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/occhiopassword" />
 
             <EditText
-                android:id="@+id/campoPassword"
+                android:id="@+id/editTextVecchiaPassword"
                 android:layout_width="201dp"
                 android:layout_height="41dp"
                 android:backgroundTint="#5F5959"
@@ -178,7 +178,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bottoneLogin">
+            app:layout_constraintTop_toBottomOf="@+id/bottoneResettaPassword">
 
             <TextView
                 android:id="@+id/passDimenticata"
@@ -194,7 +194,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
-            android:id="@+id/bottoneLogin"
+            android:id="@+id/bottoneResettaPassword"
             android:layout_width="105dp"
             android:layout_height="45dp"
             android:layout_marginBottom="73dp"

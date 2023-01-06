@@ -13,9 +13,9 @@ import com.example.ratatouille23.R;
 
 public class PasswordRecoveryActivity extends AppCompatActivity {
 
-    Button bottoneAnnulla;
-    Button bottoneRichiediCodice;
-    EditText editTextEmail;
+    private Button bottoneAnnulla;
+    private Button bottoneRichiediCodice;
+    private EditText editTextEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
