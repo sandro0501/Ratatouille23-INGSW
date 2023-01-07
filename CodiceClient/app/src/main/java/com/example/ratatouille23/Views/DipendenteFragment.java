@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import com.example.ratatouille23.R;
@@ -30,6 +31,8 @@ public class DipendenteFragment extends Fragment {
 
     private Spinner sceltaRuoli;
     private String ruoli [];
+    private Button bottoneAnnulla;
+    private Button bottoneRegistraDipendente;
 
 
     public DipendenteFragment() {
@@ -70,10 +73,14 @@ public class DipendenteFragment extends Fragment {
         // Inflate the layout for this fragment
         View fragmentCorrente = inflater.inflate(R.layout.fragment_dipendente, container, false);
         sceltaRuoli = (Spinner)fragmentCorrente.findViewById(R.id.spinnerRuoliDipendente);
+        bottoneAnnulla = fragmentCorrente.findViewById(R.id.buttonAnnullaRegistraDipendente);
+        bottoneRegistraDipendente = fragmentCorrente.findViewById(R.id.buttonConfermaRegistraDipendente);
+
         ruoli = new String[] {"Amministratore", "Supervisore", "Addetto alla cucina", "Addetto al servizio"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(fragmentCorrente.getContext(), android.R.layout.simple_spinner_dropdown_item, ruoli);
-        adapter.setDropDownViewResource(R.layout.spinner_element_layout);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(fragmentCorrente.getContext(), R.layout.spinner_layout, ruoli);
+        adapter.setDropDownViewResource(R.layout.spinner_item_layout);
         sceltaRuoli.setAdapter(adapter);
+
 
         return fragmentCorrente;
     }
