@@ -1,18 +1,25 @@
 package com.example.ratatouille23.Views;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.ratatouille23.Controller;
 import com.example.ratatouille23.R;
@@ -25,6 +32,7 @@ public class BachecaFragment extends Fragment implements RecyclerViewInterface {
     private ArrayList<Avviso> avvisiUtente;
     private RecyclerView recyclerView;
     private AvvisoRecyclerViewAdapter avvisoAdapter;
+    private ImageView bottoneCreazioneAvviso;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,6 +70,7 @@ public class BachecaFragment extends Fragment implements RecyclerViewInterface {
     public void onStart() {
         super.onStart();
         Controller.setBachecaAttiva(true);
+
     }
 
     @Override
@@ -74,12 +83,27 @@ public class BachecaFragment extends Fragment implements RecyclerViewInterface {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_bacheca, container, false);
+        View view = inflater.inflate(R.layout.fragment_bacheca, container, false);
+
+        bottoneCreazioneAvviso = (ImageView) view.findViewById(R.id.imageViewIconAddAvviso);
+        bottoneCreazioneAvviso.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intentFromBachecaToVCreazioneAvviso = new Intent(getContext(), CreazioneAvvisoActivity.class);
+                getContext().startActivity(intentFromBachecaToVCreazioneAvviso);
+
+            }
+        });
+
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
 
         recyclerView = view.findViewById(R.id.recyclerViewAvvisi);
         setUpAvvisi();
@@ -88,6 +112,8 @@ public class BachecaFragment extends Fragment implements RecyclerViewInterface {
         recyclerView.setAdapter(avvisoAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         avvisoAdapter.notifyDataSetChanged();
+
+
 
     }
 
@@ -110,8 +136,16 @@ public class BachecaFragment extends Fragment implements RecyclerViewInterface {
 
     @Override
     public void onAvvisoClicked(int posizioneAvviso) {
+
+        //cambiaAspettoAvvisoInVisiualizzato();
+        visualizzaAvviso(posizioneAvviso);
+
+    }
+
+    private void visualizzaAvviso(int posizioneAvviso) {
         Intent intentFromBachecaToVisualizzazioneAvviso = new Intent(getContext(), VisualizzazioneAvvisoActivity.class);
 
+        //passa i dati dal fragment all'activity
         intentFromBachecaToVisualizzazioneAvviso.putExtra("OGGETTO", avvisiUtente.get(posizioneAvviso).getOggetto());
         intentFromBachecaToVisualizzazioneAvviso.putExtra("AUTORE", avvisiUtente.get(posizioneAvviso).getAutore());
         intentFromBachecaToVisualizzazioneAvviso.putExtra("RUOLOAUOTORE", avvisiUtente.get(posizioneAvviso).getAutore());
@@ -119,8 +153,45 @@ public class BachecaFragment extends Fragment implements RecyclerViewInterface {
         intentFromBachecaToVisualizzazioneAvviso.putExtra("CORPO", avvisiUtente.get(posizioneAvviso).getCorpo());
 
         getContext().startActivity(intentFromBachecaToVisualizzazioneAvviso);
-
-
-
     }
+
+    private void cambiaAspettoAvvisoInVisiualizzato() {
+        ImageView imageViewAvvisi, imageViewNascondiAvviso;
+        TextView autoreAvviso, oggettoAvviso, corpoAvviso, dataAvviso, ruoloAutoreAvviso;
+
+        imageViewAvvisi = getView().findViewById(R.id.imageViewNotifica);
+        autoreAvviso = getView().findViewById(R.id.textViewAutoreAvviso);
+        oggettoAvviso = getView().findViewById(R.id.textViewOggettoAvviso);
+        corpoAvviso = getView().findViewById(R.id.textViewCorpoAvviso);
+        dataAvviso = getView().findViewById(R.id.textViewDataAvviso);
+        ruoloAutoreAvviso = getView().findViewById(R.id.textViewRuoloAutoreAvviso);
+        imageViewNascondiAvviso = getView().findViewById(R.id.imageViewNascondiAvviso);
+
+        //cambia aspetto testo
+        Typeface verdanaFace = ResourcesCompat.getFont(getContext(), R.font.verdana);
+
+        autoreAvviso.setTypeface(verdanaFace);
+        ruoloAutoreAvviso.setTypeface(verdanaFace, Typeface.ITALIC);
+        oggettoAvviso.setTypeface(verdanaFace);
+        dataAvviso.setTypeface(verdanaFace);
+
+        autoreAvviso.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
+        ruoloAutoreAvviso.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
+        oggettoAvviso.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
+        corpoAvviso.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
+        dataAvviso.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
+
+        autoreAvviso.setTextColor(Color.parseColor("#5F5959"));
+        ruoloAutoreAvviso.setTextColor(Color.parseColor("#5F5959"));
+        oggettoAvviso.setTextColor(Color.parseColor("#5F5959"));
+        corpoAvviso.setTextColor(Color.parseColor("#5F5959"));
+        dataAvviso.setTextColor(Color.parseColor("#5F5959"));
+
+        //cambia icona notifica
+        imageViewAvvisi.setImageResource(R.drawable.icon_avviso_visto);
+        imageViewNascondiAvviso.setVisibility(View.VISIBLE);
+    }
+
+
+
 }
