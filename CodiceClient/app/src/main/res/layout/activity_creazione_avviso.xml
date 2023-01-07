@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5EDED"
+    tools:context=".Views.CreazioneAvvisoActivity">
+
+    <LinearLayout
+        android:id="@+id/creazioneAvvisoLinearLayoutToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="#F2A726"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="15dp"
+        android:paddingEnd="64dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <TextView
+            android:id="@+id/textViewDenominazioneRistorante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/verdanab"
+            android:text="Nuovo avviso"
+            android:textAlignment="center"
+            android:textColor="#5F5959"
+            android:textSize="18dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textViewCreazioneAvvisoCorpo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="500dp"
+        android:fontFamily="@font/verdanab"
+        android:text="Corpo:"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textViewCreazioneAvvisoOggetto"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewCreazioneAvvisoOggetto"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCreazioneAvvisoOggetto" />
+
+    <TextView
+        android:id="@+id/textViewCreazioneAvvisoOggetto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="116dp"
+        android:fontFamily="@font/verdanab"
+        android:text="Oggetto:"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.054"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutOggettoAvviso"
+        android:layout_width="762dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="9dp"
+        android:background="@drawable/dummy_for_shadows"
+        android:elevation="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewCreazioneAvvisoOggetto"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.17000002">
+
+        <EditText
+            android:id="@+id/EditTextCreazioneAvvisoOggetto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:background="@android:color/transparent"
+            android:backgroundTint="#5F5959"
+            android:ems="10"
+            android:maxLength="500"
+            android:fontFamily="@font/verdana"
+            android:hint="Oggetto avviso modificabile..."
+            android:inputType="textEmailAddress"
+            android:singleLine="false"
+            android:textColor="@color/black"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutCorpoAvviso"
+        android:layout_width="892dp"
+        android:layout_height="273dp"
+        android:background="@drawable/dummy_for_shadows"
+        android:elevation="5dp"
+        android:maxLength="500"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.371"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.49">
+
+        <EditText
+            android:id="@+id/EditTextCreazioneAvvisoCorpo"
+            android:layout_width="872dp"
+            android:layout_height="251dp"
+            android:layout_marginStart="10dp"
+            android:background="@android:color/transparent"
+            android:backgroundTint="#5F5959"
+            android:ems="10"
+            android:fontFamily="@font/verdana"
+            android:gravity="top|start"
+            android:hint="Corpo avviso modificabile..."
+            android:inputType="textMultiLine"
+            android:lines="20"
+            android:maxLength="500"
+            android:maxLines="20"
+            android:minLines="1"
+            android:scrollbars="vertical"
+            android:selectAllOnFocus="false"
+            android:singleLine="false"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TextContrastCheck" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bottoneCreazioneAvviso"
+        android:layout_width="190dp"
+        android:layout_height="48dp"
+        android:background="@drawable/login_box_border"
+        android:backgroundTint="#F2A726"
+        android:fontFamily="@font/verdana_font"
+        android:text="Invia"
+        android:drawableLeft="@drawable/conferma_icon"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.91"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutCorpoAvviso"
+        app:layout_constraintVertical_bias="0.407" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bottoneAnnullaCreazioneAvviso"
+        android:layout_width="190dp"
+        android:layout_height="48dp"
+        android:background="@drawable/login_box_border"
+        android:backgroundTint="#F2A726"
+        android:fontFamily="@font/verdana_font"
+        android:drawableLeft="@drawable/elimina_icon"
+        android:text="Annulla"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/bottoneCreazioneAvviso"
+        app:layout_constraintHorizontal_bias="0.889"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutCorpoAvviso"
+        app:layout_constraintVertical_bias="0.407" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

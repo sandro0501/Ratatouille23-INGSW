@@ -1,6 +1,5 @@
 package com.example.ratatouille23.Views;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -48,10 +47,11 @@ public class VisualizzazioneAvvisoActivity extends AppCompatActivity {
         textViewCorpoAvviso.setText(corpoAvviso);
         textViewDataCreazioneAvviso.setText(dataCreazioneAvviso);
 
+
     }
 
     private void inizializzaToolbarNavigazione() {
-        toolbarNavigazione = (Toolbar) findViewById(R.id.toolbar);
+        toolbarNavigazione = (Toolbar) findViewById(R.id.toolbarCreazioneAvviso);
         toolbarNavigazione.setNavigationIcon(R.drawable.icon_back_arrow);
         toolbarNavigazione.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

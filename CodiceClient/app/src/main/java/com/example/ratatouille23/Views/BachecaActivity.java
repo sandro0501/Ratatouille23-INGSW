@@ -27,6 +27,7 @@ public class BachecaActivity extends AppCompatActivity {
     private ImageView iconaMenu;
     private NavigationView menu;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,8 +37,10 @@ public class BachecaActivity extends AppCompatActivity {
         iconaMenu = findViewById(R.id.menuIcon);
         menu = findViewById(R.id.menuNavigationView);
 
+
         inizializzaMenu();
         iconaMenuPremuta(menuDrawerLayout, iconaMenu);
+
 
     }
 
@@ -65,4 +68,5 @@ public class BachecaActivity extends AppCompatActivity {
             }
         });
     }
+
 }

@@ -35,6 +35,7 @@ public class ModificaPasswordActivity extends AppCompatActivity {
         editTextVecchiaPassword = findViewById(R.id.editTextVecchiaPassword);
         editTextNuovaPassword = findViewById(R.id.editTextNuovaPassword);
         editTextConfermaNuovaPassword = findViewById(R.id.editTextConfermaNuovaPassword);
+        iconaFrecciaIndietro = findViewById(R.id.iconaFrecciaIndietroModificaPassword);
         bottoneModificaPassword = findViewById(R.id.bottoneResettaPassword);
         bottoneAnnulla = findViewById(R.id.bottoneAnnullaModificaPassword);
 
