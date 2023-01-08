@@ -30,5 +30,10 @@
         android:name="com.example.ratatouille23.Views.ProfiloFragment"
         android:label="fragment_profilo"
         tools:layout="@layout/fragment_profilo" />
+    <fragment
+        android:id="@+id/opzioneMenuGestisciInventario"
+        android:name="com.example.ratatouille23.Views.DispensaFragment"
+        android:label="fragment_inventario"
+        tools:layout="@layout/fragment_dispensa" />
 
 </navigation>

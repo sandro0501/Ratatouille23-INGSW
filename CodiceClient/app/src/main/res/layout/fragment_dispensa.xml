@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:id="@+id/frameLayoutRecyclerView"
+    tools:context=".Views.DispensaFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F5EDED">
+
+
+        <TextView
+            android:id="@+id/textViewDispensaTitolo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/verdanab"
+            android:text="Inventario della dispensa"
+            android:textColor="@color/colorGrey"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/recyclerViewDispensa"
+            app:layout_constraintStart_toStartOf="@+id/recyclerViewDispensa"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.071" />
+
+        <ImageView
+            android:id="@+id/imageViewIconAddProdotto"
+            android:layout_width="110dp"
+            android:layout_height="95dp"
+            android:layout_marginStart="104dp"
+            android:src="@drawable/icon_add_ingrediente"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewDispensaTitolo"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.026" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewDispensa"
+            android:layout_width="wrap_content"
+            android:layout_height="550dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDispensaTitolo"
+            app:layout_constraintVertical_bias="0.62"
+            tools:listitem="@layout/layout_recyclerview_prodotto" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

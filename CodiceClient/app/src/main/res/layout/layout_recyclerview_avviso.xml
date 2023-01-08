@@ -63,7 +63,7 @@
                 android:text="Ruolo"
                 android:textColor="@color/black"
                 android:textStyle="italic"
-                app:layout_constraintBottom_toTopOf="@+id/textViewCorpoAvviso"
+                app:layout_constraintBottom_toTopOf="@+id/textViewAnteprimaAvviso"
                 app:layout_constraintEnd_toEndOf="@+id/textViewAutoreAvviso"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/textViewAutoreAvviso"
@@ -79,7 +79,7 @@
                 android:text="Oggetto avviso"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintBottom_toTopOf="@+id/textViewCorpoAvviso"
+                app:layout_constraintBottom_toTopOf="@+id/textViewAnteprimaAvviso"
                 app:layout_constraintEnd_toEndOf="@+id/textViewRuoloAutoreAvviso"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/textViewRuoloAutoreAvviso"
@@ -87,7 +87,7 @@
                 app:layout_constraintVertical_bias="1.0" />
 
             <TextView
-                android:id="@+id/textViewCorpoAvviso"
+                android:id="@+id/textViewAnteprimaAvviso"
                 android:layout_width="450dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -100,7 +100,7 @@
                 app:layout_constraintStart_toStartOf="@+id/textViewOggettoAvviso" />
 
             <TextView
-                android:id="@+id/textViewDataAvviso"
+                android:id="@+id/textViewDataCreazioneAvviso"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
@@ -124,7 +124,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.71"
                 app:layout_constraintStart_toEndOf="@+id/textViewOggettoAvviso"
-                app:layout_constraintTop_toBottomOf="@+id/textViewDataAvviso"
+                app:layout_constraintTop_toBottomOf="@+id/textViewDataCreazioneAvviso"
                 app:layout_constraintVertical_bias="0.222"
                 app:srcCompat="@drawable/icon_invisible_eye" />
         </androidx.constraintlayout.widget.ConstraintLayout>

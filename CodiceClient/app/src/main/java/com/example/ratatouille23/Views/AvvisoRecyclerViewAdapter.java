@@ -17,12 +17,12 @@ import java.util.ArrayList;
 
 public class AvvisoRecyclerViewAdapter extends RecyclerView.Adapter<AvvisoRecyclerViewAdapter.MyViewHolder> {
 
-	private final RecyclerViewInterface recyclerViewInterfaceAvviso;
+	private final RecyclerViewAvvisoInterface recyclerViewInterfaceAvviso;
 
     private Context context;
     private ArrayList<Avviso> avvisi;
 
-    public AvvisoRecyclerViewAdapter(Context context, ArrayList<Avviso> avvisi, RecyclerViewInterface recyclerViewInterfaceAvviso){
+    public AvvisoRecyclerViewAdapter(Context context, ArrayList<Avviso> avvisi, RecyclerViewAvvisoInterface recyclerViewInterfaceAvviso){
         this.context = context;
         this.avvisi = avvisi;
         this.recyclerViewInterfaceAvviso = recyclerViewInterfaceAvviso;
@@ -62,14 +62,14 @@ public class AvvisoRecyclerViewAdapter extends RecyclerView.Adapter<AvvisoRecycl
         ImageView imageViewAvvisi;
         TextView autoreAvviso, oggettoAvviso, corpoAvviso, dataAvviso, ruoloAutoreAvviso;
 
-        public MyViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterfaceAvviso) {
+        public MyViewHolder(@NonNull View itemView, RecyclerViewAvvisoInterface recyclerViewInterfaceAvviso) {
             super(itemView);
 
             imageViewAvvisi = itemView.findViewById(R.id.imageViewNotifica);
             autoreAvviso = itemView.findViewById(R.id.textViewAutoreAvviso);
             oggettoAvviso = itemView.findViewById(R.id.textViewOggettoAvviso);
-            corpoAvviso = itemView.findViewById(R.id.textViewCorpoAvviso);
-            dataAvviso = itemView.findViewById(R.id.textViewDataAvviso);
+            corpoAvviso = itemView.findViewById(R.id.textViewAnteprimaAvviso);
+            dataAvviso = itemView.findViewById(R.id.textViewDataCreazioneAvviso);
             ruoloAutoreAvviso = itemView.findViewById(R.id.textViewRuoloAutoreAvviso);
 
             itemView.setOnClickListener(new View.OnClickListener() {

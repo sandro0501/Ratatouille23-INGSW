@@ -12,12 +12,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,7 +25,7 @@ import com.example.ratatouille23.R;
 import com.example.ratatouille23.Models.Avviso;
 import java.util.ArrayList;
 
-public class BachecaFragment extends Fragment implements RecyclerViewInterface {
+public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInterface {
 
     private ArrayList<Avviso> avvisiUtente;
     private RecyclerView recyclerView;
@@ -162,8 +160,8 @@ public class BachecaFragment extends Fragment implements RecyclerViewInterface {
         imageViewAvvisi = getView().findViewById(R.id.imageViewNotifica);
         autoreAvviso = getView().findViewById(R.id.textViewAutoreAvviso);
         oggettoAvviso = getView().findViewById(R.id.textViewOggettoAvviso);
-        corpoAvviso = getView().findViewById(R.id.textViewCorpoAvviso);
-        dataAvviso = getView().findViewById(R.id.textViewDataAvviso);
+        corpoAvviso = getView().findViewById(R.id.textViewAnteprimaAvviso);
+        dataAvviso = getView().findViewById(R.id.textViewDataCreazioneAvviso);
         ruoloAutoreAvviso = getView().findViewById(R.id.textViewRuoloAutoreAvviso);
         imageViewNascondiAvviso = getView().findViewById(R.id.imageViewNascondiAvviso);
 
