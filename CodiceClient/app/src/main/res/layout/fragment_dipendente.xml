@@ -267,12 +267,12 @@
 
             <Spinner
                 android:id="@+id/spinnerRuoliDipendente"
-                android:layout_width="657dp"
-                android:layout_height="37dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
                 android:layout_marginBottom="40dp"
                 android:backgroundTint="#000000"
-                android:popupBackground="@color/white"
+                android:popupBackground="#F5EDED"
                 app:layout_constraintBottom_toTopOf="@+id/buttonConfermaRegistraDipendente"
                 app:layout_constraintEnd_toEndOf="@+id/constraintLayout9"
                 app:layout_constraintStart_toStartOf="@+id/constraintLayout9"
