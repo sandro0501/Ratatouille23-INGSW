@@ -22,7 +22,6 @@ public class AvvisoRecyclerViewAdapter extends RecyclerView.Adapter<AvvisoRecycl
     private Context context;
     private ArrayList<Avviso> avvisi;
 
-    public AvvisoRecyclerViewAdapter(Context context, ArrayList<Avviso> avvisi, RecyclerViewInterface recyclerViewInterfaceAvviso)
     public AvvisoRecyclerViewAdapter(Context context, ArrayList<Avviso> avvisi, RecyclerViewAvvisoInterface recyclerViewInterfaceAvviso){
         this.context = context;
         this.avvisi = avvisi;
@@ -63,7 +62,6 @@ public class AvvisoRecyclerViewAdapter extends RecyclerView.Adapter<AvvisoRecycl
         ImageView imageViewAvvisi;
         TextView autoreAvviso, oggettoAvviso, corpoAvviso, dataAvviso, ruoloAutoreAvviso;
 
-        public MyViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterfaceAvviso) 
         public MyViewHolder(@NonNull View itemView, RecyclerViewAvvisoInterface recyclerViewInterfaceAvviso) {
             super(itemView);
 
