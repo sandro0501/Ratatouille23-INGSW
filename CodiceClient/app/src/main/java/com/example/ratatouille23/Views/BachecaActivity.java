@@ -13,12 +13,21 @@ import androidx.navigation.ui.NavigationUI;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.example.ratatouille23.Controller;
+import com.example.ratatouille23.Models.Addetto;
+import com.example.ratatouille23.Models.Amministratore;
+import com.example.ratatouille23.Models.Gestore;
+import com.example.ratatouille23.Models.Utente;
+import com.example.ratatouille23.Models.ruoliPersonale;
 import com.example.ratatouille23.R;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
 
 
 public class BachecaActivity extends AppCompatActivity {
@@ -26,6 +35,7 @@ public class BachecaActivity extends AppCompatActivity {
     private DrawerLayout menuDrawerLayout;
     private ImageView iconaMenu;
     private NavigationView menu;
+
 
 
     @Override
@@ -58,6 +68,54 @@ public class BachecaActivity extends AppCompatActivity {
         NavController controllerMenu = hostFragment.getNavController();
         NavigationUI.setupWithNavController(menu, controllerMenu);
 
+        //simulazione login utente
+        ArrayList<Utente> utenti = new ArrayList<Utente>();
+        Utente u = new Addetto("Genoveffa", "Arcobaleno", "genoveffa@mail.it", ruoliPersonale.addettoAllaCucina);
+        //Utente u = new Amministratore("Mario", "Rossi", "mario@mail.it", false);
+        utenti.add(u);
+
+
+
+        for (Utente utente : utenti) {
+            if (utente instanceof Addetto){
+                if(((Addetto) utente).getRuolo().equals(ruoliPersonale.addettoAllaCucina)){
+                    MenuItem itemMenuGestioneRistorante = menu.getMenu().findItem(R.id.opzioneMenuGestisciRistorante);
+                    itemMenuGestioneRistorante.setEnabled(false);
+                    itemMenuGestioneRistorante.setVisible(false);
+
+                    MenuItem itemMenuRegistraDipendente = menu.getMenu().findItem(R.id.opzioneMenuRegistraDipendente);
+                    itemMenuRegistraDipendente.setEnabled(false);
+                    itemMenuRegistraDipendente.setVisible(false);
+
+                    MenuItem itemMenuRegistraOrdini = menu.getMenu().findItem(R.id.opzioneMenuRegistraOrdini);
+                    itemMenuRegistraOrdini.setEnabled(false);
+                    itemMenuRegistraOrdini.setVisible(false);
+                }
+                else if (((Addetto) utente).getRuolo().equals(ruoliPersonale.addettoAlServizio)){
+                    MenuItem itemMenuGestioneRistorante = menu.getMenu().findItem(R.id.opzioneMenuGestisciRistorante);
+                    itemMenuGestioneRistorante.setEnabled(false);
+                    itemMenuGestioneRistorante.setVisible(false);
+
+                    MenuItem itemMenuRegistraDipendente = menu.getMenu().findItem(R.id.opzioneMenuRegistraDipendente);
+                    itemMenuRegistraDipendente.setEnabled(false);
+                    itemMenuRegistraDipendente.setVisible(false);
+
+                    MenuItem itemMenuGestisciInventario = menu.getMenu().findItem(R.id.opzioneMenuGestisciInventario);
+                    itemMenuGestisciInventario.setEnabled(false);
+                    itemMenuGestisciInventario.setVisible(false);
+                }
+            }
+            else if (utente instanceof Amministratore){
+                MenuItem itemMenuGestisciInventario = menu.getMenu().findItem(R.id.opzioneMenuGestisciInventario);
+                itemMenuGestisciInventario.setEnabled(false);
+                itemMenuGestisciInventario.setVisible(false);
+
+                MenuItem itemMenuRegistraOrdini = menu.getMenu().findItem(R.id.opzioneMenuRegistraOrdini);
+                itemMenuRegistraOrdini.setEnabled(false);
+                itemMenuRegistraOrdini.setVisible(false);
+
+            }
+        }
     }
 
     private void iconaMenuPremuta(DrawerLayout menuDrawerLayout, ImageView iconaMenu) {

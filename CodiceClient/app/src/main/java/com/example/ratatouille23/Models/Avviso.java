@@ -4,12 +4,12 @@ import java.util.Date;
 
 public class Avviso {
 
-    String oggetto;
-    String corpo;
-    String dataCreazione;
-    String autore;
-    int iconaAvviso;
-    String ruoloAutoreAvviso;
+    private String oggetto;
+    private String corpo;
+    private String dataCreazione;
+    private String autore;
+    private int iconaAvviso;
+    private String ruoloAutoreAvviso;
 
     public Avviso(String oggetto, String corpo, String dataCreazione, String autore, int iconaAvviso, String ruoloAutoreAvviso) {
         this.oggetto = oggetto;

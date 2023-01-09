@@ -26,6 +26,20 @@
             android:icon="@drawable/icon_menu"
             android:iconTint="#5F5959"
             android:title="Visualizza il menù" />
+
+        <item
+            android:id="@+id/opzioneMenuGestisciInventario"
+            android:icon="@drawable/icon_inventario"
+            android:iconTint="#5F5959"
+            android:title="Gestisci l'inventario" />
+
+        <item
+            android:id="@+id/opzioneMenuRegistraOrdini"
+            android:icon="@drawable/icon_food"
+            android:iconTint="#5F5959"
+            android:title="Registra ordini" />
+
+
     </group>
 
 

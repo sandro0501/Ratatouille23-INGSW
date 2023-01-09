@@ -41,5 +41,48 @@
         <item>01/01</item>
     </string-array>
 
+    <string-array name="nome_prodotto">
+        <item>Pomodori pelati</item>
+        <item>Penne rigate</item>
+        <item>Peperoncino secco</item>
+        <item>Bistecca</item>
+        <item>Insalata verde</item>
+    </string-array>
+
+    <string-array name="descrizione_prodotto">
+        <item>Pelati marca Mutti. Provenienza italia.</item>
+        <item>Penne rigate marca Barilla. N.72, pasta corta di semola di grano duro.</item>
+        <item>Peperoncino secco a scaglie piccante frantumato.</item>
+        <item>Carne bovina razza chianina. Singola fetta.</item>
+        <item>Provenienza italia. Singolo pezzo.</item>
+    </string-array>
+
+    <string-array name="unita_prodotto">
+        <item>grammi</item>
+        <item>grammi</item>
+        <item>grammi</item>
+        <item>grammi</item>
+        <item>pezzi</item>
+    </string-array>
+
+    <string-array name="costoacq_prodotto">
+        <item>€4,58 / kg.</item>
+        <item>€2,10 / kg.</item>
+        <item>€16,00 / kg.</item>
+        <item>€50,00 / kg.</item>
+        <item>€1,00 / pz.</item>
+    </string-array>
+
+    <string-array name="quantita_prodotto">
+        <item>400</item>
+        <item>400</item>
+        <item>200</item>
+        <item>300</item>
+        <item>20</item>
+    </string-array>
+
+
+
+
 
 </resources>
