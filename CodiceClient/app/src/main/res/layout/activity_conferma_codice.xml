@@ -167,7 +167,7 @@
             <EditText
                 android:id="@+id/editTextPassword"
                 android:layout_width="0dp"
-                android:layout_height="48dp"
+                android:layout_height="0dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
                 android:backgroundTint="#5F5959"
@@ -212,7 +212,7 @@
             <EditText
                 android:id="@+id/editTextConfermaPassword"
                 android:layout_width="0dp"
-                android:layout_height="46dp"
+                android:layout_height="0dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
                 android:backgroundTint="#5F5959"
@@ -268,7 +268,7 @@
             <EditText
                 android:id="@+id/editTextCodice"
                 android:layout_width="0dp"
-                android:layout_height="52dp"
+                android:layout_height="0dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:backgroundTint="#5F5959"

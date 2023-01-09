@@ -8,11 +8,11 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,6 +31,12 @@ public class ProfiloFragment extends Fragment {
     private TextView textViewPassword;
     private ImageView iconaModificaPassword;
     private Button bottoneLogout;
+    private ImageView iconaModificaEmail;
+    private EditText editTextEmail;
+    private TextView textViewNomeContenuto;
+    private TextView textViewRuoloContenuto;
+    private String emailCorrente;
+
 
     public ProfiloFragment() {
         // Required empty public constructor
@@ -43,23 +49,43 @@ public class ProfiloFragment extends Fragment {
 
         View fragmentCorrente = inflater.inflate(R.layout.fragment_profilo, container, false);
 
-        textViewNome = fragmentCorrente.findViewById(R.id.textViewNomeProfilo);
-        textViewEmail = fragmentCorrente.findViewById(R.id.textViewEmailProfilo);
-        textViewRuolo = fragmentCorrente.findViewById(R.id.textViewRuoloProfilo);
-        textViewPassword = fragmentCorrente.findViewById(R.id.textViewPasswordProfilo);
+        textViewNome = fragmentCorrente.findViewById(R.id.textViewNomeProfiloPrompt);
+        textViewEmail = fragmentCorrente.findViewById(R.id.textViewEmailProfiloPrompt);
+        textViewRuolo = fragmentCorrente.findViewById(R.id.textViewRuoloProfiloPrompt);
+        textViewPassword = fragmentCorrente.findViewById(R.id.textViewPasswordProfiloPrompt);
         iconaModificaPassword = fragmentCorrente.findViewById(R.id.iconaModificaPasswordProfilo);
         bottoneLogout = fragmentCorrente.findViewById(R.id.bottoneLogout);
+        iconaModificaEmail = fragmentCorrente.findViewById(R.id.iconaModificaEmailProfilo);
+        editTextEmail = fragmentCorrente.findViewById(R.id.editTextEmailProfilo);
+        textViewNomeContenuto = fragmentCorrente.findViewById(R.id.textViewNomeProfilo);
+        textViewRuoloContenuto = fragmentCorrente.findViewById(R.id.textViewRuoloProfilo);
 
-        textViewNome.setText(Html.fromHtml("<b>"+textViewNome.getText()+"</b>"));
-        textViewEmail.setText(Html.fromHtml("<b>"+textViewEmail.getText()+"</b>"));
-        textViewRuolo.setText(Html.fromHtml("<b>"+textViewRuolo.getText()+"</b>"));
-        textViewPassword.setText(Html.fromHtml("<b>"+textViewPassword.getText()+"</b>"));
+        editTextEmail.setEnabled(false);
 
         iconaModificaPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(fragmentCorrente.getContext(), ModificaPasswordActivity.class);
                 startActivity(i);
+            }
+        });
+
+        iconaModificaEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (editTextEmail.isEnabled()) {
+                    iconaModificaEmail.setImageResource(R.drawable.icona_matita);
+                    editTextEmail.setEnabled(false);
+                    emailCorrente = editTextEmail.getText().toString();
+                    editTextEmail.setText(emailCorrente);
+                }
+                else {
+                    iconaModificaEmail.setImageResource(R.drawable.icona_spunta_modifica);
+                    editTextEmail.setEnabled(true);
+                    editTextEmail.requestFocus();
+                    editTextEmail.setSelection(editTextEmail.getText().length());
+                }
             }
         });
 
@@ -73,5 +99,20 @@ public class ProfiloFragment extends Fragment {
         });
 
         return fragmentCorrente;
+    }
+
+    public void onStart() {
+        super.onStart();
+        emailCorrente = editTextEmail.getText().toString();
+    }
+
+    @Override
+    public void onStop() {
+        if (editTextEmail.isEnabled()) {
+            iconaModificaEmail.setImageResource(R.drawable.icona_matita);
+            editTextEmail.setEnabled(false);
+            editTextEmail.setText(emailCorrente);
+        }
+        super.onStop();
     }
 }

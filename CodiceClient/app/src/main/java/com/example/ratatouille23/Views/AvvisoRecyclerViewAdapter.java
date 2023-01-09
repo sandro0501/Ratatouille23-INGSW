@@ -66,11 +66,11 @@ public class AvvisoRecyclerViewAdapter extends RecyclerView.Adapter<AvvisoRecycl
             super(itemView);
 
             imageViewAvvisi = itemView.findViewById(R.id.imageViewNotifica);
-            autoreAvviso = itemView.findViewById(R.id.textViewAutoreAvviso);
-            oggettoAvviso = itemView.findViewById(R.id.textViewOggettoAvviso);
+            autoreAvviso = itemView.findViewById(R.id.textViewNomeDipendenteCard);
+            oggettoAvviso = itemView.findViewById(R.id.textViewEmailDipendenteCard);
             corpoAvviso = itemView.findViewById(R.id.textViewCorpoAvviso);
             dataAvviso = itemView.findViewById(R.id.textViewDataAvviso);
-            ruoloAutoreAvviso = itemView.findViewById(R.id.textViewRuoloAutoreAvviso);
+            ruoloAutoreAvviso = itemView.findViewById(R.id.textViewRuoloDipendenteCard);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

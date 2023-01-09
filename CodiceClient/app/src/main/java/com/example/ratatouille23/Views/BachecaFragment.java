@@ -12,12 +12,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -160,11 +158,11 @@ public class BachecaFragment extends Fragment implements RecyclerViewInterface {
         TextView autoreAvviso, oggettoAvviso, corpoAvviso, dataAvviso, ruoloAutoreAvviso;
 
         imageViewAvvisi = getView().findViewById(R.id.imageViewNotifica);
-        autoreAvviso = getView().findViewById(R.id.textViewAutoreAvviso);
-        oggettoAvviso = getView().findViewById(R.id.textViewOggettoAvviso);
+        autoreAvviso = getView().findViewById(R.id.textViewNomeDipendenteCard);
+        oggettoAvviso = getView().findViewById(R.id.textViewEmailDipendenteCard);
         corpoAvviso = getView().findViewById(R.id.textViewCorpoAvviso);
         dataAvviso = getView().findViewById(R.id.textViewDataAvviso);
-        ruoloAutoreAvviso = getView().findViewById(R.id.textViewRuoloAutoreAvviso);
+        ruoloAutoreAvviso = getView().findViewById(R.id.textViewRuoloDipendenteCard);
         imageViewNascondiAvviso = getView().findViewById(R.id.imageViewNascondiAvviso);
 
         //cambia aspetto testo

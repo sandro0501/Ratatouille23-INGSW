@@ -39,7 +39,7 @@
                 app:srcCompat="@drawable/icon_avviso_da_vedere" />
 
             <TextView
-                android:id="@+id/textViewAutoreAvviso"
+                android:id="@+id/textViewNomeDipendenteCard"
                 android:layout_width="380dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
@@ -55,7 +55,7 @@
                 app:layout_constraintVertical_bias="0.152" />
 
             <TextView
-                android:id="@+id/textViewRuoloAutoreAvviso"
+                android:id="@+id/textViewRuoloDipendenteCard"
                 android:layout_width="215dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="34dp"
@@ -64,14 +64,14 @@
                 android:textColor="@color/black"
                 android:textStyle="italic"
                 app:layout_constraintBottom_toTopOf="@+id/textViewCorpoAvviso"
-                app:layout_constraintEnd_toEndOf="@+id/textViewAutoreAvviso"
+                app:layout_constraintEnd_toEndOf="@+id/textViewNomeDipendenteCard"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/textViewAutoreAvviso"
-                app:layout_constraintTop_toBottomOf="@+id/textViewAutoreAvviso"
+                app:layout_constraintStart_toStartOf="@+id/textViewNomeDipendenteCard"
+                app:layout_constraintTop_toBottomOf="@+id/textViewNomeDipendenteCard"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
-                android:id="@+id/textViewOggettoAvviso"
+                android:id="@+id/textViewEmailDipendenteCard"
                 android:layout_width="450dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -80,10 +80,10 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/textViewCorpoAvviso"
-                app:layout_constraintEnd_toEndOf="@+id/textViewRuoloAutoreAvviso"
+                app:layout_constraintEnd_toEndOf="@+id/textViewRuoloDipendenteCard"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/textViewRuoloAutoreAvviso"
-                app:layout_constraintTop_toBottomOf="@+id/textViewRuoloAutoreAvviso"
+                app:layout_constraintStart_toStartOf="@+id/textViewRuoloDipendenteCard"
+                app:layout_constraintTop_toBottomOf="@+id/textViewRuoloDipendenteCard"
                 app:layout_constraintVertical_bias="1.0" />
 
             <TextView
@@ -95,9 +95,9 @@
                 android:text="Anteprima avviso..."
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/textViewOggettoAvviso"
+                app:layout_constraintEnd_toEndOf="@+id/textViewEmailDipendenteCard"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/textViewOggettoAvviso" />
+                app:layout_constraintStart_toStartOf="@+id/textViewEmailDipendenteCard" />
 
             <TextView
                 android:id="@+id/textViewDataAvviso"
@@ -109,7 +109,7 @@
                 android:text="01/01"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintBottom_toTopOf="@+id/textViewOggettoAvviso"
+                app:layout_constraintBottom_toTopOf="@+id/textViewEmailDipendenteCard"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.941" />
@@ -123,7 +123,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.71"
-                app:layout_constraintStart_toEndOf="@+id/textViewOggettoAvviso"
+                app:layout_constraintStart_toEndOf="@+id/textViewEmailDipendenteCard"
                 app:layout_constraintTop_toBottomOf="@+id/textViewDataAvviso"
                 app:layout_constraintVertical_bias="0.222"
                 app:srcCompat="@drawable/icon_invisible_eye" />

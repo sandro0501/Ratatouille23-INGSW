@@ -23,7 +23,6 @@ public class ModificaPasswordActivity extends AppCompatActivity {
     private EditText editTextVecchiaPassword;
     private EditText editTextNuovaPassword;
     private EditText editTextConfermaNuovaPassword;
-    private ImageView iconaFrecciaIndietro;
     private Button bottoneModificaPassword;
     private Button bottoneAnnulla;
 
@@ -35,7 +34,6 @@ public class ModificaPasswordActivity extends AppCompatActivity {
         editTextVecchiaPassword = findViewById(R.id.editTextVecchiaPassword);
         editTextNuovaPassword = findViewById(R.id.editTextNuovaPassword);
         editTextConfermaNuovaPassword = findViewById(R.id.editTextConfermaNuovaPassword);
-        iconaFrecciaIndietro = findViewById(R.id.iconaFrecciaIndietroModificaPassword);
         bottoneModificaPassword = findViewById(R.id.bottoneResettaPassword);
         bottoneAnnulla = findViewById(R.id.bottoneAnnullaModificaPassword);
 
@@ -47,13 +45,15 @@ public class ModificaPasswordActivity extends AppCompatActivity {
                 String nuovaPassword = editTextNuovaPassword.getText().toString();
                 String confermaPassword = editTextConfermaNuovaPassword.getText().toString();
                 Boolean passwordModificata;
+                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
 
                 if (!vecchiaPassword.isEmpty() && !nuovaPassword.isEmpty() && !confermaPassword.isEmpty()) {
                     if (nuovaPassword.equals(confermaPassword)){
                         if (!vecchiaPassword.equals(nuovaPassword)) {
                             passwordModificata = Controller.getInstance().bottoneModificaPasswordPremuto(vecchiaPassword, nuovaPassword);
                             if (passwordModificata) {
-                                finish();
+                                i.addFlags(FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(i);
                             } else
                                 Controller.getInstance().mostraAlertErrore(ModificaPasswordActivity.this, "Errore!", "La password non è stata " +
                                         "modificata correttamente!");

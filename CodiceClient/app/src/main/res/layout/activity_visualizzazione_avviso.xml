@@ -75,30 +75,31 @@
             android:id="@+id/textViewVisualizzazioneAvvisoData"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="584dp"
-            android:layout_marginTop="124dp"
             android:fontFamily="@font/verdanab"
             android:text="01/01"
             android:textColor="@color/black"
             android:textSize="20sp"
 
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.194"
-            app:layout_constraintStart_toEndOf="@+id/textViewVisualizzazioneAvvisoOggetto"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@+id/textViewVisualizzazioneAvvisoOggetto"
+            app:layout_constraintEnd_toEndOf="@+id/scrollerCorpoAvviso"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/scrollerCorpoAvviso"
+            app:layout_constraintTop_toTopOf="@+id/textViewVisualizzazioneAvvisoOggetto"
+            app:layout_constraintVertical_bias="0.0" />
 
         <ScrollView
             android:id="@+id/scrollerCorpoAvviso"
-            android:layout_width="909dp"
-            android:layout_height="415dp"
+            android:layout_width="0dp"
+            android:layout_height="445dp"
+            android:layout_marginEnd="80dp"
             android:fillViewport="true"
             android:scrollbars="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.53"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewVisualizzazioneAvvisoOggetto"
-            app:layout_constraintVertical_bias="0.761">
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textViewVisualizzazioneAvvisoOggetto"
+            app:layout_constraintTop_toBottomOf="@+id/textViewVisualizzazioneAvvisoRuolo"
+            app:layout_constraintVertical_bias="0.384">
 
             <TextView
                 android:id="@+id/textViewVisualizzazioneAvvisoCorpo"

@@ -48,12 +48,13 @@
             app:layout_constraintVertical_bias="0.51">
 
             <TextView
-                android:id="@+id/textViewNomeProfilo"
+                android:id="@+id/textViewNomeProfiloPrompt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nome:"
                 android:textColor="@color/colorGrey"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.132"
@@ -62,48 +63,51 @@
                 app:layout_constraintVertical_bias="0.215" />
 
             <TextView
-                android:id="@+id/textViewRuoloProfilo"
+                android:id="@+id/textViewRuoloProfiloPrompt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:text="Ruolo:"
                 android:textColor="@color/colorGrey"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/textViewNomeProfilo"
+                app:layout_constraintEnd_toEndOf="@+id/textViewNomeProfiloPrompt"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/textViewNomeProfilo"
-                app:layout_constraintTop_toBottomOf="@+id/textViewNomeProfilo"
+                app:layout_constraintStart_toStartOf="@+id/textViewNomeProfiloPrompt"
+                app:layout_constraintTop_toBottomOf="@+id/textViewNomeProfiloPrompt"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
-                android:id="@+id/textViewEmailProfilo"
+                android:id="@+id/textViewEmailProfiloPrompt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:text="E-mail:"
                 android:textColor="@color/colorGrey"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/textViewRuoloProfilo"
+                app:layout_constraintEnd_toEndOf="@+id/textViewRuoloProfiloPrompt"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/textViewRuoloProfilo"
-                app:layout_constraintTop_toBottomOf="@+id/textViewRuoloProfilo"
+                app:layout_constraintStart_toStartOf="@+id/textViewRuoloProfiloPrompt"
+                app:layout_constraintTop_toBottomOf="@+id/textViewRuoloProfiloPrompt"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
-                android:id="@+id/textViewPasswordProfilo"
+                android:id="@+id/textViewPasswordProfiloPrompt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:text="Password:"
                 android:textColor="@color/colorGrey"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/textViewEmailProfilo"
+                app:layout_constraintEnd_toEndOf="@+id/textViewEmailProfiloPrompt"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/textViewEmailProfilo"
-                app:layout_constraintTop_toBottomOf="@+id/textViewEmailProfilo"
+                app:layout_constraintStart_toStartOf="@+id/textViewEmailProfiloPrompt"
+                app:layout_constraintTop_toBottomOf="@+id/textViewEmailProfiloPrompt"
                 app:layout_constraintVertical_bias="0.0" />
 
             <ImageView
@@ -112,11 +116,11 @@
                 android:layout_height="22dp"
                 android:layout_marginEnd="7dp"
                 android:src="@drawable/icon_credenziali"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewNomeProfilo"
-                app:layout_constraintEnd_toStartOf="@+id/textViewNomeProfilo"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewNomeProfiloPrompt"
+                app:layout_constraintEnd_toStartOf="@+id/textViewNomeProfiloPrompt"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textViewNomeProfilo"
+                app:layout_constraintTop_toTopOf="@+id/textViewNomeProfiloPrompt"
                 app:layout_constraintVertical_bias="0.0" />
 
             <ImageView
@@ -125,11 +129,11 @@
                 android:layout_height="22dp"
                 android:layout_marginEnd="7dp"
                 android:src="@drawable/icon_ruolo"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewRuoloProfilo"
-                app:layout_constraintEnd_toStartOf="@+id/textViewRuoloProfilo"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewRuoloProfiloPrompt"
+                app:layout_constraintEnd_toStartOf="@+id/textViewRuoloProfiloPrompt"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textViewRuoloProfilo" />
+                app:layout_constraintTop_toTopOf="@+id/textViewRuoloProfiloPrompt" />
 
             <ImageView
                 android:id="@+id/iconaEmailProfilo"
@@ -137,11 +141,11 @@
                 android:layout_height="22dp"
                 android:layout_marginEnd="7dp"
                 android:src="@drawable/icon_profile"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewEmailProfilo"
-                app:layout_constraintEnd_toStartOf="@+id/textViewEmailProfilo"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewEmailProfiloPrompt"
+                app:layout_constraintEnd_toStartOf="@+id/textViewEmailProfiloPrompt"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textViewEmailProfilo" />
+                app:layout_constraintTop_toTopOf="@+id/textViewEmailProfiloPrompt" />
 
             <ImageView
                 android:id="@+id/iconaPasswordProfilo"
@@ -149,11 +153,11 @@
                 android:layout_height="22dp"
                 android:layout_marginEnd="7dp"
                 android:src="@drawable/icon_password"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewPasswordProfilo"
-                app:layout_constraintEnd_toStartOf="@+id/textViewPasswordProfilo"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewPasswordProfiloPrompt"
+                app:layout_constraintEnd_toStartOf="@+id/textViewPasswordProfiloPrompt"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textViewPasswordProfilo" />
+                app:layout_constraintTop_toTopOf="@+id/textViewPasswordProfiloPrompt" />
 
             <ImageView
                 android:id="@+id/iconaModificaPasswordProfilo"
@@ -161,11 +165,73 @@
                 android:layout_height="22dp"
                 android:layout_marginStart="20dp"
                 android:src="@drawable/icona_matita"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewPasswordProfilo"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewPasswordProfiloPrompt"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/textViewPasswordProfilo"
-                app:layout_constraintTop_toTopOf="@+id/textViewPasswordProfilo" />
+                app:layout_constraintStart_toEndOf="@+id/textViewPasswordProfiloPrompt"
+                app:layout_constraintTop_toTopOf="@+id/textViewPasswordProfiloPrompt" />
+
+            <ImageView
+                android:id="@+id/iconaModificaEmailProfilo"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginStart="20dp"
+                android:src="@drawable/icona_matita"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewEmailProfiloPrompt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/editTextEmailProfilo"
+                app:layout_constraintTop_toTopOf="@+id/textViewEmailProfiloPrompt" />
+
+            <EditText
+                android:id="@+id/editTextEmailProfilo"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_marginStart="7dp"
+                android:layout_marginEnd="7dp"
+                android:background="@android:color/transparent"
+                android:inputType="textEmailAddress"
+                android:backgroundTint="#5F5959"
+                android:maxWidth="600dp"
+                android:singleLine="true"
+                android:text="TextView"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:textColor="@color/colorGrey"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewEmailProfiloPrompt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/textViewEmailProfiloPrompt"
+                app:layout_constraintTop_toTopOf="@+id/textViewEmailProfiloPrompt" />
+
+            <TextView
+                android:id="@+id/textViewRuoloProfilo"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="7dp"
+                android:text="TextView"
+                android:textColor="@color/colorGrey"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewRuoloProfiloPrompt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/textViewRuoloProfiloPrompt"
+                app:layout_constraintTop_toTopOf="@+id/textViewRuoloProfiloPrompt" />
+
+            <TextView
+                android:id="@+id/textViewNomeProfilo"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="7dp"
+                android:text="TextView"
+                android:textColor="@color/colorGrey"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewNomeProfiloPrompt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/textViewNomeProfiloPrompt"
+                app:layout_constraintTop_toTopOf="@+id/textViewNomeProfiloPrompt" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatButton

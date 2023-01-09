@@ -29,11 +29,6 @@ public class DipendenteFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private Spinner sceltaRuoli;
-    private String ruoli [];
-    private Button bottoneAnnulla;
-    private Button bottoneRegistraDipendente;
-
 
     public DipendenteFragment() {
         // Required empty public constructor
@@ -72,14 +67,6 @@ public class DipendenteFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View fragmentCorrente = inflater.inflate(R.layout.fragment_dipendente, container, false);
-        sceltaRuoli = (Spinner)fragmentCorrente.findViewById(R.id.spinnerRuoliDipendente);
-        bottoneAnnulla = fragmentCorrente.findViewById(R.id.buttonAnnullaRegistraDipendente);
-        bottoneRegistraDipendente = fragmentCorrente.findViewById(R.id.buttonConfermaRegistraDipendente);
-
-        ruoli = new String[] {"Amministratore", "Supervisore", "Addetto alla cucina", "Addetto al servizio"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(fragmentCorrente.getContext(), R.layout.spinner_layout, ruoli);
-        adapter.setDropDownViewResource(R.layout.spinner_item_layout);
-        sceltaRuoli.setAdapter(adapter);
 
 
         return fragmentCorrente;
