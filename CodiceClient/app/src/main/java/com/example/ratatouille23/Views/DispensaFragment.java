@@ -2,6 +2,8 @@ package com.example.ratatouille23.Views;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -135,7 +138,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
     }
 
     private void mostraDialogInserimentoProdotto() {
-        final View viewAggiungiProdotto = getLayoutInflater().inflate(R.layout.layuot_aggiungi_prodotto_dialog, null);
+        final View viewAggiungiProdotto = getLayoutInflater().inflate(R.layout.layout_aggiungi_prodotto_dialog, null);
 
         builderDialogAggiungiProdotto = new AlertDialog.Builder(getContext());
         builderDialogAggiungiProdotto.setView(viewAggiungiProdotto);
@@ -170,6 +173,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
         });
 
         dialogAggiungiProdotto = builderDialogAggiungiProdotto.create();
+        dialogAggiungiProdotto.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
         dialogAggiungiProdotto.show();
     }
 

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="10dp"
+    android:paddingBottom="30dp"
+    android:paddingRight="50dp"
+    android:paddingLeft="50dp"
+    android:layout_marginLeft="20dip"
+    android:layout_marginRight="20dip"
+    android:orientation="horizontal"
+    android:clipToPadding="false"
+    android:background="@drawable/dialog_bg">
+
+    <TextView
+        android:id="@+id/textViewNomeRistorantePromptModifica"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nome:"
+        android:textColor="@color/colorGrey"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.132"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.215" />
+
+    <TextView
+        android:id="@+id/textViewNumeroRistorantePromptModifica"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Ruolo:"
+        android:textColor="@color/colorGrey"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textViewNomeRistorantePromptModifica"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewNomeRistorantePromptModifica"
+        app:layout_constraintTop_toBottomOf="@+id/textViewIndirizzoRistorantePromptModifica"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textViewIndirizzoRistorantePromptModifica"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="E-mail:"
+        android:textColor="@color/colorGrey"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textViewNumeroRistorantePromptModifica"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewNumeroRistorantePromptModifica"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNomeRistorantePromptModifica"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+    <ImageView
+        android:id="@+id/iconaNomeRistorante"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginEnd="7dp"
+        android:src="@drawable/icon_credenziali"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewNomeRistorantePromptModifica"
+        app:layout_constraintEnd_toStartOf="@+id/textViewNomeRistorantePromptModifica"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewNomeRistorantePromptModifica"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/iconaNumeroRistorante"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginEnd="7dp"
+        android:src="@drawable/icon_ruolo"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewNumeroRistorantePromptModifica"
+        app:layout_constraintEnd_toStartOf="@+id/textViewNumeroRistorantePromptModifica"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewNumeroRistorantePromptModifica" />
+
+    <ImageView
+        android:id="@+id/iconaIndirizzoRistorante"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginEnd="7dp"
+        android:src="@drawable/icon_profile"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewIndirizzoRistorantePromptModifica"
+        app:layout_constraintEnd_toStartOf="@+id/textViewIndirizzoRistorantePromptModifica"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewIndirizzoRistorantePromptModifica" />
+
+    <EditText
+        android:id="@+id/textViewIndirizzoRistoranteVisualizza"
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginEnd="7dp"
+        android:background="@android:color/transparent"
+        android:inputType="textEmailAddress"
+        android:backgroundTint="#5F5959"
+        android:maxWidth="600dp"
+        android:singleLine="true"
+        android:text="TextView"
+        android:textCursorDrawable="@drawable/color_cursor"
+        android:textColor="@color/colorGrey"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewIndirizzoRistorantePromptModifica"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textViewIndirizzoRistorantePromptModifica"
+        app:layout_constraintTop_toTopOf="@+id/textViewIndirizzoRistorantePromptModifica" />
+
+    <TextView
+        android:id="@+id/textViewNomeRistoranteVisualizza"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="7dp"
+        android:text="TextView"
+        android:textColor="@color/colorGrey"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewNomeRistorantePromptModifica"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textViewNomeRistorantePromptModifica"
+        app:layout_constraintTop_toTopOf="@+id/textViewNomeRistorantePromptModifica" />
+
+    <Spinner
+        android:id="@+id/spinnerRuoliDipendenteVisualizza"
+        android:layout_width="404dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="7dp"
+        android:backgroundTint="#000000"
+        android:popupBackground="#F5EDED"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewNumeroRistorantePromptModifica"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textViewNumeroRistorantePromptModifica"
+        app:layout_constraintTop_toTopOf="@+id/textViewNumeroRistorantePromptModifica" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonLicenziaDipendente"
+        android:layout_width="180dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/login_box_border"
+        android:backgroundTint="#ff0000"
+        android:fontFamily="@font/verdana_font"
+        android:text="Licenzia"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/spinnerRuoliDipendenteVisualizza"
+        app:layout_constraintStart_toStartOf="@+id/iconaNumeroRistorante"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerRuoliDipendenteVisualizza"
+        app:layout_constraintVertical_bias="0.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import com.example.ratatouille23.Controller;
 import com.example.ratatouille23.Models.Addetto;
 import com.example.ratatouille23.Models.Amministratore;
+import com.example.ratatouille23.Models.Supervisore;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Models.ruoliPersonale;
 import com.example.ratatouille23.R;
@@ -60,7 +61,7 @@ public class BachecaActivity extends AppCompatActivity {
         NavHostFragment hostFragment =(NavHostFragment)getSupportFragmentManager().findFragmentById(R.id.navHostFragment);
         NavController controllerMenu = hostFragment.getNavController();
         NavigationUI.setupWithNavController(menu, controllerMenu);
-        Utente u = new Addetto("Genoveffa", "Arcobaleno", "genoveffa@mail.it", ruoliPersonale.addettoAllaCucina);
+        Utente u = new Amministratore("Genoveffa", "Arcobaleno", "genoveffa@mail.it", true);
 
         //simulazione login utente
             if (u.getRuoloUtente().equals("Addetto alla cucina")){
@@ -98,6 +99,19 @@ public class BachecaActivity extends AppCompatActivity {
                 itemMenuRegistraOrdini.setEnabled(false);
                 itemMenuRegistraOrdini.setVisible(false);
 
+            }
+            else {
+                MenuItem itemMenuRegistraOrdini = menu.getMenu().findItem(R.id.opzioneMenuRegistraOrdini);
+                itemMenuRegistraOrdini.setEnabled(false);
+                itemMenuRegistraOrdini.setVisible(false);
+
+                MenuItem itemMenuGestioneRistorante = menu.getMenu().findItem(R.id.opzioneMenuGestisciRistorante);
+                itemMenuGestioneRistorante.setEnabled(false);
+                itemMenuGestioneRistorante.setVisible(false);
+
+                MenuItem itemMenuRegistraDipendente = menu.getMenu().findItem(R.id.opzioneMenuGestisciDipendenti);
+                itemMenuRegistraDipendente.setEnabled(false);
+                itemMenuRegistraDipendente.setVisible(false);
             }
     }
 

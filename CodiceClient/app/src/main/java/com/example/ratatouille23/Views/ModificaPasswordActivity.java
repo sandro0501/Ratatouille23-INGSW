@@ -6,7 +6,6 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -31,7 +30,7 @@ public class ModificaPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modifica_password);
 
-        editTextVecchiaPassword = findViewById(R.id.editTextVecchiaPassword);
+        editTextVecchiaPassword = findViewById(R.id.editTextCittaRistoranteModifica);
         editTextNuovaPassword = findViewById(R.id.editTextNuovaPassword);
         editTextConfermaNuovaPassword = findViewById(R.id.editTextConfermaNuovaPassword);
         bottoneModificaPassword = findViewById(R.id.bottoneResettaPassword);

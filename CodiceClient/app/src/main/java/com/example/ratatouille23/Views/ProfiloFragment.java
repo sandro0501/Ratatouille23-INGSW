@@ -49,16 +49,16 @@ public class ProfiloFragment extends Fragment {
 
         View fragmentCorrente = inflater.inflate(R.layout.fragment_profilo, container, false);
 
-        textViewNome = fragmentCorrente.findViewById(R.id.textViewNomeProfiloPrompt);
-        textViewEmail = fragmentCorrente.findViewById(R.id.textViewEmailProfiloPrompt);
-        textViewRuolo = fragmentCorrente.findViewById(R.id.textViewRuoloProfiloPrompt);
-        textViewPassword = fragmentCorrente.findViewById(R.id.textViewPasswordProfiloPrompt);
+        textViewNome = fragmentCorrente.findViewById(R.id.textViewNomeRistorantePromptModifica);
+        textViewEmail = fragmentCorrente.findViewById(R.id.textViewIndirizzoRistorantePromptModifica);
+        textViewRuolo = fragmentCorrente.findViewById(R.id.textViewNumeroRistorantePromptModifica);
+        textViewPassword = fragmentCorrente.findViewById(R.id.textViewTuristicoRistoranteModifica);
         iconaModificaPassword = fragmentCorrente.findViewById(R.id.iconaModificaPasswordProfilo);
-        bottoneLogout = fragmentCorrente.findViewById(R.id.bottoneLogout);
+        bottoneLogout = fragmentCorrente.findViewById(R.id.bottoneAnnullaModificaRistorante);
         iconaModificaEmail = fragmentCorrente.findViewById(R.id.iconaModificaEmailProfilo);
-        editTextEmail = fragmentCorrente.findViewById(R.id.editTextEmailProfilo);
-        textViewNomeContenuto = fragmentCorrente.findViewById(R.id.textViewNomeProfilo);
-        textViewRuoloContenuto = fragmentCorrente.findViewById(R.id.textViewRuoloProfilo);
+        editTextEmail = fragmentCorrente.findViewById(R.id.textViewIndirizzoRistoranteVisualizza);
+        textViewNomeContenuto = fragmentCorrente.findViewById(R.id.textViewNomeRistoranteVisualizza);
+        textViewRuoloContenuto = fragmentCorrente.findViewById(R.id.textViewNumeroRistoranteVisualizza);
 
         editTextEmail.setEnabled(false);
 
