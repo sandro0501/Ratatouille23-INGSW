@@ -60,38 +60,36 @@ public class BachecaActivity extends AppCompatActivity {
         NavHostFragment hostFragment =(NavHostFragment)getSupportFragmentManager().findFragmentById(R.id.navHostFragment);
         NavController controllerMenu = hostFragment.getNavController();
         NavigationUI.setupWithNavController(menu, controllerMenu);
+        Utente u = new Addetto("Genoveffa", "Arcobaleno", "genoveffa@mail.it", ruoliPersonale.addettoAllaCucina);
 
         //simulazione login utente
-        utenti.add(u);
-            if (utenteLoggato instanceof Addetto){
-                if(((Addetto) utenteLoggato).getRuolo().equals(ruoliPersonale.addettoAllaCucina)){
-                    MenuItem itemMenuGestioneRistorante = menu.getMenu().findItem(R.id.opzioneMenuGestisciRistorante);
-                    itemMenuGestioneRistorante.setEnabled(false);
-                    itemMenuGestioneRistorante.setVisible(false);
+            if (u.getRuoloUtente().equals("Addetto alla cucina")){
+                MenuItem itemMenuGestioneRistorante = menu.getMenu().findItem(R.id.opzioneMenuGestisciRistorante);
+                itemMenuGestioneRistorante.setEnabled(false);
+                itemMenuGestioneRistorante.setVisible(false);
 
-                    MenuItem itemMenuRegistraDipendente = menu.getMenu().findItem(R.id.opzioneMenuGestisciDipendenti);
-                    itemMenuRegistraDipendente.setEnabled(false);
-                    itemMenuRegistraDipendente.setVisible(false);
+                MenuItem itemMenuRegistraDipendente = menu.getMenu().findItem(R.id.opzioneMenuGestisciDipendenti);
+                itemMenuRegistraDipendente.setEnabled(false);
+                itemMenuRegistraDipendente.setVisible(false);
 
-                    MenuItem itemMenuRegistraOrdini = menu.getMenu().findItem(R.id.opzioneMenuRegistraOrdini);
-                    itemMenuRegistraOrdini.setEnabled(false);
-                    itemMenuRegistraOrdini.setVisible(false);
-                }
-                else if (((Addetto) utenteLoggato).getRuolo().equals(ruoliPersonale.addettoAlServizio)){
-                    MenuItem itemMenuGestioneRistorante = menu.getMenu().findItem(R.id.opzioneMenuGestisciRistorante);
-                    itemMenuGestioneRistorante.setEnabled(false);
-                    itemMenuGestioneRistorante.setVisible(false);
-
-                    MenuItem itemMenuRegistraDipendente = menu.getMenu().findItem(R.id.opzioneMenuGestisciDipendenti);
-                    itemMenuRegistraDipendente.setEnabled(false);
-                    itemMenuRegistraDipendente.setVisible(false);
-
-                    MenuItem itemMenuGestisciInventario = menu.getMenu().findItem(R.id.opzioneMenuGestisciInventario);
-                    itemMenuGestisciInventario.setEnabled(false);
-                    itemMenuGestisciInventario.setVisible(false);
-                }
+                MenuItem itemMenuRegistraOrdini = menu.getMenu().findItem(R.id.opzioneMenuRegistraOrdini);
+                itemMenuRegistraOrdini.setEnabled(false);
+                itemMenuRegistraOrdini.setVisible(false);
             }
-            else if (utenteLoggato instanceof Amministratore){
+            else if (u.getRuoloUtente().equals("Addetto al servizio")){
+                MenuItem itemMenuGestioneRistorante = menu.getMenu().findItem(R.id.opzioneMenuGestisciRistorante);
+                itemMenuGestioneRistorante.setEnabled(false);
+                itemMenuGestioneRistorante.setVisible(false);
+
+                MenuItem itemMenuRegistraDipendente = menu.getMenu().findItem(R.id.opzioneMenuGestisciDipendenti);
+                itemMenuRegistraDipendente.setEnabled(false);
+                itemMenuRegistraDipendente.setVisible(false);
+
+                MenuItem itemMenuGestisciInventario = menu.getMenu().findItem(R.id.opzioneMenuGestisciInventario);
+                itemMenuGestisciInventario.setEnabled(false);
+                itemMenuGestisciInventario.setVisible(false);
+            }
+            else if (u.getRuoloUtente().equals("Amministratore")){
                 MenuItem itemMenuGestisciInventario = menu.getMenu().findItem(R.id.opzioneMenuGestisciInventario);
                 itemMenuGestisciInventario.setEnabled(false);
                 itemMenuGestisciInventario.setVisible(false);
