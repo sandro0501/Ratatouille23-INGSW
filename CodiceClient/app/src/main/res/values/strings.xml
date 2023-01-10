@@ -81,6 +81,14 @@
         <item>20</item>
     </string-array>
 
+    <string-array name="soglia_prodotto">
+        <item>200</item>
+        <item>300</item>
+        <item>200</item>
+        <item>200</item>
+        <item>30</item>
+    </string-array>
+
 
 
 

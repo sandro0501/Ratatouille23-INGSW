@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ConstraintLayoutVisualizzazioneProdotto"
+    android:layout_width="900dp"
+    android:layout_height="600dp"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/textViewVisualizzaProdottoTitoloDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/verdanab"
+        android:text="Dettagli prodotto"
+        android:textColor="@color/colorGrey"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.025"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.024" />
+
+    <TextView
+        android:id="@+id/textViewNomeProdottoLabelVisualizzazione"
+        android:layout_width="500dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginBottom="24dp"
+        android:fontFamily="@font/verdana_font"
+        android:text="Nome:"
+        android:textColor="#5F5959"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/textViewDescrizioneProdottoLabelVisualizzazione"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewVisualizzaProdottoTitoloDialog"
+        app:layout_constraintVertical_bias="0.58000004" />
+
+    <TextView
+        android:id="@+id/textViewDescrizioneProdottoLabelVisualizzazione"
+        android:layout_width="500dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginEnd="344dp"
+        android:fontFamily="@font/verdana_font"
+        android:text="Descrizione:"
+        android:textColor="#5F5959"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/textViewQuantitaProdottoProdottoLabelVisualizzazione"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewQuantitaProdottoProdottoLabelVisualizzazione"
+        android:layout_width="300dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="544dp"
+        android:fontFamily="@font/verdana_font"
+        android:text="Quantità:"
+        android:textColor="#5F5959"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDescrizioneProdottoLabelVisualizzazione" />
+
+    <TextView
+        android:id="@+id/textViewUnitaProdottoLabelVisualizzazione"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="544dp"
+        android:layout_marginBottom="24dp"
+        android:fontFamily="@font/verdana_font"
+        android:text="Unità di misura:"
+        android:textColor="#5F5959"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/textViewCostoAcquistoProdottoLabelVisualizzazione"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewQuantitaProdottoProdottoLabelVisualizzazione" />
+
+    <TextView
+        android:id="@+id/textViewCostoAcquistoProdottoLabelVisualizzazione"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginEnd="544dp"
+        android:layout_marginBottom="24dp"
+        android:fontFamily="@font/verdana_font"
+        android:text="Costo d'acquisto:"
+        android:textColor="#5F5959"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/textViewSogliaLimiteProdottoLabelVisualizzazione"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewSogliaLimiteProdottoLabelVisualizzazione"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="544dp"
+        android:fontFamily="@font/verdana_font"
+        android:text="Soglia limite:"
+        android:textColor="#5F5959"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCostoAcquistoProdottoLabelVisualizzazione" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bottoneAnnullaVisualizzaProdotto"
+        android:layout_width="139dp"
+        android:layout_height="48dp"
+        android:background="@drawable/login_box_border"
+        android:backgroundTint="#D1CBC1"
+        android:fontFamily="@font/verdana_font"
+        android:text="Indietro"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="16sp"
+
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSogliaLimiteProdottoLabelVisualizzazione"
+        app:layout_constraintVertical_bias="0.522" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,12 +9,13 @@ public class Prodotto {
     private double quantita;
     private double soglia;
 
-    public Prodotto(String nome, String descrizione, String unita, String costoAcquisto, double quantita) {
+    public Prodotto(String nome, String descrizione, String unita, String costoAcquisto, double quantita, double soglia) {
         this.nome = nome;
         this.descrizione = descrizione;
         this.unita = unita;
         this.costoAcquisto = costoAcquisto;
         this.quantita = quantita;
+        this.soglia = soglia;
     }
 
     public String getNome() {
@@ -40,4 +41,5 @@ public class Prodotto {
     public double getSoglia() {
         return soglia;
     }
+
 }
