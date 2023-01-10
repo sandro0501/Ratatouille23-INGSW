@@ -16,10 +16,10 @@
             android:title="Gestisci ristorante" />
 
         <item
-            android:id="@+id/opzioneMenuRegistraDipendente"
+            android:id="@+id/opzioneMenuGestisciDipendenti"
             android:icon="@drawable/icon_utenti"
             android:iconTint="#5F5959"
-            android:title="Registra dipendente" />
+            android:title="Gestisci dipendenti" />
 
         <item
             android:id="@+id/opzioneMenuVisualizzaIlMenu"

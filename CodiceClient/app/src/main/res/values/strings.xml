@@ -81,6 +81,38 @@
         <item>20</item>
     </string-array>
 
+    <string-array name="nome_dipendente_xml">
+        <item>Luigi</item>
+        <item>Vincenzo</item>
+        <item>Paolo</item>
+        <item>Giovanni</item>
+        <item>Ciro</item>
+    </string-array>
+
+    <string-array name="ruolo_dipendente_xml">
+        <item>Supervisore</item>
+        <item>Amministratore</item>
+        <item>Supervisore</item>
+        <item>Supervisore</item>
+        <item>Supervisore</item>
+    </string-array>
+
+    <string-array name="cognome_dipendente_xml">
+        <item>Rossi</item>
+        <item>Bianchi</item>
+        <item>Verdi</item>
+        <item>Esposito</item>
+        <item>Russo</item>
+    </string-array>
+
+    <string-array name="email_dipendente_xml">
+        <item>luigirossi@mailfittizia.com</item>
+        <item>vincenzobianchi@mailfittizia.com</item>
+        <item>paoloverdi@mailfittizia.com</item>
+        <item>giovanniesposito@mailfittizia.com</item>
+        <item>cirorusso@mailfittizia.com</item>
+    </string-array>
+
 
 
 

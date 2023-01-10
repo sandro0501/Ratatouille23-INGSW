@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context=".Views.DipendenteFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,34 +13,45 @@
 
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textViewTitoloGestioneDipendenti"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="571dp"
-            android:layout_marginTop="44dp"
-            android:layout_marginEnd="652dp"
-            android:layout_marginBottom="712dp"
             android:fontFamily="@font/verdana_font"
             android:text="Gestione dipendenti"
             android:textColor="@color/colorGrey"
-            android:textSize="18sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.22"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="@+id/recyclerViewDipendenti"
+            app:layout_constraintHorizontal_bias="0.12"
+            app:layout_constraintStart_toStartOf="@+id/recyclerViewDipendenti"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.050000012" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="1071dp"
-            android:layout_height="659dp"
-            android:layout_marginTop="48dp"
-            tools:listitem="@layout/layout_recyclerview_dipendente"
+            android:id="@+id/recyclerViewDipendenti"
+            android:layout_width="763dp"
+            android:layout_height="599dp"
+            android:layout_marginTop="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewTitoloGestioneDipendenti"
+            app:layout_constraintVertical_bias="0.0"
+            tools:listitem="@layout/layout_recyclerview_dipendente" />
+
+        <ImageView
+            android:id="@+id/iconaAggiungiDipendente"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewTitoloGestioneDipendenti"
+            app:layout_constraintEnd_toEndOf="@+id/recyclerViewDipendenti"
+            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintStart_toStartOf="@+id/recyclerViewDipendenti"
+            app:layout_constraintTop_toTopOf="@+id/textViewTitoloGestioneDipendenti"
+            app:srcCompat="@drawable/icon_add_utente"
+            tools:src="@tools:sample/avatars" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

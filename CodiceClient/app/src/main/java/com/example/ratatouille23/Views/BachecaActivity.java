@@ -3,17 +3,11 @@ package com.example.ratatouille23.Views;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,7 +15,6 @@ import android.widget.ImageView;
 import com.example.ratatouille23.Controller;
 import com.example.ratatouille23.Models.Addetto;
 import com.example.ratatouille23.Models.Amministratore;
-import com.example.ratatouille23.Models.Gestore;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Models.ruoliPersonale;
 import com.example.ratatouille23.R;
@@ -70,7 +63,7 @@ public class BachecaActivity extends AppCompatActivity {
 
         //simulazione login utente
         ArrayList<Utente> utenti = new ArrayList<Utente>();
-        Utente u = new Addetto("Genoveffa", "Arcobaleno", "genoveffa@mail.it", ruoliPersonale.addettoAllaCucina);
+        Utente u = new Amministratore("Genoveffa", "Arcobaleno", "genoveffa@mail.it", true);
         //Utente u = new Amministratore("Mario", "Rossi", "mario@mail.it", false);
         utenti.add(u);
 
@@ -83,7 +76,7 @@ public class BachecaActivity extends AppCompatActivity {
                     itemMenuGestioneRistorante.setEnabled(false);
                     itemMenuGestioneRistorante.setVisible(false);
 
-                    MenuItem itemMenuRegistraDipendente = menu.getMenu().findItem(R.id.opzioneMenuRegistraDipendente);
+                    MenuItem itemMenuRegistraDipendente = menu.getMenu().findItem(R.id.opzioneMenuGestisciDipendenti);
                     itemMenuRegistraDipendente.setEnabled(false);
                     itemMenuRegistraDipendente.setVisible(false);
 
@@ -96,7 +89,7 @@ public class BachecaActivity extends AppCompatActivity {
                     itemMenuGestioneRistorante.setEnabled(false);
                     itemMenuGestioneRistorante.setVisible(false);
 
-                    MenuItem itemMenuRegistraDipendente = menu.getMenu().findItem(R.id.opzioneMenuRegistraDipendente);
+                    MenuItem itemMenuRegistraDipendente = menu.getMenu().findItem(R.id.opzioneMenuGestisciDipendenti);
                     itemMenuRegistraDipendente.setEnabled(false);
                     itemMenuRegistraDipendente.setVisible(false);
 
