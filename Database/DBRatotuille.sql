@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS ristorante
 	denominazione VARCHAR(100) NOT NULL,
 	numeroTelefono VARCHAR(20) NOT NULL,
 	indirizzo VARCHAR(100) NOT NULL,
+	citta VARCHAR(100) NOT NULL,
 	turistico BOOLEAN NOT NULL,
 	urlFoto VARCHAR(200) 
 	
