@@ -62,16 +62,9 @@ public class BachecaActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(menu, controllerMenu);
 
         //simulazione login utente
-        ArrayList<Utente> utenti = new ArrayList<Utente>();
-        Utente u = new Amministratore("Genoveffa", "Arcobaleno", "genoveffa@mail.it", true);
-        //Utente u = new Amministratore("Mario", "Rossi", "mario@mail.it", false);
         utenti.add(u);
-
-
-
-        for (Utente utente : utenti) {
-            if (utente instanceof Addetto){
-                if(((Addetto) utente).getRuolo().equals(ruoliPersonale.addettoAllaCucina)){
+            if (utenteLoggato instanceof Addetto){
+                if(((Addetto) utenteLoggato).getRuolo().equals(ruoliPersonale.addettoAllaCucina)){
                     MenuItem itemMenuGestioneRistorante = menu.getMenu().findItem(R.id.opzioneMenuGestisciRistorante);
                     itemMenuGestioneRistorante.setEnabled(false);
                     itemMenuGestioneRistorante.setVisible(false);
@@ -84,7 +77,7 @@ public class BachecaActivity extends AppCompatActivity {
                     itemMenuRegistraOrdini.setEnabled(false);
                     itemMenuRegistraOrdini.setVisible(false);
                 }
-                else if (((Addetto) utente).getRuolo().equals(ruoliPersonale.addettoAlServizio)){
+                else if (((Addetto) utenteLoggato).getRuolo().equals(ruoliPersonale.addettoAlServizio)){
                     MenuItem itemMenuGestioneRistorante = menu.getMenu().findItem(R.id.opzioneMenuGestisciRistorante);
                     itemMenuGestioneRistorante.setEnabled(false);
                     itemMenuGestioneRistorante.setVisible(false);
@@ -98,7 +91,7 @@ public class BachecaActivity extends AppCompatActivity {
                     itemMenuGestisciInventario.setVisible(false);
                 }
             }
-            else if (utente instanceof Amministratore){
+            else if (utenteLoggato instanceof Amministratore){
                 MenuItem itemMenuGestisciInventario = menu.getMenu().findItem(R.id.opzioneMenuGestisciInventario);
                 itemMenuGestisciInventario.setEnabled(false);
                 itemMenuGestisciInventario.setVisible(false);
@@ -108,7 +101,6 @@ public class BachecaActivity extends AppCompatActivity {
                 itemMenuRegistraOrdini.setVisible(false);
 
             }
-        }
     }
 
     private void iconaMenuPremuta(DrawerLayout menuDrawerLayout, ImageView iconaMenu) {

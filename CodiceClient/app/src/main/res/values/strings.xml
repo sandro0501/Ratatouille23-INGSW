@@ -81,14 +81,19 @@
         <item>20</item>
     </string-array>
 
-    <string-array name="nome_dipendente_xml">
-        <item>Luigi</item>
+    <string-array name="soglia_prodotto">
+        <item>200</item>
+        <item>300</item>
+        <item>200</item>
+        <item>200</item>
+        <item>30</item>
+    </string-array>
+    <string-array name="nome_dipendente_xml">        <item>Luigi</item>
         <item>Vincenzo</item>
         <item>Paolo</item>
         <item>Giovanni</item>
         <item>Ciro</item>
     </string-array>
-
     <string-array name="ruolo_dipendente_xml">
         <item>Supervisore</item>
         <item>Amministratore</item>
@@ -112,9 +117,5 @@
         <item>giovanniesposito@mailfittizia.com</item>
         <item>cirorusso@mailfittizia.com</item>
     </string-array>
-
-
-
-
 
 </resources>
