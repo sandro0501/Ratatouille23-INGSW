@@ -149,7 +149,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
                 Controller.setIsModalitaEliminazioneProdottoAttiva(true);
                 bottoneAggiungiProdotto.setEnabled(false);
                 bottoneEliminaProdotto.setImageResource(R.drawable.icon_modalita_elimina_prodotto_attiva);
-                Toast.makeText(getContext(),"Modalit‡ eliminazione attiva",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),"Modalit√† eliminazione attiva",Toast.LENGTH_LONG).show();
 
             }
         });
@@ -157,7 +157,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
     }
 
     private void mostraDialogInserimentoProdotto() {
-        final View viewAggiungiProdotto = getLayoutInflater().inflate(R.layout.layuot_aggiungi_prodotto_dialog, null);
+        final View viewAggiungiProdotto = getLayoutInflater().inflate(R.layout.layout_aggiungi_prodotto_dialog, null);
 
         builderDialogAggiungiProdotto = new AlertDialog.Builder(getContext());
         builderDialogAggiungiProdotto.setView(viewAggiungiProdotto);
@@ -192,6 +192,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
         });
 
         dialogAggiungiProdotto = builderDialogAggiungiProdotto.create();
+        dialogAggiungiProdotto.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
         dialogAggiungiProdotto.show();
     }
 
@@ -276,6 +277,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
                     });
 
                     dialogEliminaProdotto = builderDialogEliminaProdotto.create();
+                    dialogEliminaProdotto.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
                     dialogEliminaProdotto.show();
                 }
             });
@@ -305,7 +307,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
 
         String costoAcqusitoProdotto = dispensa.get(posizioneProdotto).getCostoAcquisto().replaceAll(",",".");
 
-        editTextModificaCostoAcquistoProdotto.append(costoAcqusitoProdotto.substring(costoAcqusitoProdotto.indexOf("Ä") , costoAcqusitoProdotto.indexOf("/")));
+        editTextModificaCostoAcquistoProdotto.append(costoAcqusitoProdotto.substring(costoAcqusitoProdotto.indexOf("‚Ç¨") , costoAcqusitoProdotto.indexOf("/")));
         editTextModificaUnitaMisuraCostoAcquistoProdotto.append(costoAcqusitoProdotto.substring(costoAcqusitoProdotto.lastIndexOf("/")+1));
 
 
@@ -328,6 +330,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
         });
 
         dialogModificaProdotto = builderDialogModificaProdotto.create();
+        dialogModificaProdotto.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
         dialogModificaProdotto.show();
     }
 
