@@ -13,7 +13,7 @@
         android:background="#F5EDED">
 
         <TextView
-            android:id="@+id/promptDettagli"
+            android:id="@+id/promptDettagliRistorante"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="572dp"
@@ -41,14 +41,14 @@
             android:layout_marginBottom="80dp"
             android:background="@drawable/dummy_for_shadows_rounded"
             android:elevation="5dp"
-            app:layout_constraintBottom_toTopOf="@+id/bottoneLogout"
+            app:layout_constraintBottom_toTopOf="@+id/bottoneAnnullaModificaRistorante"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/promptDettagli"
+            app:layout_constraintTop_toBottomOf="@+id/promptDettagliRistorante"
             app:layout_constraintVertical_bias="0.51">
 
             <TextView
-                android:id="@+id/textViewNomeProfiloPrompt"
+                android:id="@+id/textViewNomeRistorantePromptModifica"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nome:"
@@ -63,7 +63,7 @@
                 app:layout_constraintVertical_bias="0.215" />
 
             <TextView
-                android:id="@+id/textViewRuoloProfiloPrompt"
+                android:id="@+id/textViewNumeroRistorantePromptModifica"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
@@ -72,14 +72,14 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/textViewNomeProfiloPrompt"
+                app:layout_constraintEnd_toEndOf="@+id/textViewNomeRistorantePromptModifica"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/textViewNomeProfiloPrompt"
-                app:layout_constraintTop_toBottomOf="@+id/textViewNomeProfiloPrompt"
+                app:layout_constraintStart_toStartOf="@+id/textViewNomeRistorantePromptModifica"
+                app:layout_constraintTop_toBottomOf="@+id/textViewNomeRistorantePromptModifica"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
-                android:id="@+id/textViewEmailProfiloPrompt"
+                android:id="@+id/textViewIndirizzoRistorantePromptModifica"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
@@ -88,14 +88,14 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/textViewRuoloProfiloPrompt"
+                app:layout_constraintEnd_toEndOf="@+id/textViewNumeroRistorantePromptModifica"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/textViewRuoloProfiloPrompt"
-                app:layout_constraintTop_toBottomOf="@+id/textViewRuoloProfiloPrompt"
+                app:layout_constraintStart_toStartOf="@+id/textViewNumeroRistorantePromptModifica"
+                app:layout_constraintTop_toBottomOf="@+id/textViewNumeroRistorantePromptModifica"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
-                android:id="@+id/textViewPasswordProfiloPrompt"
+                android:id="@+id/textViewTuristicoRistoranteModifica"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
@@ -104,60 +104,60 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/textViewEmailProfiloPrompt"
+                app:layout_constraintEnd_toEndOf="@+id/textViewIndirizzoRistorantePromptModifica"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/textViewEmailProfiloPrompt"
-                app:layout_constraintTop_toBottomOf="@+id/textViewEmailProfiloPrompt"
+                app:layout_constraintStart_toStartOf="@+id/textViewIndirizzoRistorantePromptModifica"
+                app:layout_constraintTop_toBottomOf="@+id/textViewIndirizzoRistorantePromptModifica"
                 app:layout_constraintVertical_bias="0.0" />
 
             <ImageView
-                android:id="@+id/iconaNomeProfilo"
+                android:id="@+id/iconaNomeRistorante"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:layout_marginEnd="7dp"
                 android:src="@drawable/icon_credenziali"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewNomeProfiloPrompt"
-                app:layout_constraintEnd_toStartOf="@+id/textViewNomeProfiloPrompt"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewNomeRistorantePromptModifica"
+                app:layout_constraintEnd_toStartOf="@+id/textViewNomeRistorantePromptModifica"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textViewNomeProfiloPrompt"
+                app:layout_constraintTop_toTopOf="@+id/textViewNomeRistorantePromptModifica"
                 app:layout_constraintVertical_bias="0.0" />
 
             <ImageView
-                android:id="@+id/iconaRuoloProfilo"
+                android:id="@+id/iconaNumeroRistorante"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:layout_marginEnd="7dp"
                 android:src="@drawable/icon_ruolo"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewRuoloProfiloPrompt"
-                app:layout_constraintEnd_toStartOf="@+id/textViewRuoloProfiloPrompt"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewNumeroRistorantePromptModifica"
+                app:layout_constraintEnd_toStartOf="@+id/textViewNumeroRistorantePromptModifica"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textViewRuoloProfiloPrompt" />
+                app:layout_constraintTop_toTopOf="@+id/textViewNumeroRistorantePromptModifica" />
 
             <ImageView
-                android:id="@+id/iconaEmailProfilo"
+                android:id="@+id/iconaIndirizzoRistorante"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:layout_marginEnd="7dp"
                 android:src="@drawable/icon_profile"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewEmailProfiloPrompt"
-                app:layout_constraintEnd_toStartOf="@+id/textViewEmailProfiloPrompt"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewIndirizzoRistorantePromptModifica"
+                app:layout_constraintEnd_toStartOf="@+id/textViewIndirizzoRistorantePromptModifica"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textViewEmailProfiloPrompt" />
+                app:layout_constraintTop_toTopOf="@+id/textViewIndirizzoRistorantePromptModifica" />
 
             <ImageView
-                android:id="@+id/iconaPasswordProfilo"
+                android:id="@+id/iconaRistoranteTuristico"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:layout_marginEnd="7dp"
                 android:src="@drawable/icon_password"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewPasswordProfiloPrompt"
-                app:layout_constraintEnd_toStartOf="@+id/textViewPasswordProfiloPrompt"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewTuristicoRistoranteModifica"
+                app:layout_constraintEnd_toStartOf="@+id/textViewTuristicoRistoranteModifica"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textViewPasswordProfiloPrompt" />
+                app:layout_constraintTop_toTopOf="@+id/textViewTuristicoRistoranteModifica" />
 
             <ImageView
                 android:id="@+id/iconaModificaPasswordProfilo"
@@ -165,11 +165,11 @@
                 android:layout_height="22dp"
                 android:layout_marginStart="20dp"
                 android:src="@drawable/icona_matita"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewPasswordProfiloPrompt"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewTuristicoRistoranteModifica"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/textViewPasswordProfiloPrompt"
-                app:layout_constraintTop_toTopOf="@+id/textViewPasswordProfiloPrompt" />
+                app:layout_constraintStart_toEndOf="@+id/textViewTuristicoRistoranteModifica"
+                app:layout_constraintTop_toTopOf="@+id/textViewTuristicoRistoranteModifica" />
 
             <ImageView
                 android:id="@+id/iconaModificaEmailProfilo"
@@ -177,14 +177,14 @@
                 android:layout_height="22dp"
                 android:layout_marginStart="20dp"
                 android:src="@drawable/icona_matita"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewEmailProfiloPrompt"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewIndirizzoRistorantePromptModifica"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/editTextEmailProfilo"
-                app:layout_constraintTop_toTopOf="@+id/textViewEmailProfiloPrompt" />
+                app:layout_constraintStart_toEndOf="@+id/textViewIndirizzoRistoranteVisualizza"
+                app:layout_constraintTop_toTopOf="@+id/textViewIndirizzoRistorantePromptModifica" />
 
             <EditText
-                android:id="@+id/editTextEmailProfilo"
+                android:id="@+id/textViewIndirizzoRistoranteVisualizza"
                 android:layout_width="wrap_content"
                 android:layout_height="22dp"
                 android:layout_marginStart="7dp"
@@ -198,44 +198,44 @@
                 android:textCursorDrawable="@drawable/color_cursor"
                 android:textColor="@color/colorGrey"
                 android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewEmailProfiloPrompt"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewIndirizzoRistorantePromptModifica"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/textViewEmailProfiloPrompt"
-                app:layout_constraintTop_toTopOf="@+id/textViewEmailProfiloPrompt" />
+                app:layout_constraintStart_toEndOf="@+id/textViewIndirizzoRistorantePromptModifica"
+                app:layout_constraintTop_toTopOf="@+id/textViewIndirizzoRistorantePromptModifica" />
 
             <TextView
-                android:id="@+id/textViewRuoloProfilo"
+                android:id="@+id/textViewNumeroRistoranteVisualizza"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginStart="7dp"
                 android:text="TextView"
                 android:textColor="@color/colorGrey"
                 android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewRuoloProfiloPrompt"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewNumeroRistorantePromptModifica"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/textViewRuoloProfiloPrompt"
-                app:layout_constraintTop_toTopOf="@+id/textViewRuoloProfiloPrompt" />
+                app:layout_constraintStart_toEndOf="@+id/textViewNumeroRistorantePromptModifica"
+                app:layout_constraintTop_toTopOf="@+id/textViewNumeroRistorantePromptModifica" />
 
             <TextView
-                android:id="@+id/textViewNomeProfilo"
+                android:id="@+id/textViewNomeRistoranteVisualizza"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginStart="7dp"
                 android:text="TextView"
                 android:textColor="@color/colorGrey"
                 android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewNomeProfiloPrompt"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewNomeRistorantePromptModifica"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/textViewNomeProfiloPrompt"
-                app:layout_constraintTop_toTopOf="@+id/textViewNomeProfiloPrompt" />
+                app:layout_constraintStart_toEndOf="@+id/textViewNomeRistorantePromptModifica"
+                app:layout_constraintTop_toTopOf="@+id/textViewNomeRistorantePromptModifica" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/bottoneLogout"
+            android:id="@+id/bottoneAnnullaModificaRistorante"
             android:layout_width="118dp"
             android:layout_height="48dp"
             android:background="@drawable/login_box_border"
@@ -260,7 +260,7 @@
             android:layout_marginBottom="1dp"
             android:src="@drawable/impostazioni"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/bottoneLogout"
+            app:layout_constraintEnd_toStartOf="@+id/bottoneAnnullaModificaRistorante"
             app:layout_constraintHorizontal_bias="0.163"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout8"

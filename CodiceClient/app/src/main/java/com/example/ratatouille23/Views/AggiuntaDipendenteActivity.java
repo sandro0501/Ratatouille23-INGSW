@@ -22,9 +22,9 @@ public class AggiuntaDipendenteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aggiunta_dipendente);
 
-        sceltaRuoli = (Spinner)findViewById(R.id.spinnerRuoliDipendente);
+        sceltaRuoli = (Spinner)findViewById(R.id.spinnerRuoliDipendenteVisualizza);
         bottoneAnnulla = findViewById(R.id.buttonAnnullaRegistraDipendente);
-        bottoneRegistraDipendente = findViewById(R.id.buttonConfermaRegistraDipendente);
+        bottoneRegistraDipendente = findViewById(R.id.buttonLicenziaDipendente);
 
         ruoli = new String[] {"Amministratore", "Supervisore", "Addetto alla cucina", "Addetto al servizio"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(), R.layout.spinner_layout, ruoli);

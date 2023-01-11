@@ -149,7 +149,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
                 Controller.setIsModalitaEliminazioneProdottoAttiva(true);
                 bottoneAggiungiProdotto.setEnabled(false);
                 bottoneEliminaProdotto.setImageResource(R.drawable.icon_modalita_elimina_prodotto_attiva);
-                Toast.makeText(getContext(),"Modalit√† eliminazione attiva",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),"Modalit‡ eliminazione attiva",Toast.LENGTH_LONG).show();
 
             }
         });
@@ -305,7 +305,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
 
         String costoAcqusitoProdotto = dispensa.get(posizioneProdotto).getCostoAcquisto().replaceAll(",",".");
 
-        editTextModificaCostoAcquistoProdotto.append(costoAcqusitoProdotto.substring(costoAcqusitoProdotto.indexOf("‚Ç¨") , costoAcqusitoProdotto.indexOf("/")));
+        editTextModificaCostoAcquistoProdotto.append(costoAcqusitoProdotto.substring(costoAcqusitoProdotto.indexOf("Ä") , costoAcqusitoProdotto.indexOf("/")));
         editTextModificaUnitaMisuraCostoAcquistoProdotto.append(costoAcqusitoProdotto.substring(costoAcqusitoProdotto.lastIndexOf("/")+1));
 
 

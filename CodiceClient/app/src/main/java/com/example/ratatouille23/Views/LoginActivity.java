@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         passDimenticata.setText(HtmlCompat.fromHtml(passDim, HtmlCompat.FROM_HTML_MODE_LEGACY));
 
 
-        editTextPass = (EditText) findViewById(R.id.editTextVecchiaPassword);
+        editTextPass = (EditText) findViewById(R.id.editTextCittaRistoranteModifica);
         editTextPass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
         bottoneLogin = findViewById(R.id.bottoneResettaPassword);
@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void occhioSchermataLoginpremuto(View v) {
-        EditText pass = (EditText) findViewById(R.id.editTextVecchiaPassword);
+        EditText pass = (EditText) findViewById(R.id.editTextCittaRistoranteModifica);
         if (pass.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
 
             ((ImageView) (v)).setImageResource(R.drawable.occhiosbarrato);

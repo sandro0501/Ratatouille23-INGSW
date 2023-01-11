@@ -109,7 +109,7 @@
                     app:layout_constraintVertical_bias="0.945" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/buttonConfermaRegistraDipendente"
+                    android:id="@+id/buttonLicenziaDipendente"
                     android:layout_width="208dp"
                     android:layout_height="50dp"
                     android:background="@drawable/login_box_border"
@@ -295,14 +295,14 @@
                     app:layout_constraintVertical_bias="0.0" />
 
                 <Spinner
-                    android:id="@+id/spinnerRuoliDipendente"
+                    android:id="@+id/spinnerRuoliDipendenteVisualizza"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="7dp"
                     android:layout_marginBottom="40dp"
                     android:backgroundTint="#000000"
                     android:popupBackground="#F5EDED"
-                    app:layout_constraintBottom_toTopOf="@+id/buttonConfermaRegistraDipendente"
+                    app:layout_constraintBottom_toTopOf="@+id/buttonLicenziaDipendente"
                     app:layout_constraintEnd_toEndOf="@+id/constraintLayout9"
                     app:layout_constraintStart_toStartOf="@+id/constraintLayout9"
                     app:layout_constraintTop_toBottomOf="@+id/textViewRuoloDipendente"

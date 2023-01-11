@@ -1,5 +1,6 @@
 package com.example.ratatouille23.Views;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,7 +8,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
+import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.R;
 
 /**
@@ -25,6 +29,15 @@ public class RistoranteFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private Button bottoneModifica;
+    private TextView textViewNome;
+    private TextView textViewTelefono;
+    private TextView textViewIndirizzo;
+    private TextView textViewCitta;
+    private TextView textViewTuristico;
+
+    private Ristorante ristoranteCorrente;
 
     public RistoranteFragment() {
         // Required empty public constructor
@@ -61,6 +74,33 @@ public class RistoranteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ristorante, container, false);
+        View fragmentCorrente = inflater.inflate(R.layout.fragment_ristorante, container, false);
+
+        bottoneModifica = fragmentCorrente.findViewById(R.id.bottoneAnnullaModificaRistorante);
+        textViewNome = fragmentCorrente.findViewById(R.id.textViewNomeRistoranteVisualizza);
+        textViewTelefono = fragmentCorrente.findViewById(R.id.textViewNumeroRistoranteVisualizza);
+        textViewIndirizzo = fragmentCorrente.findViewById(R.id.textViewIndirizzoRistoranteVisualizza);
+        textViewCitta = fragmentCorrente.findViewById(R.id.textViewCittaRistoranteVisualizza);
+        textViewTuristico = fragmentCorrente.findViewById(R.id.textViewTuristicoRistoranteVisualizza);
+
+        ristoranteCorrente = new Ristorante("ProvaNome", "ProvaTelefono", "ProvaIndirizzo", "ProvaCittà", true);
+
+        textViewNome.setText(ristoranteCorrente.getNome());
+        textViewTelefono.setText(ristoranteCorrente.getNumeroDiTelefono());
+        textViewIndirizzo.setText(ristoranteCorrente.getIndirizzo());
+        textViewCitta.setText(ristoranteCorrente.getCitta());
+        textViewTuristico.setText((ristoranteCorrente.isTuristico() ? "Il tuo ristorante è in una località turistica!": "Il tuo ristorante non è in una località turistica!"));
+
+
+        bottoneModifica.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(fragmentCorrente.getContext(), ModificaDettagliRistoranteActivity.class);
+                i.putExtra("RistoranteCorrente", ristoranteCorrente);
+                startActivity(i);
+            }
+        });
+
+        return fragmentCorrente;
     }
 }

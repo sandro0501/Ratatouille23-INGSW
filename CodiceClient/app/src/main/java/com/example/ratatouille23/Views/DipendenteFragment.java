@@ -1,5 +1,7 @@
 package com.example.ratatouille23.Views;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -9,19 +11,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
 
-import com.example.ratatouille23.Controller;
-import com.example.ratatouille23.Models.Addetto;
-import com.example.ratatouille23.Models.Amministratore;
-import com.example.ratatouille23.Models.Avviso;
-import com.example.ratatouille23.Models.Supervisore;
 import com.example.ratatouille23.Models.Utente;
-import com.example.ratatouille23.Models.ruoliPersonale;
 import com.example.ratatouille23.R;
 
 import java.util.ArrayList;
@@ -47,6 +46,13 @@ public class DipendenteFragment extends Fragment implements RecyclerViewDipenden
 
     private DipendenteRecyclerViewAdapter dipendenteAdapter;
     private ArrayList<Utente> dipendenti;
+    private AlertDialog.Builder builderDialogVisualizzaDipendente;
+    private Dialog dialogVisualizzaDipendente;
+
+    private TextView textViewNomeDipendente;
+    private TextView textViewEmailDipendente;
+    private Spinner spinnerRuoloDipendente;
+    private Button bottoneLicenzia;
 
 
     public DipendenteFragment() {
@@ -134,13 +140,44 @@ public class DipendenteFragment extends Fragment implements RecyclerViewDipenden
     @Override
     public void onDipendenteClicked(int posizioneDipendente) {
 
-        Intent i = new Intent(getContext(), AggiuntaDipendenteActivity.class);
+        visualizzaInfoDipendente(dipendenti.get(posizioneDipendente));
+    }
 
-        i.putExtra("NOME", dipendenti.get(posizioneDipendente).getNome());
-        i.putExtra("COGNOME", dipendenti.get(posizioneDipendente).getCognome());
-        i.putExtra("EMAIL", dipendenti.get(posizioneDipendente).getEmail());
-        i.putExtra("RUOLO", dipendenti.get(posizioneDipendente).getRuoloUtente());
+    public void visualizzaInfoDipendente(Utente dipendenteScelto) {
 
-        startActivity(i);
+        final View viewVisualizzaDipendente = getLayoutInflater().inflate(R.layout.layout_visualizza_dipendente_dialog, null);
+
+        builderDialogVisualizzaDipendente = new AlertDialog.Builder(getContext());
+        builderDialogVisualizzaDipendente.setView(viewVisualizzaDipendente);
+        builderDialogVisualizzaDipendente.setCancelable(true);
+
+        textViewNomeDipendente = viewVisualizzaDipendente.findViewById(R.id.textViewNomeRistoranteVisualizza);
+        textViewEmailDipendente = viewVisualizzaDipendente.findViewById(R.id.textViewIndirizzoRistoranteVisualizza);
+        spinnerRuoloDipendente = viewVisualizzaDipendente.findViewById(R.id.spinnerRuoliDipendenteVisualizza);
+        bottoneLicenzia = viewVisualizzaDipendente.findViewById(R.id.buttonLicenziaDipendente);
+
+        String ruoli [] = new String[] {"Amministratore", "Supervisore", "Addetto alla cucina", "Addetto al servizio"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(viewVisualizzaDipendente.getContext(), R.layout.spinner_layout, ruoli);
+        adapter.setDropDownViewResource(R.layout.spinner_item_layout);
+        spinnerRuoloDipendente.setAdapter(adapter);
+
+        textViewNomeDipendente.setText(dipendenteScelto.getNomeCompleto());
+        textViewEmailDipendente.setText(dipendenteScelto.getEmail());
+
+        int posizioneRuoloCorrente = adapter.getPosition(dipendenteScelto.getRuoloUtente());
+        spinnerRuoloDipendente.setSelection(posizioneRuoloCorrente);
+
+        bottoneLicenzia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogVisualizzaDipendente.dismiss();
+            }
+        });
+
+        dialogVisualizzaDipendente = builderDialogVisualizzaDipendente.create();
+        dialogVisualizzaDipendente.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
+        dialogVisualizzaDipendente.show();
+
+
     }
 }
