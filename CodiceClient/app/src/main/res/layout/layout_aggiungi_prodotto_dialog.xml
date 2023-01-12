@@ -123,13 +123,13 @@
         android:layout_marginStart="208dp"
         android:layout_marginBottom="20dp"
         android:fontFamily="@font/verdana_font"
-        android:text="/ unità di misura"
+        android:text="/"
         android:textColor="#5F5959"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayoutSogliaLimiteProdotto"
         app:layout_constraintStart_toEndOf="@+id/textViewCostoAcquistoProdottoLabel"
         app:layout_constraintTop_toTopOf="@+id/constraintLayoutCostoAcquistoProdotto"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.39" />
 
     <TextView
         android:id="@+id/textViewSogliaLimiteProdottoLabel"
@@ -142,10 +142,10 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/bottoneAnnullaAggiungiProdotto"
         app:layout_constraintEnd_toEndOf="@+id/textViewAggiungiProdottoTitoloDialog"
-        app:layout_constraintHorizontal_bias="0.171"
+        app:layout_constraintHorizontal_bias="0.141"
         app:layout_constraintStart_toStartOf="@+id/textViewAggiungiProdottoTitoloDialog"
         app:layout_constraintTop_toBottomOf="@+id/textViewCostoAcquistoProdottoLabel"
-        app:layout_constraintVertical_bias="0.032" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayoutNomeProdotto"
@@ -299,6 +299,49 @@
             tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutUnitaMisuraCostoAcquisto"
+        android:layout_width="180dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="256dp"
+        android:layout_marginEnd="338dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/dummy_for_shadows"
+        android:elevation="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottoneAnnullaAggiungiProdotto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toEndOf="@+id/textViewUnitaMisuraLabel"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAggiungiProdottoTitoloDialog"
+        app:layout_constraintVertical_bias="0.0">
+
+        <EditText
+            android:id="@+id/EditTextUnitaMisuraCostoAcquisto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:background="@android:color/transparent"
+            android:backgroundTint="#5F5959"
+            android:ems="10"
+            android:fontFamily="@font/verdana"
+            android:hint="unità di misura"
+            android:inputType="text"
+            android:maxLength="10"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayoutCostoAcquistoProdotto"
         android:layout_width="160dp"
@@ -339,8 +382,8 @@
         android:id="@+id/constraintLayoutSogliaLimiteProdotto"
         android:layout_width="180dp"
         android:layout_height="32dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="308dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="304dp"
         android:background="@drawable/dummy_for_shadows"
         android:elevation="5dp"
         app:layout_constraintStart_toEndOf="@+id/textViewSogliaLimiteProdottoLabel"

@@ -11,6 +11,7 @@
     android:clipToPadding="false">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewProdotto"
         android:layout_width="wrap_content"
         android:layout_height="130dp"
         android:layout_marginStart="8dp"
@@ -21,7 +22,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="800dp"

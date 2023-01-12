@@ -66,15 +66,15 @@
     </string-array>
 
     <string-array name="costoacq_prodotto">
-        <item>€4,58 / kg.</item>
-        <item>€2,10 / kg.</item>
-        <item>€16,00 / kg.</item>
-        <item>€50,00 / kg.</item>
-        <item>€1,00 / pz.</item>
+        <item>€4.58 / kg.</item>
+        <item>€2.10 / kg.</item>
+        <item>€16.00 / kg.</item>
+        <item>€50.00 / kg.</item>
+        <item>€1.00 / pz.</item>
     </string-array>
 
     <string-array name="quantita_prodotto">
-        <item>400</item>
+        <item>100</item>
         <item>400</item>
         <item>200</item>
         <item>300</item>

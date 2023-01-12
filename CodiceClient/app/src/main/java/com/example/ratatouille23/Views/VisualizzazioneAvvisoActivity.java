@@ -56,6 +56,7 @@ public class VisualizzazioneAvvisoActivity extends AppCompatActivity {
         toolbarNavigazione.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 onBackPressed(); // Implemented by activity
             }
         });

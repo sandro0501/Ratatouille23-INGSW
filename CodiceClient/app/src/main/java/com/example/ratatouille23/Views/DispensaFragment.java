@@ -3,11 +3,11 @@ package com.example.ratatouille23.Views;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,11 +16,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ratatouille23.Controller;
 import com.example.ratatouille23.Models.Prodotto;
@@ -39,27 +39,34 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
     private ProdottoRecyclerViewAdapter prodottoAdapter;
     private RecyclerView recyclerView;
     private ImageView bottoneAggiungiProdotto;
+    private ImageView bottoneEliminaProdotto;
     private AlertDialog.Builder builderDialogAggiungiProdotto;
     private Dialog dialogAggiungiProdotto;
-    private AlertDialog.Builder builderDialogVisualizzaProdotto;
-    private Dialog dialogVisualizzaProdotto;
+    private AlertDialog.Builder builderDialogModificaProdotto;
+    private Dialog dialogModificaProdotto;
+    private AlertDialog.Builder builderDialogEliminaProdotto;
+    private Dialog dialogEliminaProdotto;
+    private TextView textViewEliminazioneProdotto;
     private EditText editTextNomeProdotto;
     private EditText editTextDescrizioneProdotto;
     private EditText editTextQuantitaProdotto;
     private EditText editTextUnitaMisuraProdotto;
     private EditText editTextCostoAcquistoProdotto;
     private EditText editTextSogliaProdotto;
-    private TextView textViewVisualizzazioneNomeProdotto;
-    private TextView textViewVisualizzazioneDescrizioneProdotto;
-    private TextView textViewVisualizzazioneQuantitaProdotto;
-    private TextView textViewVisualizzazioneUnitaMisuraProdotto;
-    private TextView textViewVisualizzazioneCostoAcquistoProdotto;
-    private TextView textViewVisualizzazioneSogliaProdotto;
+    private EditText editTextModificaNomeProdotto;
+    private EditText editTextModificaDescrizioneProdotto;
+    private EditText editTextModificaQuantitaProdotto;
+    private EditText editTextModificaUnitaMisuraProdotto;
+    private EditText editTextModificaCostoAcquistoProdotto;
+    private EditText editTextModificaUnitaMisuraCostoAcquistoProdotto;
+    private EditText editTextModificaSogliaProdotto;
     private Button bottoneConfermaAggiungiProdotto;
     private Button bottoneAnnullaAggiungiProdotto;
-    private Button bottoneAnnullaVisualizzazioneProdotto;
-
-
+    private Button bottoneAnnullaModificaProdotto;
+    private Button bottoneConfermaModificaProdotto;
+    private Button bottoneConfermaEliminazioneProdotto;
+    private Button bottoneAnullaEliminazioneProdotto;
+    int counterProdotti = 0;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -135,6 +142,18 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
             }
         });
 
+        bottoneEliminaProdotto = (ImageView) view.findViewById(R.id.imageViewIconEliminaProdotto);
+        bottoneEliminaProdotto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Controller.setIsModalitaEliminazioneProdottoAttiva(true);
+                bottoneAggiungiProdotto.setEnabled(false);
+                bottoneEliminaProdotto.setImageResource(R.drawable.icon_modalita_elimina_prodotto_attiva);
+                Toast.makeText(getContext(),"Modalità eliminazione attiva",Toast.LENGTH_LONG).show();
+
+            }
+        });
+
     }
 
     private void mostraDialogInserimentoProdotto() {
@@ -196,39 +215,123 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
     }
 
     @Override
-    public void onProdottoClicked(int posizioneProdotto) {
-        Log.println(Log.INFO, "ciao","ciao msg");
-        final View viewVisualizzaProdotto = getLayoutInflater().inflate(R.layout.layout_modifica_prodotto_dialog, null);
+    public void onProdottoClicked(int posizioneProdotto, View itemView) {
 
-        builderDialogVisualizzaProdotto = new AlertDialog.Builder(getContext());
-        builderDialogVisualizzaProdotto.setView(viewVisualizzaProdotto);
-        builderDialogVisualizzaProdotto.setCancelable(true);
+        if(Controller.getIsModalitaEliminazioneProdottoAttiva() == false){
+            mostraDialogModificaProdotto(posizioneProdotto);
+        } else {
+            attivaModalitaEliminazioneProdotto(posizioneProdotto, itemView);
+        }
+    }
 
-        textViewVisualizzazioneNomeProdotto = (TextView) viewVisualizzaProdotto.findViewById(R.id.textViewNomeProdottoLabelVisualizzazione);
-        textViewVisualizzazioneDescrizioneProdotto = (TextView) viewVisualizzaProdotto.findViewById(R.id.textViewDescrizioneProdottoLabelVisualizzazione);
-        textViewVisualizzazioneUnitaMisuraProdotto = (TextView) viewVisualizzaProdotto.findViewById(R.id.textViewUnitaProdottoLabelVisualizzazione);
-        textViewVisualizzazioneCostoAcquistoProdotto = (TextView) viewVisualizzaProdotto.findViewById(R.id.textViewCostoAcquistoProdottoLabelVisualizzazione);
-        textViewVisualizzazioneQuantitaProdotto = (TextView) viewVisualizzaProdotto.findViewById(R.id.textViewQuantitaProdottoProdottoLabelVisualizzazione);
-        textViewVisualizzazioneSogliaProdotto = (TextView) viewVisualizzaProdotto.findViewById(R.id.textViewSogliaLimiteProdottoLabelVisualizzazione);
+    private void attivaModalitaEliminazioneProdotto(int posizioneProdotto, View itemView) {
+        Prodotto prodottoCorrente = dispensa.get(posizioneProdotto);
+        prodottoCorrente.setSelected(!prodottoCorrente.isSelected());
 
-        textViewVisualizzazioneNomeProdotto.append(" "+dispensa.get(posizioneProdotto).getNome());
-        textViewVisualizzazioneDescrizioneProdotto.append(" "+dispensa.get(posizioneProdotto).getDescrizione());
-        textViewVisualizzazioneUnitaMisuraProdotto.append(" "+dispensa.get(posizioneProdotto).getUnita());
-        textViewVisualizzazioneCostoAcquistoProdotto.append(" "+dispensa.get(posizioneProdotto).getCostoAcquisto());
-        textViewVisualizzazioneQuantitaProdotto.append(" "+dispensa.get(posizioneProdotto).getQuantita());
-        textViewVisualizzazioneSogliaProdotto.append(" "+dispensa.get(posizioneProdotto).getSoglia());
+        if(prodottoCorrente.isSelected()){
+            counterProdotti++;
+            CardView cardProdotto = itemView.findViewById(R.id.cardViewProdotto);
+            cardProdotto.setCardBackgroundColor(Color.parseColor("#F2A726"));
 
-        bottoneAnnullaVisualizzazioneProdotto = (Button) viewVisualizzaProdotto.findViewById(R.id.bottoneAnnullaVisualizzaProdotto);
-        bottoneAnnullaVisualizzazioneProdotto.setOnClickListener(new View.OnClickListener() {
+            bottoneEliminaProdotto.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final View viewEliminaProdotto = getLayoutInflater().inflate(R.layout.layout_elimina_prodotto_dialog, null);
+                    builderDialogEliminaProdotto = new AlertDialog.Builder(getContext());
+                    builderDialogEliminaProdotto.setView(viewEliminaProdotto);
+                    builderDialogEliminaProdotto.setCancelable(true);
+
+                    textViewEliminazioneProdotto = (TextView) viewEliminaProdotto.findViewById(R.id.textViewEliminaProdottoDescrizioneDialog);
+                    if(counterProdotti==1){
+                        textViewEliminazioneProdotto.setText("Sei sicuro di voler eliminare il prodotto selezionato?");
+                    } else {
+                        textViewEliminazioneProdotto.setText("Sei sicuro di voler eliminare i "+counterProdotti+" prodotti selezionati?");
+                    }
+
+                    bottoneAnullaEliminazioneProdotto = (Button) viewEliminaProdotto.findViewById(R.id.bottoneAnnullaEliminaProdotto);
+                    bottoneAnullaEliminazioneProdotto.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Controller.setIsModalitaEliminazioneProdottoAttiva(false);
+                            bottoneAggiungiProdotto.setEnabled(true);
+                            bottoneEliminaProdotto.setImageResource(R.drawable.icon_elimina_prodotto_dispensa);
+                            cardProdotto.setCardBackgroundColor(Color.WHITE);
+                            prodottoCorrente.setSelected(false);
+                            dialogEliminaProdotto.dismiss();
+                        }
+                    });
+
+                    bottoneConfermaEliminazioneProdotto = (Button) viewEliminaProdotto.findViewById(R.id.bottoneEliminaProdotto);
+                    bottoneConfermaEliminazioneProdotto.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            //codice db
+                            Controller.getInstance().mostraAlertErrore(getContext(),"Eliminazione effettuata", "Eliminazione dei prodotti selezionati effettuata correttamente!");
+                            Controller.setIsModalitaEliminazioneProdottoAttiva(false);
+                            bottoneAggiungiProdotto.setEnabled(true);
+                            bottoneEliminaProdotto.setImageResource(R.drawable.icon_elimina_prodotto_dispensa);
+                            prodottoCorrente.setSelected(false);
+                            cardProdotto.setCardBackgroundColor(Color.WHITE);
+                            dialogEliminaProdotto.dismiss();
+                        }
+                    });
+
+                    dialogEliminaProdotto = builderDialogEliminaProdotto.create();
+                    dialogEliminaProdotto.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
+                    dialogEliminaProdotto.show();
+                }
+            });
+        }
+    }
+
+    private void mostraDialogModificaProdotto(int posizioneProdotto) {
+        final View viewModificaProdotto = getLayoutInflater().inflate(R.layout.layout_modifica_prodotto_dialog, null);
+
+        builderDialogModificaProdotto = new AlertDialog.Builder(getContext());
+        builderDialogModificaProdotto.setView(viewModificaProdotto);
+        builderDialogModificaProdotto.setCancelable(true);
+
+        editTextModificaNomeProdotto = (EditText) viewModificaProdotto.findViewById(R.id.EditTextNomeProdottoModifica);
+        editTextModificaDescrizioneProdotto = (EditText) viewModificaProdotto.findViewById(R.id.EditTextDescrizioneProdottoModifica);
+        editTextModificaQuantitaProdotto = (EditText) viewModificaProdotto.findViewById(R.id.EditTextQuantitaProdottoModifica);
+        editTextModificaUnitaMisuraProdotto = (EditText) viewModificaProdotto.findViewById(R.id.EditTextUnitaMisuraProdottoModifica);
+        editTextModificaCostoAcquistoProdotto = (EditText) viewModificaProdotto.findViewById(R.id.EditTextCostoAcquistoProdottoModifica);
+        editTextModificaUnitaMisuraCostoAcquistoProdotto = (EditText) viewModificaProdotto.findViewById(R.id.EditTextUnitaMisuraCostoAcquistoModifica);
+        editTextModificaSogliaProdotto = (EditText) (EditText) viewModificaProdotto.findViewById(R.id.EditTextSogliaLimiteProdottoModifica);
+
+        editTextModificaNomeProdotto.append(dispensa.get(posizioneProdotto).getNome());
+        editTextModificaDescrizioneProdotto.append(dispensa.get(posizioneProdotto).getDescrizione());
+        editTextModificaQuantitaProdotto.append(Double.toString(dispensa.get(posizioneProdotto).getQuantita()));
+        editTextModificaUnitaMisuraProdotto.append(dispensa.get(posizioneProdotto).getUnita());
+        editTextModificaSogliaProdotto.append(Double.toString(dispensa.get(posizioneProdotto).getSoglia()));
+
+        String costoAcqusitoProdotto = dispensa.get(posizioneProdotto).getCostoAcquisto().replaceAll(",",".");
+
+        editTextModificaCostoAcquistoProdotto.append(costoAcqusitoProdotto.substring(costoAcqusitoProdotto.indexOf("€") , costoAcqusitoProdotto.indexOf("/")));
+        editTextModificaUnitaMisuraCostoAcquistoProdotto.append(costoAcqusitoProdotto.substring(costoAcqusitoProdotto.lastIndexOf("/")+1));
+
+
+        bottoneAnnullaModificaProdotto = (Button) viewModificaProdotto.findViewById(R.id.bottoneAnnullaModificaProdotto);
+        bottoneAnnullaModificaProdotto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialogVisualizzaProdotto.dismiss();
+                dialogModificaProdotto.dismiss();
             }
         });
 
-        dialogVisualizzaProdotto = builderDialogVisualizzaProdotto.create();
-        dialogVisualizzaProdotto.show();
+        bottoneConfermaModificaProdotto = (Button) viewModificaProdotto.findViewById(R.id.bottoneModificaProdotto);
+        bottoneConfermaModificaProdotto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.println(Log.VERBOSE,"MOD","MODIFICA");
+                Controller.getInstance().mostraAlertErrore(getContext(),"Prodotto modificato", "Informazioni del prodotto modificate correttamente!");
+                dialogModificaProdotto.dismiss();
+            }
+        });
 
+        dialogModificaProdotto = builderDialogModificaProdotto.create();
+        dialogModificaProdotto.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
+        dialogModificaProdotto.show();
     }
 
 

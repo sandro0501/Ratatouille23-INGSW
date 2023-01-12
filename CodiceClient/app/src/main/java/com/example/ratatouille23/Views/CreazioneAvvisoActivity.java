@@ -33,8 +33,7 @@ public class CreazioneAvvisoActivity extends AppCompatActivity {
         bottoneAnnullaCreazioneAvviso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentFromCreazioneAvvisoToBacheca = new Intent(getApplicationContext(), BachecaActivity.class);
-                startActivity(intentFromCreazioneAvvisoToBacheca);
+                finish();
             }
         });
     }
