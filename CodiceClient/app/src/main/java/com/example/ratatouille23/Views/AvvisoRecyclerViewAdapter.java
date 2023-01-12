@@ -66,7 +66,7 @@ public class AvvisoRecyclerViewAdapter extends RecyclerView.Adapter<AvvisoRecycl
             super(itemView);
 
             imageViewAvvisi = itemView.findViewById(R.id.imageViewNotifica);
-            autoreAvviso = itemView.findViewById(R.id.textViewNomeDipendenteCard);
+            autoreAvviso = itemView.findViewById(R.id.textViewTitoloSezioneMenuCard);
             oggettoAvviso = itemView.findViewById(R.id.textViewEmailDipendenteCard);
             corpoAvviso = itemView.findViewById(R.id.textViewAnteprimaAvviso);
             dataAvviso = itemView.findViewById(R.id.textViewDataCreazioneAvviso);

@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ratatouille23.Models.Avviso;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.R;
 
@@ -63,7 +62,7 @@ public class DipendenteRecyclerViewAdapter extends RecyclerView.Adapter<Dipenden
         public MyViewHolder(@NonNull View itemView, RecyclerViewDipendenteInterface recyclerViewInterfaceDipendente) {
             super(itemView);
 
-            textViewNome = itemView.findViewById(R.id.textViewNomeDipendenteCard);
+            textViewNome = itemView.findViewById(R.id.textViewTitoloSezioneMenuCard);
             textViewEmail = itemView.findViewById(R.id.textViewEmailDipendenteCard);
             textViewRuolo = itemView.findViewById(R.id.textViewRuoloDipendenteCard);
 

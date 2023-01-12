@@ -23,12 +23,12 @@
             android:textColor="@color/colorGrey"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout8"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.44"
+            app:layout_constraintVertical_bias="0.042"
             app:layout_constraintVertical_chainStyle="packed" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,16 +36,17 @@
             android:layout_width="896dp"
             android:layout_height="397dp"
             android:layout_marginStart="186dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="185dp"
             android:layout_marginBottom="80dp"
             android:background="@drawable/dummy_for_shadows_rounded"
             android:elevation="5dp"
             app:layout_constraintBottom_toTopOf="@+id/bottoneAnnullaModificaRistorante"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.461"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/promptDettagliRistorante"
-            app:layout_constraintVertical_bias="0.51">
+            app:layout_constraintTop_toBottomOf="@+id/iconaLogoRistoranteVisualizza"
+            app:layout_constraintVertical_bias="0.23000002">
 
             <TextView
                 android:id="@+id/textViewNomeRistorantePromptModifica"
@@ -277,9 +278,21 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout8"
-            app:layout_constraintVertical_bias="0.875" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.93" />
+
+        <ImageView
+            android:id="@+id/iconaLogoRistoranteVisualizza"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/promptDettagliRistorante"
+            app:layout_constraintStart_toStartOf="@+id/promptDettagliRistorante"
+            app:layout_constraintTop_toBottomOf="@+id/promptDettagliRistorante"
+            app:layout_constraintVertical_bias="0.060000002"
+            tools:src="@tools:sample/avatars" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
