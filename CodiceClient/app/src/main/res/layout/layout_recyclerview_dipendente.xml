@@ -29,7 +29,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textViewNomeDipendenteCard"
+                android:id="@+id/textViewTitoloSezioneMenuCard"
                 android:layout_width="380dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
@@ -52,10 +52,10 @@
                 android:fontFamily="@font/verdana_font"
                 android:text="Ruolo"
                 android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="@+id/textViewNomeDipendenteCard"
+                app:layout_constraintEnd_toEndOf="@+id/textViewTitoloSezioneMenuCard"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/textViewNomeDipendenteCard"
-                app:layout_constraintTop_toBottomOf="@+id/textViewNomeDipendenteCard" />
+                app:layout_constraintStart_toStartOf="@+id/textViewTitoloSezioneMenuCard"
+                app:layout_constraintTop_toBottomOf="@+id/textViewTitoloSezioneMenuCard" />
 
             <TextView
                 android:id="@+id/textViewEmailDipendenteCard"

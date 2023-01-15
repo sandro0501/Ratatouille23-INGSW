@@ -159,7 +159,7 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
         TextView autoreAvviso, oggettoAvviso, corpoAvviso, dataAvviso, ruoloAutoreAvviso;
 
         imageViewAvvisi = getView().findViewById(R.id.imageViewNotifica);
-        autoreAvviso = getView().findViewById(R.id.textViewNomeDipendenteCard);
+        autoreAvviso = getView().findViewById(R.id.textViewTitoloSezioneMenuCard);
         oggettoAvviso = getView().findViewById(R.id.textViewEmailDipendenteCard);
         corpoAvviso = getView().findViewById(R.id.textViewAnteprimaAvviso);
         dataAvviso = getView().findViewById(R.id.textViewDataCreazioneAvviso);

@@ -2,8 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="900dp"
-    android:layout_height="300dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="50dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="30dp"
     android:orientation="horizontal">
 
     <TextView
@@ -17,7 +20,7 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.025"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.024" />
@@ -43,7 +46,7 @@
         android:layout_height="47dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="392dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/login_box_border"
         android:backgroundTint="#F2A726"
         android:fontFamily="@font/verdana_font"
@@ -56,14 +59,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/bottoneAnnullaEliminaProdotto"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.875" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bottoneAnnullaEliminaProdotto"
         android:layout_width="139dp"
         android:layout_height="48dp"
-        android:layout_marginStart="200dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/login_box_border"
         android:backgroundTint="#D1CBC1"
         android:fontFamily="@font/verdana_font"
@@ -72,9 +74,9 @@
         android:textColor="#000000"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/bottoneEliminaProdotto"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.815" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewEliminaProdottoDescrizioneDialog" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
