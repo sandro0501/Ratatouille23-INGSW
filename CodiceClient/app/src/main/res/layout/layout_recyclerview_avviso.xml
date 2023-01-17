@@ -28,7 +28,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageViewNotifica"
+                android:id="@+id/imageViewImmagineElementoMenuCard"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="28dp"
@@ -39,7 +39,7 @@
                 app:srcCompat="@drawable/icon_avviso_da_vedere" />
 
             <TextView
-                android:id="@+id/textViewTitoloSezioneMenuCard"
+                android:id="@+id/textViewTitoloPrincipaleElementoMenuCard"
                 android:layout_width="380dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
@@ -50,12 +50,12 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/imageViewNotifica"
+                app:layout_constraintStart_toEndOf="@+id/imageViewImmagineElementoMenuCard"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.152" />
 
             <TextView
-                android:id="@+id/textViewRuoloDipendenteCard"
+                android:id="@+id/textViewTitoloSecondarioElementoMenuCard"
                 android:layout_width="215dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="34dp"
@@ -63,15 +63,15 @@
                 android:text="Ruolo"
                 android:textColor="@color/black"
                 android:textStyle="italic"
-                app:layout_constraintBottom_toTopOf="@+id/textViewAnteprimaAvviso"
-                app:layout_constraintEnd_toEndOf="@+id/textViewTitoloSezioneMenuCard"
+                app:layout_constraintBottom_toTopOf="@+id/textViewDescrizioneSecondariaElementoMenuCard"
+                app:layout_constraintEnd_toEndOf="@+id/textViewTitoloPrincipaleElementoMenuCard"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/textViewTitoloSezioneMenuCard"
-                app:layout_constraintTop_toBottomOf="@+id/textViewTitoloSezioneMenuCard"
+                app:layout_constraintStart_toStartOf="@+id/textViewTitoloPrincipaleElementoMenuCard"
+                app:layout_constraintTop_toBottomOf="@+id/textViewTitoloPrincipaleElementoMenuCard"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
-                android:id="@+id/textViewEmailDipendenteCard"
+                android:id="@+id/textViewDescrizionePrincipaleElementoMenuCard"
                 android:layout_width="450dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -79,15 +79,15 @@
                 android:text="Oggetto avviso"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintBottom_toTopOf="@+id/textViewAnteprimaAvviso"
-                app:layout_constraintEnd_toEndOf="@+id/textViewRuoloDipendenteCard"
+                app:layout_constraintBottom_toTopOf="@+id/textViewDescrizioneSecondariaElementoMenuCard"
+                app:layout_constraintEnd_toEndOf="@+id/textViewTitoloSecondarioElementoMenuCard"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/textViewRuoloDipendenteCard"
-                app:layout_constraintTop_toBottomOf="@+id/textViewRuoloDipendenteCard"
+                app:layout_constraintStart_toStartOf="@+id/textViewTitoloSecondarioElementoMenuCard"
+                app:layout_constraintTop_toBottomOf="@+id/textViewTitoloSecondarioElementoMenuCard"
                 app:layout_constraintVertical_bias="1.0" />
 
             <TextView
-                android:id="@+id/textViewAnteprimaAvviso"
+                android:id="@+id/textViewDescrizioneSecondariaElementoMenuCard"
                 android:layout_width="450dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -95,12 +95,12 @@
                 android:text="Anteprima avviso..."
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/textViewEmailDipendenteCard"
+                app:layout_constraintEnd_toEndOf="@+id/textViewDescrizionePrincipaleElementoMenuCard"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/textViewEmailDipendenteCard" />
+                app:layout_constraintStart_toStartOf="@+id/textViewDescrizionePrincipaleElementoMenuCard" />
 
             <TextView
-                android:id="@+id/textViewDataCreazioneAvviso"
+                android:id="@+id/textViewCostoElementoMenuCard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
@@ -109,13 +109,13 @@
                 android:text="01/01"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintBottom_toTopOf="@+id/textViewEmailDipendenteCard"
+                app:layout_constraintBottom_toTopOf="@+id/textViewDescrizionePrincipaleElementoMenuCard"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.941" />
 
             <ImageView
-                android:id="@+id/imageViewNascondiAvviso"
+                android:id="@+id/imageViewVediIngredientiElementoMenuCard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -123,8 +123,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.71"
-                app:layout_constraintStart_toEndOf="@+id/textViewEmailDipendenteCard"
-                app:layout_constraintTop_toBottomOf="@+id/textViewDataCreazioneAvviso"
+                app:layout_constraintStart_toEndOf="@+id/textViewDescrizionePrincipaleElementoMenuCard"
+                app:layout_constraintTop_toBottomOf="@+id/textViewCostoElementoMenuCard"
                 app:layout_constraintVertical_bias="0.222"
                 app:srcCompat="@drawable/icon_invisible_eye" />
         </androidx.constraintlayout.widget.ConstraintLayout>

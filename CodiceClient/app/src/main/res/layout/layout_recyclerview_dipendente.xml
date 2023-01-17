@@ -29,7 +29,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textViewTitoloSezioneMenuCard"
+                android:id="@+id/textViewTitoloPrincipaleElementoMenuCard"
                 android:layout_width="380dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
@@ -46,19 +46,19 @@
                 app:layout_constraintVertical_bias="0.152" />
 
             <TextView
-                android:id="@+id/textViewRuoloDipendenteCard"
+                android:id="@+id/textViewTitoloSecondarioElementoMenuCard"
                 android:layout_width="215dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/verdana_font"
                 android:text="Ruolo"
                 android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="@+id/textViewTitoloSezioneMenuCard"
+                app:layout_constraintEnd_toEndOf="@+id/textViewTitoloPrincipaleElementoMenuCard"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/textViewTitoloSezioneMenuCard"
-                app:layout_constraintTop_toBottomOf="@+id/textViewTitoloSezioneMenuCard" />
+                app:layout_constraintStart_toStartOf="@+id/textViewTitoloPrincipaleElementoMenuCard"
+                app:layout_constraintTop_toBottomOf="@+id/textViewTitoloPrincipaleElementoMenuCard" />
 
             <TextView
-                android:id="@+id/textViewEmailDipendenteCard"
+                android:id="@+id/textViewDescrizionePrincipaleElementoMenuCard"
                 android:layout_width="450dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -67,10 +67,10 @@
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 android:textStyle="italic"
-                app:layout_constraintEnd_toEndOf="@+id/textViewRuoloDipendenteCard"
+                app:layout_constraintEnd_toEndOf="@+id/textViewTitoloSecondarioElementoMenuCard"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/textViewRuoloDipendenteCard"
-                app:layout_constraintTop_toBottomOf="@+id/textViewRuoloDipendenteCard" />
+                app:layout_constraintStart_toStartOf="@+id/textViewTitoloSecondarioElementoMenuCard"
+                app:layout_constraintTop_toBottomOf="@+id/textViewTitoloSecondarioElementoMenuCard" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

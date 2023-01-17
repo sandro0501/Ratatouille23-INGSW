@@ -2,16 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clipChildren="false"
     android:clipToPadding="false">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         app:cardBackgroundColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,110 +17,283 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="642dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/elemento_menu_bg">
 
             <ImageView
-                android:id="@+id/imageViewNotifica"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="28dp"
+                android:id="@+id/imageViewImmagineElementoMenuCard"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:src="@color/colorGrey"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.02"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.205"
-                app:srcCompat="@drawable/icon_avviso_da_vedere" />
+                app:layout_constraintVertical_bias="0.481" />
 
             <TextView
-                android:id="@+id/textViewTitoloSezioneMenuCard"
-                android:layout_width="380dp"
+                android:id="@+id/textViewTitoloPrincipaleElementoMenuCard"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:fontFamily="@font/verdanab"
-                android:text="Nome Cognome"
+                android:fontFamily="@font/verdana_font"
+                android:maxWidth="240dp"
+                android:singleLine="true"
+                android:text="Nome piatto"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/imageViewNotifica"
+                app:layout_constraintStart_toEndOf="@+id/imageViewImmagineElementoMenuCard"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.152" />
 
             <TextView
-                android:id="@+id/textViewRuoloDipendenteCard"
-                android:layout_width="215dp"
+                android:id="@+id/textViewTitoloSecondarioElementoMenuCard"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="34dp"
-                android:fontFamily="@font/verdanab"
-                android:text="Ruolo"
+                android:fontFamily="@font/verdana_font"
+                android:singleLine="true"
+                android:maxWidth="240dp"
+                android:text="Nome secondario"
                 android:textColor="@color/black"
+                android:textSize="15sp"
                 android:textStyle="italic"
-                app:layout_constraintBottom_toTopOf="@+id/textViewAnteprimaAvviso"
-                app:layout_constraintEnd_toEndOf="@+id/textViewTitoloSezioneMenuCard"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/textViewTitoloPrincipaleElementoMenuCard"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/textViewTitoloSezioneMenuCard"
-                app:layout_constraintTop_toBottomOf="@+id/textViewTitoloSezioneMenuCard"
+                app:layout_constraintStart_toStartOf="@+id/textViewTitoloPrincipaleElementoMenuCard"
+                app:layout_constraintTop_toBottomOf="@+id/textViewTitoloPrincipaleElementoMenuCard"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
-                android:id="@+id/textViewEmailDipendenteCard"
-                android:layout_width="450dp"
+                android:id="@+id/textViewDescrizionePrincipaleElementoMenuCard"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:fontFamily="@font/verdanab"
-                android:text="Oggetto avviso"
+                android:fontFamily="@font/verdana_font"
+                android:maxWidth="240dp"
+                android:singleLine="true"
+                android:text="Descrizione principale"
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toTopOf="@+id/textViewAnteprimaAvviso"
-                app:layout_constraintEnd_toEndOf="@+id/textViewRuoloDipendenteCard"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/textViewDescrizioneSecondariaElementoMenuCard"
+                app:layout_constraintEnd_toEndOf="@+id/textViewTitoloPrincipaleElementoMenuCard"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/textViewRuoloDipendenteCard"
-                app:layout_constraintTop_toBottomOf="@+id/textViewRuoloDipendenteCard"
+                app:layout_constraintStart_toStartOf="@+id/textViewTitoloPrincipaleElementoMenuCard"
+                app:layout_constraintTop_toBottomOf="@+id/textViewTitoloSecondarioElementoMenuCard"
                 app:layout_constraintVertical_bias="1.0" />
 
             <TextView
-                android:id="@+id/textViewAnteprimaAvviso"
-                android:layout_width="450dp"
+                android:id="@+id/textViewDescrizioneSecondariaElementoMenuCard"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:fontFamily="@font/verdana"
-                android:text="Anteprima avviso..."
+                android:fontFamily="@font/verdana_font"
+                android:maxWidth="240dp"
+                android:singleLine="true"
+                android:text="Descrizione secondaria"
                 android:textColor="@color/black"
+                android:textSize="11sp"
+                android:textStyle="italic"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/textViewEmailDipendenteCard"
+                app:layout_constraintEnd_toEndOf="@+id/textViewTitoloPrincipaleElementoMenuCard"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/textViewEmailDipendenteCard" />
+                app:layout_constraintStart_toStartOf="@+id/textViewTitoloPrincipaleElementoMenuCard" />
 
             <TextView
-                android:id="@+id/textViewDataCreazioneAvviso"
+                android:id="@+id/textViewCostoElementoMenuCard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
-                android:layout_marginBottom="31dp"
-                android:fontFamily="@font/verdanab"
-                android:text="01/01"
+                android:fontFamily="@font/verdana_font"
+                android:text="€10"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintBottom_toTopOf="@+id/textViewEmailDipendenteCard"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.941" />
+                app:layout_constraintBottom_toBottomOf="@+id/textViewTitoloPrincipaleElementoMenuCard"
+                app:layout_constraintEnd_toStartOf="@+id/imageViewVediIngredientiElementoMenuCard"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textViewTitoloPrincipaleElementoMenuCard" />
 
             <ImageView
-                android:id="@+id/imageViewNascondiAvviso"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:id="@+id/imageViewVediIngredientiElementoMenuCard"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewDescrizioneSecondariaElementoMenuCard"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.71"
-                app:layout_constraintStart_toEndOf="@+id/textViewEmailDipendenteCard"
-                app:layout_constraintTop_toBottomOf="@+id/textViewDataCreazioneAvviso"
-                app:layout_constraintVertical_bias="0.222"
-                app:srcCompat="@drawable/icon_invisible_eye" />
+                app:layout_constraintHorizontal_bias="0.64"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textViewTitoloPrincipaleElementoMenuCard"
+                app:srcCompat="@drawable/zoom_ingredienti" />
+
+            <ImageView
+                android:id="@+id/imageViewIconaAllergeniCrostaceiVisualizza"
+                android:layout_width="31dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="30dp"
+                android:src="@drawable/conferma_icon"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewDescrizioneSecondariaElementoMenuCard"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imageViewVediIngredientiElementoMenuCard"
+                app:layout_constraintTop_toTopOf="@+id/textViewTitoloPrincipaleElementoMenuCard"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/crustaceans_allergen_food_allergens_icon_183708" />
+
+            <ImageView
+                android:id="@+id/imageViewIconaAllergeniLupiniVisualizza"
+                android:layout_width="31dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewIconaAllergeniSolfitiVisualizza"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imageViewIconaAllergeniSolfitiVisualizza"
+                app:layout_constraintTop_toTopOf="@+id/imageViewIconaAllergeniSolfitiVisualizza"
+                app:layout_constraintVertical_bias="1.0"
+                app:srcCompat="@drawable/lupins_allergen_food_allergens_icon_183713" />
+
+            <ImageView
+                android:id="@+id/imageViewIconaAllergeniMolluschiVisualizza"
+                android:layout_width="31dp"
+                android:layout_height="30dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewIconaAllergeniCrostaceiVisualizza"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imageViewIconaAllergeniCrostaceiVisualizza"
+                app:layout_constraintTop_toTopOf="@+id/imageViewIconaAllergeniCrostaceiVisualizza"
+                app:srcCompat="@drawable/shellfish_allergen_food_allergens_icon_183718" />
+
+            <ImageView
+                android:id="@+id/imageViewIconaAllergeniUovaVisualizza"
+                android:layout_width="31dp"
+                android:layout_height="30dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewIconaAllergeniMolluschiVisualizza"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imageViewIconaAllergeniMolluschiVisualizza"
+                app:layout_constraintTop_toTopOf="@+id/imageViewIconaAllergeniMolluschiVisualizza"
+                app:srcCompat="@drawable/egg_allergen_food_allergens_icon_183709" />
+
+            <ImageView
+                android:id="@+id/imageViewIconaAllergeniSoiaVisualizza"
+                android:layout_width="31dp"
+                android:layout_height="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imageViewIconaAllergeniUovaVisualizza"
+                app:layout_constraintTop_toTopOf="@+id/imageViewIconaAllergeniUovaVisualizza"
+                app:srcCompat="@drawable/soy_allergen_food_allergens_icon_183712" />
+
+            <ImageView
+                android:id="@+id/imageViewIconaAllergeniSedanoVisualizza"
+                android:layout_width="31dp"
+                android:layout_height="30dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewIconaAllergeniSoiaVisualizza"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imageViewIconaAllergeniSoiaVisualizza"
+                app:layout_constraintTop_toTopOf="@+id/imageViewIconaAllergeniSoiaVisualizza"
+                app:srcCompat="@drawable/celery_allergen_food_allergens_icon_183714" />
+
+            <ImageView
+                android:id="@+id/imageViewIconaAllergeniSolfitiVisualizza"
+                android:layout_width="31dp"
+                android:layout_height="30dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewIconaAllergeniSedanoVisualizza"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imageViewIconaAllergeniSedanoVisualizza"
+                app:layout_constraintTop_toTopOf="@+id/imageViewIconaAllergeniSedanoVisualizza"
+                app:srcCompat="@drawable/sulfites_allergen_food_allergens_icon_183716" />
+
+            <ImageView
+                android:id="@+id/imageViewIconaAllergeniGlutineVisualizza"
+                android:layout_width="31dp"
+                android:layout_height="30dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewDescrizioneSecondariaElementoMenuCard"
+                app:layout_constraintEnd_toEndOf="@+id/imageViewIconaAllergeniCrostaceiVisualizza"
+                app:layout_constraintStart_toStartOf="@+id/imageViewIconaAllergeniCrostaceiVisualizza"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewIconaAllergeniCrostaceiVisualizza"
+                app:layout_constraintVertical_bias="1.0"
+                app:srcCompat="@drawable/gluten_allergen_food_allergens_icon_183719" />
+
+            <ImageView
+                android:id="@+id/imageViewIconaAllergeniLattosioVisualizza"
+                android:layout_width="31dp"
+                android:layout_height="30dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewIconaAllergeniArachidiVisualizza"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imageViewIconaAllergeniArachidiVisualizza"
+                app:layout_constraintTop_toTopOf="@+id/imageViewIconaAllergeniArachidiVisualizza"
+                app:srcCompat="@drawable/milk_allergen_food_allergens_icon_183717" />
+
+            <ImageView
+                android:id="@+id/imageViewIconaAllergeniPesceVisualizza"
+                android:layout_width="31dp"
+                android:layout_height="30dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewIconaAllergeniNociVisualizza"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imageViewIconaAllergeniNociVisualizza"
+                app:layout_constraintTop_toTopOf="@+id/imageViewIconaAllergeniNociVisualizza"
+                app:srcCompat="@drawable/fish_allergen_food_allergens_icon_183707" />
+
+            <ImageView
+                android:id="@+id/imageViewIconaAllergeniSenapeVisualizza"
+                android:layout_width="31dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewIconaAllergeniPesceVisualizza"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imageViewIconaAllergeniPesceVisualizza"
+                app:layout_constraintTop_toTopOf="@+id/imageViewIconaAllergeniPesceVisualizza"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/mustard_allergen_food_allergens_icon_183710" />
+
+            <ImageView
+                android:id="@+id/imageViewIconaAllergeniNociVisualizza"
+                android:layout_width="31dp"
+                android:layout_height="30dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewIconaAllergeniSesamoVisualizza"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imageViewIconaAllergeniSesamoVisualizza"
+                app:layout_constraintTop_toTopOf="@+id/imageViewIconaAllergeniSesamoVisualizza"
+                app:srcCompat="@drawable/nuts_allergen_food_allergens_icon_183715" />
+
+            <ImageView
+                android:id="@+id/imageViewIconaAllergeniArachidiVisualizza"
+                android:layout_width="31dp"
+                android:layout_height="30dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewIconaAllergeniGlutineVisualizza"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imageViewIconaAllergeniGlutineVisualizza"
+                app:layout_constraintTop_toTopOf="@+id/imageViewIconaAllergeniGlutineVisualizza"
+                app:srcCompat="@drawable/peanut_allergen_food_allergens_icon_183711" />
+
+            <ImageView
+                android:id="@+id/imageViewIconaAllergeniSesamoVisualizza"
+                android:layout_width="31dp"
+                android:layout_height="30dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewIconaAllergeniLattosioVisualizza"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imageViewIconaAllergeniLattosioVisualizza"
+                app:layout_constraintTop_toTopOf="@+id/imageViewIconaAllergeniLattosioVisualizza"
+                app:srcCompat="@drawable/sesame_allergen_food_allergens_icon_183706" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

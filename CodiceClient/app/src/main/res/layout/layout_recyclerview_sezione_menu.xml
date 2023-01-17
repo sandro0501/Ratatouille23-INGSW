@@ -10,6 +10,7 @@
     android:clipToPadding="false">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewSezione"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/white"
@@ -20,41 +21,54 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="642dp"
+            android:layout_width="800dp"
             android:layout_height="match_parent"
             android:background="@drawable/sezione_menu_bg"
             android:paddingBottom="10dp">
 
-            <TextView
-                android:id="@+id/textViewTitoloSezioneMenuCard"
+            <EditText
+                android:id="@+id/textViewTitoloPrincipaleElementoMenuCard"
                 android:layout_width="wrap_content"
                 android:layout_height="22dp"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="30dp"
+                android:background="@android:color/transparent"
                 android:fontFamily="@font/verdana_font"
+                android:singleLine="true"
                 android:text="Nome Cognome"
                 android:textAlignment="viewStart"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/recyclerViewElementiMenu"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewElementiMenu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewElementiMenu"
-                android:layout_width="0dp"
-                android:layout_height="194dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewTitoloSezioneMenuCard"
+                app:layout_constraintVertical_bias="0.0"
                 tools:listitem="@layout/layout_recyclerview_elemento_menu" />
+
+            <ImageView
+                android:id="@+id/iconaModificaTitoloSezione"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewTitoloPrincipaleElementoMenuCard"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/textViewTitoloPrincipaleElementoMenuCard"
+                app:layout_constraintTop_toTopOf="@+id/textViewTitoloPrincipaleElementoMenuCard"
+                app:srcCompat="@drawable/icona_matita" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

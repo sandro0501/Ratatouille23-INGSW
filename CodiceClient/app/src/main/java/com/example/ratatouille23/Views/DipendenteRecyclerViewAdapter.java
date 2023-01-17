@@ -62,9 +62,9 @@ public class DipendenteRecyclerViewAdapter extends RecyclerView.Adapter<Dipenden
         public MyViewHolder(@NonNull View itemView, RecyclerViewDipendenteInterface recyclerViewInterfaceDipendente) {
             super(itemView);
 
-            textViewNome = itemView.findViewById(R.id.textViewTitoloSezioneMenuCard);
-            textViewEmail = itemView.findViewById(R.id.textViewEmailDipendenteCard);
-            textViewRuolo = itemView.findViewById(R.id.textViewRuoloDipendenteCard);
+            textViewNome = itemView.findViewById(R.id.textViewTitoloPrincipaleElementoMenuCard);
+            textViewEmail = itemView.findViewById(R.id.textViewDescrizionePrincipaleElementoMenuCard);
+            textViewRuolo = itemView.findViewById(R.id.textViewTitoloSecondarioElementoMenuCard);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

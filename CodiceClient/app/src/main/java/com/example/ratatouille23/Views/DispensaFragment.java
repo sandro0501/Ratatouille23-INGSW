@@ -289,8 +289,10 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
 
     @Override
     public void onStop() {
-        deselezionaTuttiProdotti();
-        disattivaModalitaEliminazione();
+        if (Controller.getIsModalitaEliminazioneProdottoAttiva()){
+            deselezionaTuttiProdotti();
+            disattivaModalitaEliminazione();
+        }
         super.onStop();
     }
 
