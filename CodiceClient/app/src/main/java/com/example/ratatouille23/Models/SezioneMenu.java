@@ -7,17 +7,28 @@ public class SezioneMenu {
     private String titolo;
     private int posizione;
     private ArrayList<Elemento> appartenente;
+    private boolean inModifica = false;
 
     public SezioneMenu(String nome, int posizione) {
         this.titolo = nome;
         this.posizione = posizione;
-        ArrayList<Elemento> appartenente = new ArrayList<>();
+        appartenente = new ArrayList<>();
     }
 
     public SezioneMenu(String nome, int posizione, ArrayList<Elemento> appartenente) {
         this.titolo = nome;
         this.posizione = posizione;
         this.appartenente = appartenente;
+
+        for (Elemento el : appartenente) el.setAppartiene(this);
+    }
+
+    public boolean isInModifica() {
+        return inModifica;
+    }
+
+    public void setInModifica(boolean inModifica) {
+        this.inModifica = inModifica;
     }
 
     public ArrayList<Elemento> getAppartenente() {

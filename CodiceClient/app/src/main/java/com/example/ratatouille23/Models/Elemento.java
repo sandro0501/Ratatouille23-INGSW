@@ -12,7 +12,38 @@ public class Elemento {
     private int posizione;
     private ArrayList<Allergene> presenta;
     private ArrayList<Prodotto> preparatoCon;
-    private ArrayList<Double> quantitaNecessaria;
+    private ArrayList<Preparazione> preparazione;
+    private SezioneMenu appartiene;
+
+    public Elemento(String denominazionePrincipale, String denominazioneSecondaria, String descrizionePrincipale, String descrizioneSecondaria, Double costo, int posizione, ArrayList<Allergene> presenta, ArrayList<Prodotto> preparatoCon, ArrayList<Double> quantitaNecessaria, SezioneMenu appartiene) {
+        this.denominazionePrincipale = denominazionePrincipale;
+        this.denominazioneSecondaria = denominazioneSecondaria;
+        this.descrizionePrincipale = descrizionePrincipale;
+        this.descrizioneSecondaria = descrizioneSecondaria;
+        this.costo = costo;
+        this.posizione = posizione;
+        this.presenta = presenta;
+        this.preparatoCon = preparatoCon;
+        for (int i = 0; i < quantitaNecessaria.size(); i++) {
+            preparazione.get(i).setProdottoAssociato(preparatoCon.get(i));
+            preparazione.get(i).setQuantitaNecessaria(quantitaNecessaria.get(i));
+        }
+        this.appartiene = appartiene;
+    }
+
+    public Elemento(String denominazionePrincipale, String descrizionePrincipale, Double costo, int posizione, ArrayList<Allergene> presenta, ArrayList<Prodotto> preparatoCon, ArrayList<Double> quantitaNecessaria, SezioneMenu appartiene) {
+        this.denominazionePrincipale = denominazionePrincipale;
+        this.descrizionePrincipale = descrizionePrincipale;
+        this.costo = costo;
+        this.posizione = posizione;
+        this.presenta = presenta;
+        this.preparatoCon = preparatoCon;
+        for (int i = 0; i < quantitaNecessaria.size(); i++) {
+            preparazione.get(i).setProdottoAssociato(preparatoCon.get(i));
+            preparazione.get(i).setQuantitaNecessaria(quantitaNecessaria.get(i));
+        }
+        this.appartiene = appartiene;
+    }
 
     public Elemento(String denominazionePrincipale, String denominazioneSecondaria, String descrizionePrincipale, String descrizioneSecondaria, double costo, int posizione, ArrayList<Allergene> presenta, ArrayList<Prodotto> preparatoCon, ArrayList<Double> quantitaNecessaria) {
         this.denominazionePrincipale = denominazionePrincipale;
@@ -23,7 +54,10 @@ public class Elemento {
         this.posizione = posizione;
         this.presenta = presenta;
         this.preparatoCon = preparatoCon;
-        this.quantitaNecessaria = quantitaNecessaria;
+        for (int i = 0; i < quantitaNecessaria.size(); i++) {
+            preparazione.get(i).setProdottoAssociato(preparatoCon.get(i));
+            preparazione.get(i).setQuantitaNecessaria(quantitaNecessaria.get(i));
+        }
     }
 
     public Elemento(String denominazionePrincipale, String descrizionePrincipale, double costo, int posizione, ArrayList<Allergene> presenta, ArrayList<Prodotto> preparatoCon, ArrayList<Double> quantitaNecessaria) {
@@ -33,7 +67,10 @@ public class Elemento {
         this.posizione = posizione;
         this.presenta = presenta;
         this.preparatoCon = preparatoCon;
-        this.quantitaNecessaria = quantitaNecessaria;
+        for (int i = 0; i < quantitaNecessaria.size(); i++) {
+            preparazione.get(i).setProdottoAssociato(preparatoCon.get(i));
+            preparazione.get(i).setQuantitaNecessaria(quantitaNecessaria.get(i));
+        }
     }
 
     public Elemento(String denominazionePrincipale, String denominazioneSecondaria, String descrizionePrincipale, String descrizioneSecondaria, double costo, int posizione) {
@@ -45,7 +82,7 @@ public class Elemento {
         this.posizione = posizione;
         presenta = new ArrayList<>();
         this.preparatoCon = new ArrayList<>();
-        this.quantitaNecessaria = new ArrayList<>();
+        this.preparazione = new ArrayList<>();
     }
 
     public Elemento(String denominazionePrincipale, String descrizionePrincipale, double costo, int posizione) {
@@ -55,7 +92,7 @@ public class Elemento {
         this.posizione = posizione;
         presenta = new ArrayList<>();
         this.preparatoCon = new ArrayList<>();
-        this.quantitaNecessaria = new ArrayList<>();
+        this.preparazione = new ArrayList<>();
     }
 
     public String getDenominazionePrincipale() {
@@ -122,11 +159,19 @@ public class Elemento {
         this.preparatoCon = preparatoCon;
     }
 
-    public ArrayList<Double> getQuantitaNecessaria() {
-        return quantitaNecessaria;
+    public ArrayList<Preparazione> getPreparazione() {
+        return preparazione;
     }
 
-    public void setQuantitaNecessaria(ArrayList<Double> quantitaNecessaria) {
-        this.quantitaNecessaria = quantitaNecessaria;
+    public void setPreparazione(ArrayList<Preparazione> preparazione) {
+        this.preparazione = preparazione;
+    }
+
+    public SezioneMenu getAppartiene() {
+        return appartiene;
+    }
+
+    public void setAppartiene(SezioneMenu appartiene) {
+        this.appartiene = appartiene;
     }
 }
