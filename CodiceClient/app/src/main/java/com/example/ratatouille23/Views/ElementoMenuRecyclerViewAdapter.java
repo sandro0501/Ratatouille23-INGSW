@@ -11,23 +11,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ratatouille23.Models.Allergene;
 import com.example.ratatouille23.Models.Elemento;
 import com.example.ratatouille23.Models.Prodotto;
+import com.example.ratatouille23.Models.SezioneMenu;
 import com.example.ratatouille23.Models.listaAllergeni;
 import com.example.ratatouille23.R;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ElementoMenuRecyclerViewAdapter extends RecyclerView.Adapter<ElementoMenuRecyclerViewAdapter.MyViewHolder>{
 
     private final RecyclerViewElementoMenuInterface recyclerViewInterfaceElemento;
 
     private Context context;
+
     private ArrayList<Elemento> listaElementi;
 
     public ElementoMenuRecyclerViewAdapter(Context context, ArrayList<Elemento> listaElementi, RecyclerViewElementoMenuInterface recyclerViewInterfaceElemento){
@@ -53,6 +57,8 @@ public class ElementoMenuRecyclerViewAdapter extends RecyclerView.Adapter<Elemen
         holder.textViewDescrizioneSecondaria.setText(listaElementi.get(position).getDescrizioneSecondaria());
         holder.textViewCosto.setText("€" + listaElementi.get(position).getCosto().toString());
         boolean iconaDaMostrare;
+
+        if (!listaElementi.isEmpty()) holder.sezioneCorrente = listaElementi.get(0).getAppartiene();
 
         for (ImageView icona : holder.listaIconeAllergeni) {
             iconaDaMostrare = false;
@@ -98,6 +104,8 @@ public class ElementoMenuRecyclerViewAdapter extends RecyclerView.Adapter<Elemen
         ImageView iconaLattosio;
         ImageView iconaSedano;
         ImageView iconaSoia;
+
+        SezioneMenu sezioneCorrente;
 
         public MyViewHolder(@NonNull View itemView, RecyclerViewElementoMenuInterface recyclerViewInterfaceElemento) {
             super(itemView);

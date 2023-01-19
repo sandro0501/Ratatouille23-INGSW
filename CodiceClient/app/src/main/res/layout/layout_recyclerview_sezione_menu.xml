@@ -62,13 +62,38 @@
                 android:id="@+id/iconaModificaTitoloSezione"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="7dp"
+                android:layout_marginStart="10dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewTitoloPrincipaleElementoMenuCard"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/textViewTitoloPrincipaleElementoMenuCard"
                 app:layout_constraintTop_toTopOf="@+id/textViewTitoloPrincipaleElementoMenuCard"
                 app:srcCompat="@drawable/icona_matita" />
+
+            <ImageView
+                android:id="@+id/iconaEliminaSezione"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/iconaModificaTitoloSezione"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/iconaModificaTitoloSezione"
+                app:layout_constraintTop_toTopOf="@+id/iconaModificaTitoloSezione"
+                app:srcCompat="@drawable/ic_baseline_delete_24"
+                tools:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/iconaDragNDropSezione"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/iconaEliminaSezione"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/iconaEliminaSezione"
+                app:layout_constraintTop_toTopOf="@+id/iconaEliminaSezione"
+                app:srcCompat="@drawable/ic_baseline_drag_handle_24" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
