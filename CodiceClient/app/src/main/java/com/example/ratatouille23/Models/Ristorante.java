@@ -1,6 +1,9 @@
 package com.example.ratatouille23.Models;
 
+import android.widget.ArrayAdapter;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Ristorante implements Serializable {
 
@@ -9,6 +12,8 @@ public class Ristorante implements Serializable {
     private String indirizzo;
     private String citta;
     private boolean turistico;
+    private ArrayList<SezioneMenu> offre = new ArrayList<>();
+    private ArrayList<Prodotto> utilizza = new ArrayList<>();
 
     public String getNome() {
         return nome;
@@ -58,5 +63,20 @@ public class Ristorante implements Serializable {
         this.turistico = turistico;
     }
 
+    public ArrayList<SezioneMenu> getOffre() {
+        return offre;
+    }
+
+    public void setOffre(ArrayList<SezioneMenu> offre) {
+        this.offre = offre;
+    }
+
+    public ArrayList<Prodotto> getUtilizza() {
+        return utilizza;
+    }
+
+    public void setUtilizza(ArrayList<Prodotto> utilizza) {
+        this.utilizza = utilizza;
+    }
 
 }

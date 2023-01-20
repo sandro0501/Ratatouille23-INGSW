@@ -8,6 +8,7 @@ public class Utente {
     private String cognome;
     private String email;
     private ArrayList<Bacheca> bacheca = new ArrayList<>();
+    private Ristorante lavora;
 
     public Utente() {};
 
@@ -67,5 +68,13 @@ public class Utente {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Ristorante getLavora() {
+        return lavora;
+    }
+
+    public void setLavora(Ristorante lavora) {
+        this.lavora = lavora;
     }
 }

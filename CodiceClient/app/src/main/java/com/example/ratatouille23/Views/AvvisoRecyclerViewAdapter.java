@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.ratatouille23.Models.Avviso;
 import com.example.ratatouille23.R;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class AvvisoRecyclerViewAdapter extends RecyclerView.Adapter<AvvisoRecyclerViewAdapter.MyViewHolder> {
@@ -42,11 +44,12 @@ public class AvvisoRecyclerViewAdapter extends RecyclerView.Adapter<AvvisoRecycl
     public void onBindViewHolder(@NonNull AvvisoRecyclerViewAdapter.MyViewHolder holder, int position) {
         //assegna valori alle "card" che abbiamo creato in dipendenza anche della loro posizione nella lista recycler view
 
-        holder.imageViewAvvisi.setImageResource(avvisi.get(position).getIconaAvviso());
+        holder.imageViewAvvisi.setImageResource(R.drawable.icon_avviso_da_vedere);
         holder.autoreAvviso.setText(avvisi.get(position).getAutore().getNomeCompleto());
         holder.oggettoAvviso.setText(avvisi.get(position).getOggetto());
         holder.corpoAvviso.setText(avvisi.get(position).getCorpo());
-        holder.dataAvviso.setText(avvisi.get(position).getDataCreazione());
+        Date data = avvisi.get(position).getDataCreazione();
+        holder.dataAvviso.setText(new SimpleDateFormat("dd/MM").format(data));
         holder.ruoloAutoreAvviso.setText(avvisi.get(position).getAutore().getRuoloUtente());
 
     }

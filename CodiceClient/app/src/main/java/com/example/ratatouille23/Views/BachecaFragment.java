@@ -26,6 +26,10 @@ import com.example.ratatouille23.Presenters.PresenterBacheca;
 import com.example.ratatouille23.R;
 
 import com.example.ratatouille23.Models.Avviso;
+
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
@@ -133,7 +137,14 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
 
         for(int i=0; i<oggettiAvvisi.length; i++){
             Utente utente = UtenteFactory.getInstance().getNuovoUtente(nomiAutori[i], cognomiAutori[i], emailAutori[i], ruoliAutoriAvvisi[i], false);
-            Avviso avviso = new Avviso(oggettiAvvisi[i],corpoAvvisi[i],dateAvvisi[i],(Gestore)utente,iconaAvvisoDaVedere);
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM");
+            Date stringaData = null;
+            try {
+                stringaData = new Date(formatter.parse(dateAvvisi[i]).getTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Avviso avviso = new Avviso(oggettiAvvisi[i],corpoAvvisi[i], stringaData,(Gestore)utente);
             avvisiUtente.add(avviso);
         }
     }

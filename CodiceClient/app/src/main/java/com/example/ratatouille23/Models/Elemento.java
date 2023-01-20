@@ -10,9 +10,9 @@ public class Elemento {
     private String descrizioneSecondaria = "";
     private Double costo;
     private int posizione;
-    private ArrayList<Allergene> presenta;
-    private ArrayList<Prodotto> preparatoCon;
-    private ArrayList<Preparazione> preparazione;
+    private ArrayList<Allergene> presenta = new ArrayList<>();
+    private ArrayList<Prodotto> preparatoCon = new ArrayList<>();
+    private ArrayList<Preparazione> preparazione = new ArrayList<>();
     private SezioneMenu appartiene;
 
     public Elemento(String denominazionePrincipale, String denominazioneSecondaria, String descrizionePrincipale, String descrizioneSecondaria, Double costo, int posizione, ArrayList<Allergene> presenta, ArrayList<Prodotto> preparatoCon, ArrayList<Double> quantitaNecessaria, SezioneMenu appartiene) {
@@ -80,9 +80,6 @@ public class Elemento {
         this.descrizioneSecondaria = descrizioneSecondaria;
         this.costo = costo;
         this.posizione = posizione;
-        presenta = new ArrayList<>();
-        this.preparatoCon = new ArrayList<>();
-        this.preparazione = new ArrayList<>();
     }
 
     public Elemento(String denominazionePrincipale, String descrizionePrincipale, double costo, int posizione) {
@@ -90,9 +87,6 @@ public class Elemento {
         this.descrizionePrincipale = descrizionePrincipale;
         this.costo = costo;
         this.posizione = posizione;
-        presenta = new ArrayList<>();
-        this.preparatoCon = new ArrayList<>();
-        this.preparazione = new ArrayList<>();
     }
 
     public String getDenominazionePrincipale() {
