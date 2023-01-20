@@ -1,2 +1,0 @@
-Sei rimasto all'implementazione della parte della bacheca, hai gestito l'estrazione dei vari tipi di avvisi e l'inserimento di un avviso.
-Prossimo step: menu
