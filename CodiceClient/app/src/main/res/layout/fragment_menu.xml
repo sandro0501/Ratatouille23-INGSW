@@ -8,7 +8,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#F5EDED">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewSezioniMenu"
@@ -41,18 +42,18 @@
             android:id="@+id/spinnerSceltaAggiuntaSezioneElementoMenu"
             android:layout_width="361dp"
             android:layout_height="44dp"
-            android:spinnerMode="dropdown"
             android:background="@null"
+            android:spinnerMode="dropdown"
             app:layout_constraintBottom_toTopOf="@+id/recyclerViewSezioniMenu"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewMenuPrompt"/>
+            app:layout_constraintTop_toBottomOf="@+id/textViewMenuPrompt" />
 
         <ImageView
             android:id="@+id/iconaCestinoMenu"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:src="@drawable/ic_baseline_delete_24"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/icon_rimuovi_elemento"
             app:layout_constraintBottom_toBottomOf="@+id/spinnerSceltaAggiuntaSezioneElementoMenu"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.96"
@@ -61,7 +62,7 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textViewSceltaAggiunta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"

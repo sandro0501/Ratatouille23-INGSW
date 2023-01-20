@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.ratatouille23.Controller;
+import com.example.ratatouille23.Presenters.PresenterLogin;
 import com.example.ratatouille23.R;
 
 public class ConfermaCodiceActivity extends AppCompatActivity {
@@ -60,17 +60,17 @@ public class ConfermaCodiceActivity extends AppCompatActivity {
                 boolean codiceCorretto;
                 if (!codice.isEmpty() && !password.isEmpty() && !confermaPassword.isEmpty()) {
                     if (password.equals(confermaPassword)){
-                        codiceCorretto = Controller.getInstance().bottoneResettaPasswordConCodicePremuto(codice, password);
+                        codiceCorretto = PresenterLogin.getInstance().bottoneResettaPasswordConCodicePremuto(codice, password);
                         if (codiceCorretto) {
                             i = new Intent(getApplicationContext(), LoginActivity.class);
                             i.addFlags(FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
                             startActivity(i);
                         }
-                        else Controller.getInstance().mostraAlertErrore(ConfermaCodiceActivity.this, "Errore!", "Il codice inserito è errato!");
+                        else PresenterLogin.getInstance().mostraAlert(ConfermaCodiceActivity.this, "Errore!", "Il codice inserito è errato!");
                     }
-                    else Controller.getInstance().mostraAlertErrore(ConfermaCodiceActivity.this, "Attenzione!", "Le password inserite non coincidono!");
+                    else PresenterLogin.getInstance().mostraAlert(ConfermaCodiceActivity.this, "Attenzione!", "Le password inserite non coincidono!");
                 }
-                else Controller.getInstance().mostraAlertErrore(ConfermaCodiceActivity.this, "Attenzione!", "Uno o più campi obbligatori sono " +
+                else PresenterLogin.getInstance().mostraAlert(ConfermaCodiceActivity.this, "Attenzione!", "Uno o più campi obbligatori sono " +
                         "stati lasciati vuoti");
             }
         });

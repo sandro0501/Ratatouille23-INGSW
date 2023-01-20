@@ -43,11 +43,11 @@ public class AvvisoRecyclerViewAdapter extends RecyclerView.Adapter<AvvisoRecycl
         //assegna valori alle "card" che abbiamo creato in dipendenza anche della loro posizione nella lista recycler view
 
         holder.imageViewAvvisi.setImageResource(avvisi.get(position).getIconaAvviso());
-        holder.autoreAvviso.setText(avvisi.get(position).getAutore());
+        holder.autoreAvviso.setText(avvisi.get(position).getAutore().getNomeCompleto());
         holder.oggettoAvviso.setText(avvisi.get(position).getOggetto());
         holder.corpoAvviso.setText(avvisi.get(position).getCorpo());
         holder.dataAvviso.setText(avvisi.get(position).getDataCreazione());
-        holder.ruoloAutoreAvviso.setText(avvisi.get(position).getRuoloAutoreAvviso());
+        holder.ruoloAutoreAvviso.setText(avvisi.get(position).getAutore().getRuoloUtente());
 
     }
 

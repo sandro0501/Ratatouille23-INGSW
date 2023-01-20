@@ -1,16 +1,16 @@
 package com.example.ratatouille23.Views;
 
-import android.media.Image;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.ratatouille23.Models.Allergene;
 import com.example.ratatouille23.Models.Elemento;
@@ -28,6 +29,7 @@ import com.example.ratatouille23.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,15 +49,28 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
 
     private ImageView iconaCestino;
     private Spinner spinnerSceltaAggiunta;
+    private TextView textViewSpinner;
 
     private RecyclerView recyclerViewMenu;
     private SezioneMenuRecyclerViewAdapter adapterSezioni;
     private ArrayList<SezioneMenu> listaSezioni = new ArrayList<>();
+    private ArrayList<Elemento> listaElementiSelezionati = new ArrayList<>();
 
     private ItemTouchHelper itemTouchHelper;
+    private ArrayList<CardView> listaCardElementiSelezionati = new ArrayList<>();
+
+    private boolean modalitaEliminazione = false;
 
     public MenuFragment() {
         // Required empty public constructor
+    }
+
+    public boolean isModalitaEliminazione() {
+        return modalitaEliminazione;
+    }
+
+    public void setModalitaEliminazione(boolean modalitaEliminazione) {
+        this.modalitaEliminazione = modalitaEliminazione;
     }
 
     public SezioneMenuRecyclerViewAdapter getAdapterSezioni() {
@@ -65,6 +80,15 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
     public void setAdapterSezioni(SezioneMenuRecyclerViewAdapter adapterSezioni) {
         this.adapterSezioni = adapterSezioni;
     }
+
+    public ItemTouchHelper getItemTouchHelper() {
+        return itemTouchHelper;
+    }
+
+    public void setItemTouchHelper(ItemTouchHelper itemTouchHelper) {
+        this.itemTouchHelper = itemTouchHelper;
+    }
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -109,6 +133,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         recyclerViewMenu = view.findViewById(R.id.recyclerViewSezioniMenu);
         spinnerSceltaAggiunta = view.findViewById(R.id.spinnerSceltaAggiuntaSezioneElementoMenu);
         iconaCestino = view.findViewById(R.id.iconaCestinoMenu);
+        textViewSpinner = view.findViewById(R.id.textViewSceltaAggiunta);
 
         riempiSezioni();
 
@@ -128,6 +153,16 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_item_layout);
         spinnerSceltaAggiunta.setAdapter(spinnerAdapter);
         spinnerSceltaAggiunta.setSelection(2);
+
+        iconaCestino.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listaElementiSelezionati.size() == 0)
+                    attivaDisattivaModalitaEliminazione();
+                else
+                    eliminaProdottiSelezionati();
+            }
+        });
 
         spinnerSceltaAggiunta.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -151,7 +186,40 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         });
 
          itemTouchHelper = new ItemTouchHelper(simpleCallbackSezioni);
+         itemTouchHelper.attachToRecyclerView(recyclerViewMenu);
 
+    }
+
+    private void eliminaProdottiSelezionati() {
+        for (SezioneMenu sezioneCorrente : listaSezioni) {
+            sezioneCorrente.getAppartenente().removeAll(listaElementiSelezionati);
+        }
+        ((SezioneMenuRecyclerViewAdapter)recyclerViewMenu.getAdapter()).notifyDataSetChanged();
+        attivaDisattivaModalitaEliminazione();
+    }
+
+    private void attivaDisattivaModalitaEliminazione() {
+        int width = iconaCestino.getWidth();
+        int height = iconaCestino.getHeight();
+        if (modalitaEliminazione) {
+            modalitaEliminazione = false;
+            iconaCestino.setImageResource(R.drawable.icon_rimuovi_elemento);
+            iconaCestino.requestLayout();
+            iconaCestino.getLayoutParams().height = height;
+            iconaCestino.getLayoutParams().width = width;
+            deselezionaTuttiElementi();
+            spinnerSceltaAggiunta.setVisibility(View.VISIBLE);
+            textViewSpinner.setVisibility(View.VISIBLE);
+        }
+        else {
+            modalitaEliminazione = true;
+            iconaCestino.setImageResource(R.drawable.icon_rimuovi_elemento_selected);
+            iconaCestino.requestLayout();
+            iconaCestino.getLayoutParams().height = height;
+            iconaCestino.getLayoutParams().width = width;
+            spinnerSceltaAggiunta.setVisibility(View.INVISIBLE);
+            textViewSpinner.setVisibility(View.INVISIBLE);
+        }
     }
 
     ItemTouchHelper.SimpleCallback simpleCallbackSezioni = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
@@ -183,8 +251,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         @Override
         public boolean isLongPressDragEnabled()
         {
-            Log.i("draggable", ((Boolean)holderCorrente.isDraggable()).toString());
-            return holderCorrente.isDraggable();
+            return false;
         }
     };
 
@@ -217,5 +284,43 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         listaSezioni.add(s1);
         listaSezioni.add(s2);
     }
+
+    @Override
+    public void onElementoClicked(Elemento elementoCliccato, View itemView) {
+        if (modalitaEliminazione) {
+            selezionaDeseleziona(elementoCliccato, itemView);
+        }
+        else {
+
+        }
+    }
+
+    private void selezionaDeseleziona(Elemento elementoCliccato, View itemView) {
+        CardView cardElemento = itemView.findViewById(R.id.cardElementoMenu);
+        if (listaElementiSelezionati.contains(elementoCliccato)) {
+            listaElementiSelezionati.remove(elementoCliccato);
+            listaCardElementiSelezionati.remove(cardElemento);
+            cardElemento.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        else {
+            listaElementiSelezionati.add(elementoCliccato);
+            listaCardElementiSelezionati.add(cardElemento);
+            cardElemento.setBackgroundColor(Color.parseColor("#F4B851"));
+        }
+    }
+
+    @Override
+    public void onStop() {
+        modalitaEliminazione = true;
+        attivaDisattivaModalitaEliminazione();
+        super.onStop();
+    }
+
+    private void deselezionaTuttiElementi() {
+        listaElementiSelezionati.clear();
+        for (CardView card : listaCardElementiSelezionati) card.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        listaCardElementiSelezionati.clear();
+    }
+
 
 }

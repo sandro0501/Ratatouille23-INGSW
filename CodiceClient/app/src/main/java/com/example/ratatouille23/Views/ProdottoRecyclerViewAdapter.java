@@ -8,11 +8,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ratatouille23.Controller;
 import com.example.ratatouille23.Models.Prodotto;
+import com.example.ratatouille23.Presenters.PresenterDispensa;
 import com.example.ratatouille23.R;
 
 import java.util.ArrayList;
@@ -45,7 +44,7 @@ public class ProdottoRecyclerViewAdapter extends RecyclerView.Adapter<ProdottoRe
     public void onBindViewHolder(@NonNull ProdottoRecyclerViewAdapter.MyViewHolder holder, int position) {
         //assegna valori alle "card" che abbiamo creato in dipendenza anche della loro posizione nella lista recycler view
 
-        isProdottoSottoSoglia = Controller.getInstance().controllaSogliaProdotto(dispensa,position);
+        isProdottoSottoSoglia = PresenterDispensa.getInstance().controllaSogliaProdotto(dispensa,position);
 
         /*
         if (Controller.getIsModalitaEliminazioneProdottoAttiva() == true){

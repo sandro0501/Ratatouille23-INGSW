@@ -162,6 +162,19 @@ public class ElementoMenuRecyclerViewAdapter extends RecyclerView.Adapter<Elemen
             listaIconeAllergeni.add(iconaSedano);
             listaIconeAllergeni.add(iconaSoia);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (recyclerViewInterfaceElemento != null) {
+                        int posizioneElemento = getAdapterPosition();
+                        if(posizioneElemento!=RecyclerView.NO_POSITION){
+                            recyclerViewInterfaceElemento.onElementoClicked(listaElementi.get(posizioneElemento), view);
+                        }
+
+                    }
+                }
+            });
+
         }
     }
 

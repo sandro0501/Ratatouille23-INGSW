@@ -7,17 +7,15 @@ public class Avviso {
     private String oggetto;
     private String corpo;
     private String dataCreazione;
-    private String autore;
+    private Gestore autore;
     private int iconaAvviso;
-    private String ruoloAutoreAvviso;
 
-    public Avviso(String oggetto, String corpo, String dataCreazione, String autore, int iconaAvviso, String ruoloAutoreAvviso) {
+    public Avviso(String oggetto, String corpo, String dataCreazione, Gestore autore, int iconaAvviso) {
         this.oggetto = oggetto;
         this.corpo = corpo;
         this.dataCreazione = dataCreazione;
         this.autore = autore;
         this.iconaAvviso = iconaAvviso;
-        this.ruoloAutoreAvviso = ruoloAutoreAvviso;
     }
 
     public String getOggetto() {
@@ -32,7 +30,7 @@ public class Avviso {
         return dataCreazione;
     }
 
-    public String getAutore() {
+    public Gestore getAutore() {
         return autore;
     }
 
@@ -40,9 +38,6 @@ public class Avviso {
         return iconaAvviso;
     }
 
-    public String getRuoloAutoreAvviso() {
-        return ruoloAutoreAvviso;
-    }
 
 
 

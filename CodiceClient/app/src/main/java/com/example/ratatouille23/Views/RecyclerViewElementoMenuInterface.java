@@ -1,5 +1,10 @@
 package com.example.ratatouille23.Views;
 
-public interface RecyclerViewElementoMenuInterface {
+import android.view.View;
 
+import com.example.ratatouille23.Models.Elemento;
+import com.example.ratatouille23.Models.SezioneMenu;
+
+public interface RecyclerViewElementoMenuInterface {
+    public void onElementoClicked(Elemento elementoCliccato, View itemView);
 }

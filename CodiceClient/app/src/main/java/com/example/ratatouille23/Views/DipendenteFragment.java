@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.ratatouille23.Models.Utente;
+import com.example.ratatouille23.Models.UtenteFactory;
 import com.example.ratatouille23.R;
 
 import java.util.ArrayList;
@@ -132,7 +133,7 @@ public class DipendenteFragment extends Fragment implements RecyclerViewDipenden
 
         for(int i=0; i<nomiDipendenti.length; i++){
 
-            dipendenti.add(Utente.creaUtenteConRuolo(nomiDipendenti[i], cognomiDipendenti[i], emailDipendenti[i], ruoliDipendenti[i], false));
+            dipendenti.add(UtenteFactory.getInstance().getNuovoUtente(nomiDipendenti[i], cognomiDipendenti[i], emailDipendenti[i], ruoliDipendenti[i], false));
 
         }
     }

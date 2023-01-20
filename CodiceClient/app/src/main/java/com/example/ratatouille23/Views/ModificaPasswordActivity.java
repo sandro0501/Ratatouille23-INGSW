@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.example.ratatouille23.Controller;
+import com.example.ratatouille23.Presenters.PresenterAreaPersonale;
 import com.example.ratatouille23.R;
 
 public class ModificaPasswordActivity extends AppCompatActivity {
@@ -49,21 +49,21 @@ public class ModificaPasswordActivity extends AppCompatActivity {
                 if (!vecchiaPassword.isEmpty() && !nuovaPassword.isEmpty() && !confermaPassword.isEmpty()) {
                     if (nuovaPassword.equals(confermaPassword)){
                         if (!vecchiaPassword.equals(nuovaPassword)) {
-                            passwordModificata = Controller.getInstance().bottoneModificaPasswordPremuto(vecchiaPassword, nuovaPassword);
+                            passwordModificata = PresenterAreaPersonale.getInstance().bottoneModificaPasswordPremuto(vecchiaPassword, nuovaPassword);
                             if (passwordModificata) {
                                 i.addFlags(FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(i);
                             } else
-                                Controller.getInstance().mostraAlertErrore(ModificaPasswordActivity.this, "Errore!", "La password non è stata " +
+                                PresenterAreaPersonale.getInstance().mostraAlert(ModificaPasswordActivity.this, "Errore!", "La password non è stata " +
                                         "modificata correttamente!");
 
                         }
-                        else Controller.getInstance().mostraAlertErrore(ModificaPasswordActivity.this, "Attenzione!", "La nuova password scelta " +
+                        else PresenterAreaPersonale.getInstance().mostraAlert(ModificaPasswordActivity.this, "Attenzione!", "La nuova password scelta " +
                                 "deve differire da quella attuale");
                     }
-                    else Controller.getInstance().mostraAlertErrore(ModificaPasswordActivity.this, "Attenzione!", "Le password inserite non coincidono!");
+                    else PresenterAreaPersonale.getInstance().mostraAlert(ModificaPasswordActivity.this, "Attenzione!", "Le password inserite non coincidono!");
                 }
-                else Controller.getInstance().mostraAlertErrore(ModificaPasswordActivity.this, "Attenzione!", "Uno o più campi obbligatori sono " +
+                else PresenterAreaPersonale.getInstance().mostraAlert(ModificaPasswordActivity.this, "Attenzione!", "Uno o più campi obbligatori sono " +
                         "stati lasciati vuoti");
             }
         });

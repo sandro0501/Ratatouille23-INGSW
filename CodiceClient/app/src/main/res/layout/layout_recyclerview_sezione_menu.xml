@@ -22,9 +22,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="800dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/sezione_menu_bg"
-            android:paddingBottom="10dp">
+            android:layout_height="wrap_content"
+            android:background="@drawable/sezione_menu_bg">
 
             <EditText
                 android:id="@+id/textViewTitoloPrincipaleElementoMenuCard"

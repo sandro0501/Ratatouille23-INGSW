@@ -2,7 +2,6 @@ package com.example.ratatouille23.Views;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -21,7 +20,6 @@ import com.example.ratatouille23.Models.Elemento;
 import com.example.ratatouille23.Models.SezioneMenu;
 import com.example.ratatouille23.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -34,6 +32,14 @@ public class SezioneMenuRecyclerViewAdapter extends RecyclerView.Adapter<Sezione
     private ElementoMenuRecyclerViewAdapter elementoMenuAdapter;
 
     private MyViewHolder holder;
+
+    public ElementoMenuRecyclerViewAdapter getElementoMenuAdapter() {
+        return elementoMenuAdapter;
+    }
+
+    public void setElementoMenuAdapter(ElementoMenuRecyclerViewAdapter elementoMenuAdapter) {
+        this.elementoMenuAdapter = elementoMenuAdapter;
+    }
 
     public SezioneMenuRecyclerViewAdapter(Context context, ArrayList<SezioneMenu> sezioni, RecyclerViewSezioneMenuInterface recyclerViewInterfaceSezioni){
         this.context = context;
@@ -66,8 +72,10 @@ public class SezioneMenuRecyclerViewAdapter extends RecyclerView.Adapter<Sezione
         holder.iconaMatitaModificaSezione.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                holder.sezioneCorrente.setInModifica(!holder.sezioneCorrente.isInModifica());
-                impostaGraficamenteModalitaModifica(holder, holder.sezioneCorrente);
+                if (!((MenuFragment)recyclerViewInterfaceSezioni).isModalitaEliminazione()) {
+                    holder.sezioneCorrente.setInModifica(!holder.sezioneCorrente.isInModifica());
+                    impostaGraficamenteModalitaModifica(holder, holder.sezioneCorrente);
+                }
             }
         });
 
@@ -82,14 +90,15 @@ public class SezioneMenuRecyclerViewAdapter extends RecyclerView.Adapter<Sezione
         holder.iconaDragNDrop.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
-                    holder.draggable = true;
+
+                if (!((MenuFragment)recyclerViewInterfaceSezioni).isModalitaEliminazione()) {
+                    if (motionEvent.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                        ((MenuFragment) recyclerViewInterfaceSezioni).getItemTouchHelper().startDrag(holder);
+                    }
                 }
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP){
-                    holder.draggable = false;
-                }
-                return true;
+                return false;
             }
+
         });
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallbackElementi);
@@ -132,7 +141,6 @@ public class SezioneMenuRecyclerViewAdapter extends RecyclerView.Adapter<Sezione
         private String titoloCorrente;
         private SezioneMenu sezioneCorrente;
         private ImageView iconaDragNDrop;
-        private boolean draggable = false;
 
         public MyViewHolder(@NonNull View itemView, RecyclerViewSezioneMenuInterface recyclerViewInterfaceSezioni) {
             super(itemView);
@@ -148,23 +156,6 @@ public class SezioneMenuRecyclerViewAdapter extends RecyclerView.Adapter<Sezione
 
         }
 
-        public boolean isDraggable() {
-            return draggable;
-        }
-
-        public void setDraggable(boolean draggable) {
-            this.draggable = draggable;
-        }
-    }
-
-    public void ripristinaTitoli() {
-        holder.iconaMatitaModificaSezione.setImageResource(R.drawable.icona_matita);
-        holder.editTextTitoloSezione.setEnabled(false);
-        holder.editTextTitoloSezione.setText(holder.titoloCorrente);
-    }
-
-    public void impostaTitoli() {
-        holder.titoloCorrente = holder.editTextTitoloSezione.getText().toString();
     }
 
     ItemTouchHelper.SimpleCallback simpleCallbackElementi = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
@@ -195,5 +186,6 @@ public class SezioneMenuRecyclerViewAdapter extends RecyclerView.Adapter<Sezione
 
         }
     };
+
 
 }

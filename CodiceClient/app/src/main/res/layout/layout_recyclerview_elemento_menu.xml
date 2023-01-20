@@ -8,6 +8,7 @@
     android:clipToPadding="false">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardElementoMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/white"
@@ -59,8 +60,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/verdana_font"
-                android:singleLine="true"
                 android:maxWidth="240dp"
+                android:singleLine="true"
                 android:text="Nome secondario"
                 android:textColor="@color/black"
                 android:textSize="15sp"
