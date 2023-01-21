@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="650dp"
+    android:background="@drawable/dialog_second_bg"
+    android:clipToPadding="false"
+    android:orientation="horizontal"
+    android:paddingLeft="50dp"
+    android:paddingTop="10dp"
+    android:paddingRight="50dp"
+    android:paddingBottom="30dp">
+
+
+    <TextView
+        android:id="@+id/textViewRicercaProdottoInDispensa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/verdanab"
+        android:text="Aggiungi prodotto alla preparazione dell'elemento del menù"
+        android:textColor="@color/colorGrey"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.025" />
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchViewRicercaProdottoInDispensa"
+        android:layout_width="600dp"
+        android:layout_height="50dp"
+        android:background="@drawable/search_view_bg"
+        app:iconifiedByDefault="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewRicercaProdottoInDispensa"
+        app:layout_constraintVertical_bias="0.047"
+        app:queryHint="Cerca tra i prodotti presenti in dispensa...">
+
+    </androidx.appcompat.widget.SearchView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewDispensaElemento"
+        android:layout_width="944dp"
+        android:layout_height="359dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottoneAnnullaAggiungiProdottoPerElemento"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchViewRicercaProdottoInDispensa"
+        app:layout_constraintVertical_bias="0.52"
+        tools:listitem="@layout/layout_recyclerview_prodotto" />
+
+
+    <TextView
+        android:id="@+id/textViewRicercaVuotaProdottoInDispensa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:fontFamily="@font/verdanab"
+        android:text="Nessun prodotto corrispondente trovato in dispensa!"
+        android:textColor="@color/colorGrey"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerViewDispensaElemento"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/recyclerViewDispensaElemento"
+        app:layout_constraintVertical_bias="0.537" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bottoneAnnullaAggiungiProdottoPerElemento"
+        android:layout_width="139dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/login_box_border"
+        android:backgroundTint="#D1CBC1"
+        android:fontFamily="@font/verdana_font"
+        android:text="Annulla"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewDispensaElemento" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

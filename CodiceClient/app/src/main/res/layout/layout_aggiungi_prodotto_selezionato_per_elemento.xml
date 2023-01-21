@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="300dp"
+    android:background="@drawable/dialog_second_bg"
+    android:clipToPadding="false"
+    android:orientation="horizontal"
+    android:paddingLeft="50dp"
+    android:paddingTop="10dp"
+    android:paddingRight="50dp"
+    android:paddingBottom="30dp">
+
+
+    <TextView
+        android:id="@+id/textViewProdottoInDispensaSelezionato"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/verdanab"
+        android:text="Prodotto selezionato da inserire alla preparazione:\n"
+        android:textColor="@color/colorGrey"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.025" />
+
+    <TextView
+        android:id="@+id/textViewQuantitaProdottoSelezionato"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/verdana_font"
+        android:text="Quantità necessaria alla preparazione:"
+        android:textColor="#5F5959"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textViewProdottoInDispensaSelezionato"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewProdottoInDispensaSelezionato"
+        app:layout_constraintTop_toBottomOf="@+id/textViewProdottoInDispensaSelezionato"
+        app:layout_constraintVertical_bias="0.17000002" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutQuantitaProdottoSelezionato"
+        android:layout_width="180dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="150dp"
+        android:background="@drawable/dummy_for_shadows"
+        android:elevation="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewQuantitaProdottoSelezionato"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.26">
+
+        <EditText
+            android:id="@+id/EditTextQuantitaProdottoSelezionato"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:backgroundTint="#5F5959"
+            android:ems="10"
+            android:fontFamily="@font/verdana"
+            android:inputType="numberDecimal"
+            android:maxLength="10"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textViewMisuraProdottoSelezionato"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/verdana_font"
+        android:text="misura"
+        android:textColor="#5F5959"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.11"
+        app:layout_constraintStart_toEndOf="@+id/constraintLayoutQuantitaProdottoSelezionato"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.37" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bottoneAggiungiProdottoSelezionato"
+        android:layout_width="136dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="84dp"
+        android:layout_marginEnd="28dp"
+        android:background="@drawable/login_box_border"
+        android:backgroundTint="#F2A726"
+        android:fontFamily="@font/verdana_font"
+        android:text="Aggiungi"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMisuraProdottoSelezionato"
+        app:layout_constraintVertical_bias="0.204" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bottoneAnnullaAggiungiProdottoSelezionato"
+        android:layout_width="139dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="279dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/login_box_border"
+        android:backgroundTint="#D1CBC1"
+        android:fontFamily="@font/verdana_font"
+        android:text="Annulla selezione"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/bottoneAggiungiProdottoSelezionato"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
