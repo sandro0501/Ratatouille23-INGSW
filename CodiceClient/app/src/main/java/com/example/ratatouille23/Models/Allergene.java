@@ -1,6 +1,8 @@
 package com.example.ratatouille23.Models;
 
-public class Allergene {
+import java.io.Serializable;
+
+public class Allergene implements Serializable {
 
     private listaAllergeni nome;
 

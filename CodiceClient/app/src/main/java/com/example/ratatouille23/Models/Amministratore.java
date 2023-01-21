@@ -1,6 +1,8 @@
 package com.example.ratatouille23.Models;
 
-public class Amministratore extends Gestore{
+import java.io.Serializable;
+
+public class Amministratore extends Gestore implements Serializable {
 
     private boolean superA;
 

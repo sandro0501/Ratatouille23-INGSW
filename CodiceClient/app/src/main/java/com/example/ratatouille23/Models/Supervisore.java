@@ -1,6 +1,8 @@
 package com.example.ratatouille23.Models;
 
-public class Supervisore extends Gestore {
+import java.io.Serializable;
+
+public class Supervisore extends Gestore implements Serializable {
 
     public Supervisore() {
     }

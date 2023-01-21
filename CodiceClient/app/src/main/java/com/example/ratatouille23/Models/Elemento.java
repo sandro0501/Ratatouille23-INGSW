@@ -1,8 +1,9 @@
 package com.example.ratatouille23.Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Elemento {
+public class Elemento implements Serializable {
 
     private String denominazionePrincipale;
     private String denominazioneSecondaria = "";
@@ -10,8 +11,8 @@ public class Elemento {
     private String descrizioneSecondaria = "";
     private Double costo;
     private int posizione;
-    private ArrayList<Allergene> presenta;
-    private ArrayList<Preparazione> preparazione;
+    private ArrayList<Allergene> presenta = new ArrayList<>();
+    private ArrayList<Preparazione> preparazione = new ArrayList<>();
     private SezioneMenu appartiene;
 
     public Elemento(String denominazionePrincipale, String denominazioneSecondaria, String descrizionePrincipale, String descrizioneSecondaria, Double costo, int posizione, ArrayList<Allergene> presenta, ArrayList<Preparazione> preparazione, SezioneMenu appartiene) {

@@ -1,8 +1,9 @@
 package com.example.ratatouille23.Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SezioneMenu {
+public class SezioneMenu implements Serializable {
 
     private String titolo;
     private int posizione;

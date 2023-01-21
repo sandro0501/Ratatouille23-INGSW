@@ -1,6 +1,8 @@
 package com.example.ratatouille23.Models;
 
-public class Bacheca {
+import java.io.Serializable;
+
+public class Bacheca implements Serializable {
 
     Avviso avvisoAssociato;
     boolean visibile;

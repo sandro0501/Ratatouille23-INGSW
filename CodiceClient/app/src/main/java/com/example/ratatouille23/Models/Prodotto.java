@@ -1,6 +1,8 @@
 package com.example.ratatouille23.Models;
 
-public class Prodotto {
+import java.io.Serializable;
+
+public class Prodotto implements Serializable {
 
     private String nome;
     private String descrizione;

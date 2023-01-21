@@ -1,8 +1,9 @@
 package com.example.ratatouille23.Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Utente {
+public class Utente implements Serializable {
 
     private String nome;
     private String cognome;

@@ -1,5 +1,6 @@
 package com.example.ratatouille23.Views;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -23,10 +24,13 @@ import android.widget.TextView;
 
 import com.example.ratatouille23.Models.Allergene;
 import com.example.ratatouille23.Models.Elemento;
+import com.example.ratatouille23.Models.Preparazione;
+import com.example.ratatouille23.Models.Prodotto;
 import com.example.ratatouille23.Models.SezioneMenu;
 import com.example.ratatouille23.Models.listaAllergeni;
 import com.example.ratatouille23.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -271,6 +275,20 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         el1.setPresenta(l1);
         el3.setPresenta(l2);
 
+        Prodotto passata = new Prodotto("Passata di pomodoro", "Passata buona", "kg", "2.30", 10, 5);
+        Prodotto pasta = new Prodotto("Maccheroni", "maccarun", "kg", "1.00", 20, 10);
+        Double quantitaPassata = 2.00;
+        Double quantitaPasta = 3.00;
+
+        Preparazione preparazionePastaAlPomodoroUno = new Preparazione(passata, quantitaPassata);
+        Preparazione preparazionePastaAlPomodoroDue = new Preparazione(pasta, quantitaPasta);
+
+        ArrayList<Preparazione> preparazionePastaAlPomodoro = new ArrayList<Preparazione>();
+        preparazionePastaAlPomodoro.add(preparazionePastaAlPomodoroUno);
+        preparazionePastaAlPomodoro.add(preparazionePastaAlPomodoroDue);
+
+        el2.setPreparazione(preparazionePastaAlPomodoro);
+
         ArrayList<Elemento> listaE1 = new ArrayList<>();
         listaE1.add(el1);
         listaE1.add(el2);
@@ -293,6 +311,13 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         else {
 
         }
+    }
+
+    @Override
+    public void onVediIngredientiElementoClicked(Elemento elemento, View view) {
+        Intent i = new Intent(getContext(), VisualizzazioneIngredientiElementoActivity.class);
+        i.putExtra("Elemento selezionato", (Serializable) elemento);
+        startActivity(i);
     }
 
     private void selezionaDeseleziona(Elemento elementoCliccato, View itemView) {

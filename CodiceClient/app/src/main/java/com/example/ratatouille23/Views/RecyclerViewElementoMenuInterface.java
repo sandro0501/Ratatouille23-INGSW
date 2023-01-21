@@ -7,4 +7,6 @@ import com.example.ratatouille23.Models.SezioneMenu;
 
 public interface RecyclerViewElementoMenuInterface {
     public void onElementoClicked(Elemento elementoCliccato, View itemView);
+
+    public void onVediIngredientiElementoClicked(Elemento elemento, View view);
 }

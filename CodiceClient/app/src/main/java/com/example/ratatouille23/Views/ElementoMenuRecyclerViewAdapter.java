@@ -175,6 +175,19 @@ public class ElementoMenuRecyclerViewAdapter extends RecyclerView.Adapter<Elemen
                 }
             });
 
+            iconaVediIngredienti.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (recyclerViewInterfaceElemento != null) {
+                        int posizioneElemento = getAdapterPosition();
+                        if(posizioneElemento!=RecyclerView.NO_POSITION){
+                            recyclerViewInterfaceElemento.onVediIngredientiElementoClicked(listaElementi.get(posizioneElemento), view);
+                        }
+
+                    }
+                }
+            });
+
         }
     }
 

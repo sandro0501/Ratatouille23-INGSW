@@ -1,8 +1,9 @@
 package com.example.ratatouille23.Models;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Avviso {
+public class Avviso implements Serializable {
 
     private String oggetto;
     private String corpo;

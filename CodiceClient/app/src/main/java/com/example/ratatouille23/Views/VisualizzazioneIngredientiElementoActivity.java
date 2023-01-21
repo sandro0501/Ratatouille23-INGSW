@@ -2,7 +2,7 @@ package com.example.ratatouille23.Views;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.graphics.Typeface;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -63,7 +63,8 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizzazione_ingredienti_elemento);
 
-        setUpPreparazioneElemento();
+        elemento = ((Elemento)getIntent().getExtras().get("Elemento selezionato"));
+
         onIndietroPremuto();
         inizializzaPannelloIngredienti();
         onAggiungiIngredientePremuto();
@@ -80,29 +81,6 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
 
         titoloElemento = findViewById(R.id.textViewVisualizzazioneIngredientiElementoDenominazione);
         titoloElemento.append(elemento.getDenominazionePrincipale());
-    }
-
-    private void setUpPreparazioneElemento() {
-        Prodotto passata = new Prodotto("Passata di pomodoro", "Passata buona", "kg", "2.30", 10, 5);
-        Prodotto pasta = new Prodotto("Maccheroni", "maccarun", "kg", "1.00", 20, 10);
-        Double quantitaPassata = 2.00;
-        Double quantitaPasta = 3.00;
-
-        Preparazione preparazionePastaAlPomodoroUno = new Preparazione(passata, quantitaPassata);
-        Preparazione preparazionePastaAlPomodoroDue = new Preparazione(pasta, quantitaPasta);
-
-        ArrayList<Preparazione> preparazionePastaAlPomodoro = new ArrayList<Preparazione>();
-        preparazionePastaAlPomodoro.add(preparazionePastaAlPomodoroUno);
-        preparazionePastaAlPomodoro.add(preparazionePastaAlPomodoroDue);
-
-        ArrayList<Allergene> allergeniPasta = new ArrayList<Allergene>();
-        Allergene allergenePasta = new Allergene(listaAllergeni.Glutine);
-        allergeniPasta.add(allergenePasta);
-
-        SezioneMenu sezione = new SezioneMenu("sezione", 1);
-
-        elemento = new Elemento("Pasta al pomodoro", "pomodoro pasta", 5.00, 1, allergeniPasta, preparazionePastaAlPomodoro, sezione);
-
     }
 
     private void onIndietroPremuto() {
@@ -145,8 +123,6 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
 
         searchViewRicercaProdotti = viewAggiuntaIngrediente.findViewById(R.id.searchViewRicercaProdottoInDispensa);
         TextView searchText = (TextView) searchViewRicercaProdotti.findViewById(androidx.appcompat.R.id.search_src_text);
-        Typeface myCustomFont = Typeface.createFromAsset(this.getAssets(), "res/font/verdana.ttf");
-        searchText.setTypeface(myCustomFont);
         try {
             @SuppressLint("SoonBlockedPrivateApi") Field field = TextView.class.getDeclaredField("mCursorDrawableRes");
             field.setAccessible(true);
@@ -221,9 +197,9 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
     }
 
     @Override
-    public void onProdottoClicked(int posizioneProdotto, View itemView) {
+    public void onProdottoClicked(Prodotto prodottoSelezionato, View itemView) {
 
-        prodottoCorrente = dispensa.get(posizioneProdotto);
+        prodottoCorrente = prodottoSelezionato;
         nomeProdottoCorrente = prodottoCorrente.getNome();
         quantitaProdottoCorrente = prodottoCorrente.getQuantita();
         unitaMisuraProdottoCorrente = prodottoCorrente.getUnita();

@@ -88,7 +88,8 @@ public class AggiuntaIngredientiRecyclerViewAdapter extends RecyclerView.Adapter
                     if(recyclerViewInterfaceIngredienteElemento != null){
                         int posizioneProdotto = getAdapterPosition();
                         if(posizioneProdotto != RecyclerView.NO_POSITION){
-                            recyclerViewInterfaceIngredienteElemento.onProdottoClicked(posizioneProdotto, itemView);
+                            Prodotto prodottoSelezionato = dispensa.get(posizioneProdotto);
+                            recyclerViewInterfaceIngredienteElemento.onProdottoClicked(prodottoSelezionato, itemView);
 
                         }
                     }
