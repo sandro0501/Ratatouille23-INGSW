@@ -10,7 +10,6 @@ public class Prodotto implements Serializable {
     private String costoAcquisto;
     private double quantita;
     private double soglia;
-    private boolean isSelected = false;
 
     public Prodotto(String nome, String descrizione, String unita, String costoAcquisto, double quantita, double soglia) {
         this.nome = nome;
@@ -43,14 +42,6 @@ public class Prodotto implements Serializable {
 
     public double getSoglia() {
         return soglia;
-    }
-
-    public void setSelected(boolean selected) {
-        isSelected = selected;
-    }
-
-    public boolean isSelected() {
-        return isSelected;
     }
 
 }

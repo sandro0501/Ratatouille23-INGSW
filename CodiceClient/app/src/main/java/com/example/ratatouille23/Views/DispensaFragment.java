@@ -69,9 +69,10 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
     private Button bottoneConfermaEliminazioneProdotto;
     private Button bottoneAnnullaEliminazioneProdotto;
 
-    private int counterProdotti = 0;
     private ArrayList<Prodotto> listaProdottiSelezionati = new ArrayList<>();
     private ArrayList<CardView> listaCardProdottiSelezionati = new ArrayList<>();
+
+    private boolean modalitaEliminazione = false;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -151,8 +152,8 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
         bottoneEliminaProdotto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (PresenterDispensa.getIsModalitaEliminazioneProdottoAttiva()) {
-                    if (counterProdotti == 0) disattivaModalitaEliminazione();
+                if (modalitaEliminazione) {
+                    if (listaProdottiSelezionati.size() == 0) disattivaModalitaEliminazione();
                     else {
                         final View viewEliminaProdotto = getLayoutInflater().inflate(R.layout.layout_elimina_prodotto_dialog, null);
                         builderDialogEliminaProdotto = new AlertDialog.Builder(getContext());
@@ -160,10 +161,10 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
                         builderDialogEliminaProdotto.setCancelable(true);
 
                         textViewEliminazioneProdotto = (TextView) viewEliminaProdotto.findViewById(R.id.textViewEliminaProdottoDescrizioneDialog);
-                        if (counterProdotti == 1) {
+                        if (listaProdottiSelezionati.size() == 1) {
                             textViewEliminazioneProdotto.setText("Sei sicuro di voler eliminare il prodotto selezionato?");
                         } else {
-                            textViewEliminazioneProdotto.setText("Sei sicuro di voler eliminare i " + counterProdotti + " prodotti selezionati?");
+                            textViewEliminazioneProdotto.setText("Sei sicuro di voler eliminare i " + listaProdottiSelezionati.size() + " prodotti selezionati?");
                         }
 
                         bottoneAnnullaEliminazioneProdotto = (Button) viewEliminaProdotto.findViewById(R.id.bottoneAnnullaEliminaProdotto);
@@ -194,7 +195,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
                     }
                 }
                 else {
-                    PresenterDispensa.setIsModalitaEliminazioneProdottoAttiva(true);
+                    modalitaEliminazione = true;
                     bottoneAggiungiProdotto.setEnabled(false);
                     bottoneEliminaProdotto.setImageResource(R.drawable.icon_modalita_elimina_prodotto_attiva);
                     Toast.makeText(getContext(), "Modalità eliminazione attiva", Toast.LENGTH_LONG).show();
@@ -206,19 +207,16 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
     }
 
     private void disattivaModalitaEliminazione() {
-        PresenterDispensa.setIsModalitaEliminazioneProdottoAttiva(false);
+        modalitaEliminazione = false;
         bottoneAggiungiProdotto.setEnabled(true);
         bottoneEliminaProdotto.setImageResource(R.drawable.icon_elimina_prodotto_dispensa);
-        Toast.makeText(getContext(), "Modalità eliminazione disattiva", Toast.LENGTH_LONG).show();
     }
 
     private void deselezionaTuttiProdotti() {
-        PresenterDispensa.setIsModalitaEliminazioneProdottoAttiva(false);
+        modalitaEliminazione = false;
         for (CardView card : listaCardProdottiSelezionati) card.setCardBackgroundColor(Color.WHITE);
-        for (Prodotto prodotto : listaProdottiSelezionati) prodotto.setSelected(false);
         listaCardProdottiSelezionati.clear();
         listaProdottiSelezionati.clear();
-        counterProdotti = 0;
     }
 
     private void mostraDialogInserimentoProdotto() {
@@ -286,7 +284,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
     @Override
     public void onProdottoClicked(int posizioneProdotto, View itemView) {
 
-        if(PresenterDispensa.getIsModalitaEliminazioneProdottoAttiva() == false){
+        if(!modalitaEliminazione){
             mostraDialogModificaProdotto(posizioneProdotto);
         } else {
             selezionaDeselezionaProdotto(posizioneProdotto, itemView);
@@ -295,7 +293,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
 
     @Override
     public void onStop() {
-        if (PresenterDispensa.getIsModalitaEliminazioneProdottoAttiva()){
+        if (modalitaEliminazione){
             deselezionaTuttiProdotti();
             disattivaModalitaEliminazione();
         }
@@ -304,17 +302,13 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
 
     private void selezionaDeselezionaProdotto(int posizioneProdotto, View itemView) {
         Prodotto prodottoCorrente = dispensa.get(posizioneProdotto);
-        prodottoCorrente.setSelected(!prodottoCorrente.isSelected());
-
-        if(prodottoCorrente.isSelected()){
-            counterProdotti++;
+        if (!listaProdottiSelezionati.contains(prodottoCorrente)) {
             listaProdottiSelezionati.add(prodottoCorrente);
             CardView cardProdotto = itemView.findViewById(R.id.cardViewProdotto);
             cardProdotto.setCardBackgroundColor(Color.parseColor("#F4B851"));
             listaCardProdottiSelezionati.add(cardProdotto);
         }
-        else{
-            counterProdotti--;
+        else {
             listaProdottiSelezionati.remove(prodottoCorrente);
             CardView cardProdotto = itemView.findViewById(R.id.cardViewProdotto);
             cardProdotto.setCardBackgroundColor(Color.parseColor("#FFFFFF"));

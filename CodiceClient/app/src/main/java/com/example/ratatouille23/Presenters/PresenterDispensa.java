@@ -8,8 +8,6 @@ public class PresenterDispensa extends PresenterBase {
 
     private static PresenterDispensa instance;
 
-    private static Boolean isModalitaEliminazioneProdottoAttiva = false;
-
     private PresenterDispensa() { };
 
     public static PresenterDispensa getInstance(){
@@ -33,15 +31,6 @@ public class PresenterDispensa extends PresenterBase {
             isProdottoSottoSogliaLimite = true;
         }
         return isProdottoSottoSogliaLimite;
-    }
-
-
-    public static Boolean getIsModalitaEliminazioneProdottoAttiva() {
-        return isModalitaEliminazioneProdottoAttiva;
-    }
-
-    public static void setIsModalitaEliminazioneProdottoAttiva(Boolean isAttiva) {
-        isModalitaEliminazioneProdottoAttiva = isAttiva;
     }
 
     public Prodotto ricavaProdottiDaIniziale(String stringaIniziale) {
