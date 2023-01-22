@@ -12,10 +12,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -236,9 +239,37 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
         bottoneConfermaAggiungiProdotto = (Button) viewAggiungiProdotto.findViewById(R.id.bottoneAggiungiProdotto);
         bottoneAnnullaAggiungiProdotto = (Button) viewAggiungiProdotto.findViewById(R.id.bottoneAnnullaAggiungiProdotto);
 
-        ArrayAdapter<Prodotto> adapterAutoComplete = new ArrayAdapter<Prodotto>(getContext(), R.layout.spinner_menu_layout, new ArrayList<Prodotto>());
+        ArrayAdapter<Prodotto> adapterAutoComplete = new ArrayAdapter<Prodotto>(getContext(), R.layout.spinner_layout, new ArrayList<Prodotto>());
         editTextNomeProdotto.setAdapter(adapterAutoComplete);
-        adapterAutoComplete.addAll(PresenterDispensa.getInstance().ricavaProdottiDaIniziale(editTextNomeProdotto.getText().toString()));
+
+        editTextNomeProdotto.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (editTextNomeProdotto.getText().toString().length() >= editTextNomeProdotto.getThreshold()) {
+                    adapterAutoComplete.clear();
+                    adapterAutoComplete.addAll(PresenterDispensa.getInstance().ricavaProdottiDaIniziale(editTextNomeProdotto.getText().toString()));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        editTextNomeProdotto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Prodotto prodottoScelto = adapterAutoComplete.getItem(i);
+                editTextDescrizioneProdotto.setText(prodottoScelto.getDescrizione());
+
+            }
+        });
 
         bottoneConfermaAggiungiProdotto.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -44,4 +44,9 @@ public class Prodotto implements Serializable {
         return soglia;
     }
 
+    @Override
+    public String toString(){
+        return nome;
+    }
+
 }

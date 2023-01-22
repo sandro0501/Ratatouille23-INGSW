@@ -33,9 +33,13 @@ public class PresenterDispensa extends PresenterBase {
         return isProdottoSottoSogliaLimite;
     }
 
-    public Prodotto ricavaProdottiDaIniziale(String stringaIniziale) {
+    public ArrayList<Prodotto> ricavaProdottiDaIniziale(String stringaIniziale) {
 
-
-        return null;
+        ArrayList<Prodotto> al = new ArrayList<>();
+        al.add(new Prodotto("Fusilli", "Pasta mista", "grammi", "5.30/kg", 500, 150));
+        al.add(new Prodotto("Penne", "Pasta mista per pomodoro", "grammi", "5.30/kg", 500, 150));
+        al.add(new Prodotto("Cavoli", "Verdura", "grammi", "5.30/kg", 500, 150));
+        al.add(new Prodotto("Carote", "Ortaggio", "grammi", "5.30/kg", 500, 150));
+        return al;
     }
 }
