@@ -12,15 +12,15 @@ public class DAOFactory {
         return instance;
     }
 
-    public DAOSezioneMenu getDAOMenu() {
+    public DAOSezioneMenu getDAOSezioneMenu() {
         return new DAOSezioneMenuImpl();
     }
 
-    public DAOElemento getDAOLogin() {
+    public DAOElemento getDAOElemento() {
         return new DAOElementoImpl();
     }
 
-    public DAOProdotto getDAODipendenti() {
+    public DAOProdotto getDAOProdotto() {
         return new DAOProdottoImpl();
     }
 
@@ -28,11 +28,11 @@ public class DAOFactory {
         return new DAORistoranteImpl();
     }
 
-    public DAOAvviso getDAOBacheca() {
+    public DAOAvviso getDAOAvviso() {
         return new DAOAvvisoImpl();
     }
 
-    public DAOUtente getDAOAreaPrivata() {
+    public DAOUtente getDAOUtente() {
         return new DAOUtenteImpl();
     }
 }

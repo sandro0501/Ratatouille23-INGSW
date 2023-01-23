@@ -20,6 +20,14 @@ public class Prodotto implements Serializable {
         this.soglia = soglia;
     }
 
+    public Prodotto(String nome, String descrizione) {
+        this.nome = nome;
+        this.descrizione = descrizione;
+    }
+
+    public Prodotto() {
+    }
+
     public String getNome() {
         return nome;
     }
@@ -42,6 +50,30 @@ public class Prodotto implements Serializable {
 
     public double getSoglia() {
         return soglia;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
+    }
+
+    public void setUnita(String unita) {
+        this.unita = unita;
+    }
+
+    public void setCostoAcquisto(String costoAcquisto) {
+        this.costoAcquisto = costoAcquisto;
+    }
+
+    public void setQuantita(double quantita) {
+        this.quantita = quantita;
+    }
+
+    public void setSoglia(double soglia) {
+        this.soglia = soglia;
     }
 
     @Override

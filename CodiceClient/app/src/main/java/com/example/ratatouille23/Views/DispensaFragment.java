@@ -75,6 +75,9 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
     private ArrayList<Prodotto> listaProdottiSelezionati = new ArrayList<>();
     private ArrayList<CardView> listaCardProdottiSelezionati = new ArrayList<>();
 
+    private ArrayAdapter<Prodotto> adapterAutoComplete;
+    private ArrayList<Prodotto> listaAutoComplete = new ArrayList<>();
+
     private boolean modalitaEliminazione = false;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -125,7 +128,6 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
 
         View view = inflater.inflate(R.layout.fragment_dispensa, container, false);
 
-
         return view;
 
     }
@@ -133,6 +135,8 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        adapterAutoComplete = new ArrayAdapter<Prodotto>(getContext(), R.layout.spinner_layout, listaAutoComplete);
 
         recyclerView = view.findViewById(R.id.recyclerViewDispensa);
         riempiDispensa();
@@ -239,7 +243,6 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
         bottoneConfermaAggiungiProdotto = (Button) viewAggiungiProdotto.findViewById(R.id.bottoneAggiungiProdotto);
         bottoneAnnullaAggiungiProdotto = (Button) viewAggiungiProdotto.findViewById(R.id.bottoneAnnullaAggiungiProdotto);
 
-        ArrayAdapter<Prodotto> adapterAutoComplete = new ArrayAdapter<Prodotto>(getContext(), R.layout.spinner_layout, new ArrayList<Prodotto>());
         editTextNomeProdotto.setAdapter(adapterAutoComplete);
 
         editTextNomeProdotto.addTextChangedListener(new TextWatcher() {
@@ -251,8 +254,8 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (editTextNomeProdotto.getText().toString().length() >= editTextNomeProdotto.getThreshold()) {
-                    adapterAutoComplete.clear();
-                    adapterAutoComplete.addAll(PresenterDispensa.getInstance().ricavaProdottiDaIniziale(editTextNomeProdotto.getText().toString()));
+                    listaAutoComplete.clear();
+                    PresenterDispensa.getInstance().settaProdottiDaIniziale(DispensaFragment.this, editTextNomeProdotto.getText().toString());
                 }
             }
 
@@ -395,6 +398,12 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
         dialogModificaProdotto = builderDialogModificaProdotto.create();
         dialogModificaProdotto.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
         dialogModificaProdotto.show();
+    }
+
+    public void setupListaProdottiOpenFoodFacts(ArrayList<Prodotto> lista){
+        listaAutoComplete.addAll(lista);
+        adapterAutoComplete.addAll(listaAutoComplete);
+        adapterAutoComplete.notifyDataSetChanged();
     }
 
 

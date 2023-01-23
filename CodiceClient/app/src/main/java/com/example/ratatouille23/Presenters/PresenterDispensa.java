@@ -1,6 +1,13 @@
 package com.example.ratatouille23.Presenters;
 
+import android.content.Context;
+import android.util.Log;
+
+import com.example.ratatouille23.DAO.DAOFactory;
+import com.example.ratatouille23.DAO.DAOProdotto;
+import com.example.ratatouille23.DAO.DAOProdottoImpl;
 import com.example.ratatouille23.Models.Prodotto;
+import com.example.ratatouille23.Views.DispensaFragment;
 
 import java.util.ArrayList;
 
@@ -8,7 +15,11 @@ public class PresenterDispensa extends PresenterBase {
 
     private static PresenterDispensa instance;
 
-    private PresenterDispensa() { };
+    private DAOProdotto daoProdotto;
+
+    private PresenterDispensa() {
+        daoProdotto = DAOFactory.getInstance().getDAOProdotto();
+    };
 
     public static PresenterDispensa getInstance(){
 
@@ -33,13 +44,15 @@ public class PresenterDispensa extends PresenterBase {
         return isProdottoSottoSogliaLimite;
     }
 
-    public ArrayList<Prodotto> ricavaProdottiDaIniziale(String stringaIniziale) {
+    public void settaProdottiDaIniziale(DispensaFragment context, String stringaIniziale) {
 
-        ArrayList<Prodotto> al = new ArrayList<>();
-        al.add(new Prodotto("Fusilli", "Pasta mista", "grammi", "5.30/kg", 500, 150));
-        al.add(new Prodotto("Penne", "Pasta mista per pomodoro", "grammi", "5.30/kg", 500, 150));
-        al.add(new Prodotto("Cavoli", "Verdura", "grammi", "5.30/kg", 500, 150));
-        al.add(new Prodotto("Carote", "Ortaggio", "grammi", "5.30/kg", 500, 150));
-        return al;
+        daoProdotto.getProdottiOpenFoodFactsDaStringa(stringaIniziale, new DAOProdottoImpl.ProdottoCallbacks() {
+            @Override
+            public void onCaricamentoListaProdottiOpenFoodFacts(ArrayList<Prodotto> listaProdottiOttenuta) {
+                Log.i("Prova", listaProdottiOttenuta.toString());
+                context.setupListaProdottiOpenFoodFacts(listaProdottiOttenuta);
+            }
+        });
+
     }
 }
