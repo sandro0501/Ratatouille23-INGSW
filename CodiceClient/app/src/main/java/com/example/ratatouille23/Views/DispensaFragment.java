@@ -12,18 +12,23 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ratatouille23.Controller;
 import com.example.ratatouille23.Models.Prodotto;
+import com.example.ratatouille23.Presenters.PresenterDispensa;
 import com.example.ratatouille23.R;
 
 import java.util.ArrayList;
@@ -47,7 +52,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
     private AlertDialog.Builder builderDialogEliminaProdotto;
     private Dialog dialogEliminaProdotto;
     private TextView textViewEliminazioneProdotto;
-    private EditText editTextNomeProdotto;
+    private AutoCompleteTextView editTextNomeProdotto;
     private EditText editTextDescrizioneProdotto;
     private EditText editTextQuantitaProdotto;
     private EditText editTextUnitaMisuraProdotto;
@@ -67,9 +72,13 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
     private Button bottoneConfermaEliminazioneProdotto;
     private Button bottoneAnnullaEliminazioneProdotto;
 
-    private int counterProdotti = 0;
     private ArrayList<Prodotto> listaProdottiSelezionati = new ArrayList<>();
     private ArrayList<CardView> listaCardProdottiSelezionati = new ArrayList<>();
+
+    private ArrayAdapter<Prodotto> adapterAutoComplete;
+    private ArrayList<Prodotto> listaAutoComplete = new ArrayList<>();
+
+    private boolean modalitaEliminazione = false;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -119,7 +128,6 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
 
         View view = inflater.inflate(R.layout.fragment_dispensa, container, false);
 
-
         return view;
 
     }
@@ -127,6 +135,8 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        adapterAutoComplete = new ArrayAdapter<Prodotto>(getContext(), R.layout.spinner_layout, listaAutoComplete);
 
         recyclerView = view.findViewById(R.id.recyclerViewDispensa);
         riempiDispensa();
@@ -149,8 +159,8 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
         bottoneEliminaProdotto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Controller.getIsModalitaEliminazioneProdottoAttiva()) {
-                    if (counterProdotti == 0) disattivaModalitaEliminazione();
+                if (modalitaEliminazione) {
+                    if (listaProdottiSelezionati.size() == 0) disattivaModalitaEliminazione();
                     else {
                         final View viewEliminaProdotto = getLayoutInflater().inflate(R.layout.layout_elimina_prodotto_dialog, null);
                         builderDialogEliminaProdotto = new AlertDialog.Builder(getContext());
@@ -158,10 +168,10 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
                         builderDialogEliminaProdotto.setCancelable(true);
 
                         textViewEliminazioneProdotto = (TextView) viewEliminaProdotto.findViewById(R.id.textViewEliminaProdottoDescrizioneDialog);
-                        if (counterProdotti == 1) {
+                        if (listaProdottiSelezionati.size() == 1) {
                             textViewEliminazioneProdotto.setText("Sei sicuro di voler eliminare il prodotto selezionato?");
                         } else {
-                            textViewEliminazioneProdotto.setText("Sei sicuro di voler eliminare i " + counterProdotti + " prodotti selezionati?");
+                            textViewEliminazioneProdotto.setText("Sei sicuro di voler eliminare i " + listaProdottiSelezionati.size() + " prodotti selezionati?");
                         }
 
                         bottoneAnnullaEliminazioneProdotto = (Button) viewEliminaProdotto.findViewById(R.id.bottoneAnnullaEliminaProdotto);
@@ -179,7 +189,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
                             @Override
                             public void onClick(View view) {
                                 //codice db
-                                Controller.getInstance().mostraAlertErrore(getContext(), "Eliminazione effettuata", "Eliminazione dei prodotti selezionati effettuata correttamente!");
+                                PresenterDispensa.getInstance().mostraAlert(getContext(), "Eliminazione effettuata", "Eliminazione dei prodotti selezionati effettuata correttamente!");
                                 disattivaModalitaEliminazione();
                                 deselezionaTuttiProdotti();
                                 dialogEliminaProdotto.dismiss();
@@ -192,7 +202,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
                     }
                 }
                 else {
-                    Controller.setIsModalitaEliminazioneProdottoAttiva(true);
+                    modalitaEliminazione = true;
                     bottoneAggiungiProdotto.setEnabled(false);
                     bottoneEliminaProdotto.setImageResource(R.drawable.icon_modalita_elimina_prodotto_attiva);
                     Toast.makeText(getContext(), "Modalità eliminazione attiva", Toast.LENGTH_LONG).show();
@@ -204,19 +214,16 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
     }
 
     private void disattivaModalitaEliminazione() {
-        Controller.setIsModalitaEliminazioneProdottoAttiva(false);
+        modalitaEliminazione = false;
         bottoneAggiungiProdotto.setEnabled(true);
         bottoneEliminaProdotto.setImageResource(R.drawable.icon_elimina_prodotto_dispensa);
-        Toast.makeText(getContext(), "Modalità eliminazione disattiva", Toast.LENGTH_LONG).show();
     }
 
     private void deselezionaTuttiProdotti() {
-        Controller.setIsModalitaEliminazioneProdottoAttiva(false);
+        modalitaEliminazione = false;
         for (CardView card : listaCardProdottiSelezionati) card.setCardBackgroundColor(Color.WHITE);
-        for (Prodotto prodotto : listaProdottiSelezionati) prodotto.setSelected(false);
         listaCardProdottiSelezionati.clear();
         listaProdottiSelezionati.clear();
-        counterProdotti = 0;
     }
 
     private void mostraDialogInserimentoProdotto() {
@@ -226,7 +233,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
         builderDialogAggiungiProdotto.setView(viewAggiungiProdotto);
         builderDialogAggiungiProdotto.setCancelable(true);
 
-        editTextNomeProdotto = (EditText) viewAggiungiProdotto.findViewById(R.id.EditTextNomeProdotto);
+        editTextNomeProdotto = (AutoCompleteTextView) viewAggiungiProdotto.findViewById(R.id.EditTextNomeProdotto);
         editTextDescrizioneProdotto = (EditText) viewAggiungiProdotto.findViewById(R.id.EditTextDescrizioneProdotto);
         editTextQuantitaProdotto = (EditText) viewAggiungiProdotto.findViewById(R.id.EditTextQuantitaProdotto);
         editTextUnitaMisuraProdotto = (EditText) viewAggiungiProdotto.findViewById(R.id.EditTextUnitaMisuraProdotto);
@@ -236,12 +243,43 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
         bottoneConfermaAggiungiProdotto = (Button) viewAggiungiProdotto.findViewById(R.id.bottoneAggiungiProdotto);
         bottoneAnnullaAggiungiProdotto = (Button) viewAggiungiProdotto.findViewById(R.id.bottoneAnnullaAggiungiProdotto);
 
+        editTextNomeProdotto.setAdapter(adapterAutoComplete);
+
+        editTextNomeProdotto.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (editTextNomeProdotto.getText().toString().length() >= editTextNomeProdotto.getThreshold()) {
+                    listaAutoComplete.clear();
+                    PresenterDispensa.getInstance().settaProdottiDaIniziale(DispensaFragment.this, editTextNomeProdotto.getText().toString());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        editTextNomeProdotto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Prodotto prodottoScelto = adapterAutoComplete.getItem(i);
+                editTextDescrizioneProdotto.setText(prodottoScelto.getDescrizione());
+
+            }
+        });
+
         bottoneConfermaAggiungiProdotto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //metodo controller aggiungi prodotto che interagisce col DB
                 Log.println(Log.VERBOSE,"ADD","AGGIUNGI");
-                Controller.getInstance().mostraAlertErrore(getContext(),"Prodotto aggiunto", "Prodotto aggiunto correttamente alla dispensa!");
+                PresenterDispensa.getInstance().mostraAlert(getContext(),"Prodotto aggiunto", "Prodotto aggiunto correttamente alla dispensa!");
                 dialogAggiungiProdotto.dismiss();
 
             }
@@ -280,7 +318,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
     @Override
     public void onProdottoClicked(int posizioneProdotto, View itemView) {
 
-        if(Controller.getIsModalitaEliminazioneProdottoAttiva() == false){
+        if(!modalitaEliminazione){
             mostraDialogModificaProdotto(posizioneProdotto);
         } else {
             selezionaDeselezionaProdotto(posizioneProdotto, itemView);
@@ -289,7 +327,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
 
     @Override
     public void onStop() {
-        if (Controller.getIsModalitaEliminazioneProdottoAttiva()){
+        if (modalitaEliminazione){
             deselezionaTuttiProdotti();
             disattivaModalitaEliminazione();
         }
@@ -298,17 +336,13 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
 
     private void selezionaDeselezionaProdotto(int posizioneProdotto, View itemView) {
         Prodotto prodottoCorrente = dispensa.get(posizioneProdotto);
-        prodottoCorrente.setSelected(!prodottoCorrente.isSelected());
-
-        if(prodottoCorrente.isSelected()){
-            counterProdotti++;
+        if (!listaProdottiSelezionati.contains(prodottoCorrente)) {
             listaProdottiSelezionati.add(prodottoCorrente);
             CardView cardProdotto = itemView.findViewById(R.id.cardViewProdotto);
-            cardProdotto.setCardBackgroundColor(Color.parseColor("#F2A726"));
+            cardProdotto.setCardBackgroundColor(Color.parseColor("#F4B851"));
             listaCardProdottiSelezionati.add(cardProdotto);
         }
-        else{
-            counterProdotti--;
+        else {
             listaProdottiSelezionati.remove(prodottoCorrente);
             CardView cardProdotto = itemView.findViewById(R.id.cardViewProdotto);
             cardProdotto.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
@@ -356,7 +390,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
             @Override
             public void onClick(View view) {
                 Log.println(Log.VERBOSE,"MOD","MODIFICA");
-                Controller.getInstance().mostraAlertErrore(getContext(),"Prodotto modificato", "Informazioni del prodotto modificate correttamente!");
+                PresenterDispensa.getInstance().mostraAlert(getContext(),"Prodotto modificato", "Informazioni del prodotto modificate correttamente!");
                 dialogModificaProdotto.dismiss();
             }
         });
@@ -364,6 +398,12 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
         dialogModificaProdotto = builderDialogModificaProdotto.create();
         dialogModificaProdotto.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
         dialogModificaProdotto.show();
+    }
+
+    public void setupListaProdottiOpenFoodFacts(ArrayList<Prodotto> lista){
+        listaAutoComplete.addAll(lista);
+        adapterAutoComplete.addAll(listaAutoComplete);
+        adapterAutoComplete.notifyDataSetChanged();
     }
 
 

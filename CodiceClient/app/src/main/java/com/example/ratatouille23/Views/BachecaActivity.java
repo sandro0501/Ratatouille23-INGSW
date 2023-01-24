@@ -12,16 +12,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.ratatouille23.Controller;
-import com.example.ratatouille23.Models.Addetto;
-import com.example.ratatouille23.Models.Amministratore;
-import com.example.ratatouille23.Models.Supervisore;
 import com.example.ratatouille23.Models.Utente;
-import com.example.ratatouille23.Models.ruoliPersonale;
+import com.example.ratatouille23.Models.UtenteFactory;
+import com.example.ratatouille23.Presenters.PresenterBacheca;
 import com.example.ratatouille23.R;
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.ArrayList;
 
 
 public class BachecaActivity extends AppCompatActivity {
@@ -51,9 +46,8 @@ public class BachecaActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (Controller.getBachecaAttiva()) { }
+        if (PresenterBacheca.getInstance().getBachecaAttiva()) { }
         else super.onBackPressed();
-
 
     }
 
@@ -61,7 +55,7 @@ public class BachecaActivity extends AppCompatActivity {
         NavHostFragment hostFragment =(NavHostFragment)getSupportFragmentManager().findFragmentById(R.id.navHostFragment);
         NavController controllerMenu = hostFragment.getNavController();
         NavigationUI.setupWithNavController(menu, controllerMenu);
-        Utente u = Utente.creaUtenteConRuolo("Genoveffa", "Arcobaleno", "emailprova", "Supervisore", true);
+        Utente u = UtenteFactory.getInstance().getNuovoUtente("Genoveffa", "Arcobaleno", "emailprova", "Supervisore", true);
 
         //simulazione login utente
             if (u.getRuoloUtente().equals("Addetto alla cucina")){

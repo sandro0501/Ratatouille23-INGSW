@@ -1,30 +1,37 @@
 package com.example.ratatouille23.Models;
 
-public class Utente {
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class Utente implements Serializable {
 
     private String nome;
     private String cognome;
     private String email;
+    private ArrayList<Bacheca> bacheca = new ArrayList<>();
+    private Ristorante lavora;
 
     public Utente() {};
+
     public Utente(String nome, String cognome, String email) {
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
     }
 
-    public static Utente creaUtenteConRuolo(String nome, String cognome, String email, String ruolo, boolean superAmministratore) {
-        Utente utenteCorrente;
-        if (ruolo.equals("Amministratore"))
-            utenteCorrente = new Amministratore(nome, cognome, email, superAmministratore);
-        else if (ruolo.equals("Supervisore"))
-            utenteCorrente = new Supervisore(nome, cognome, email);
-        else if (ruolo.equals("Addetto alla cucina"))
-            utenteCorrente = new Addetto(nome, cognome, email, ruoliPersonale.addettoAllaCucina);
-        else
-            utenteCorrente = new Addetto(nome, cognome, email, ruoliPersonale.addettoAlServizio);
+    public Utente(String nome, String cognome, String email, ArrayList<Bacheca> bacheca) {
+        this.nome = nome;
+        this.cognome = cognome;
+        this.email = email;
+        this.bacheca = bacheca;
+    }
 
-        return utenteCorrente;
+    public ArrayList<Bacheca> getBacheca() {
+        return bacheca;
+    }
+
+    public void setBacheca(ArrayList<Bacheca> bacheca) {
+        this.bacheca = bacheca;
     }
 
     public String getRuoloUtente() {
@@ -39,7 +46,6 @@ public class Utente {
     public String getNomeCompleto() {
         return nome + " " + cognome;
     }
-
 
     public String getNome() {
         return nome;
@@ -63,5 +69,13 @@ public class Utente {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Ristorante getLavora() {
+        return lavora;
+    }
+
+    public void setLavora(Ristorante lavora) {
+        this.lavora = lavora;
     }
 }

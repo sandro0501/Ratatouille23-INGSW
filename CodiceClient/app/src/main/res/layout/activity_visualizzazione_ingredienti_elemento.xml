@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Views.VisualizzazioneIngredientiElementoActivity">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F5EDED">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarVisualizzazioneIngredientiElemento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/mainYellowAppColor"
+            android:minHeight="?attr/actionBarSize"
+            android:navigationIcon="@drawable/icon_back_arrow"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:titleMargin="0dp"
+            app:titleMarginStart="20dp"
+            app:titleTextAppearance="@style/Style_item_menu"
+            app:titleTextColor="@color/colorGrey" />
+
+        <TextView
+            android:id="@+id/textViewVisualizzazioneIngredientiElementoDenominazione"
+            android:layout_width="592dp"
+            android:layout_height="88dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/verdanab"
+            android:text="Ingredienti necessari alla preparazione\ndell'elemento del menù:\n"
+            android:textColor="@color/colorGrey"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerViewIngredientiElemento"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewIconEliminaProdottoPreparazioneElemento"
+            app:layout_constraintHorizontal_bias="0.192"
+            app:layout_constraintStart_toStartOf="@+id/recyclerViewIngredientiElemento"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarVisualizzazioneIngredientiElemento"
+            app:layout_constraintVertical_bias="0.128" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewIngredientiElemento"
+            android:layout_width="914dp"
+            android:layout_height="464dp"
+            android:layout_marginBottom="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarVisualizzazioneIngredientiElemento"
+            app:layout_constraintVertical_bias="0.976"
+            tools:listitem="@layout/layout_recyclerview_prodotto" />
+
+        <ImageView
+            android:id="@+id/imageViewIconAddProdottoPreparazioneElemento"
+            android:layout_width="110dp"
+            android:layout_height="95dp"
+            android:layout_marginStart="104dp"
+            android:src="@drawable/icon_add_prodotto_elemento"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewIconEliminaProdottoPreparazioneElemento"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/textViewVisualizzazioneIngredientiElementoDenominazione"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarVisualizzazioneIngredientiElemento"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/imageViewIconEliminaProdottoPreparazioneElemento"
+            android:layout_width="110dp"
+            android:layout_height="95dp"
+            android:layout_marginStart="188dp"
+            android:src="@drawable/icon_elimina_prodotto_elemento"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarVisualizzazioneIngredientiElemento"
+            app:layout_constraintVertical_bias="0.007" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</RelativeLayout>

@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.ratatouille23.Controller;
+import com.example.ratatouille23.Presenters.PresenterLogin;
 import com.example.ratatouille23.R;
 
 public class PasswordRecoveryActivity extends AppCompatActivity {
@@ -40,13 +40,13 @@ public class PasswordRecoveryActivity extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), ConfermaCodiceActivity.class);
                 boolean emailCorretta;
                 if (!email.isEmpty()) {
-                    emailCorretta = Controller.getInstance().bottoneRichiediCodicePremuto(email);
+                    emailCorretta = PresenterLogin.getInstance().bottoneRichiediCodicePremuto(email);
                     if (emailCorretta)
                         startActivity(i);
                     else
-                        Controller.getInstance().mostraAlertErrore(PasswordRecoveryActivity.this, "Attenzione!", "L'email inserita è errata!");
+                        PresenterLogin.getInstance().mostraAlert(PasswordRecoveryActivity.this, "Attenzione!", "L'email inserita è errata!");
                 }
-                else Controller.getInstance().mostraAlertErrore(PasswordRecoveryActivity.this, "Attenzione!", "Uno o più campi obbligatori sono " +
+                else PresenterLogin.getInstance().mostraAlert(PasswordRecoveryActivity.this, "Attenzione!", "Uno o più campi obbligatori sono " +
                         "stati lasciati vuoti");
             }
         });

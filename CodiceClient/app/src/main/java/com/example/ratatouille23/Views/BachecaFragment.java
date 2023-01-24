@@ -19,10 +19,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.ratatouille23.Controller;
+import com.example.ratatouille23.Models.Gestore;
+import com.example.ratatouille23.Models.Utente;
+import com.example.ratatouille23.Models.UtenteFactory;
+import com.example.ratatouille23.Presenters.PresenterBacheca;
 import com.example.ratatouille23.R;
 
 import com.example.ratatouille23.Models.Avviso;
+
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
@@ -68,13 +75,13 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
     @Override
     public void onStart() {
         super.onStart();
-        Controller.setBachecaAttiva(true);
+        PresenterBacheca.getInstance().setBachecaAttiva(true);
 
     }
 
     @Override
     public void onStop () {
-        Controller.setBachecaAttiva(false);
+        PresenterBacheca.getInstance().setBachecaAttiva(false);
         super.onStop();
     }
 
@@ -119,7 +126,9 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
     private void setUpAvvisi(){
         avvisiUtente = new ArrayList<>();
 
-        String[] autoriAvvisi = getResources().getStringArray(R.array.autore_avviso_xml);
+        String[] nomiAutori = getResources().getStringArray(R.array.autore_avviso_nome_xml);
+        String[] cognomiAutori = getResources().getStringArray(R.array.autore_avviso_cognome_xml);
+        String[] emailAutori = getResources().getStringArray(R.array.email_dipendente_xml);
         String[] ruoliAutoriAvvisi = getResources().getStringArray(R.array.ruolo_autore_avviso_xml);
         String[] oggettiAvvisi = getResources().getStringArray(R.array.oggetto_avviso_xml);
         String[] corpoAvvisi = getResources().getStringArray(R.array.corpo_avviso_xml);
@@ -127,7 +136,15 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
         int iconaAvvisoDaVedere = R.drawable.icon_avviso_da_vedere;
 
         for(int i=0; i<oggettiAvvisi.length; i++){
-            Avviso avviso = new Avviso(oggettiAvvisi[i],corpoAvvisi[i],dateAvvisi[i],autoriAvvisi[i],iconaAvvisoDaVedere,ruoliAutoriAvvisi[i]);
+            Utente utente = UtenteFactory.getInstance().getNuovoUtente(nomiAutori[i], cognomiAutori[i], emailAutori[i], ruoliAutoriAvvisi[i], false);
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM");
+            Date stringaData = null;
+            try {
+                stringaData = new Date(formatter.parse(dateAvvisi[i]).getTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Avviso avviso = new Avviso(oggettiAvvisi[i],corpoAvvisi[i], stringaData,(Gestore)utente);
             avvisiUtente.add(avviso);
         }
     }
@@ -146,8 +163,8 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
 
         //passa i dati dal fragment all'activity
         intentFromBachecaToVisualizzazioneAvviso.putExtra("OGGETTO", avvisiUtente.get(posizioneAvviso).getOggetto());
-        intentFromBachecaToVisualizzazioneAvviso.putExtra("AUTORE", avvisiUtente.get(posizioneAvviso).getAutore());
-        intentFromBachecaToVisualizzazioneAvviso.putExtra("RUOLOAUOTORE", avvisiUtente.get(posizioneAvviso).getAutore());
+        intentFromBachecaToVisualizzazioneAvviso.putExtra("AUTORE", avvisiUtente.get(posizioneAvviso).getAutore().getNomeCompleto());
+        intentFromBachecaToVisualizzazioneAvviso.putExtra("RUOLOAUOTORE", avvisiUtente.get(posizioneAvviso).getAutore().getRuoloUtente());
         intentFromBachecaToVisualizzazioneAvviso.putExtra("DATACREAZIONE", avvisiUtente.get(posizioneAvviso).getDataCreazione());
         intentFromBachecaToVisualizzazioneAvviso.putExtra("CORPO", avvisiUtente.get(posizioneAvviso).getCorpo());
 

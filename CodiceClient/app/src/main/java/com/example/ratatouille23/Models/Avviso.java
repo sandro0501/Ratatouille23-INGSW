@@ -1,23 +1,20 @@
 package com.example.ratatouille23.Models;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.sql.Date;
 
-public class Avviso {
+public class Avviso implements Serializable {
 
     private String oggetto;
     private String corpo;
-    private String dataCreazione;
-    private String autore;
-    private int iconaAvviso;
-    private String ruoloAutoreAvviso;
+    private Date dataCreazione;
+    private Gestore autore;
 
-    public Avviso(String oggetto, String corpo, String dataCreazione, String autore, int iconaAvviso, String ruoloAutoreAvviso) {
+    public Avviso(String oggetto, String corpo, Date dataCreazione, Gestore autore) {
         this.oggetto = oggetto;
         this.corpo = corpo;
         this.dataCreazione = dataCreazione;
         this.autore = autore;
-        this.iconaAvviso = iconaAvviso;
-        this.ruoloAutoreAvviso = ruoloAutoreAvviso;
     }
 
     public String getOggetto() {
@@ -28,22 +25,12 @@ public class Avviso {
         return corpo;
     }
 
-    public String getDataCreazione() {
+    public Date getDataCreazione() {
         return dataCreazione;
     }
 
-    public String getAutore() {
+    public Gestore getAutore() {
         return autore;
     }
-
-    public int getIconaAvviso() {
-        return iconaAvviso;
-    }
-
-    public String getRuoloAutoreAvviso() {
-        return ruoloAutoreAvviso;
-    }
-
-
 
 }

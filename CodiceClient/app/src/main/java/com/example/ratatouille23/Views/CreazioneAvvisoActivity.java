@@ -1,21 +1,18 @@
 package com.example.ratatouille23.Views;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.ratatouille23.Controller;
+import com.example.ratatouille23.Presenters.PresenterBacheca;
 import com.example.ratatouille23.R;
 
 public class CreazioneAvvisoActivity extends AppCompatActivity {
 
     private Button bottoneAnnullaCreazioneAvviso;
     private Button bottoneCreazioneAvviso;
-    private Controller c;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +54,7 @@ public class CreazioneAvvisoActivity extends AppCompatActivity {
         alertConfermaCreazioneAvvisoBuilder.setCancelable(true);
         AlertDialog alertConfermaCreazioneAvviso = alertConfermaCreazioneAvvisoBuilder.create();
         alertConfermaCreazioneAvviso.show(); */
-        c.getInstance().mostraAlertErrore(CreazioneAvvisoActivity.this, "Avviso creato!", "Avviso creato ed inviato correttamente");
+        PresenterBacheca.getInstance().mostraAlert(CreazioneAvvisoActivity.this, "Avviso creato!", "Avviso creato ed inviato correttamente");
 
     }
 }

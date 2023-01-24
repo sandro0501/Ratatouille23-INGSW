@@ -1,12 +1,20 @@
 <resources>
     <string name="app_name">Ratatouille23</string>
 
-    <string-array name="autore_avviso_xml">
-        <item>Luigi Rossi</item>
-        <item>Vincenzo Bianchi</item>
-        <item>Paolo Verdi</item>
-        <item>Giovanni Esposito</item>
-        <item>Ciro Russo</item>
+    <string-array name="autore_avviso_nome_xml">
+        <item>Luigi</item>
+        <item>Vincenzo</item>
+        <item>Paolo</item>
+        <item>Giovanni</item>
+        <item>Ciro</item>
+    </string-array>
+
+    <string-array name="autore_avviso_cognome_xml">
+        <item>Rossi</item>
+        <item>Bianchi</item>
+        <item>Verdi</item>
+        <item>Esposito</item>
+        <item>Russo</item>
     </string-array>
 
     <string-array name="ruolo_autore_avviso_xml">

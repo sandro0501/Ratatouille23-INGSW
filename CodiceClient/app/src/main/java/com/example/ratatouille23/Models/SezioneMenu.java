@@ -1,18 +1,18 @@
 package com.example.ratatouille23.Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SezioneMenu {
+public class SezioneMenu implements Serializable {
 
     private String titolo;
     private int posizione;
-    private ArrayList<Elemento> appartenente;
+    private ArrayList<Elemento> appartenente = new ArrayList<>();
     private boolean inModifica = false;
 
     public SezioneMenu(String nome, int posizione) {
         this.titolo = nome;
         this.posizione = posizione;
-        appartenente = new ArrayList<>();
     }
 
     public SezioneMenu(String nome, int posizione, ArrayList<Elemento> appartenente) {

@@ -1,6 +1,8 @@
 package com.example.ratatouille23.Models;
 
-public class Prodotto {
+import java.io.Serializable;
+
+public class Prodotto implements Serializable {
 
     private String nome;
     private String descrizione;
@@ -8,7 +10,6 @@ public class Prodotto {
     private String costoAcquisto;
     private double quantita;
     private double soglia;
-    private boolean isSelected = false;
 
     public Prodotto(String nome, String descrizione, String unita, String costoAcquisto, double quantita, double soglia) {
         this.nome = nome;
@@ -17,6 +18,14 @@ public class Prodotto {
         this.costoAcquisto = costoAcquisto;
         this.quantita = quantita;
         this.soglia = soglia;
+    }
+
+    public Prodotto(String nome, String descrizione) {
+        this.nome = nome;
+        this.descrizione = descrizione;
+    }
+
+    public Prodotto() {
     }
 
     public String getNome() {
@@ -43,12 +52,33 @@ public class Prodotto {
         return soglia;
     }
 
-    public void setSelected(boolean selected) {
-        isSelected = selected;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public boolean isSelected() {
-        return isSelected;
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
+    }
+
+    public void setUnita(String unita) {
+        this.unita = unita;
+    }
+
+    public void setCostoAcquisto(String costoAcquisto) {
+        this.costoAcquisto = costoAcquisto;
+    }
+
+    public void setQuantita(double quantita) {
+        this.quantita = quantita;
+    }
+
+    public void setSoglia(double soglia) {
+        this.soglia = soglia;
+    }
+
+    @Override
+    public String toString(){
+        return nome;
     }
 
 }

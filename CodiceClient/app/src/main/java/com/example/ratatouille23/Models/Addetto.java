@@ -1,6 +1,8 @@
 package com.example.ratatouille23.Models;
 
-public class Addetto extends Utente {
+import java.io.Serializable;
+
+public class Addetto extends Utente implements Serializable {
 
     private ruoliPersonale ruolo;
 

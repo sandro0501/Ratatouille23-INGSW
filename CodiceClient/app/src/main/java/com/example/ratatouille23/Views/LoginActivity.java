@@ -18,8 +18,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.ratatouille23.Controller;
 import com.example.ratatouille23.Models.Utente;
+import com.example.ratatouille23.Presenters.PresenterLogin;
 import com.example.ratatouille23.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -62,16 +62,16 @@ public class LoginActivity extends AppCompatActivity {
                 Utente utenteCorrente;
                 Intent i = new Intent(getApplicationContext(), BachecaActivity.class);
                 if (!email.isEmpty() && !password.isEmpty()) {
-                    utenteCorrente = Controller.getInstance().bottoneLoginPremuto(email, password);
+                    utenteCorrente = PresenterLogin.getInstance().bottoneLoginPremuto(email, password);
                     if (utenteCorrente == null) {
-                        Controller.getInstance().mostraAlertErrore(LoginActivity.this, "Errore!", "L'email o la password non sono corretti!");
+                        PresenterLogin.getInstance().mostraAlert(LoginActivity.this, "Errore!", "L'email o la password non sono corretti!");
                     }
                     else {
                         startActivity(i);
                     }
                 }
                 else {
-                    Controller.getInstance().mostraAlertErrore(LoginActivity.this, "Attenzione!", "Uno o più campi obbligatori sono " +
+                    PresenterLogin.getInstance().mostraAlert(LoginActivity.this, "Attenzione!", "Uno o più campi obbligatori sono " +
                             "stati lasciati vuoti");
                 }
 

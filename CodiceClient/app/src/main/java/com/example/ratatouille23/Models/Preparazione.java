@@ -1,6 +1,8 @@
 package com.example.ratatouille23.Models;
 
-public class Preparazione {
+import java.io.Serializable;
+
+public class Preparazione implements Serializable  {
     Prodotto prodottoAssociato;
     double quantitaNecessaria;
 
