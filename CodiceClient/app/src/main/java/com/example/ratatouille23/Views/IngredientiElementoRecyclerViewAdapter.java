@@ -2,6 +2,7 @@ package com.example.ratatouille23.Views;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,15 +11,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.ratatouille23.Models.Elemento;
+import com.example.ratatouille23.Models.Prodotto;
 import com.example.ratatouille23.R;
 
 public class IngredientiElementoRecyclerViewAdapter extends RecyclerView.Adapter<IngredientiElementoRecyclerViewAdapter.MyViewHolder>{
 
-    private final RecyclerViewProdottoInterface recyclerViewInterfaceProdotto;
+    private final RecyclerViewIngredientiElementoInterface  recyclerViewInterfaceProdotto;
     private Context context;
     private Elemento elemento;
 
-    public IngredientiElementoRecyclerViewAdapter(Context context, Elemento elemento, RecyclerViewProdottoInterface recyclerViewInterfaceProdotto){
+    public IngredientiElementoRecyclerViewAdapter(Context context, Elemento elemento, RecyclerViewIngredientiElementoInterface recyclerViewInterfaceProdotto){
         this.context = context;
         this.elemento = elemento;
         this.recyclerViewInterfaceProdotto = recyclerViewInterfaceProdotto;
@@ -62,7 +64,7 @@ public class IngredientiElementoRecyclerViewAdapter extends RecyclerView.Adapter
         TextView unitaProdottoLabel;
         TextView costoAcquistoProdottoLabel;
 
-        public MyViewHolder(@NonNull View itemView, RecyclerViewProdottoInterface recyclerViewInterfaceProdotto) {
+        public MyViewHolder(@NonNull View itemView, RecyclerViewIngredientiElementoInterface recyclerViewInterfaceProdotto) {
             super(itemView);
 
             unitaProdottoLabel = itemView.findViewById(R.id.textViewUnitaProdottoProdottoLabel);
@@ -72,6 +74,21 @@ public class IngredientiElementoRecyclerViewAdapter extends RecyclerView.Adapter
             quantitaProdotto = itemView.findViewById(R.id.textViewQuantitaProdotto);
             unitaProdotto = itemView.findViewById(R.id.textViewMisuraProdotto);
             costoAcquistoProdotto = itemView.findViewById(R.id.textViewCostoAcquitoProdotto);
+
+            itemView.findViewById(R.id.cardViewProdotto).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if(recyclerViewInterfaceProdotto != null){
+                        int posizioneProdotto = getAdapterPosition();
+                        if(posizioneProdotto != RecyclerView.NO_POSITION){
+                            Prodotto prodottoSelezionato = elemento.getPreparazione().get(posizioneProdotto).getProdottoAssociato();
+                            recyclerViewInterfaceProdotto.onProdottoAssociatoAElementoSelezionato(prodottoSelezionato, itemView);
+
+                        }
+                    }
+                }
+            });
 
 
         }

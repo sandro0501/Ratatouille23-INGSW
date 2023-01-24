@@ -2,49 +2,54 @@ package com.example.ratatouille23.Views;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ratatouille23.Models.Allergene;
 import com.example.ratatouille23.Models.Elemento;
-import com.example.ratatouille23.Models.Preparazione;
 import com.example.ratatouille23.Models.Prodotto;
-import com.example.ratatouille23.Models.SezioneMenu;
-import com.example.ratatouille23.Models.listaAllergeni;
+import com.example.ratatouille23.Presenters.PresenterDispensa;
+import com.example.ratatouille23.Presenters.PresenterMenu;
 import com.example.ratatouille23.R;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivity implements  RecyclerViewAggiuntaIngredientiElementoInterface{
+public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivity implements  RecyclerViewIngredientiElementoInterface, RecyclerViewAggiuntaIngredientiElementoInterface{
 
     private Toolbar toolbarNavigazione;
     private RecyclerView pannelloIngredienti;
     private IngredientiElementoRecyclerViewAdapter ingredientiElementoAdapter;
     private Elemento elemento;
-    private RecyclerViewProdottoInterface ingredientiElementoInterface;
     private ImageView iconaAggiuntaIngrediente;
     private Drawable iconaIndietro;
     private ImageView iconaCestino;
     private TextView titoloElemento;
     private AlertDialog.Builder builderDialogAggiuntaIngrediente;
+    private AlertDialog.Builder builderDialogEliminazioneIngrediente;
     private Dialog dialogAggiuntaIngrediente;
     private Dialog dialogAggiuntaIngredienteSelezionato;
+    private Dialog dialogEliminaIngrediente;
     private Button bottoneAggiuntaProdottoSelezionato;
-    private Button annullaAggiuntaProdottoSelezionato;
+    private Button bottoneAnnullaAggiuntaProdottoSelezionato;
     private Button bottoneAnnullaAggiungiProdottoPerElemento;
+    private Button bottoneAnnullaEliminazioneIngrediente;
+    private Button bottoneConfermaEliminazioneIngrediente;
     private RecyclerView pannelloProdottiInDispensa;
     private AggiuntaIngredientiRecyclerViewAdapter prodottiInDispensaAdapter;
     private ArrayList<Prodotto> dispensa;
@@ -53,10 +58,15 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
     private TextView ricercaProdottiVuota;
     private TextView nomeProdottoSelezionato;
     private TextView unitaMisuraProdottoSelezionato;
+    private TextView textViewEliminazioneIngrediente;
     private Double quantitaProdottoCorrente;
     private String nomeProdottoCorrente;
     private String unitaMisuraProdottoCorrente;
+    private EditText quantitaProdottoSelezionato;
     private ArrayList <Prodotto> dispensaFiltrata;
+    private ArrayList<Prodotto> listaProdottiSelezionati = new ArrayList<>();
+    private ArrayList<CardView> listaCardProdottiSelezionati = new ArrayList<>();
+    private boolean modalitaEliminazione = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,14 +77,24 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
 
         onIndietroPremuto();
         inizializzaPannelloIngredienti();
-        onAggiungiIngredientePremuto();
+        bottoneAggiuntaIngredientePremuto();
+        bottoneEliminaIngredientePremuto();
 
 
     }
 
+    @Override
+    protected void onStop() {
+        if (modalitaEliminazione){
+            deselezionaTuttiProdotti();
+            disattivaModalitaEliminazione();
+        }
+        super.onStop();
+    }
+
     private void inizializzaPannelloIngredienti() {
         pannelloIngredienti = findViewById(R.id.recyclerViewIngredientiElemento);
-        ingredientiElementoAdapter = new IngredientiElementoRecyclerViewAdapter(getApplicationContext(), elemento, ingredientiElementoInterface);
+        ingredientiElementoAdapter = new IngredientiElementoRecyclerViewAdapter(getApplicationContext(), elemento, this);
         pannelloIngredienti.setAdapter(ingredientiElementoAdapter);
         pannelloIngredienti.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         ingredientiElementoAdapter.notifyDataSetChanged();
@@ -95,7 +115,80 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
         });
     }
 
-    private void onAggiungiIngredientePremuto(){
+    private void bottoneEliminaIngredientePremuto() {
+        iconaCestino = findViewById(R.id.imageViewIconEliminaProdottoPreparazioneElemento);
+        iconaCestino.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (modalitaEliminazione) {
+                    if (listaProdottiSelezionati.size() == 0) disattivaModalitaEliminazione();
+                    else {
+                        final View viewEliminaProdotto = getLayoutInflater().inflate(R.layout.layout_elimina_prodotto_dialog, null);
+                        builderDialogEliminazioneIngrediente = new AlertDialog.Builder(VisualizzazioneIngredientiElementoActivity.this);
+                        builderDialogEliminazioneIngrediente.setView(viewEliminaProdotto);
+                        builderDialogEliminazioneIngrediente.setCancelable(true);
+
+                        textViewEliminazioneIngrediente = (TextView) viewEliminaProdotto.findViewById(R.id.textViewEliminaProdottoDescrizioneDialog);
+                        if (listaProdottiSelezionati.size() == 1) {
+                            textViewEliminazioneIngrediente.setText("Sei sicuro di voler eliminare il prodotto selezionato dalla preparazione dell'elemento?");
+                        } else {
+                            textViewEliminazioneIngrediente.setText("Sei sicuro di voler eliminare i " + listaProdottiSelezionati.size() + " prodotti selezionati dalla preparazione dell'elemento?");
+                        }
+
+                        bottoneAnnullaEliminazioneIngrediente = (Button) viewEliminaProdotto.findViewById(R.id.bottoneAnnullaEliminaProdotto);
+                        bottoneAnnullaEliminazioneIngrediente.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                disattivaModalitaEliminazione();
+                                deselezionaTuttiProdotti();
+                                dialogEliminaIngrediente.dismiss();
+                            }
+                        });
+
+                        bottoneConfermaEliminazioneIngrediente = (Button) viewEliminaProdotto.findViewById(R.id.bottoneEliminaProdotto);
+                        bottoneConfermaEliminazioneIngrediente.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                //codice db
+                                PresenterDispensa.getInstance().mostraAlert(VisualizzazioneIngredientiElementoActivity.this, "Eliminazione effettuata", "Eliminazione dei prodotti selezionati effettuata correttamente!");
+                                disattivaModalitaEliminazione();
+                                deselezionaTuttiProdotti();
+                                dialogEliminaIngrediente.dismiss();
+                            }
+                        });
+
+                        dialogEliminaIngrediente = builderDialogEliminazioneIngrediente.create();
+                        dialogEliminaIngrediente.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
+                        dialogEliminaIngrediente.show();
+                    }
+                }
+                else {
+                    modalitaEliminazione = true;
+                    iconaAggiuntaIngrediente.setEnabled(false);
+                    iconaCestino.setImageResource(R.drawable.icon_elimina_prodotto_elemento_attiva);
+                    Toast.makeText(VisualizzazioneIngredientiElementoActivity.this,
+                            "Modalità eliminazione ingrediente dalla preparazione attiva", Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+        });
+    }
+
+    private void deselezionaTuttiProdotti() {
+        modalitaEliminazione = false;
+        for (CardView card : listaCardProdottiSelezionati) card.setCardBackgroundColor(Color.WHITE);
+        listaCardProdottiSelezionati.clear();
+        listaProdottiSelezionati.clear();
+    }
+
+    private void disattivaModalitaEliminazione() {
+        modalitaEliminazione = false;
+        iconaAggiuntaIngrediente.setEnabled(true);
+        iconaCestino.setImageResource(R.drawable.icon_elimina_prodotto_elemento);
+    }
+
+    private void bottoneAggiuntaIngredientePremuto(){
         iconaAggiuntaIngrediente = findViewById(R.id.imageViewIconAddProdottoPreparazioneElemento);
         iconaAggiuntaIngrediente.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,8 +212,6 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
         pannelloProdottiInDispensa.setLayoutManager(new LinearLayoutManager(viewAggiuntaIngrediente.getContext()));
         prodottiInDispensaAdapter.notifyDataSetChanged();
 
-
-
         searchViewRicercaProdotti = viewAggiuntaIngrediente.findViewById(R.id.searchViewRicercaProdottoInDispensa);
         TextView searchText = (TextView) searchViewRicercaProdotti.findViewById(androidx.appcompat.R.id.search_src_text);
         try {
@@ -141,8 +232,6 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
                 filtraProdottiInDispensa(nomeProdotto);
                 return true;
             }
-
-
         });
 
         bottoneAnnullaAggiungiProdottoPerElemento = (Button) viewAggiuntaIngrediente.findViewById(R.id.bottoneAnnullaAggiungiProdottoPerElemento);
@@ -198,38 +287,85 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
 
     @Override
     public void onProdottoClicked(Prodotto prodottoSelezionato, View itemView) {
+            prodottoCorrente = prodottoSelezionato;
 
-        prodottoCorrente = prodottoSelezionato;
-        nomeProdottoCorrente = prodottoCorrente.getNome();
-        quantitaProdottoCorrente = prodottoCorrente.getQuantita();
-        unitaMisuraProdottoCorrente = prodottoCorrente.getUnita();
+                nomeProdottoCorrente = prodottoCorrente.getNome();
+                quantitaProdottoCorrente = prodottoCorrente.getQuantita();
+                unitaMisuraProdottoCorrente = prodottoCorrente.getUnita();
 
-        dialogAggiuntaIngrediente.dismiss();
+                dialogAggiuntaIngrediente.dismiss();
 
-        final View viewAggiuntaIngredienteSelezionato = getLayoutInflater().inflate(R.layout.layout_aggiungi_prodotto_selezionato_per_elemento, null);
+                final View viewAggiuntaIngredienteSelezionato = getLayoutInflater().inflate(R.layout.layout_aggiungi_prodotto_selezionato_per_elemento, null);
 
-        nomeProdottoSelezionato = viewAggiuntaIngredienteSelezionato.findViewById(R.id.textViewProdottoInDispensaSelezionato);
-        nomeProdottoSelezionato.append(nomeProdottoCorrente);
+                nomeProdottoSelezionato = viewAggiuntaIngredienteSelezionato.findViewById(R.id.textViewProdottoInDispensaSelezionato);
+                nomeProdottoSelezionato.append(nomeProdottoCorrente);
 
-        unitaMisuraProdottoSelezionato = viewAggiuntaIngredienteSelezionato.findViewById(R.id.textViewMisuraProdottoSelezionato);
-        unitaMisuraProdottoSelezionato.setText(unitaMisuraProdottoCorrente);
+                unitaMisuraProdottoSelezionato = viewAggiuntaIngredienteSelezionato.findViewById(R.id.textViewMisuraProdottoSelezionato);
+                unitaMisuraProdottoSelezionato.setText(unitaMisuraProdottoCorrente);
 
-        bottoneAnnullaAggiungiProdottoPerElemento = viewAggiuntaIngredienteSelezionato.findViewById(R.id.bottoneAnnullaAggiungiProdottoSelezionato);
-        bottoneAnnullaAggiungiProdottoPerElemento.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialogAggiuntaIngredienteSelezionato.dismiss();
-                dialogAggiuntaIngrediente.show();
-            }
-        });
+                bottoneAnnullaAggiuntaProdottoSelezionato = viewAggiuntaIngredienteSelezionato.findViewById(R.id.bottoneAnnullaAggiungiProdottoSelezionato);
+                bottoneAnnullaAggiuntaProdottoSelezionato.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialogAggiuntaIngredienteSelezionato.dismiss();
+                        dialogAggiuntaIngrediente.show();
+                    }
+                });
 
+                bottoneAggiuntaProdottoSelezionato = viewAggiuntaIngredienteSelezionato.findViewById(R.id.bottoneAggiungiProdottoSelezionato);
+                bottoneAggiuntaProdottoSelezionato.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        quantitaProdottoSelezionato = viewAggiuntaIngredienteSelezionato.findViewById(R.id.EditTextQuantitaProdottoSelezionato);
 
+                        if (quantitaProdottoSelezionato.getText().toString().trim().length() != 0) {
+                            PresenterMenu.getInstance().mostraAlert(VisualizzazioneIngredientiElementoActivity.this, "Prodotto selezionato aggiunto",
+                                    "Hai aggiunto correttamente all'elemento del menù " + quantitaProdottoSelezionato.getText() + " " +
+                                            unitaMisuraProdottoCorrente + " del prodotto " + nomeProdottoCorrente);
 
-        builderDialogAggiuntaIngrediente.setView(viewAggiuntaIngredienteSelezionato);
-        builderDialogAggiuntaIngrediente.setCancelable(true);
-        dialogAggiuntaIngredienteSelezionato = builderDialogAggiuntaIngrediente.create();
-        dialogAggiuntaIngredienteSelezionato.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
-        dialogAggiuntaIngredienteSelezionato.show();
+                    /*
+                    Preparazione p = new Preparazione(prodottoCorrente, Double.parseDouble(quantitaProdottoSelezionato.getText().toString()));
+                    elemento.getPreparazione().add(p); */
+
+                            dialogAggiuntaIngredienteSelezionato.dismiss();
+                            dialogAggiuntaIngrediente.dismiss();
+                        } else {
+                            PresenterMenu.getInstance().mostraAlert(VisualizzazioneIngredientiElementoActivity.this, "Attenzione",
+                                    "Non hai specificato la quantità necessaria alla preparazione per il prodotto selezionato");
+                        }
+
+                    }
+                });
+
+                builderDialogAggiuntaIngrediente.setView(viewAggiuntaIngredienteSelezionato);
+                builderDialogAggiuntaIngrediente.setCancelable(true);
+                dialogAggiuntaIngredienteSelezionato = builderDialogAggiuntaIngrediente.create();
+                dialogAggiuntaIngredienteSelezionato.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
+                dialogAggiuntaIngredienteSelezionato.show();
+        }
+
+    @Override
+    public void onProdottoAssociatoAElementoSelezionato(Prodotto prodottoSelezionato, View itemView) {
+        if(modalitaEliminazione){
+            selezionaDeselezionaProdotto(prodottoSelezionato, itemView);
+        }
 
     }
+
+    private void selezionaDeselezionaProdotto(Prodotto prodottoCorrente, View itemView) {
+
+        if (!listaProdottiSelezionati.contains(prodottoCorrente)) {
+            listaProdottiSelezionati.add(prodottoCorrente);
+            CardView cardProdotto = itemView.findViewById(R.id.cardViewProdotto);
+            cardProdotto.setCardBackgroundColor(Color.parseColor("#F4B851"));
+            listaCardProdottiSelezionati.add(cardProdotto);
+        }
+        else {
+            listaProdottiSelezionati.remove(prodottoCorrente);
+            CardView cardProdotto = itemView.findViewById(R.id.cardViewProdotto);
+            cardProdotto.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+            listaCardProdottiSelezionati.remove(cardProdotto);
+        }
+    }
 }
+
