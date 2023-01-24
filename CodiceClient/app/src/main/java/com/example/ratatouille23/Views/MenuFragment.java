@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ratatouille23.Models.Allergene;
 import com.example.ratatouille23.Models.Elemento;
@@ -206,6 +207,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         int width = iconaCestino.getWidth();
         int height = iconaCestino.getHeight();
         if (modalitaEliminazione) {
+
             modalitaEliminazione = false;
             iconaCestino.setImageResource(R.drawable.icon_rimuovi_elemento);
             iconaCestino.requestLayout();

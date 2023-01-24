@@ -46,4 +46,9 @@ public class ServiceUtente {
 		return repository.save(utente);
 	}
 
+	public String delete(Utente utente) {
+		repository.delete(repository.findById(utente.getIdUtente()).get());
+		return "Tutto bene";
+	}
+
 }

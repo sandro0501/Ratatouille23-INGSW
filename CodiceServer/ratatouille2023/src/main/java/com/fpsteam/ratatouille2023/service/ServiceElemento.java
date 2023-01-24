@@ -1,16 +1,13 @@
 package com.fpsteam.ratatouille2023.service;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fpsteam.ratatouille2023.entity.Elemento;
-import com.fpsteam.ratatouille2023.entity.Ristorante;
 import com.fpsteam.ratatouille2023.entity.SezioneMenu;
 import com.fpsteam.ratatouille2023.repository.RepositoryElemento;
-import com.fpsteam.ratatouille2023.repository.RepositoryRistorante;
 
 @Service
 public class ServiceElemento {
@@ -24,6 +21,22 @@ public class ServiceElemento {
 
 	public void save(Elemento elemento) {
 		repository.save(elemento);
+	}
+
+	public void update(Elemento elemento) {
+		Elemento estratto = repository.findById(elemento.getIdElemento()).get();
+		estratto = elemento;
+		repository.save(elemento);
+		
+	}
+
+	public String delete(ArrayList<Elemento> elemento) {
+		for(int x = 0; x<elemento.size(); x++)
+		{
+			Elemento res = repository.findById(elemento.get(x).getIdElemento()).get();
+			repository.delete(res);
+		}
+		return "Tutto bene";
 	}
 	
 

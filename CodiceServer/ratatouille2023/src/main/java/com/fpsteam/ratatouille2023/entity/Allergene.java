@@ -37,6 +37,30 @@ public class Allergene {
 	}
 	
 	
+	public int getIdAllergene() {
+		return idAllergene;
+	}
+
+
+
+	public void setIdAllergene(int idAllergene) {
+		this.idAllergene = idAllergene;
+	}
+
+
+
+	public Set<ListaAllergeni> getPresenteIn() {
+		return presenteIn;
+	}
+
+
+
+	public void setPresenteIn(Set<ListaAllergeni> presenteIn) {
+		this.presenteIn = presenteIn;
+	}
+
+
+
 	public Valid getNome() {
 		return nome;
 	}
