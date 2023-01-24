@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fpsteam.ratatouille2023.entity.Ristorante;
+import com.fpsteam.ratatouille2023.entity.Ristorante;
+import com.fpsteam.ratatouille2023.primaryKeys.PreparazioneId;
 import com.fpsteam.ratatouille2023.repository.RepositoryRistorante;
 
 @Service
@@ -21,6 +23,14 @@ public class ServiceRistorante {
 	
 	public Ristorante saveRistorante(Ristorante ristorante) {
 		return repository.save(ristorante);
+	}
+
+	public String update(Ristorante ristorante) {
+		PreparazioneId id = new PreparazioneId();
+		Ristorante estratto = repository.findById(ristorante.getIdRistorante()).get();
+		estratto =ristorante;
+		repository.save(ristorante);
+		return "Tutto bene";
 	}
 
 }

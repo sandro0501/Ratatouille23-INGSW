@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fpsteam.ratatouille2023.entity.Prodotto;
 import com.fpsteam.ratatouille2023.entity.Ristorante;
 import com.fpsteam.ratatouille2023.entity.Utente;
 import com.fpsteam.ratatouille2023.service.ServiceRistorante;
@@ -28,6 +30,12 @@ public class ControllerRistorante {
 	{
 		List<Utente> res = serviceUtente.estraiDipendenti(ristorante);	
 		return res;
-	}	
+	}
+	
+	@PutMapping("")
+	public String update(@RequestBody Ristorante ristorante)
+	{
+		return service.update(ristorante);
+	}
 
 }

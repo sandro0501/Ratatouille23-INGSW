@@ -29,5 +29,23 @@ public class ListaAllergeniId implements Serializable{
 	public int hashCode() {
 		return Objects.hash(idAllergene,idElemento);
 	}
+
+	public Allergene getIdAllergene() {
+		return idAllergene;
+	}
+
+	public void setIdAllergene(Allergene idAllergene) {
+		this.idAllergene = idAllergene;
+	}
+
+	public Elemento getIdElemento() {
+		return idElemento;
+	}
+
+	public void setIdElemento(Elemento idElemento) {
+		this.idElemento = idElemento;
+	}
+	
+	
 	
 }
