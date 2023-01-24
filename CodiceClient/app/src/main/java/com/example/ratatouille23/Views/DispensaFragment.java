@@ -137,6 +137,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
         super.onViewCreated(view, savedInstanceState);
 
         adapterAutoComplete = new ArrayAdapter<Prodotto>(getContext(), R.layout.spinner_layout, listaAutoComplete);
+        adapterAutoComplete.setNotifyOnChange(true);
 
         recyclerView = view.findViewById(R.id.recyclerViewDispensa);
         riempiDispensa();
@@ -254,14 +255,13 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (editTextNomeProdotto.getText().toString().length() >= editTextNomeProdotto.getThreshold()) {
-                    listaAutoComplete.clear();
                     PresenterDispensa.getInstance().settaProdottiDaIniziale(DispensaFragment.this, editTextNomeProdotto.getText().toString());
                 }
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-
+                adapterAutoComplete.clear();
             }
         });
 
@@ -401,9 +401,8 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
     }
 
     public void setupListaProdottiOpenFoodFacts(ArrayList<Prodotto> lista){
-        listaAutoComplete.addAll(lista);
-        adapterAutoComplete.addAll(listaAutoComplete);
-        adapterAutoComplete.notifyDataSetChanged();
+        adapterAutoComplete.addAll(lista);
+        adapterAutoComplete.getFilter().filter(editTextNomeProdotto.getText(), editTextNomeProdotto);
     }
 
 
