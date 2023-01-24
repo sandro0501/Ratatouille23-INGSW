@@ -33,4 +33,22 @@ public class ListaAllergeni {
 	
 	public ListaAllergeni() {}
 
+	public Allergene getIdAllergene() {
+		return idAllergene;
+	}
+
+	public void setIdAllergene(Allergene idAllergene) {
+		this.idAllergene = idAllergene;
+	}
+
+	public Elemento getIdElemento() {
+		return idElemento;
+	}
+
+	public void setIdElemento(Elemento idElemento) {
+		this.idElemento = idElemento;
+	}
+	
+	
+
 }

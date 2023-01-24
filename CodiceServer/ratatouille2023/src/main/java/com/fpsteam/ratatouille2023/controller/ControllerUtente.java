@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,8 +19,10 @@ import com.fpsteam.ratatouille2023.entity.Ristorante;
 import com.fpsteam.ratatouille2023.entity.Utente;
 import com.fpsteam.ratatouille2023.handlers.GetDipendentiHandler;
 import com.fpsteam.ratatouille2023.handlers.LoginHandler;
+import com.fpsteam.ratatouille2023.handlers.RecoverHandler;
 import com.fpsteam.ratatouille2023.handlers.RegisterHandler;
 import com.fpsteam.ratatouille2023.handlers.RegisterResponseHandler;
+import com.fpsteam.ratatouille2023.handlers.SignoutHandler;
 import com.fpsteam.ratatouille2023.handlers.UpdateHandler;
 import com.fpsteam.ratatouille2023.handlers.UpdateResponseHandler;
 import com.fpsteam.ratatouille2023.service.ServiceRistorante;
@@ -44,6 +47,79 @@ public class ControllerUtente {
 	private ServiceUtente service;
 	@Autowired
 	private ServiceRistorante servRist;
+	
+	@PostMapping("/recover")
+	public String confirmRecover(@RequestBody RecoverHandler handle)
+	{
+		try {
+			JsonApiGatewayCaller caller = new JsonApiGatewayCaller(
+	                AWS_IAM_ACCESS_KEY,
+	                AWS_IAM_SECRET_ACCESS_KEY,
+	                null,
+	                AWS_REGION,
+	                new URI(AWS_API_GATEWAY_ENPOINT)
+	        );
+			String jsonRequest = "{"+
+					             "\"email\" : \"" + handle.email + "\","+
+					             "\"password\" : \"" + handle.password+ "\","+
+					             "\"code\" : \"" + handle.code + "\","+
+					             "}";
+			ApiGatewayResponse response = caller.execute(HttpMethodName.GET, "/passrecover", new ByteArrayInputStream(jsonRequest.getBytes()));
+			return response.getBody();
+		}
+		catch(Exception e)
+		{
+			return e.getMessage();
+		}
+		
+	}
+	
+	@GetMapping("/recover")
+	public String recover(@RequestBody Utente utente)
+	{
+		
+		try {
+			JsonApiGatewayCaller caller = new JsonApiGatewayCaller(
+	                AWS_IAM_ACCESS_KEY,
+	                AWS_IAM_SECRET_ACCESS_KEY,
+	                null,
+	                AWS_REGION,
+	                new URI(AWS_API_GATEWAY_ENPOINT)
+	        );
+			String jsonRequest = "{"+
+					             "\"email\" : \"" + utente.getEmail()+"\""+
+					             "}";
+			ApiGatewayResponse response = caller.execute(HttpMethodName.GET, "/passrecover", new ByteArrayInputStream(jsonRequest.getBytes()));
+			return response.getBody();
+		}
+		catch(Exception e)
+		{
+			return e.getMessage();
+		}
+	}
+	
+	@GetMapping("/out")
+	public String signout(@RequestBody SignoutHandler handle)
+	{
+		try {
+			JsonApiGatewayCaller caller = new JsonApiGatewayCaller(
+	                AWS_IAM_ACCESS_KEY,
+	                AWS_IAM_SECRET_ACCESS_KEY,
+	                null,
+	                AWS_REGION,
+	                new URI(AWS_API_GATEWAY_ENPOINT)
+	        );
+			String jsonRequest = "{"+
+					             "\"AccessToken\" : \"" + handle.accessToken+"\""+
+					             "}";
+			ApiGatewayResponse response = caller.execute(HttpMethodName.GET, "/signout", new ByteArrayInputStream(jsonRequest.getBytes()));
+			return "Logged out";
+		}
+		catch(Exception e)
+		{
+			return e.getMessage();
+		}
+	}
 	
 	@GetMapping("/{idRist}")
 	public GetDipendentiHandler estraiDipendenti(@PathVariable("idRist") int idRist)
@@ -178,6 +254,8 @@ public class ControllerUtente {
             body = body.getJSONObject("AuthenticationResult");
 		    res.idToken = body.getString("IdToken");
 			res.utente =  service.giveUtente(utente);
+			if (res.utente == null)
+				throw new Exception("Non sei associato a nessun ristorante!");
 			res.messaggio = "Tutto bene";
 			
 			return res;
@@ -250,8 +328,11 @@ public class ControllerUtente {
 		return service.saveUtentePrimario(utente);
 	}
 	//Serve a cancellare un utente dal db NON E NON DALLA USER POOL PERCHE NON SERVE
-//	@DeleteMapping("")
-//	public String
+	@DeleteMapping("")
+	public String delete(@RequestBody Utente utente)
+	{
+		return service.delete(utente);
+	}
 	
 	private class LoginResponseHandler{
 		public Utente utente;

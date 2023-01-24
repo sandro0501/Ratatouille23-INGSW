@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fpsteam.ratatouille2023.entity.Ristorante;
 import com.fpsteam.ratatouille2023.entity.SezioneMenu;
 import com.fpsteam.ratatouille2023.handlers.ElementoHandler;
+import com.fpsteam.ratatouille2023.handlers.EliminaProdottiHandler;
+import com.fpsteam.ratatouille2023.handlers.EliminaSezioniHandler;
 import com.fpsteam.ratatouille2023.handlers.MenuResponseHandler;
 import com.fpsteam.ratatouille2023.handlers.ProdottoHandler;
 import com.fpsteam.ratatouille2023.handlers.RichiestaPreparazioneHandler;
@@ -44,7 +47,8 @@ public class ControllerSezione {
 		return "Tutto bene";
 	}
 	
-	//Estraiamo tutte le sezioni e gli elementi delle sezioni
+	//Estraiamo tutte le sezioni e gli elementi delle sezioni, come anche tutte le preparazioni e tutti
+	//gli allergeni
 	@GetMapping("")
 	public ArrayList<MenuResponseHandler> estraiMenu(@RequestBody Ristorante ristorante)
 	{
@@ -64,7 +68,23 @@ public class ControllerSezione {
 			}
 		
 		return res;
-		
 	}
+	
+	//Questa viene chiamata dal client ogni volta che una sezione diventa vuota all'uscita dall'activity
+	//del menu. 
+	@DeleteMapping("")
+	public String delete(@RequestBody EliminaSezioniHandler handle)
+	{
+		ArrayList<SezioneMenu> sezioni = new ArrayList<SezioneMenu>();
+		for(SezioneMenu x : handle.sezioni)
+		{
+			SezioneMenu ne = new SezioneMenu();
+			ne.setIdAvviso(x.getIdAvviso());
+			sezioni.add(ne);
+		}
+		return service.delete(sezioni);
+	}
+	
+	
 
 }

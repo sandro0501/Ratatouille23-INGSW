@@ -17,4 +17,10 @@ public interface RepositoryProdotto extends JpaRepository<Prodotto,Integer>{
 			nativeQuery = true
 			)
 	ArrayList<Tuple> findByElemento(int idElemento);
+	
+	@Query(
+			value= "SELECT * FROM prodotto WHERE id_ristorante = ?1 ",
+			nativeQuery = true
+			)
+	ArrayList<Prodotto> findAllByRistorante(int idRistorante);
 }

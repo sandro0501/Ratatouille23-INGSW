@@ -11,7 +11,6 @@ public class PreparazioneId implements Serializable{
 
 	private Elemento idElemento;
 	private Prodotto idProdotto;
-	private double quantita;
 	
 	public PreparazioneId() {
 		
@@ -23,12 +22,30 @@ public class PreparazioneId implements Serializable{
 		if(o==null || getClass() != o.getClass())return false;
 		
 		PreparazioneId preparazioneId = (PreparazioneId) o;
-		return idProdotto.equals(preparazioneId.idProdotto) && idElemento.equals(preparazioneId.idElemento) && quantita == preparazioneId.quantita;	
+		return idProdotto.equals(preparazioneId.idProdotto) && idElemento.equals(preparazioneId.idElemento);	
 	}
 	
 	@Override
 	public int hashCode() {
 		return Objects.hash(idProdotto,idElemento);
 	}
+
+	public Elemento getIdElemento() {
+		return idElemento;
+	}
+
+	public void setIdElemento(Elemento idElemento) {
+		this.idElemento = idElemento;
+	}
+
+	public Prodotto getIdProdotto() {
+		return idProdotto;
+	}
+
+	public void setIdProdotto(Prodotto idProdotto) {
+		this.idProdotto = idProdotto;
+	}
+
+	
 	
 }
