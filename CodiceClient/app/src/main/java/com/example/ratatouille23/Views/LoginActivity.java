@@ -18,9 +18,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amplifyframework.AmplifyException;
+import com.amplifyframework.core.Amplify;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Presenters.PresenterLogin;
 import com.example.ratatouille23.R;
+import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
+
+
 
 public class LoginActivity extends AppCompatActivity {
 

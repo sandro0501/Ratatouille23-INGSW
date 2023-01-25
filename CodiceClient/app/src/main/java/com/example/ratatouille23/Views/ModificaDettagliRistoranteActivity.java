@@ -3,9 +3,13 @@ package com.example.ratatouille23.Views;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -14,11 +18,15 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amplifyframework.core.Amplify;
 import com.example.ratatouille23.Models.Ristorante;
+import com.example.ratatouille23.Presenters.PresenterRistorante;
 import com.example.ratatouille23.R;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class ModificaDettagliRistoranteActivity extends AppCompatActivity {
 
@@ -32,6 +40,7 @@ public class ModificaDettagliRistoranteActivity extends AppCompatActivity {
     private CheckBox checkBoxTuristico;
     private ImageButton buttonSceltaFoto;
     private ImageView imageViewLogoRistorante;
+    private File fileLogo;
 
     private Ristorante ristoranteCorrente;
 
@@ -54,6 +63,7 @@ public class ModificaDettagliRistoranteActivity extends AppCompatActivity {
         imageViewLogoRistorante = findViewById(R.id.iconaLogoRistoranteModifica);
 
         ristoranteCorrente = (Ristorante)getIntent().getSerializableExtra("RistoranteCorrente");
+        fileLogo = (File)getIntent().getSerializableExtra("FileLogo");
 
         textViewNome.setText(ristoranteCorrente.getNome());
         textViewTelefono.setText(ristoranteCorrente.getNumeroDiTelefono());
@@ -61,6 +71,11 @@ public class ModificaDettagliRistoranteActivity extends AppCompatActivity {
         textViewCitta.setText(ristoranteCorrente.getCitta());
         textViewTuristico.setText((ristoranteCorrente.isTuristico() ? "Il tuo ristorante è in una località turistica!": "Il tuo ristorante non è in una località turistica!"));
         checkBoxTuristico.setChecked(ristoranteCorrente.isTuristico());
+
+        if (fileLogo != null) {
+            Bitmap bitmap = BitmapFactory.decodeFile(fileLogo.getAbsolutePath());
+            imageViewLogoRistorante.setImageBitmap(bitmap);
+        }
 
         checkBoxTuristico.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -108,8 +123,24 @@ public class ModificaDettagliRistoranteActivity extends AppCompatActivity {
             }
 
             Uri uri = data.getData();
-            imageViewLogoRistorante.setImageURI(uri);
+            InputStream streamLogo = null;
+            try {
+                streamLogo = getContentResolver().openInputStream(uri);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            uploadS3(streamLogo, uri);
+
         }
+    }
+
+    private void uploadS3(InputStream streamLogo, Uri uri) {
+        Amplify.Storage.uploadInputStream(
+                ((Integer)ristoranteCorrente.getId()).toString()+"_LogoRistorante.jpg",
+                streamLogo,
+                result -> imageViewLogoRistorante.setImageURI(uri),
+                storageFailure -> PresenterRistorante.getInstance().mostraAlert(getBaseContext(), "Errore!", "L'immagine non è stata caricata correttamente, riprovare")
+        );
     }
 
 }

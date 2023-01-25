@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class Ristorante implements Serializable {
 
+    private int id;
     private String nome;
     private String numeroDiTelefono;
     private String indirizzo;
@@ -79,4 +80,11 @@ public class Ristorante implements Serializable {
         this.utilizza = utilizza;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
