@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,10 +38,10 @@ import java.util.Comparator;
 
 public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInterface {
 
-    private ArrayList<Avviso> avvisiUtente;
-    private ArrayList<Avviso> avvisiUtenteNuovi; //la lista di utenti ottenuta va qui
-    private ArrayList<Avviso> avvisiUtenteLetti;
-    private ArrayList<Avviso> avvisiUtenteNascosti;
+    private ArrayList<Avviso> avvisiUtente = new ArrayList<>();
+    private ArrayList<Avviso> avvisiUtenteNuovi = new ArrayList<>(); //la lista di utenti ottenuta va qui
+    private ArrayList<Avviso> avvisiUtenteLetti = new ArrayList<>();
+    private ArrayList<Avviso> avvisiUtenteNascosti = new ArrayList<>();
     private RecyclerView recyclerView;
     private AvvisoRecyclerViewAdapter avvisoAdapter; //.setnotifydatachange dopo che
     private ImageView bottoneCreazioneAvviso;
@@ -118,10 +119,10 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
+        utenteCorrente = (Utente)getActivity().getIntent().getSerializableExtra("Utente");
+        Log.i("Prova", utenteCorrente.toString());
         recyclerView = view.findViewById(R.id.recyclerViewAvvisi);
-        setUpAvvisi();
-        avvisoAdapter = new AvvisoRecyclerViewAdapter(getContext(),avvisiUtente,this);
+        avvisoAdapter = new AvvisoRecyclerViewAdapter(getContext(),avvisiUtenteNuovi,this);
         //recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(avvisoAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

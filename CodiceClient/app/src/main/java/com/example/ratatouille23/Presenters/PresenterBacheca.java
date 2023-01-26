@@ -1,7 +1,8 @@
 package com.example.ratatouille23.Presenters;
 
-import com.example.ratatouille23.DAO.DAOBacheca;
-import com.example.ratatouille23.DAO.DAOBachecaImpl;
+import com.example.ratatouille23.DAO.DAOAvviso;
+import com.example.ratatouille23.DAO.DAOAvvisoImpl;
+import com.example.ratatouille23.DAO.DAOFactory;
 import com.example.ratatouille23.Models.Avviso;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Views.BachecaFragment;
@@ -12,11 +13,13 @@ public class PresenterBacheca extends PresenterBase {
 
     private static PresenterBacheca instance;
 
-    private DAOBacheca daoBacheca;
+    private DAOAvviso daoBacheca;
 
     static Boolean bachecaAttiva = true;
 
-    private PresenterBacheca() { };
+    private PresenterBacheca() {
+        daoBacheca = DAOFactory.getInstance().getDAOAvviso();
+    };
 
     public static PresenterBacheca getInstance(){
 
@@ -37,7 +40,7 @@ public class PresenterBacheca extends PresenterBase {
 
     public void setAvvisi(BachecaFragment context, Utente utente)
     {
-        daoBacheca.getAvvisiUtenteCorrente(utente, new DAOBachecaImpl.BachecaCallbacks() {
+        daoBacheca.getAvvisi(utente, new DAOAvvisoImpl.BachecaCallbacks() {
             @Override
             public void onCaricamentoAvvisi(ArrayList<Avviso> avvisiUtenteNuovi, ArrayList<Avviso> avvisiUtenteLetti, ArrayList<Avviso> avvisiutenteNascosti) {
                 context.setAvvisiUtente(avvisiUtenteNuovi,avvisiUtenteLetti,avvisiutenteNascosti);

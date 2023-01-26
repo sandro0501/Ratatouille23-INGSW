@@ -48,7 +48,7 @@ public class AvvisoRecyclerViewAdapter extends RecyclerView.Adapter<AvvisoRecycl
         holder.autoreAvviso.setText(avvisi.get(position).getAutore().getNomeCompleto());
         holder.oggettoAvviso.setText(avvisi.get(position).getOggetto());
         holder.corpoAvviso.setText(avvisi.get(position).getCorpo());
-        Date data = avvisi.get(position).getDataCreazione();
+        Date data = (java.sql.Date)avvisi.get(position).getDataCreazione();
         holder.dataAvviso.setText(new SimpleDateFormat("dd/MM").format(data));
         holder.ruoloAutoreAvviso.setText(avvisi.get(position).getAutore().getRuoloUtente());
 
