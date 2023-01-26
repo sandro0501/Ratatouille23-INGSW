@@ -32,12 +32,12 @@ public class ControllerAvviso {
 	public String aggiungiAvviso(@RequestBody InserisciAvvisoHandler handle) 
 	{
 		Avviso avv = handle.avviso;
-		handle.autore.setRistorante(handle.ristorante);
+		handle.autore.setidRistorante(handle.ristorante);
 		avv.setAutore(handle.autore);
 		//Si dovrebbe salvare l'avviso nel database
 		avv = service.save(avv);
 		//Dopo averlo preso, bisogna salvare nella bacheca ogni utente con questo nuovo avviso
-		List<Utente> dipendenti = servUt.estraiDipendenti(avv.getAutore().getRistorante());
+		List<Utente> dipendenti = servUt.estraiDipendenti(avv.getAutore().getidRistorante());
 		for (Utente x : dipendenti)
 		{
 			servBa.salvaRelazioneUtenteAvviso(x, avv);

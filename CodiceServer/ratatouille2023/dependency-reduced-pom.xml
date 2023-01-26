@@ -10,7 +10,7 @@
   <groupId>com.fpsteam</groupId>
   <artifactId>ratatouille2023</artifactId>
   <name>ratatouille2023</name>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
   <description>Demo project for Spring Boot</description>
   <build>
     <plugins>

@@ -31,14 +31,20 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInterface {
 
     private ArrayList<Avviso> avvisiUtente;
+    private ArrayList<Avviso> avvisiUtenteNuovi; //la lista di utenti ottenuta va qui
+    private ArrayList<Avviso> avvisiUtenteLetti;
+    private ArrayList<Avviso> avvisiUtenteNascosti;
     private RecyclerView recyclerView;
-    private AvvisoRecyclerViewAdapter avvisoAdapter;
+    private AvvisoRecyclerViewAdapter avvisoAdapter; //.setnotifydatachange dopo che
     private ImageView bottoneCreazioneAvviso;
+    private Utente utenteCorrente;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -75,6 +81,8 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
     @Override
     public void onStart() {
         super.onStart();
+        //Devi estrarre gli avvisi dell'utente
+        PresenterBacheca.getInstance().setAvvisi(this, utenteCorrente);
         PresenterBacheca.getInstance().setBachecaAttiva(true);
 
     }
@@ -208,6 +216,22 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
         imageViewNascondiAvviso.setVisibility(View.VISIBLE);
     }
 
+    public void setAvvisiUtente(ArrayList<Avviso> avvisiUtenteNuovi, ArrayList<Avviso> avvisiUtenteLetti, ArrayList<Avviso> avvisiUtenteNascosti)
+    {
+        this.avvisiUtenteNuovi.addAll(avvisiUtenteNuovi);
+        this.avvisiUtenteLetti.addAll(avvisiUtenteLetti);
+        this.avvisiUtenteNascosti.addAll(avvisiUtenteNascosti);
+        avvisiUtente.addAll(avvisiUtenteNuovi);avvisiUtenteLetti.addAll(avvisiUtenteLetti);
+
+        Collections.sort(avvisiUtente,new Comparator<Avviso>() {
+            public int compare (Avviso a1, Avviso a2)
+            {
+                return a1.getDataCreazione().compareTo(a2.getDataCreazione());
+            }
+        });
+
+        avvisoAdapter.notifyDataSetChanged();
+    }
 
 
 }

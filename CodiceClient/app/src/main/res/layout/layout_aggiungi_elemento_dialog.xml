@@ -1,6 +1,735 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_bg"
+    android:clipToPadding="false"
+    android:orientation="horizontal"
+    android:paddingLeft="50dp"
+    android:paddingTop="10dp"
+    android:paddingRight="50dp"
+    android:paddingBottom="30dp">
+
+    <TextView
+        android:id="@+id/textViewAggiungiElementoTitolo"
+        android:layout_width="371dp"
+        android:layout_height="32dp"
+        android:layout_gravity="center"
+        android:fontFamily="@font/verdanab"
+        android:text="Aggiungi piatto al menù"
+        android:textColor="@color/colorGrey"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.025"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.024" />
+
+    <TextView
+        android:id="@+id/textViewTitoloPrincipaleElemento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/verdana_font"
+        android:text="Titolo principale:"
+        android:textColor="#5F5959"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewAggiungiElementoTitolo"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewAggiungiElementoTitolo"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAggiungiElementoTitolo" />
+
+    <TextView
+        android:id="@+id/textViewTitoloSecondarioElemento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/verdana_font"
+        android:text="Titolo secondario:"
+        android:textColor="#5F5959"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewAggiungiElementoTitolo"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewAggiungiElementoTitolo"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitoloPrincipaleElemento" />
+
+    <TextView
+        android:id="@+id/textViewDescrizionePrincipaleElemento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/verdana_font"
+        android:text="Descrizione principale:"
+        android:textColor="#5F5959"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewAggiungiElementoTitolo"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewAggiungiElementoTitolo"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitoloSecondarioElemento" />
+
+
+    <TextView
+        android:id="@+id/textViewDescrizioneSecondariaElemento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:fontFamily="@font/verdana_font"
+        android:text="Descrizione secondaria:"
+        android:textColor="#5F5959"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewAggiungiElementoTitolo"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewAggiungiElementoTitolo"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDescrizionePrincipaleElemento" />
+
+    <TextView
+        android:id="@+id/textViewPrezzoElemento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:fontFamily="@font/verdana_font"
+        android:text="Prezzo:"
+        android:textColor="#5F5959"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewAggiungiElementoTitolo"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewAggiungiElementoTitolo"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDescrizioneSecondariaElemento" />
+
+    <TextView
+        android:id="@+id/textViewEuroElemento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/verdana_font"
+        android:text="€"
+        android:textColor="#5F5959"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/textViewSezioneElemento"
+        app:layout_constraintStart_toEndOf="@+id/textViewPrezzoElemento"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDescrizioneSecondariaElemento"
+        app:layout_constraintVertical_bias="0.74" />
+
+    <TextView
+        android:id="@+id/textViewSezioneElemento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/verdana_font"
+        android:text="Sezione:"
+        android:textColor="#5F5959"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewAggiungiElementoTitolo"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewAggiungiElementoTitolo"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPrezzoElemento" />
+
+    <TextView
+        android:id="@+id/textViewAllergeniComuniElemento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="84dp"
+        android:fontFamily="@font/verdana_font"
+        android:text="Allergeni comuni:"
+        android:textColor="#5F5959"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewAggiungiElementoTitolo"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewAggiungiElementoTitolo"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPrezzoElemento" />
+
+    <ImageView
+        android:id="@+id/iconaLogoElemento"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:background="#DCDCDC"
+        android:scaleType="fitXY"
+        android:src="@drawable/placeholder_immagine"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textViewAggiungiElementoTitolo"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewAggiungiElementoTitolo"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAggiungiElementoTitolo"
+        app:layout_constraintVertical_bias="0.068" />
+
+    <ImageButton
+        android:id="@+id/imageButtonSceltaFotoElemento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="-10dp"
+        android:layout_marginBottom="-10dp"
+        android:background="@drawable/bg_icona_modifica_foto"
+        android:src="@drawable/ic_baseline_photo_camera_24"
+        app:layout_constraintBottom_toBottomOf="@+id/iconaLogoElemento"
+        app:layout_constraintEnd_toEndOf="@+id/iconaLogoElemento"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/iconaLogoElemento"
+        app:layout_constraintTop_toTopOf="@+id/iconaLogoElemento"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutTitoloPrincipaleElemento"
+        android:layout_width="450dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/dummy_for_shadows"
+        android:elevation="5dp"
+        app:layout_constraintStart_toEndOf="@+id/textViewTitoloPrincipaleElemento"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAggiungiElementoTitolo">
+
+        <AutoCompleteTextView
+            android:id="@+id/EditTextTitoloPrincipaleElemento"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="10dp"
+            android:background="@android:color/transparent"
+            android:backgroundTint="#5F5959"
+            android:completionThreshold="4"
+            android:ems="10"
+            android:fontFamily="@font/verdana"
+            android:hint="Scrivi il nome dell'elemento qui..."
+            android:inputType="text|textAutoComplete"
+            android:maxLength="100"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutTitoloSecondarioElemento"
+        android:layout_width="450dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/dummy_for_shadows"
+        android:elevation="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textViewTitoloSecondarioElemento"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutTitoloPrincipaleElemento">
+
+        <AutoCompleteTextView
+            android:id="@+id/EditTextTitoloSecondarioElemento"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:background="@android:color/transparent"
+            android:backgroundTint="#5F5959"
+            android:completionThreshold="4"
+            android:ems="10"
+            android:fontFamily="@font/verdana"
+            android:hint="Scrivi il nome dell'elemento nella seconda lingua qui..."
+            android:inputType="text|textAutoComplete"
+            android:maxLength="100"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutDescrizionePrincipaleElemento"
+        android:layout_width="450dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="132dp"
+        android:background="@drawable/dummy_for_shadows"
+        android:elevation="5dp"
+        app:layout_constraintStart_toEndOf="@+id/textViewDescrizionePrincipaleElemento"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAggiungiElementoTitolo">
+
+        <EditText
+            android:id="@+id/editTexDescrizionePrincipaleElemento"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:background="@android:color/transparent"
+            android:backgroundTint="#5F5959"
+            android:ems="10"
+            android:fontFamily="@font/verdana"
+            android:gravity="top|start"
+            android:hint="Scrivi la descrizione dell'elemento qui..."
+            android:inputType="textMultiLine"
+            android:lines="10"
+            android:maxLength="500"
+            android:maxLines="10"
+            android:minLines="1"
+            android:scrollbars="vertical"
+            android:selectAllOnFocus="false"
+            android:singleLine="false"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutDescrizioneSecondariaElemento"
+        android:layout_width="450dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/dummy_for_shadows"
+        android:elevation="5dp"
+        app:layout_constraintStart_toStartOf="@+id/constraintLayoutDescrizionePrincipaleElemento"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutDescrizionePrincipaleElemento">
+
+        <EditText
+            android:id="@+id/editTextDescrizioneSecondariaElemento"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:background="@android:color/transparent"
+            android:backgroundTint="#5F5959"
+            android:ems="10"
+            android:fontFamily="@font/verdana"
+            android:gravity="top|start"
+            android:hint="Scrivi la descrizione dell'elemento nella seconda\nlingua qui..."
+            android:inputType="textMultiLine"
+            android:lines="10"
+            android:maxLength="500"
+            android:maxLines="10"
+            android:minLines="1"
+            android:scrollbars="vertical"
+            android:selectAllOnFocus="false"
+            android:singleLine="false"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Spinner
+        android:id="@+id/spinnerSezioneElemento"
+        android:layout_width="450dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#000000"
+        android:popupBackground="#F5EDED"
+        app:layout_constraintBottom_toTopOf="@+id/textViewAllergeniComuniElemento"
+        app:layout_constraintStart_toStartOf="@+id/constraintLayoutDescrizioneSecondariaElemento"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutCostoElemento"
+        app:layout_constraintVertical_bias="0.257" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutCostoElemento"
+        android:layout_width="160dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/dummy_for_shadows"
+        android:elevation="5dp"
+        app:layout_constraintStart_toEndOf="@+id/textViewEuroElemento"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutDescrizioneSecondariaElemento">
+
+        <EditText
+            android:id="@+id/editTextCostoElemento"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:background="@android:color/transparent"
+            android:backgroundTint="#5F5959"
+            android:ems="10"
+            android:fontFamily="@font/verdana"
+            android:hint="Es. 6.00"
+            android:inputType="numberDecimal"
+            android:maxLength="20"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bottoneAggiungiModificaElemento"
+        android:layout_width="136dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/login_box_border"
+        android:backgroundTint="#F2A726"
+        android:fontFamily="@font/verdana_font"
+        android:text="Aggiungi"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/constraintLayoutTitoloPrincipaleElemento"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/bottoneAnnullaElemento"
+        app:layout_constraintTop_toBottomOf="@+id/constraintAllergeniElemento" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bottoneAnnullaElemento"
+        android:layout_width="139dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="523dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/login_box_border"
+        android:backgroundTint="#D1CBC1"
+        android:fontFamily="@font/verdana_font"
+        android:text="Annulla"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintAllergeniElemento" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintAllergeniElemento"
+        android:layout_width="375dp"
+        android:layout_height="140dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toEndOf="@+id/textViewAllergeniComuniElemento"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerSezioneElemento">
+
+        <CheckBox
+            android:id="@+id/checkBoxAllergeneCrostacei"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="42dp"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxAllergeneFruttiDiMare"
+            app:layout_constraintEnd_toStartOf="@+id/checkBoxAllergeneUova"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/checkBoxAllergeneUova"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/checkBoxAllergeneCrostacei"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.35" />
+
+        <CheckBox
+            android:id="@+id/checkBoxAllergeneSedano"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/checkBoxAllergeneUova"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.35" />
+
+        <CheckBox
+            android:id="@+id/checkBoxAllergeneLupini"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/checkBoxAllergeneSedano"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.35" />
+
+        <CheckBox
+            android:id="@+id/checkBoxAllergenePesce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/checkBoxAllergeneLupini"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.35" />
+
+        <CheckBox
+            android:id="@+id/checkBoxAllergeneNoci"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/checkBoxAllergenePesce"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.35" />
+
+        <CheckBox
+            android:id="@+id/checkBoxAllergeneGlutine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/checkBoxAllergeneNoci"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.35" />
+
+        <CheckBox
+            android:id="@+id/checkBoxAllergeneFruttiDiMare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <CheckBox
+            android:id="@+id/checkBoxAllergeneSoia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/checkBoxAllergeneFruttiDiMare"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <CheckBox
+            android:id="@+id/checkBoxAllergeneSolfiti"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/checkBoxAllergeneSoia"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <CheckBox
+            android:id="@+id/checkBoxAllergeneLatte"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/checkBoxAllergeneSolfiti"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <CheckBox
+            android:id="@+id/checkBoxAllergeneMostarda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/checkBoxAllergeneLatte"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <CheckBox
+            android:id="@+id/checkBoxAllergeneArachidi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/checkBoxAllergeneMostarda"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <CheckBox
+            android:id="@+id/checkBoxAllergeneSesamo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/checkBoxAllergeneArachidi"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <ImageView
+            android:id="@+id/imageViewAllergeneCrostacei"
+            android:layout_width="32dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxAllergeneCrostacei"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/crustaceans_allergen_food_allergens_icon_183708" />
+
+        <ImageView
+            android:id="@+id/imageViewAllergeneUova"
+            android:layout_width="32dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxAllergeneCrostacei"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/egg_allergen_food_allergens_icon_183709" />
+
+        <ImageView
+            android:id="@+id/imageViewAllergeneSedano"
+            android:layout_width="32dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="112dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxAllergeneCrostacei"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/celery_allergen_food_allergens_icon_183714" />
+
+        <ImageView
+            android:id="@+id/imageViewAllergeneLupini"
+            android:layout_width="32dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="168dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxAllergeneCrostacei"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/lupins_allergen_food_allergens_icon_183713" />
+
+        <ImageView
+            android:id="@+id/imageViewAllergenePesce"
+            android:layout_width="32dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="224dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxAllergeneCrostacei"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/fish_allergen_food_allergens_icon_183707" />
+
+        <ImageView
+            android:id="@+id/imageViewAllergeneNoci"
+            android:layout_width="32dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="280dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxAllergeneCrostacei"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/nuts_allergen_food_allergens_icon_183715" />
+
+        <ImageView
+            android:id="@+id/imageViewAllergeneGlutine"
+            android:layout_width="32dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="336dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxAllergeneCrostacei"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/gluten_allergen_food_allergens_icon_183719" />
+
+        <ImageView
+            android:id="@+id/imageViewAllergeneFruttiDiMare"
+            android:layout_width="32dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="7dp"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxAllergeneFruttiDiMare"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxAllergeneCrostacei"
+            app:srcCompat="@drawable/shellfish_allergen_food_allergens_icon_183718" />
+
+        <ImageView
+            android:id="@+id/imageViewAllergeneSoia"
+            android:layout_width="32dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="7dp"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxAllergeneSoia"
+            app:layout_constraintStart_toEndOf="@+id/imageViewAllergeneFruttiDiMare"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxAllergeneUova"
+            app:srcCompat="@drawable/soy_allergen_food_allergens_icon_183712" />
+
+        <ImageView
+            android:id="@+id/imageViewAllergeneSolfiti"
+            android:layout_width="32dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="7dp"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxAllergeneSolfiti"
+            app:layout_constraintStart_toEndOf="@+id/imageViewAllergeneSoia"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxAllergeneSedano"
+            app:srcCompat="@drawable/sulfites_allergen_food_allergens_icon_183716" />
+
+        <ImageView
+            android:id="@+id/imageViewAllergeneLatte"
+            android:layout_width="32dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="7dp"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxAllergeneLatte"
+            app:layout_constraintStart_toEndOf="@+id/imageViewAllergeneSolfiti"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxAllergeneLupini"
+            app:srcCompat="@drawable/milk_allergen_food_allergens_icon_183717" />
+
+        <ImageView
+            android:id="@+id/imageViewAllergeneMostarda"
+            android:layout_width="32dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="7dp"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxAllergeneMostarda"
+            app:layout_constraintStart_toEndOf="@+id/imageViewAllergeneLatte"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxAllergenePesce"
+            app:srcCompat="@drawable/mustard_allergen_food_allergens_icon_183710" />
+
+        <ImageView
+            android:id="@+id/imageViewAllergeneArachidi"
+            android:layout_width="32dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="7dp"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxAllergeneArachidi"
+            app:layout_constraintStart_toEndOf="@+id/imageViewAllergeneMostarda"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxAllergeneNoci"
+            app:srcCompat="@drawable/peanut_allergen_food_allergens_icon_183711" />
+
+        <ImageView
+            android:id="@+id/imageViewAllergeneSesamo"
+            android:layout_width="32dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="7dp"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxAllergeneSesamo"
+            app:layout_constraintStart_toEndOf="@+id/imageViewAllergeneArachidi"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxAllergeneGlutine"
+            app:srcCompat="@drawable/sesame_allergen_food_allergens_icon_183706" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -57,12 +57,12 @@ public class Utente {
 
 	
 	
-	public Utente(String nome, String cognome, String email, String password, Ristorante ristorante, String ruolo) {
+	public Utente(String nome, String cognome, String email, String password, Ristorante idRistorante, String ruolo) {
 		super();
 		this.nome = nome;
 		this.cognome = cognome;
 		this.email = email;
-		this.idRistorante = ristorante;
+		this.idRistorante = idRistorante;
 		this.ruolo = ruolo;
 	}
 	
@@ -113,11 +113,11 @@ public class Utente {
 		this.email = email;
 	}
 
-	public Ristorante getRistorante() {
+	public Ristorante getidRistorante() {
 		return idRistorante;
 	}
-	public void setRistorante(Ristorante ristorante) {
-		this.idRistorante = ristorante;
+	public void setidRistorante(Ristorante idRistorante) {
+		this.idRistorante = idRistorante;
 	}
 	public String getRuolo() {
 		return ruolo;

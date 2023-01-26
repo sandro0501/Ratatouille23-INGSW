@@ -8,8 +8,7 @@ public class Utente implements Serializable {
 
     private int id;
     private String idToken;
-    private String accessToken;
-    private String nome;
+    private String accessToken;    private String nome;
     private String cognome;
     private String email;
     private ArrayList<Bacheca> bacheca = new ArrayList<>();
@@ -82,8 +81,7 @@ public class Utente implements Serializable {
     public void setLavora(Ristorante lavora) {
         this.lavora = lavora;
     }
-
-    public int getId() {
+   public int getId() {
         return id;
     }
 
@@ -105,5 +103,4 @@ public class Utente implements Serializable {
 
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
-    }
-}
+    }}

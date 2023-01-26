@@ -1,5 +1,7 @@
 package com.example.ratatouille23.Views;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,16 +14,18 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.ratatouille23.Models.Allergene;
 import com.example.ratatouille23.Models.Elemento;
@@ -29,12 +33,13 @@ import com.example.ratatouille23.Models.Preparazione;
 import com.example.ratatouille23.Models.Prodotto;
 import com.example.ratatouille23.Models.SezioneMenu;
 import com.example.ratatouille23.Models.listaAllergeni;
+import com.example.ratatouille23.Presenters.PresenterMenu;
 import com.example.ratatouille23.R;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
+import java.util.function.LongFunction;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,6 +61,17 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
     private Spinner spinnerSceltaAggiunta;
     private TextView textViewSpinner;
 
+    private TextView titoloDialog;
+    private EditText titoloPrincipaleElementoEditText;
+    private EditText titoloSecondarioElementoEditText;
+    private EditText descrizionePrincipaleElementoEditText;
+    private EditText descrizioneSecondariaElementoEditText;
+    private EditText prezzoElementoEditText;
+    private Spinner sezioneElementoSpinner;
+    private Button bottoneConferma;
+    private Button bottoneAnnulla;
+
+
     private RecyclerView recyclerViewMenu;
     private SezioneMenuRecyclerViewAdapter adapterSezioni;
     private ArrayList<SezioneMenu> listaSezioni = new ArrayList<>();
@@ -63,6 +79,9 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
 
     private ItemTouchHelper itemTouchHelper;
     private ArrayList<CardView> listaCardElementiSelezionati = new ArrayList<>();
+
+    private AlertDialog.Builder builderDialogElemento;
+    private Dialog dialogElemento;
 
     private boolean modalitaEliminazione = false;
 
@@ -178,7 +197,12 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
                     listaSezioni.add(nuovaSezione);
                     adapterSezioni.notifyDataSetChanged();
                     spinnerSceltaAggiunta.setSelection(2);
-                } else {
+                }
+                else if (spinnerAdapter.getItem(i).equals("Aggiungi un piatto")){
+                    mostraDialogAggiuntaElemento();
+                    spinnerSceltaAggiunta.setSelection(2);
+                }
+                else {
                     spinnerSceltaAggiunta.setSelection(2);
                 }
             }
@@ -192,6 +216,37 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
 
          itemTouchHelper = new ItemTouchHelper(simpleCallbackSezioni);
          itemTouchHelper.attachToRecyclerView(recyclerViewMenu);
+
+    }
+
+    private void mostraDialogAggiuntaElemento() {
+        final View viewAggiungiElemento = getLayoutInflater().inflate(R.layout.layout_aggiungi_elemento_dialog, null);
+
+        builderDialogElemento = new AlertDialog.Builder(getContext());
+        builderDialogElemento.setView(viewAggiungiElemento);
+        builderDialogElemento.setCancelable(true);
+
+        bottoneConferma = (Button) viewAggiungiElemento.findViewById(R.id.bottoneAggiungiModificaElemento);
+        bottoneAnnulla = (Button) viewAggiungiElemento.findViewById(R.id.bottoneAnnullaElemento);
+
+        bottoneConferma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PresenterMenu.getInstance().mostraAlert(getContext(), "Piatto aggiunto", "Piatto aggiunto correttamente al menù");
+                dialogElemento.dismiss();
+            }
+        });
+
+        bottoneAnnulla.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogElemento.dismiss();
+            }
+        });
+
+        dialogElemento = builderDialogElemento.create();
+        dialogElemento.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
+        dialogElemento.show();
 
     }
 
@@ -311,8 +366,78 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
             selezionaDeseleziona(elementoCliccato, itemView);
         }
         else {
+            //modifica elemento
+            Log.println(Log.VERBOSE, "aa", elementoCliccato.getDenominazionePrincipale());
+            mostraDialogModificaElemento(elementoCliccato);
+
 
         }
+    }
+
+    private void mostraDialogModificaElemento(Elemento elementoDaModificare) {
+        final View viewModificaElemento = getLayoutInflater().inflate(R.layout.layout_aggiungi_elemento_dialog, null);
+
+        builderDialogElemento = new AlertDialog.Builder(getContext());
+        builderDialogElemento.setView(viewModificaElemento);
+        builderDialogElemento.setCancelable(true);
+
+        titoloDialog = (TextView) viewModificaElemento.findViewById(R.id.textViewAggiungiElementoTitolo);
+        titoloDialog.setText("Modifica piatto del menù");
+
+        titoloPrincipaleElementoEditText = (EditText) viewModificaElemento.findViewById(R.id.EditTextTitoloPrincipaleElemento);
+        titoloPrincipaleElementoEditText.append(elementoDaModificare.getDenominazionePrincipale());
+
+        titoloSecondarioElementoEditText = (EditText) viewModificaElemento.findViewById(R.id.EditTextTitoloSecondarioElemento);
+        if(elementoDaModificare.getDenominazioneSecondaria().isEmpty()){
+            titoloSecondarioElementoEditText.setEnabled(false);
+            titoloSecondarioElementoEditText.setHint("Il piatto non presenta titolo secondario");
+        } else {
+            titoloSecondarioElementoEditText.append(elementoDaModificare.getDenominazioneSecondaria());
+        }
+
+        descrizionePrincipaleElementoEditText = (EditText) viewModificaElemento.findViewById(R.id.editTexDescrizionePrincipaleElemento);
+        descrizionePrincipaleElementoEditText.append(elementoDaModificare.getDescrizionePrincipale());
+
+        descrizioneSecondariaElementoEditText = (EditText) viewModificaElemento.findViewById(R.id.editTextDescrizioneSecondariaElemento);
+        if(elementoDaModificare.getDenominazioneSecondaria().isEmpty()){
+            descrizioneSecondariaElementoEditText.setEnabled(false);
+            descrizioneSecondariaElementoEditText.setHint("Il piatto non presenta descrizione secondaria");
+        } else {
+            descrizioneSecondariaElementoEditText.append(elementoDaModificare.getDenominazioneSecondaria());
+        }
+
+        prezzoElementoEditText = (EditText) viewModificaElemento.findViewById(R.id.editTextCostoElemento);
+        prezzoElementoEditText.append(String.valueOf(elementoDaModificare.getCosto()));
+
+        sezioneElementoSpinner = (Spinner) viewModificaElemento.findViewById(R.id.spinnerSezioneElemento);
+        //get sezione scelta
+
+        //checkbox checckate?
+
+        bottoneConferma = (Button) viewModificaElemento.findViewById(R.id.bottoneAggiungiModificaElemento);
+        bottoneConferma.setText("Modifica");
+
+        bottoneAnnulla = (Button) viewModificaElemento.findViewById(R.id.bottoneAnnullaElemento);
+
+        bottoneConferma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //eventuali controlli sulle edittext
+                PresenterMenu.getInstance().mostraAlert(getContext(), "Piatto modificato", "Piatto modificato correttamente");
+                dialogElemento.dismiss();
+            }
+        });
+
+        bottoneAnnulla.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogElemento.dismiss();
+            }
+        });
+
+        dialogElemento = builderDialogElemento.create();
+        dialogElemento.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
+        dialogElemento.show();
     }
 
     @Override
