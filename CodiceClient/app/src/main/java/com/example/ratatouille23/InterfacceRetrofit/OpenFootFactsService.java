@@ -7,7 +7,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface OpenFootFactsService {
-//={termineDaCercare}&search_simple=true&json=true&fields=product_name,generic_name\""
+
     @GET("search.pl")
     Call<ResponseBody> getProdottiDaTermine(
             @Query("search_terms") String termineDaCercare,

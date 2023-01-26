@@ -18,13 +18,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.amplifyframework.AmplifyException;
-import com.amplifyframework.core.Amplify;
+import com.example.ratatouille23.Exceptions.CampiVuotiException;
+import com.example.ratatouille23.Exceptions.CaratteriIllecitiException;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Presenters.PresenterLogin;
 import com.example.ratatouille23.R;
-import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
-
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -64,20 +62,14 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email = editTextEmail.getText().toString();
                 String password = editTextPass.getText().toString();
-                Utente utenteCorrente;
-                Intent i = new Intent(getApplicationContext(), BachecaActivity.class);
-                if (!email.isEmpty() && !password.isEmpty()) {
-                    utenteCorrente = PresenterLogin.getInstance().bottoneLoginPremuto(email, password);
-                    if (utenteCorrente == null) {
-                        PresenterLogin.getInstance().mostraAlert(LoginActivity.this, "Errore!", "L'email o la password non sono corretti!");
-                    }
-                    else {
-                        startActivity(i);
-                    }
+                try {
+                    PresenterLogin.getInstance().bottoneLoginPremuto(LoginActivity.this, email, password);
                 }
-                else {
-                    PresenterLogin.getInstance().mostraAlert(LoginActivity.this, "Attenzione!", "Uno o più campi obbligatori sono " +
-                            "stati lasciati vuoti");
+                catch (CampiVuotiException e) {
+                    PresenterLogin.getInstance().mostraAlert(LoginActivity.this, "Attenzione!", e.getMessage());
+                }
+                catch(CaratteriIllecitiException e) {
+                    PresenterLogin.getInstance().mostraAlert(LoginActivity.this, "Errore!", e.getMessage());
                 }
 
             }
@@ -115,5 +107,22 @@ public class LoginActivity extends AppCompatActivity {
             pass.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
         }
+    }
+
+    public void effettuaAccesso(Utente utente) {
+        Intent i = new Intent(getApplicationContext(), BachecaActivity.class);
+        i.putExtra("Utente", utente);
+        startActivity(i);
+    }
+
+    public void mostraAlertAccessoErrato() {
+        PresenterLogin.getInstance().mostraAlert(LoginActivity.this, "Errore!", "Le credenziali sono errate!");
+    }
+
+    public void effettuaPrimoAccessoUtente(Utente utente, String session) {
+        Intent i = new Intent(getApplicationContext(), PrimoLoginModificaPasswordActivity.class);
+        i.putExtra("Utente", utente);
+        i.putExtra("Session", session);
+        startActivity(i);
     }
 }

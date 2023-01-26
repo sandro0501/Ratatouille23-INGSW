@@ -13,6 +13,7 @@ public class Ristorante implements Serializable {
     private String indirizzo;
     private String citta;
     private boolean turistico;
+    private String urlFoto;
     private ArrayList<SezioneMenu> offre = new ArrayList<>();
     private ArrayList<Prodotto> utilizza = new ArrayList<>();
 
@@ -64,6 +65,16 @@ public class Ristorante implements Serializable {
         this.turistico = turistico;
     }
 
+    public Ristorante(int id, String nome, String numeroDiTelefono, String indirizzo, String citta, boolean turistico, String url) {
+        this.id = id;
+        this.nome = nome;
+        this.numeroDiTelefono = numeroDiTelefono;
+        this.indirizzo = indirizzo;
+        this.citta = citta;
+        this.turistico = turistico;
+        this.urlFoto = url;
+    }
+
     public ArrayList<SezioneMenu> getOffre() {
         return offre;
     }
@@ -86,5 +97,13 @@ public class Ristorante implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getUrlFoto() {
+        return urlFoto;
+    }
+
+    public void setUrlFoto(String urlFoto) {
+        this.urlFoto = urlFoto;
     }
 }

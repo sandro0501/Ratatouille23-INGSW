@@ -5,6 +5,10 @@ import java.util.ArrayList;
 
 public class Utente implements Serializable {
 
+
+    private int id;
+    private String idToken;
+    private String accessToken;
     private String nome;
     private String cognome;
     private String email;
@@ -77,5 +81,29 @@ public class Utente implements Serializable {
 
     public void setLavora(Ristorante lavora) {
         this.lavora = lavora;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getIdToken() {
+        return idToken;
+    }
+
+    public void setIdToken(String idToken) {
+        this.idToken = idToken;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 }
