@@ -11,7 +11,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Models.UtenteFactory;
 import com.example.ratatouille23.Presenters.PresenterBacheca;
@@ -24,7 +26,8 @@ public class BachecaActivity extends AppCompatActivity {
     private DrawerLayout menuDrawerLayout;
     private ImageView iconaMenu;
     private NavigationView menu;
-
+    private TextView textViewNomeRistorante;
+    private Ristorante ristoranteCorrente;
 
 
     @Override
@@ -32,10 +35,15 @@ public class BachecaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bacheca);
 
+        Utente utenteCorrente = (Utente)getIntent().getSerializableExtra("Utente");
+        ristoranteCorrente = utenteCorrente.getLavora();
+
+        textViewNomeRistorante = findViewById(R.id.textViewDenominazioneRistorante);
         menuDrawerLayout = findViewById(R.id.menuDrawerLayout);
         iconaMenu = findViewById(R.id.menuIcon);
         menu = findViewById(R.id.menuNavigationView);
 
+        textViewNomeRistorante.setText(ristoranteCorrente.getNome());
 
         inizializzaMenu();
         iconaMenuPremuta(menuDrawerLayout, iconaMenu);

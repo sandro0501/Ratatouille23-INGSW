@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ratatouille23.Models.Avviso;
+import com.example.ratatouille23.Models.Bacheca;
 import com.example.ratatouille23.R;
 
 import java.sql.Date;
@@ -22,9 +23,9 @@ public class AvvisoRecyclerViewAdapter extends RecyclerView.Adapter<AvvisoRecycl
 	private final RecyclerViewAvvisoInterface recyclerViewInterfaceAvviso;
 
     private Context context;
-    private ArrayList<Avviso> avvisi;
+    private ArrayList<Bacheca> avvisi;
 
-    public AvvisoRecyclerViewAdapter(Context context, ArrayList<Avviso> avvisi, RecyclerViewAvvisoInterface recyclerViewInterfaceAvviso){
+    public AvvisoRecyclerViewAdapter(Context context, ArrayList<Bacheca> avvisi, RecyclerViewAvvisoInterface recyclerViewInterfaceAvviso){
         this.context = context;
         this.avvisi = avvisi;
         this.recyclerViewInterfaceAvviso = recyclerViewInterfaceAvviso;
@@ -45,12 +46,12 @@ public class AvvisoRecyclerViewAdapter extends RecyclerView.Adapter<AvvisoRecycl
         //assegna valori alle "card" che abbiamo creato in dipendenza anche della loro posizione nella lista recycler view
 
         holder.imageViewAvvisi.setImageResource(R.drawable.icon_avviso_da_vedere);
-        holder.autoreAvviso.setText(avvisi.get(position).getAutore().getNomeCompleto());
-        holder.oggettoAvviso.setText(avvisi.get(position).getOggetto());
-        holder.corpoAvviso.setText(avvisi.get(position).getCorpo());
-        Date data = (java.sql.Date)avvisi.get(position).getDataCreazione();
+        holder.autoreAvviso.setText(avvisi.get(position).getAvvisoAssociato().getAutore().getNomeCompleto());
+        holder.oggettoAvviso.setText(avvisi.get(position).getAvvisoAssociato().getOggetto());
+        holder.corpoAvviso.setText(avvisi.get(position).getAvvisoAssociato().getCorpo());
+        Date data = (java.sql.Date)avvisi.get(position).getAvvisoAssociato().getDataCreazione();
         holder.dataAvviso.setText(new SimpleDateFormat("dd/MM").format(data));
-        holder.ruoloAutoreAvviso.setText(avvisi.get(position).getAutore().getRuoloUtente());
+        holder.ruoloAutoreAvviso.setText(avvisi.get(position).getAvvisoAssociato().getAutore().getRuoloUtente());
 
     }
 

@@ -23,9 +23,9 @@
             android:textColor="@color/colorGrey"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/recyclerViewAvvisi"
-            app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintStart_toStartOf="@+id/recyclerViewAvvisi"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.29"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.048" />
 
@@ -58,8 +58,9 @@
             android:layout_width="wrap_content"
             android:layout_height="550dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/textViewBachecaAvvisi"
+            app:layout_constraintHorizontal_bias="0.12"
+            app:layout_constraintStart_toStartOf="@+id/textViewBachecaAvvisi"
             app:layout_constraintTop_toBottomOf="@+id/textViewBachecaAvvisi"
             app:layout_constraintVertical_bias="0.62"
             tools:listitem="@layout/layout_recyclerview_avviso" />
@@ -120,11 +121,13 @@
             android:id="@+id/immagineBachecha"
             android:layout_width="224dp"
             android:layout_height="230dp"
+            android:layout_marginEnd="40dp"
             android:src="@drawable/bacheca"
-            app:layout_constraintBottom_toBottomOf="@+id/recyclerViewAvvisi"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/recyclerViewAvvisi"
-            app:layout_constraintTop_toTopOf="@+id/recyclerViewAvvisi" />
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

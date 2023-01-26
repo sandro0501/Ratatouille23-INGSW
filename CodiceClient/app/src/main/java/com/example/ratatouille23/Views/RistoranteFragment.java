@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.amplifyframework.core.Amplify;
 import com.example.ratatouille23.Models.Ristorante;
+import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.R;
 
 import java.io.File;
@@ -96,7 +97,8 @@ public class RistoranteFragment extends Fragment {
         textViewTuristico = fragmentCorrente.findViewById(R.id.textViewTuristicoRistoranteVisualizza);
         logoRistorante = fragmentCorrente.findViewById(R.id.iconaLogoRistoranteVisualizza);
 
-        ristoranteCorrente = new Ristorante("ProvaNome", "ProvaTelefono", "ProvaIndirizzo", "ProvaCittà", true);
+        Utente utenteCorrente = (Utente)getActivity().getIntent().getSerializableExtra("Utente");
+        ristoranteCorrente = utenteCorrente.getLavora();
 
         textViewNome.setText(ristoranteCorrente.getNome());
         textViewTelefono.setText(ristoranteCorrente.getNumeroDiTelefono());

@@ -3,6 +3,7 @@ package com.example.ratatouille23.Views;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,17 +21,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.ratatouille23.Models.Gestore;
+import com.example.ratatouille23.Models.Bacheca;
 import com.example.ratatouille23.Models.Utente;
-import com.example.ratatouille23.Models.UtenteFactory;
 import com.example.ratatouille23.Presenters.PresenterBacheca;
 import com.example.ratatouille23.R;
 
 import com.example.ratatouille23.Models.Avviso;
 
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -38,14 +35,14 @@ import java.util.Comparator;
 
 public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInterface {
 
-    private ArrayList<Avviso> avvisiUtente = new ArrayList<>();
-    private ArrayList<Avviso> avvisiUtenteNuovi = new ArrayList<>(); //la lista di utenti ottenuta va qui
-    private ArrayList<Avviso> avvisiUtenteLetti = new ArrayList<>();
-    private ArrayList<Avviso> avvisiUtenteNascosti = new ArrayList<>();
+    private ArrayList<Bacheca> avvisiVisibili = new ArrayList<>();
+    private ArrayList<Bacheca> tuttiAvvisi = new ArrayList<>();
     private RecyclerView recyclerView;
-    private AvvisoRecyclerViewAdapter avvisoAdapter; //.setnotifydatachange dopo che
+    private AvvisoRecyclerViewAdapter avvisiVisibiliAdapter;
+    private AvvisoRecyclerViewAdapter tuttiAvvisiAdapter;
     private ImageView bottoneCreazioneAvviso;
     private Utente utenteCorrente;
+    private TextView textViewNumeroAvvisi;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -85,7 +82,7 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
         //Devi estrarre gli avvisi dell'utente
         PresenterBacheca.getInstance().setAvvisi(this, utenteCorrente);
         PresenterBacheca.getInstance().setBachecaAttiva(true);
-
+        setNumeroAvvisiDaLeggere();
     }
 
     @Override
@@ -99,7 +96,7 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_bacheca, container, false);
-
+        textViewNumeroAvvisi = view.findViewById(R.id.textViewNumeroAvvisi);
         bottoneCreazioneAvviso = (ImageView) view.findViewById(R.id.imageViewIconAddAvviso);
         bottoneCreazioneAvviso.setOnClickListener(new View.OnClickListener()
         {
@@ -120,44 +117,17 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
         super.onViewCreated(view, savedInstanceState);
 
         utenteCorrente = (Utente)getActivity().getIntent().getSerializableExtra("Utente");
-        Log.i("Prova", utenteCorrente.toString());
         recyclerView = view.findViewById(R.id.recyclerViewAvvisi);
-        avvisoAdapter = new AvvisoRecyclerViewAdapter(getContext(),avvisiUtenteNuovi,this);
+        avvisiVisibiliAdapter = new AvvisoRecyclerViewAdapter(getContext(), avvisiVisibili,this);
+        tuttiAvvisiAdapter = new AvvisoRecyclerViewAdapter(getContext(), tuttiAvvisi, this);
         //recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(avvisoAdapter);
+        recyclerView.setAdapter(avvisiVisibiliAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        avvisoAdapter.notifyDataSetChanged();
-
+        avvisiVisibiliAdapter.notifyDataSetChanged();
+        tuttiAvvisiAdapter.notifyDataSetChanged();
 
 
     }
-
-    private void setUpAvvisi(){
-        avvisiUtente = new ArrayList<>();
-
-        String[] nomiAutori = getResources().getStringArray(R.array.autore_avviso_nome_xml);
-        String[] cognomiAutori = getResources().getStringArray(R.array.autore_avviso_cognome_xml);
-        String[] emailAutori = getResources().getStringArray(R.array.email_dipendente_xml);
-        String[] ruoliAutoriAvvisi = getResources().getStringArray(R.array.ruolo_autore_avviso_xml);
-        String[] oggettiAvvisi = getResources().getStringArray(R.array.oggetto_avviso_xml);
-        String[] corpoAvvisi = getResources().getStringArray(R.array.corpo_avviso_xml);
-        String[] dateAvvisi = getResources().getStringArray(R.array.data_avviso_xml);
-        int iconaAvvisoDaVedere = R.drawable.icon_avviso_da_vedere;
-
-        for(int i=0; i<oggettiAvvisi.length; i++){
-            Utente utente = UtenteFactory.getInstance().getNuovoUtente(nomiAutori[i], cognomiAutori[i], emailAutori[i], ruoliAutoriAvvisi[i], false);
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM");
-            Date stringaData = null;
-            try {
-                stringaData = new Date(formatter.parse(dateAvvisi[i]).getTime());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            Avviso avviso = new Avviso(oggettiAvvisi[i],corpoAvvisi[i], stringaData,(Gestore)utente);
-            avvisiUtente.add(avviso);
-        }
-    }
-
 
     @Override
     public void onAvvisoClicked(int posizioneAvviso) {
@@ -171,11 +141,11 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
         Intent intentFromBachecaToVisualizzazioneAvviso = new Intent(getContext(), VisualizzazioneAvvisoActivity.class);
 
         //passa i dati dal fragment all'activity
-        intentFromBachecaToVisualizzazioneAvviso.putExtra("OGGETTO", avvisiUtente.get(posizioneAvviso).getOggetto());
-        intentFromBachecaToVisualizzazioneAvviso.putExtra("AUTORE", avvisiUtente.get(posizioneAvviso).getAutore().getNomeCompleto());
-        intentFromBachecaToVisualizzazioneAvviso.putExtra("RUOLOAUOTORE", avvisiUtente.get(posizioneAvviso).getAutore().getRuoloUtente());
-        intentFromBachecaToVisualizzazioneAvviso.putExtra("DATACREAZIONE", avvisiUtente.get(posizioneAvviso).getDataCreazione());
-        intentFromBachecaToVisualizzazioneAvviso.putExtra("CORPO", avvisiUtente.get(posizioneAvviso).getCorpo());
+        intentFromBachecaToVisualizzazioneAvviso.putExtra("OGGETTO", avvisiVisibili.get(posizioneAvviso).getAvvisoAssociato().getOggetto());
+        intentFromBachecaToVisualizzazioneAvviso.putExtra("AUTORE", avvisiVisibili.get(posizioneAvviso).getAvvisoAssociato().getAutore().getNomeCompleto());
+        intentFromBachecaToVisualizzazioneAvviso.putExtra("RUOLOAUOTORE", avvisiVisibili.get(posizioneAvviso).getAvvisoAssociato().getAutore().getRuoloUtente());
+        intentFromBachecaToVisualizzazioneAvviso.putExtra("DATACREAZIONE", avvisiVisibili.get(posizioneAvviso).getAvvisoAssociato().getDataCreazione());
+        intentFromBachecaToVisualizzazioneAvviso.putExtra("CORPO", avvisiVisibili.get(posizioneAvviso).getAvvisoAssociato().getCorpo());
 
         getContext().startActivity(intentFromBachecaToVisualizzazioneAvviso);
     }
@@ -219,20 +189,53 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
 
     public void setAvvisiUtente(ArrayList<Avviso> avvisiUtenteNuovi, ArrayList<Avviso> avvisiUtenteLetti, ArrayList<Avviso> avvisiUtenteNascosti)
     {
-        this.avvisiUtenteNuovi.addAll(avvisiUtenteNuovi);
-        this.avvisiUtenteLetti.addAll(avvisiUtenteLetti);
-        this.avvisiUtenteNascosti.addAll(avvisiUtenteNascosti);
-        avvisiUtente.addAll(avvisiUtenteNuovi);avvisiUtenteLetti.addAll(avvisiUtenteLetti);
+        avvisiVisibili.clear();
 
-        Collections.sort(avvisiUtente,new Comparator<Avviso>() {
-            public int compare (Avviso a1, Avviso a2)
+        for (Avviso avviso : avvisiUtenteNuovi){
+            avvisiVisibili.add(new Bacheca(avviso, true, false));
+        }
+
+        for (Avviso avviso : avvisiUtenteLetti){
+            avvisiVisibili.add(new Bacheca(avviso, true, true));
+        }
+
+        tuttiAvvisi.addAll(avvisiVisibili);
+
+        for (Avviso avviso : avvisiUtenteNascosti){
+            tuttiAvvisi.add(new Bacheca(avviso, false, true));
+        }
+
+        Collections.sort(avvisiVisibili,new Comparator<Bacheca>() {
+            public int compare (Bacheca a1, Bacheca a2)
             {
-                return a1.getDataCreazione().compareTo(a2.getDataCreazione());
+                return a1.getAvvisoAssociato().getDataCreazione().compareTo(a2.getAvvisoAssociato().getDataCreazione());
             }
         });
 
-        avvisoAdapter.notifyDataSetChanged();
+        Collections.sort(tuttiAvvisi,new Comparator<Bacheca>() {
+            public int compare (Bacheca a1, Bacheca a2)
+            {
+                return a1.getAvvisoAssociato().getDataCreazione().compareTo(a2.getAvvisoAssociato().getDataCreazione());
+            }
+        });
+
+        avvisiVisibiliAdapter.notifyDataSetChanged();
+        tuttiAvvisiAdapter.notifyDataSetChanged();
     }
 
+
+    private void setNumeroAvvisiDaLeggere() {
+        int numeroAvvisi = 0;
+        for (Bacheca avviso : avvisiVisibili) {
+            if (!avviso.isVisualizzato()) numeroAvvisi++;
+        }
+        if (numeroAvvisi == 0) {
+            textViewNumeroAvvisi.setVisibility(View.INVISIBLE);
+        }
+        else {
+            textViewNumeroAvvisi.setVisibility(View.VISIBLE);
+            textViewNumeroAvvisi.setText(((Integer)numeroAvvisi).toString());
+        }
+    }
 
 }
