@@ -1,18 +1,25 @@
 package com.example.ratatouille23.Views;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amplifyframework.core.Amplify;
 import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.R;
+
+import java.io.File;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,6 +43,11 @@ public class RistoranteFragment extends Fragment {
     private TextView textViewIndirizzo;
     private TextView textViewCitta;
     private TextView textViewTuristico;
+    private ImageView logoRistorante;
+
+    private View fragmentCorrente;
+
+    private File fileLogo;
 
     private Ristorante ristoranteCorrente;
 
@@ -74,7 +86,7 @@ public class RistoranteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View fragmentCorrente = inflater.inflate(R.layout.fragment_ristorante, container, false);
+        fragmentCorrente = inflater.inflate(R.layout.fragment_ristorante, container, false);
 
         bottoneModifica = fragmentCorrente.findViewById(R.id.bottoneAnnullaModificaRistorante);
         textViewNome = fragmentCorrente.findViewById(R.id.textViewNomeRistoranteVisualizza);
@@ -82,6 +94,7 @@ public class RistoranteFragment extends Fragment {
         textViewIndirizzo = fragmentCorrente.findViewById(R.id.textViewIndirizzoRistoranteVisualizza);
         textViewCitta = fragmentCorrente.findViewById(R.id.textViewCittaRistoranteVisualizza);
         textViewTuristico = fragmentCorrente.findViewById(R.id.textViewTuristicoRistoranteVisualizza);
+        logoRistorante = fragmentCorrente.findViewById(R.id.iconaLogoRistoranteVisualizza);
 
         ristoranteCorrente = new Ristorante("ProvaNome", "ProvaTelefono", "ProvaIndirizzo", "ProvaCittà", true);
 
@@ -96,11 +109,30 @@ public class RistoranteFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(fragmentCorrente.getContext(), ModificaDettagliRistoranteActivity.class);
+                i.putExtra("FileLogo", fileLogo);
                 i.putExtra("RistoranteCorrente", ristoranteCorrente);
                 startActivity(i);
             }
         });
 
         return fragmentCorrente;
+    }
+
+    @Override
+    public void onStart() {
+        Amplify.Storage.downloadFile(
+                "0_LogoRistorante.jpg",
+                new File(fragmentCorrente.getContext().getFilesDir() + "/0_LogoRistorante.jpg"),
+                result -> setImmagine(result.getFile()),
+                error -> Log.e("MyAmplifyApp",  "Download Failure", error)
+        );
+        super.onStart();
+    }
+
+    private void setImmagine(File file) {
+        fileLogo = file;
+        Bitmap bitmapLogo  = BitmapFactory.decodeFile(file.getAbsolutePath());
+        logoRistorante.setImageBitmap(bitmapLogo);
+
     }
 }
