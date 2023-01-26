@@ -30,7 +30,7 @@ public class ServiceUtente {
 	
 	public Utente saveUtentePrimario(Utente utente) {
 		Ristorante save = servRistorante.saveRistorante(new Ristorante());
-		utente.setRistorante(save);
+		utente.setidRistorante(save);
 		utente.setMaster(true);
 		return repository.save(utente);
 	}

@@ -1,7 +1,7 @@
 package com.example.ratatouille23.Models;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 public class Avviso implements Serializable {
 

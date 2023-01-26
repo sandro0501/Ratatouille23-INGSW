@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class Utente implements Serializable {
 
+    private int idUtente;
     private String nome;
     private String cognome;
     private String email;
@@ -77,5 +78,9 @@ public class Utente implements Serializable {
 
     public void setLavora(Ristorante lavora) {
         this.lavora = lavora;
+    }
+
+    public int getIdUtente() {
+        return idUtente;
     }
 }

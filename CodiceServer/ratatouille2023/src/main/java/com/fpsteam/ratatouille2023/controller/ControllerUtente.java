@@ -173,7 +173,7 @@ public class ControllerUtente {
 			else
 			{//significa che stiamo aggiornando l'entita e non la password
 				Utente mod = handle.utente;
-				mod.setRistorante(handle.ristorante);
+				mod.setidRistorante(handle.ristorante);
 				service.updateUtente(mod);
 				res.messaggio = "Tutto bene";
 				res.utente = handle.utente;
@@ -190,11 +190,11 @@ public class ControllerUtente {
 	
 	
 	//Questo e' quello che si usa quando si crea un nuovo account nella finestra degli amministratori.
-	@PostMapping("")
+	@PostMapping("/new")
 	public RegisterResponseHandler registrazione(@RequestBody RegisterHandler handle)
 	{
 		Utente utente = handle.utente;
-		utente.setRistorante(handle.ristorante);
+		utente.setidRistorante(handle.ristorante);
 		RegisterResponseHandler res = new RegisterResponseHandler();
 		try
 		{
@@ -272,7 +272,7 @@ public class ControllerUtente {
 	
 	//utente deve avere soltanto il campo email, che siccome nel db e' unique viene usato per restituire
 	//l'utente in se.
-	@GetMapping("")
+	@PostMapping("")
 	public LoginResponseHandler loginUtente(@RequestBody LoginHandler handle)
 	{
 		Utente utente = handle.utente;
