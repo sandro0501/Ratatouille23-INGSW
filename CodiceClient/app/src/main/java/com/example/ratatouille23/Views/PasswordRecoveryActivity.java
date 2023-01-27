@@ -16,12 +16,14 @@ public class PasswordRecoveryActivity extends AppCompatActivity {
     private Button bottoneAnnulla;
     private Button bottoneRichiediCodice;
     private EditText editTextEmail;
+    private PasswordRecoveryActivity context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password_recovery);
 
+        context = this;
         bottoneAnnulla = findViewById(R.id.annullaButton);
         bottoneRichiediCodice = findViewById(R.id.richiediCodiceButton);
         editTextEmail = findViewById(R.id.emailEditText);
@@ -37,20 +39,21 @@ public class PasswordRecoveryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String email = editTextEmail.getText().toString();
-                Intent i = new Intent(getApplicationContext(), ConfermaCodiceActivity.class);
-                boolean emailCorretta;
-                if (!email.isEmpty()) {
-                    emailCorretta = PresenterLogin.getInstance().bottoneRichiediCodicePremuto(email);
-                    if (emailCorretta)
-                        startActivity(i);
-                    else
-                        PresenterLogin.getInstance().mostraAlert(PasswordRecoveryActivity.this, "Attenzione!", "L'email inserita è errata!");
-                }
+                if (!email.isEmpty())
+                    PresenterLogin.getInstance().bottoneRichiediCodicePremuto(email, context);
                 else PresenterLogin.getInstance().mostraAlert(PasswordRecoveryActivity.this, "Attenzione!", "Uno o più campi obbligatori sono " +
                         "stati lasciati vuoti");
             }
         });
 
     }
+
+    public void avviaConfermaCodice(String email)
+    {
+        Intent i = new Intent(getApplicationContext(), ConfermaCodiceActivity.class);
+        i.putExtra("email",email);
+        startActivity(i);
+    }
+
 
 }

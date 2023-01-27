@@ -31,5 +31,10 @@ public class ServiceRistorante {
 		repository.save(ristorante);
 		return "Tutto bene";
 	}
+	
+	public Ristorante get(int id)
+	{
+		return repository.findById(id).get();
+	}
 
 }

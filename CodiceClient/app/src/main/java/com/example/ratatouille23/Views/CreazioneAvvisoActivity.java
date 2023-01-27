@@ -24,7 +24,7 @@ public class CreazioneAvvisoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creazione_avviso);
-        utenteCorrente = (Utente) getIntent().getSerializableExtra("utente");
+        utenteCorrente = (Utente) getIntent().getSerializableExtra("Utente");
         bottoneAnnullaCreazioneAvvisoPremuto();
         bottoneCreazioneAvvisoPremuto();
 
@@ -55,7 +55,6 @@ public class CreazioneAvvisoActivity extends AppCompatActivity {
                 handler.avviso.setCorpo(((EditText) findViewById(R.id.EditTextCreazioneAvvisoCorpo)).getText().toString());
                 handler.avviso.setOggetto(((EditText) findViewById(R.id.EditTextCreazioneAvvisoOggetto)).getText().toString());
                 PresenterBacheca.getInstance().insertAvviso(context,handler);
-                mostraConfermaCreazioneAvvisoDialog();
             }
         });
     }

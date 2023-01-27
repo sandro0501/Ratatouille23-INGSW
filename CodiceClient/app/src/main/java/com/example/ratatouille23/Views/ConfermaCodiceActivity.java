@@ -27,12 +27,15 @@ public class ConfermaCodiceActivity extends AppCompatActivity {
     private EditText editTextCodice;
     private Button bottoneAnnulla;
     private Button bottoneResettaPassword;
+    private String email;
+    private ConfermaCodiceActivity context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conferma_codice);
-
+        context = this;
+        email = (String) getIntent().getSerializableExtra("email");
         textViewPromptColorato = findViewById(R.id.textViewPromptColorato);
         bottoneAnnulla = findViewById(R.id.buttonAnnulla);
         bottoneResettaPassword = findViewById(R.id.buttonResettaPassword);
@@ -56,17 +59,9 @@ public class ConfermaCodiceActivity extends AppCompatActivity {
                 String codice = editTextCodice.getText().toString();
                 String password = editTextPassword.getText().toString();
                 String confermaPassword = editTextConfermaPassword.getText().toString();
-                Intent i;
-                boolean codiceCorretto;
                 if (!codice.isEmpty() && !password.isEmpty() && !confermaPassword.isEmpty()) {
                     if (password.equals(confermaPassword)){
-                        codiceCorretto = PresenterLogin.getInstance().bottoneResettaPasswordConCodicePremuto(codice, password);
-                        if (codiceCorretto) {
-                            i = new Intent(getApplicationContext(), LoginActivity.class);
-                            i.addFlags(FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(i);
-                        }
-                        else PresenterLogin.getInstance().mostraAlert(ConfermaCodiceActivity.this, "Errore!", "Il codice inserito è errato!");
+                        PresenterLogin.getInstance().bottoneResettaPasswordConCodicePremuto(email, codice, password,context);
                     }
                     else PresenterLogin.getInstance().mostraAlert(ConfermaCodiceActivity.this, "Attenzione!", "Le password inserite non coincidono!");
                 }
@@ -98,6 +93,13 @@ public class ConfermaCodiceActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    public void tornaAlLogin()
+    {
+        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+        i.addFlags(FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
     }
 
 }
