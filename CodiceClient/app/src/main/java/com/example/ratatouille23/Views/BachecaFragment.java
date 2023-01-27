@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.ratatouille23.Handlers.AggiornaAvvisoHandler;
 import com.example.ratatouille23.Models.Bacheca;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Presenters.PresenterBacheca;
@@ -80,7 +81,7 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
     public void onStart() {
         super.onStart();
         //Devi estrarre gli avvisi dell'utente
-        PresenterBacheca.getInstance().setAvvisi(this, utenteCorrente);
+        PresenterBacheca.getInstance().setAvvisi(this, utenteCorrente.getIdUtente());
         PresenterBacheca.getInstance().setBachecaAttiva(true);
         setNumeroAvvisiDaLeggere();
     }
@@ -147,7 +148,18 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
         intentFromBachecaToVisualizzazioneAvviso.putExtra("DATACREAZIONE", avvisiVisibili.get(posizioneAvviso).getAvvisoAssociato().getDataCreazione());
         intentFromBachecaToVisualizzazioneAvviso.putExtra("CORPO", avvisiVisibili.get(posizioneAvviso).getAvvisoAssociato().getCorpo());
 
-        getContext().startActivity(intentFromBachecaToVisualizzazioneAvviso);
+        if(avvisiVisibili.get(posizioneAvviso).isVisualizzato())
+        {
+            getContext().startActivity(intentFromBachecaToVisualizzazioneAvviso);
+        }
+        else
+        {
+            avvisiVisibili.get(posizioneAvviso).setVisualizzato(true);
+            AggiornaAvvisoHandler handle = new AggiornaAvvisoHandler();
+            handle.utente = utenteCorrente;
+            handle.avviso = avvisiVisibili.get(posizioneAvviso).getAvvisoAssociato();
+            PresenterBacheca.getInstance().visualizzaAvviso(this,intentFromBachecaToVisualizzazioneAvviso,handle);
+        }
     }
 
     private void cambiaAspettoAvvisoInVisiualizzato() {

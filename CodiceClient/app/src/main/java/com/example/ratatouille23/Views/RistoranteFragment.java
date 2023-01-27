@@ -98,10 +98,10 @@ public class RistoranteFragment extends Fragment {
         logoRistorante = fragmentCorrente.findViewById(R.id.iconaLogoRistoranteVisualizza);
 
         Utente utenteCorrente = (Utente)getActivity().getIntent().getSerializableExtra("Utente");
-        ristoranteCorrente = utenteCorrente.getLavora();
+        ristoranteCorrente = utenteCorrente.getIdRistorante();
 
-        textViewNome.setText(ristoranteCorrente.getNome());
-        textViewTelefono.setText(ristoranteCorrente.getNumeroDiTelefono());
+        textViewNome.setText(ristoranteCorrente.getDenominazione());
+        textViewTelefono.setText(ristoranteCorrente.getNumeroTelefono());
         textViewIndirizzo.setText(ristoranteCorrente.getIndirizzo());
         textViewCitta.setText(ristoranteCorrente.getCitta());
         textViewTuristico.setText((ristoranteCorrente.isTuristico() ? "Il tuo ristorante è in una località turistica!": "Il tuo ristorante non è in una località turistica!"));

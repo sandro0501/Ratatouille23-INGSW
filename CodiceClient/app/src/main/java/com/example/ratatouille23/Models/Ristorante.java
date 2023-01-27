@@ -7,9 +7,9 @@ import java.util.ArrayList;
 
 public class Ristorante implements Serializable {
 
-    private int id;
-    private String nome;
-    private String numeroDiTelefono;
+    private int idRistorante;
+    private String denominazione;
+    private String numeroTelefono;
     private String indirizzo;
     private String citta;
     private boolean turistico;
@@ -17,20 +17,22 @@ public class Ristorante implements Serializable {
     private ArrayList<SezioneMenu> offre = new ArrayList<>();
     private ArrayList<Prodotto> utilizza = new ArrayList<>();
 
-    public String getNome() {
-        return nome;
+    public Ristorante() {}
+
+    public String getDenominazione() {
+        return denominazione;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setDenominazione(String nome) {
+        this.denominazione = nome;
     }
 
-    public String getNumeroDiTelefono() {
-        return numeroDiTelefono;
+    public String getNumeroTelefono() {
+        return numeroTelefono;
     }
 
-    public void setNumeroDiTelefono(String numeroDiTelefono) {
-        this.numeroDiTelefono = numeroDiTelefono;
+    public void setNumeroTelefono(String numeroDiTelefono) {
+        this.numeroTelefono = numeroTelefono;
     }
 
     public String getIndirizzo() {
@@ -58,17 +60,17 @@ public class Ristorante implements Serializable {
     }
 
     public Ristorante(String nome, String numeroDiTelefono, String indirizzo, String citta, boolean turistico) {
-        this.nome = nome;
-        this.numeroDiTelefono = numeroDiTelefono;
+        this.denominazione = nome;
+        this.numeroTelefono = numeroDiTelefono;
         this.indirizzo = indirizzo;
         this.citta = citta;
         this.turistico = turistico;
     }
 
     public Ristorante(int id, String nome, String numeroDiTelefono, String indirizzo, String citta, boolean turistico, String url) {
-        this.id = id;
-        this.nome = nome;
-        this.numeroDiTelefono = numeroDiTelefono;
+        this.idRistorante = id;
+        this.denominazione = nome;
+        this.numeroTelefono = numeroDiTelefono;
         this.indirizzo = indirizzo;
         this.citta = citta;
         this.turistico = turistico;
@@ -91,12 +93,12 @@ public class Ristorante implements Serializable {
         this.utilizza = utilizza;
     }
 
-    public int getId() {
-        return id;
+    public int getIdRistorante() {
+        return idRistorante;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdRistorante(int id) {
+        this.idRistorante = id;
     }
 
     public String getUrlFoto() {

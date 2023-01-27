@@ -49,11 +49,11 @@ public class ServiceBacheca {
 		repository.save(rel);
 	}
 
-	public EstraiBachecaResponseHandler estraiAvvisi(Utente u) {
+	public EstraiBachecaResponseHandler estraiAvvisi(int u) {
 		EstraiBachecaResponseHandler handle = new EstraiBachecaResponseHandler();
-		handle.nonVisualizzati = (List<Avviso>) (Object) repository.findByVisualizzato(u.getIdUtente(),false);
-		handle.nonVisibili = (List<Avviso>) (Object) repository.findNonVisibili(u.getIdUtente());
-		handle.visibili = (List<Avviso>) (Object) repository.findVisibili(u.getIdUtente());
+		handle.nonVisualizzati = (List<Avviso>) (Object) repository.findByVisualizzato(u,false);
+		handle.nonVisibili = (List<Avviso>) (Object) repository.findNonVisibili(u);
+		handle.visibili = (List<Avviso>) (Object) repository.findVisibili(u);
 		return handle;
 	}
 

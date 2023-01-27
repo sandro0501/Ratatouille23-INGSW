@@ -26,7 +26,6 @@ public class ServiceRistorante {
 	}
 
 	public String update(Ristorante ristorante) {
-		PreparazioneId id = new PreparazioneId();
 		Ristorante estratto = repository.findById(ristorante.getIdRistorante()).get();
 		estratto =ristorante;
 		repository.save(ristorante);

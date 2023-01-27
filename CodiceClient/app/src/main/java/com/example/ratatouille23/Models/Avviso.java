@@ -17,6 +17,8 @@ public class Avviso implements Serializable {
         this.autore = autore;
     }
 
+    public Avviso(){}
+
     public String getOggetto() {
         return oggetto;
     }
@@ -32,5 +34,16 @@ public class Avviso implements Serializable {
     public Gestore getAutore() {
         return autore;
     }
+
+    public void setOggetto(String oggetto)
+    {
+        this.oggetto = oggetto;
+    }
+    public void setCorpo(String corpo)
+    {
+        this.corpo = corpo;
+    }
+
+
 
 }
