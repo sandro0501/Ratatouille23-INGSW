@@ -1,12 +1,17 @@
 package com.example.ratatouille23.Presenters;
 
+import android.content.Intent;
+
 import com.example.ratatouille23.DAO.DAOFactory;
 import com.example.ratatouille23.DAO.DAOUtente;
 import com.example.ratatouille23.DAO.DAOUtenteImpl;
 import com.example.ratatouille23.Exceptions.CampiVuotiException;
 import com.example.ratatouille23.Exceptions.CaratteriIllecitiException;
 import com.example.ratatouille23.Exceptions.ConfermaPasswordErrataException;
+import com.example.ratatouille23.Handlers.RecoverHandler;
 import com.example.ratatouille23.Models.Utente;
+import com.example.ratatouille23.Views.ConfermaCodiceActivity;
+import com.example.ratatouille23.Views.PasswordRecoveryActivity;
 import com.example.ratatouille23.Views.PrimoLoginModificaPasswordActivity;
 import com.example.ratatouille23.Views.LoginActivity;
 
@@ -74,14 +79,40 @@ public class PresenterLogin extends PresenterBase {
         });
     }
 
-    public boolean bottoneRichiediCodicePremuto(String email) {
+    public void bottoneRichiediCodicePremuto(String email, PasswordRecoveryActivity context)
+    {
+        Utente utente = new Utente();
+        utente.setEmail(email);
+        daoUtente.recuperaPassword(utente, new DAOUtenteImpl.RecuperaPasswordCallbacks() {
+            @Override
+            public void onRichiestaCodice()
+            {
+                context.avviaConfermaCodice(email);
+            }
 
-        return true;
+            public void onConfermaCodice(){}
+        });
+
     }
 
 
-    public boolean bottoneResettaPasswordConCodicePremuto(String codice, String password) {
-        return true;
+    public void bottoneResettaPasswordConCodicePremuto(String email, String codice, String password, ConfermaCodiceActivity context)
+    {
+        RecoverHandler handle = new RecoverHandler();
+        handle.code = codice;
+        handle.password = password;
+        handle.email = email;
+        daoUtente.confermaPassword(handle, new DAOUtenteImpl.RecuperaPasswordCallbacks() {
+            @Override
+            public void onRichiestaCodice() { }
+
+            @Override
+            public void onConfermaCodice()
+            {
+                context.tornaAlLogin();
+            }
+        });
+
     }
 
 }

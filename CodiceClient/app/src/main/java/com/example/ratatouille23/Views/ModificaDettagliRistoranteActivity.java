@@ -92,13 +92,13 @@ public class ModificaDettagliRistoranteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Ristorante ristoranteTemporaneo = new Ristorante(
-                        ristoranteCorrente.getId(),
+                        ristoranteCorrente.getIdRistorante(),
                         textViewNome.getText().toString(),
                         textViewTelefono.getText().toString(),
                         textViewIndirizzo.getText().toString(),
                         textViewCitta.getText().toString(),
                         checkBoxTuristico.isChecked(),
-                    ((Integer)ristoranteCorrente.getId()).toString()+"_LogoRistorante.jpg"
+                    ((Integer)ristoranteCorrente.getIdRistorante()).toString()+"_LogoRistorante.jpg"
                 );
                 PresenterRistorante.getInstance().confermaModifichePremuto(ModificaDettagliRistoranteActivity.this, ristoranteTemporaneo);
             }
@@ -118,12 +118,12 @@ public class ModificaDettagliRistoranteActivity extends AppCompatActivity {
     }
 
     private void aggiornaRistorante() {
-        ristoranteCorrente.setNome(textViewNome.getText().toString());
-        ristoranteCorrente.setNumeroDiTelefono(textViewTelefono.getText().toString());
+        ristoranteCorrente.setDenominazione(textViewNome.getText().toString());
+        ristoranteCorrente.setNumeroTelefono(textViewTelefono.getText().toString());
         ristoranteCorrente.setIndirizzo(textViewIndirizzo.getText().toString());
         ristoranteCorrente.setCitta(textViewCitta.getText().toString());
         ristoranteCorrente.setTuristico(checkBoxTuristico.isChecked());
-        ristoranteCorrente.setUrlFoto(((Integer)ristoranteCorrente.getId()).toString()+"_LogoRistorante.jpg");
+        ristoranteCorrente.setUrlFoto(((Integer)ristoranteCorrente.getIdRistorante()).toString()+"_LogoRistorante.jpg");
     }
 
     @Override
@@ -158,7 +158,7 @@ public class ModificaDettagliRistoranteActivity extends AppCompatActivity {
 
     private void setLogoRistorante(Uri uri) {
         imageViewLogoRistorante.setImageURI(uri);
-        ristoranteCorrente.setUrlFoto(((Integer)ristoranteCorrente.getId()).toString()+"_LogoRistorante.jpg");
+        ristoranteCorrente.setUrlFoto(((Integer)ristoranteCorrente.getIdRistorante()).toString()+"_LogoRistorante.jpg");
     }
 
     public void modificheEffettuate(boolean successo) {

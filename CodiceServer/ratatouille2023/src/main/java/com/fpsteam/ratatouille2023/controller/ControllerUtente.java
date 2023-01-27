@@ -62,9 +62,9 @@ public class ControllerUtente {
 			String jsonRequest = "{"+
 					             "\"email\" : \"" + handle.email + "\","+
 					             "\"password\" : \"" + handle.password+ "\","+
-					             "\"code\" : \"" + handle.code + "\","+
+					             "\"code\" : \"" + handle.code + "\""+
 					             "}";
-			ApiGatewayResponse response = caller.execute(HttpMethodName.GET, "/passrecover", new ByteArrayInputStream(jsonRequest.getBytes()));
+			ApiGatewayResponse response = caller.execute(HttpMethodName.POST, "/passrecover", new ByteArrayInputStream(jsonRequest.getBytes()));
 			return response.getBody();
 		}
 		catch(Exception e)

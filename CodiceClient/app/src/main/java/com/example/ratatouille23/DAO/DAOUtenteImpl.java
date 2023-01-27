@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.ratatouille23.Exceptions.LoginFallitoException;
 import com.example.ratatouille23.Exceptions.PrimoAccessoException;
 import com.example.ratatouille23.Handlers.LoginHandler;
+import com.example.ratatouille23.Handlers.RecoverHandler;
 import com.example.ratatouille23.InterfacceRetrofit.BaseCallback;
 import com.example.ratatouille23.InterfacceRetrofit.LoginService;
 import com.example.ratatouille23.Models.Ristorante;
@@ -38,6 +39,12 @@ public class DAOUtenteImpl implements DAOUtente {
 
     public interface ModificaPasswordPrimoLoginCallbacks {
         void onModificaPasswordUtente(Utente utenteControllato);
+    }
+
+    public interface RecuperaPasswordCallbacks
+    {
+        void onRichiestaCodice();
+        void onConfermaCodice();
     }
 
     Retrofit retrofitLogin = new Retrofit.Builder().baseUrl("http://ec2-54-90-54-40.compute-1.amazonaws.com:8080/").addConverterFactory(GsonConverterFactory.create()).build();
@@ -135,6 +142,48 @@ public class DAOUtenteImpl implements DAOUtente {
 
         }
     }
+
+    @Override
+    public void recuperaPassword(Utente utente, RecuperaPasswordCallbacks callback)
+    {
+        Call<ResponseBody> callRecupero = loginService.recuperaPassword(utente);
+        callRecupero.enqueue(new Callback<ResponseBody>() {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response)
+            {
+                if(response.isSuccessful())
+                {
+                    callback.onRichiestaCodice();
+                }
+            }
+
+            public void onFailure(Call<ResponseBody> call, Throwable t)
+            {
+
+            }
+        });
+    }
+
+    @Override
+    public void confermaPassword(RecoverHandler handle, RecuperaPasswordCallbacks callback)
+    {
+        Call<ResponseBody> callConferma = loginService.confermaPassword(handle);
+        callConferma.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response)
+            {
+                if(response.isSuccessful())
+                {
+                    callback.onConfermaCodice();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
 
     private Utente formaUtenteDaJSON (JSONObject jsonLoginUtente) throws JSONException {
         JSONObject utenteCorrenteJson = jsonLoginUtente.getJSONObject("utente");

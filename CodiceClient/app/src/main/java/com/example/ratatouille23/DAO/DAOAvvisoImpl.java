@@ -135,7 +135,7 @@ public class DAOAvvisoImpl implements DAOAvviso
                     }
                     catch (Exception e)
                     {
-
+                        callback.onAggiuntaAvviso(false);
                     }
                 }
             }
