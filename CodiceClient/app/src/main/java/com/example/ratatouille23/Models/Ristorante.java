@@ -14,6 +14,7 @@ public class Ristorante implements Serializable {
     private String citta;
     private boolean turistico;
     private String urlFoto;
+
     private ArrayList<SezioneMenu> offre = new ArrayList<>();
     private ArrayList<Prodotto> utilizza = new ArrayList<>();
 

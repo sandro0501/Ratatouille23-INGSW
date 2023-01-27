@@ -105,7 +105,7 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
             public void onClick(View v)
             {
                 Intent intentFromBachecaToVCreazioneAvviso = new Intent(getContext(), CreazioneAvvisoActivity.class);
-                getContext().startActivity(intentFromBachecaToVCreazioneAvviso);
+                startActivity(intentFromBachecaToVCreazioneAvviso);
 
             }
         });

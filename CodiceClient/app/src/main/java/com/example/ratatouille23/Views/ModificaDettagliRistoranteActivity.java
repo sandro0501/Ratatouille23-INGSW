@@ -38,10 +38,13 @@ public class ModificaDettagliRistoranteActivity extends AppCompatActivity {
     private ImageButton buttonSceltaFoto;
     private ImageView imageViewLogoRistorante;
     private File fileLogo;
+    private TextView pannelloNomeRistorante;
 
     private Ristorante ristoranteCorrente;
 
     private static final int PICK_IMAGE = 1;
+
+    private static final int RICEZIONE_RISTORANTE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,7 @@ public class ModificaDettagliRistoranteActivity extends AppCompatActivity {
         checkBoxTuristico = findViewById(R.id.checkBoxRistoranteTuristico);
         buttonSceltaFoto = findViewById(R.id.imageButtonSceltaFoto);
         imageViewLogoRistorante = findViewById(R.id.iconaLogoRistoranteModifica);
+        pannelloNomeRistorante = findViewById(R.id.textViewDenominazioneRistorante);
 
         ristoranteCorrente = (Ristorante)getIntent().getSerializableExtra("RistoranteCorrente");
         fileLogo = (File)getIntent().getSerializableExtra("FileLogo");
@@ -68,6 +72,8 @@ public class ModificaDettagliRistoranteActivity extends AppCompatActivity {
         textViewCitta.setText(ristoranteCorrente.getCitta());
         textViewTuristico.setText((ristoranteCorrente.isTuristico() ? "Il tuo ristorante è in una località turistica!": "Il tuo ristorante non è in una località turistica!"));
         checkBoxTuristico.setChecked(ristoranteCorrente.isTuristico());
+        pannelloNomeRistorante.setText(ristoranteCorrente.getDenominazione());
+
 
         if (fileLogo != null) {
             Bitmap bitmap = BitmapFactory.decodeFile(fileLogo.getAbsolutePath());
@@ -117,15 +123,6 @@ public class ModificaDettagliRistoranteActivity extends AppCompatActivity {
 
     }
 
-    private void aggiornaRistorante() {
-        ristoranteCorrente.setDenominazione(textViewNome.getText().toString());
-        ristoranteCorrente.setNumeroTelefono(textViewTelefono.getText().toString());
-        ristoranteCorrente.setIndirizzo(textViewIndirizzo.getText().toString());
-        ristoranteCorrente.setCitta(textViewCitta.getText().toString());
-        ristoranteCorrente.setTuristico(checkBoxTuristico.isChecked());
-        ristoranteCorrente.setUrlFoto(((Integer)ristoranteCorrente.getIdRistorante()).toString()+"_LogoRistorante.jpg");
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -161,12 +158,8 @@ public class ModificaDettagliRistoranteActivity extends AppCompatActivity {
         ristoranteCorrente.setUrlFoto(((Integer)ristoranteCorrente.getIdRistorante()).toString()+"_LogoRistorante.jpg");
     }
 
-    public void modificheEffettuate(boolean successo) {
-        if (successo) {
-            aggiornaRistorante();
-            finish();
-        }
-
+    public void modificheEffettuate() {
+        finish();
     }
 
 

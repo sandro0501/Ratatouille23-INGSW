@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.R;
 
 /**
@@ -31,11 +32,11 @@ public class ProfiloFragment extends Fragment {
     private TextView textViewPassword;
     private ImageView iconaModificaPassword;
     private Button bottoneLogout;
-    private ImageView iconaModificaEmail;
-    private EditText editTextEmail;
+    private TextView textViewEmailContenuto;
     private TextView textViewNomeContenuto;
     private TextView textViewRuoloContenuto;
     private String emailCorrente;
+    private Utente utenteCorrente;
 
 
     public ProfiloFragment() {
@@ -55,12 +56,15 @@ public class ProfiloFragment extends Fragment {
         textViewPassword = fragmentCorrente.findViewById(R.id.textViewTuristicoRistoranteModifica);
         iconaModificaPassword = fragmentCorrente.findViewById(R.id.iconaModificaPasswordProfilo);
         bottoneLogout = fragmentCorrente.findViewById(R.id.bottoneAnnullaModificaRistorante);
-        iconaModificaEmail = fragmentCorrente.findViewById(R.id.iconaModificaEmailProfilo);
-        editTextEmail = fragmentCorrente.findViewById(R.id.textViewIndirizzoRistoranteVisualizza);
+        textViewEmailContenuto = fragmentCorrente.findViewById(R.id.textViewIndirizzoRistoranteVisualizza);
         textViewNomeContenuto = fragmentCorrente.findViewById(R.id.textViewNomeRistoranteVisualizza);
         textViewRuoloContenuto = fragmentCorrente.findViewById(R.id.textViewNumeroRistoranteVisualizza);
 
-        editTextEmail.setEnabled(false);
+        utenteCorrente = (Utente) getActivity().getIntent().getSerializableExtra("Utente");
+
+        textViewNomeContenuto.setText(utenteCorrente.getNomeCompleto());
+        textViewRuoloContenuto.setText(utenteCorrente.getRuoloUtente());
+        textViewEmailContenuto.setText(utenteCorrente.getEmail());
 
         iconaModificaPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,24 +74,6 @@ public class ProfiloFragment extends Fragment {
             }
         });
 
-        iconaModificaEmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (editTextEmail.isEnabled()) {
-                    iconaModificaEmail.setImageResource(R.drawable.icona_matita);
-                    editTextEmail.setEnabled(false);
-                    emailCorrente = editTextEmail.getText().toString();
-                    editTextEmail.setText(emailCorrente);
-                }
-                else {
-                    iconaModificaEmail.setImageResource(R.drawable.icona_spunta_modifica);
-                    editTextEmail.setEnabled(true);
-                    editTextEmail.requestFocus();
-                    editTextEmail.setSelection(editTextEmail.getText().length());
-                }
-            }
-        });
 
         bottoneLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,18 +87,4 @@ public class ProfiloFragment extends Fragment {
         return fragmentCorrente;
     }
 
-    public void onStart() {
-        super.onStart();
-        emailCorrente = editTextEmail.getText().toString();
-    }
-
-    @Override
-    public void onStop() {
-        if (editTextEmail.isEnabled()) {
-            iconaModificaEmail.setImageResource(R.drawable.icona_matita);
-            editTextEmail.setEnabled(false);
-            editTextEmail.setText(emailCorrente);
-        }
-        super.onStop();
-    }
 }

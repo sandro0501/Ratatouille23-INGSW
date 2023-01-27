@@ -28,7 +28,6 @@ public class CreazioneAvvisoActivity extends AppCompatActivity {
         bottoneAnnullaCreazioneAvvisoPremuto();
         bottoneCreazioneAvvisoPremuto();
 
-
     }
 
     private void bottoneAnnullaCreazioneAvvisoPremuto() {

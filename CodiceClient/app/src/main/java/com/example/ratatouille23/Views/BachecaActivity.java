@@ -43,7 +43,7 @@ public class BachecaActivity extends AppCompatActivity {
         iconaMenu = findViewById(R.id.menuIcon);
         menu = findViewById(R.id.menuNavigationView);
 
-        textViewNomeRistorante.setText(ristoranteCorrente.getDenominazione());
+        setNomeRistorante(ristoranteCorrente);
 
         inizializzaMenu();
         iconaMenuPremuta(menuDrawerLayout, iconaMenu);
@@ -57,6 +57,11 @@ public class BachecaActivity extends AppCompatActivity {
         if (PresenterBacheca.getInstance().getBachecaAttiva()) { }
         else super.onBackPressed();
 
+    }
+
+    public void setNomeRistorante(Ristorante ristorante){
+        ristoranteCorrente = ristorante;
+        textViewNomeRistorante.setText(ristoranteCorrente.getDenominazione());
     }
 
     private void inizializzaMenu() {
