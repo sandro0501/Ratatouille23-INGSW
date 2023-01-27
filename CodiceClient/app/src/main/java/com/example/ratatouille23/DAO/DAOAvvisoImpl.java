@@ -26,7 +26,7 @@ public class DAOAvvisoImpl implements DAOAvviso
     {
         public void onCaricamentoAvvisi(ArrayList<Avviso> avvisiUtenteNuovi,ArrayList<Avviso> avvisiUtenteLetti,ArrayList<Avviso> avvisiUtenteNascosti);
     }
-    Retrofit retrofitBacheca =  new Retrofit.Builder().baseUrl("https://100.25.166.43/").addConverterFactory(GsonConverterFactory.create()).build();
+    Retrofit retrofitBacheca =  new Retrofit.Builder().baseUrl("http://ec2-54-90-54-40.compute-1.amazonaws.com:8080/").addConverterFactory(GsonConverterFactory.create()).build();
     BachecaService bachecaService = retrofitBacheca.create(BachecaService.class);
 
     public void getAvvisi(Utente utente, BachecaCallbacks callback)

@@ -3,13 +3,11 @@ package com.example.ratatouille23.Views;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -25,7 +23,6 @@ import com.example.ratatouille23.R;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 
 public class ModificaDettagliRistoranteActivity extends AppCompatActivity {
@@ -94,7 +91,16 @@ public class ModificaDettagliRistoranteActivity extends AppCompatActivity {
         bottoneConferma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                Ristorante ristoranteTemporaneo = new Ristorante(
+                        ristoranteCorrente.getId(),
+                        textViewNome.getText().toString(),
+                        textViewTelefono.getText().toString(),
+                        textViewIndirizzo.getText().toString(),
+                        textViewCitta.getText().toString(),
+                        checkBoxTuristico.isChecked(),
+                    ((Integer)ristoranteCorrente.getId()).toString()+"_LogoRistorante.jpg"
+                );
+                PresenterRistorante.getInstance().confermaModifichePremuto(ModificaDettagliRistoranteActivity.this, ristoranteTemporaneo);
             }
         });
 
@@ -109,8 +115,15 @@ public class ModificaDettagliRistoranteActivity extends AppCompatActivity {
             }
         });
 
+    }
 
-
+    private void aggiornaRistorante() {
+        ristoranteCorrente.setNome(textViewNome.getText().toString());
+        ristoranteCorrente.setNumeroDiTelefono(textViewTelefono.getText().toString());
+        ristoranteCorrente.setIndirizzo(textViewIndirizzo.getText().toString());
+        ristoranteCorrente.setCitta(textViewCitta.getText().toString());
+        ristoranteCorrente.setTuristico(checkBoxTuristico.isChecked());
+        ristoranteCorrente.setUrlFoto(((Integer)ristoranteCorrente.getId()).toString()+"_LogoRistorante.jpg");
     }
 
     @Override
@@ -138,9 +151,23 @@ public class ModificaDettagliRistoranteActivity extends AppCompatActivity {
         Amplify.Storage.uploadInputStream(
                 ((Integer)ristoranteCorrente.getId()).toString()+"_LogoRistorante.jpg",
                 streamLogo,
-                result -> imageViewLogoRistorante.setImageURI(uri),
-                storageFailure -> PresenterRistorante.getInstance().mostraAlert(getBaseContext(), "Errore!", "L'immagine non è stata caricata correttamente, riprovare")
+                result -> setLogoRistorante(uri),
+                storageFailure -> PresenterRistorante.getInstance().mostraAlert(getApplicationContext(), "Errore!", "L'immagine non è stata caricata correttamente, riprovare")
         );
     }
+
+    private void setLogoRistorante(Uri uri) {
+        imageViewLogoRistorante.setImageURI(uri);
+        ristoranteCorrente.setUrlFoto(((Integer)ristoranteCorrente.getId()).toString()+"_LogoRistorante.jpg");
+    }
+
+    public void modificheEffettuate(boolean successo) {
+        if (successo) {
+            aggiornaRistorante();
+            finish();
+        }
+
+    }
+
 
 }

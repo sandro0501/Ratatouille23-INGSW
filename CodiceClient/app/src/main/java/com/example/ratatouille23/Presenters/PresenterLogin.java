@@ -10,6 +10,9 @@ import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Views.PrimoLoginModificaPasswordActivity;
 import com.example.ratatouille23.Views.LoginActivity;
 
+import okhttp3.ResponseBody;
+import retrofit2.Response;
+
 public class PresenterLogin extends PresenterBase {
 
     private DAOUtente daoUtente;
@@ -37,6 +40,11 @@ public class PresenterLogin extends PresenterBase {
         Utente utenteCorrente = new Utente();
         utenteCorrente.setEmail(email);
         daoUtente.controllaDatiLogin(utenteCorrente, password, new DAOUtenteImpl.LoginCallbacks() {
+            @Override
+            public void onErroreDiConnessione(Response<ResponseBody> response) {
+                PresenterLogin.getInstance().mostraAlertConnessioneServer(context, response);
+            }
+
             @Override
             public void onAccessoCorrettoUtente(Utente utenteControllato) {
                 context.effettuaAccesso(utenteControllato);
