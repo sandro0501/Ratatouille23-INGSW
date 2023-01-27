@@ -43,7 +43,7 @@ public class BachecaActivity extends AppCompatActivity {
         iconaMenu = findViewById(R.id.menuIcon);
         menu = findViewById(R.id.menuNavigationView);
 
-        textViewNomeRistorante.setText(ristoranteCorrente.getNome());
+        textViewNomeRistorante.setText(ristoranteCorrente.getDenominazione());
 
         inizializzaMenu();
         iconaMenuPremuta(menuDrawerLayout, iconaMenu);
