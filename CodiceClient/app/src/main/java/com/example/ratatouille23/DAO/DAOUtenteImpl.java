@@ -149,7 +149,7 @@ public class DAOUtenteImpl implements DAOUtente {
         );
         utenteCorrente.setAccessToken(accessToken);
         utenteCorrente.setIdToken(idToken);
-        utenteCorrente.setId(utenteCorrenteJson.getInt("idUtente"));
+        utenteCorrente.setIdUtente(utenteCorrenteJson.getInt("idUtente"));
         JSONObject ristoranteUtenteJson = utenteCorrenteJson.getJSONObject("idRistorante");
         Ristorante ristoranteUtente = new Ristorante(
                 ristoranteUtenteJson.getInt("idRistorante"),
@@ -160,7 +160,7 @@ public class DAOUtenteImpl implements DAOUtente {
                 ristoranteUtenteJson.getBoolean("turistico"),
                 ristoranteUtenteJson.getString("urlFoto")
         );
-        utenteCorrente.setLavora(ristoranteUtente);
+        utenteCorrente.setIdRistorante(ristoranteUtente);
         return utenteCorrente;
     }
 

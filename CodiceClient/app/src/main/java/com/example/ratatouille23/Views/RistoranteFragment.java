@@ -99,7 +99,15 @@ public class RistoranteFragment extends Fragment {
         logoRistorante = fragmentCorrente.findViewById(R.id.iconaLogoRistoranteVisualizza);
 
         Utente utenteCorrente = (Utente)getActivity().getIntent().getSerializableExtra("Utente");
-        ristoranteCorrente = utenteCorrente.getLavora();
+
+        ristoranteCorrente = utenteCorrente.getIdRistorante();
+
+        textViewNome.setText(ristoranteCorrente.getDenominazione());
+        textViewTelefono.setText(ristoranteCorrente.getNumeroTelefono());
+        textViewIndirizzo.setText(ristoranteCorrente.getIndirizzo());
+        textViewCitta.setText(ristoranteCorrente.getCitta());
+        textViewTuristico.setText((ristoranteCorrente.isTuristico() ? "Il tuo ristorante è in una località turistica!": "Il tuo ristorante non è in una località turistica!"));
+
 
         bottoneModifica.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +127,7 @@ public class RistoranteFragment extends Fragment {
         aggiornaRistorante();
         super.onStart();
     }
+
 
     private void setImmagine(File file, String path) {
         fileLogo = file;

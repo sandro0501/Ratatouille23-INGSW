@@ -36,7 +36,7 @@ public class BachecaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bacheca);
 
         Utente utenteCorrente = (Utente)getIntent().getSerializableExtra("Utente");
-        ristoranteCorrente = utenteCorrente.getLavora();
+        ristoranteCorrente = utenteCorrente.getIdRistorante();
 
         textViewNomeRistorante = findViewById(R.id.textViewDenominazioneRistorante);
         menuDrawerLayout = findViewById(R.id.menuDrawerLayout);

@@ -6,13 +6,14 @@ import java.util.ArrayList;
 public class Utente implements Serializable {
 
 
-    private int id;
+    private int idUtente;
     private String idToken;
-    private String accessToken;    private String nome;
+    private String accessToken;
+    private String nome;
     private String cognome;
     private String email;
     private ArrayList<Bacheca> bacheca = new ArrayList<>();
-    private Ristorante lavora;
+    private Ristorante idRistorante;
 
     public Utente() {};
 
@@ -74,19 +75,19 @@ public class Utente implements Serializable {
         this.email = email;
     }
 
-    public Ristorante getLavora() {
-        return lavora;
+    public Ristorante getIdRistorante() {
+        return idRistorante;
     }
 
-    public void setLavora(Ristorante lavora) {
-        this.lavora = lavora;
+    public void setIdRistorante(Ristorante lavora) {
+        this.idRistorante = lavora;
     }
-   public int getId() {
-        return id;
+   public int getIdUtente() {
+        return idUtente;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdUtente(int idUtente) {
+        this.idUtente = idUtente;
     }
 
     public String getIdToken() {

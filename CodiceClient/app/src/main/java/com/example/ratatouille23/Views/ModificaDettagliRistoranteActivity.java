@@ -62,8 +62,8 @@ public class ModificaDettagliRistoranteActivity extends AppCompatActivity {
         ristoranteCorrente = (Ristorante)getIntent().getSerializableExtra("RistoranteCorrente");
         fileLogo = (File)getIntent().getSerializableExtra("FileLogo");
 
-        textViewNome.setText(ristoranteCorrente.getNome());
-        textViewTelefono.setText(ristoranteCorrente.getNumeroDiTelefono());
+        textViewNome.setText(ristoranteCorrente.getDenominazione());
+        textViewTelefono.setText(ristoranteCorrente.getNumeroTelefono());
         textViewIndirizzo.setText(ristoranteCorrente.getIndirizzo());
         textViewCitta.setText(ristoranteCorrente.getCitta());
         textViewTuristico.setText((ristoranteCorrente.isTuristico() ? "Il tuo ristorante è in una località turistica!": "Il tuo ristorante non è in una località turistica!"));
@@ -149,7 +149,7 @@ public class ModificaDettagliRistoranteActivity extends AppCompatActivity {
 
     private void uploadS3(InputStream streamLogo, Uri uri) {
         Amplify.Storage.uploadInputStream(
-                ((Integer)ristoranteCorrente.getId()).toString()+"_LogoRistorante.jpg",
+                ((Integer)ristoranteCorrente.getIdRistorante()).toString()+"_LogoRistorante.jpg",
                 streamLogo,
                 result -> setLogoRistorante(uri),
                 storageFailure -> PresenterRistorante.getInstance().mostraAlert(getApplicationContext(), "Errore!", "L'immagine non è stata caricata correttamente, riprovare")
