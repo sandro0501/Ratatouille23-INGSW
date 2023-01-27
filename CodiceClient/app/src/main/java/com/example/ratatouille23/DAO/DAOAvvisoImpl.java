@@ -33,13 +33,16 @@ public class DAOAvvisoImpl implements DAOAvviso
         public void onNascondiAvviso();
     }
 
+
     Retrofit retrofitBacheca =  new Retrofit.Builder().baseUrl("http://ec2-54-90-54-40.compute-1.amazonaws.com:8080/").addConverterFactory(GsonConverterFactory.create()).build();
     Retrofit retrofitAvviso = new Retrofit.Builder().baseUrl("http://ec2-54-90-54-40.compute-1.amazonaws.com:8080/").addConverterFactory(GsonConverterFactory.create()).build();
     BachecaService bachecaService = retrofitBacheca.create(BachecaService.class);
     AvvisoService avvisoService = retrofitAvviso.create(AvvisoService.class);
 
+
     public void getAvvisi(int uid, BachecaCallbacks callback)
     {
+
         Call<ResponseBody> callGetAvvisi = bachecaService.getAvvisi(uid);
         callGetAvvisi.enqueue(new Callback<ResponseBody>()
         {

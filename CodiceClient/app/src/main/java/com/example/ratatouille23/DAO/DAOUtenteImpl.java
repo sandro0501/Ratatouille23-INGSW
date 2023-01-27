@@ -5,10 +5,14 @@ import android.util.Log;
 import com.example.ratatouille23.Exceptions.LoginFallitoException;
 import com.example.ratatouille23.Exceptions.PrimoAccessoException;
 import com.example.ratatouille23.Handlers.LoginHandler;
+import com.example.ratatouille23.InterfacceRetrofit.BaseCallback;
 import com.example.ratatouille23.InterfacceRetrofit.LoginService;
 import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Models.UtenteFactory;
+import com.example.ratatouille23.Presenters.PresenterLogin;
+import com.example.ratatouille23.Presenters.PresenterRistorante;
+import com.example.ratatouille23.Views.LoginActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DAOUtenteImpl implements DAOUtente {
 
-    public interface LoginCallbacks {
+    public interface LoginCallbacks extends BaseCallback {
         void onAccessoCorrettoUtente(Utente utenteControllato);
 
         void onPrimoAccessoUtente(Utente utente, String session);
@@ -78,7 +82,7 @@ public class DAOUtenteImpl implements DAOUtente {
                         }
                     }
                     else {
-                        Log.i("Prova", "noSUCCESS");
+                        callback.onErroreDiConnessione(response);
                     }
                 }
 

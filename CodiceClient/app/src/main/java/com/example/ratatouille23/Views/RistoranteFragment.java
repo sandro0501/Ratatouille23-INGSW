@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.amplifyframework.core.Amplify;
 import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Models.Utente;
+import com.example.ratatouille23.Presenters.PresenterRistorante;
 import com.example.ratatouille23.R;
 
 import java.io.File;
@@ -98,6 +99,7 @@ public class RistoranteFragment extends Fragment {
         logoRistorante = fragmentCorrente.findViewById(R.id.iconaLogoRistoranteVisualizza);
 
         Utente utenteCorrente = (Utente)getActivity().getIntent().getSerializableExtra("Utente");
+
         ristoranteCorrente = utenteCorrente.getIdRistorante();
 
         textViewNome.setText(ristoranteCorrente.getDenominazione());
@@ -122,19 +124,32 @@ public class RistoranteFragment extends Fragment {
 
     @Override
     public void onStart() {
-        Amplify.Storage.downloadFile(
-                "0_LogoRistorante.jpg",
-                new File(fragmentCorrente.getContext().getFilesDir() + "/0_LogoRistorante.jpg"),
-                result -> setImmagine(result.getFile()),
-                error -> Log.e("MyAmplifyApp",  "Download Failure", error)
-        );
+        aggiornaRistorante();
         super.onStart();
     }
 
-    private void setImmagine(File file) {
+
+    private void setImmagine(File file, String path) {
         fileLogo = file;
         Bitmap bitmapLogo  = BitmapFactory.decodeFile(file.getAbsolutePath());
         logoRistorante.setImageBitmap(bitmapLogo);
+    }
 
+    public void aggiornaRistorante() {
+        textViewNome.setText(ristoranteCorrente.getNome());
+        textViewTelefono.setText(ristoranteCorrente.getNumeroDiTelefono());
+        textViewIndirizzo.setText(ristoranteCorrente.getIndirizzo());
+        textViewCitta.setText(ristoranteCorrente.getCitta());
+        textViewTuristico.setText((ristoranteCorrente.isTuristico() ? "Il tuo ristorante è in una località turistica!": "Il tuo ristorante non è in una località turistica!"));
+        if (ristoranteCorrente.getUrlFoto() != null) {
+            String pathFoto = ristoranteCorrente.getUrlFoto();
+            Amplify.Storage.downloadFile(
+                    pathFoto,
+                    new File(fragmentCorrente.getContext().getFilesDir() + "/" + pathFoto),
+                    result -> setImmagine(result.getFile(), pathFoto),
+                    error -> PresenterRistorante.getInstance().mostraAlert(getContext(), "Errore!", "L'immagine non è stata scaricata correttamente, riprovare")
+
+            );
+        }
     }
 }
