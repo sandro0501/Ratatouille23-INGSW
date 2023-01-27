@@ -48,7 +48,7 @@ public class ControllerUtente {
 	@Autowired
 	private ServiceRistorante servRist;
 	
-	@PostMapping("/recover")
+	@PostMapping("/recoverConfirm")
 	public String confirmRecover(@RequestBody RecoverHandler handle)
 	{
 		try {
@@ -74,7 +74,7 @@ public class ControllerUtente {
 		
 	}
 	
-	@GetMapping("/recover")
+	@PostMapping("/recover")
 	public String recover(@RequestBody Utente utente)
 	{
 		
@@ -98,7 +98,7 @@ public class ControllerUtente {
 		}
 	}
 	
-	@GetMapping("/out")
+	@PostMapping("/out")
 	public String signout(@RequestBody SignoutHandler handle)
 	{
 		try {
@@ -225,7 +225,7 @@ public class ControllerUtente {
 			return res;
 		}
 	}
-	@GetMapping("/firstlog")
+	@PostMapping("/firstlog")
 	public LoginResponseHandler primoLoginUtente(@RequestBody LoginHandler handle)
 	{
 		Utente utente = handle.utente;
