@@ -32,8 +32,8 @@ public class DAOAvvisoImpl implements DAOAvviso
         public void onVisualizzaAvviso();
     }
 
-    Retrofit retrofitBacheca =  new Retrofit.Builder().baseUrl("https://100.25.166.43/bacheca").addConverterFactory(GsonConverterFactory.create()).build();
-    Retrofit retrofitAvviso = new Retrofit.Builder().baseUrl("https://100.25.166.43/").addConverterFactory(GsonConverterFactory.create()).build();
+    Retrofit retrofitBacheca =  new Retrofit.Builder().baseUrl("http://100.25.166.43:8080/bacheca").addConverterFactory(GsonConverterFactory.create()).build();
+    Retrofit retrofitAvviso = new Retrofit.Builder().baseUrl("http://100.25.166.43:8080/").addConverterFactory(GsonConverterFactory.create()).build();
     BachecaService bachecaService = retrofitBacheca.create(BachecaService.class);
     AvvisoService avvisoService = retrofitAvviso.create(AvvisoService.class);
 
@@ -187,7 +187,7 @@ public class DAOAvvisoImpl implements DAOAvviso
                 {
                     try
                     {
-                        
+
                     }
                     catch(Exception e)
                     {
