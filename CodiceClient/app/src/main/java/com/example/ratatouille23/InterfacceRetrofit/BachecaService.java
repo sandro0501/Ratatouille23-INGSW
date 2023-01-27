@@ -13,12 +13,12 @@ import retrofit2.http.Query;
 
 public interface BachecaService {
 
-    @GET("")
+    @GET("bacheca")
     Call<ResponseBody> getAvvisi(
             @Query("uid") int idUtente
     );
 
-    @PUT("")
+    @PUT("bacheca")
     Call<ResponseBody> viewAvviso(
             @Body AggiornaAvvisoHandler handle
     );

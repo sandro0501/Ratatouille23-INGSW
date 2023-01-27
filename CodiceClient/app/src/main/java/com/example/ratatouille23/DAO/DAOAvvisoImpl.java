@@ -30,10 +30,11 @@ public class DAOAvvisoImpl implements DAOAvviso
         public void onCaricamentoAvvisi(ArrayList<Avviso> avvisiUtenteNuovi,ArrayList<Avviso> avvisiUtenteLetti,ArrayList<Avviso> avvisiUtenteNascosti);
         public void onAggiuntaAvviso(Boolean added);
         public void onVisualizzaAvviso();
+        public void onNascondiAvviso();
     }
 
-    Retrofit retrofitBacheca =  new Retrofit.Builder().baseUrl("http://100.25.166.43:8080/bacheca").addConverterFactory(GsonConverterFactory.create()).build();
-    Retrofit retrofitAvviso = new Retrofit.Builder().baseUrl("http://100.25.166.43:8080/").addConverterFactory(GsonConverterFactory.create()).build();
+    Retrofit retrofitBacheca =  new Retrofit.Builder().baseUrl("http://ec2-54-90-54-40.compute-1.amazonaws.com:8080/").addConverterFactory(GsonConverterFactory.create()).build();
+    Retrofit retrofitAvviso = new Retrofit.Builder().baseUrl("http://ec2-54-90-54-40.compute-1.amazonaws.com:8080/").addConverterFactory(GsonConverterFactory.create()).build();
     BachecaService bachecaService = retrofitBacheca.create(BachecaService.class);
     AvvisoService avvisoService = retrofitAvviso.create(AvvisoService.class);
 
@@ -187,7 +188,9 @@ public class DAOAvvisoImpl implements DAOAvviso
                 {
                     try
                     {
-
+                        JSONObject body = new JSONObject(response.body().toString());
+                        if(body.getString("messaggio").equals("Tutto bene"))
+                            callback.onNascondiAvviso();
                     }
                     catch(Exception e)
                     {

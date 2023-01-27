@@ -36,7 +36,7 @@ public class DAOUtenteImpl implements DAOUtente {
         void onModificaPasswordUtente(Utente utenteControllato);
     }
 
-    Retrofit retrofitLogin = new Retrofit.Builder().baseUrl("http://100.25.166.43:8080/").addConverterFactory(GsonConverterFactory.create()).build();
+    Retrofit retrofitLogin = new Retrofit.Builder().baseUrl("http://ec2-54-90-54-40.compute-1.amazonaws.com:8080/").addConverterFactory(GsonConverterFactory.create()).build();
     LoginService loginService = retrofitLogin.create(LoginService.class);
 
     @Override

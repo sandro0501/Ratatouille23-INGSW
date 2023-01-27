@@ -54,7 +54,10 @@ public class PresenterBacheca extends PresenterBase {
 
             @Override
             public void onAggiuntaAvviso(Boolean added) { }
+
             public void onVisualizzaAvviso(){ }
+
+            public void onNascondiAvviso() { }
         });
     }
 
@@ -68,6 +71,8 @@ public class PresenterBacheca extends PresenterBase {
                 else context.mostraErroreCreazioneAvvisoDialog();
             }
             public void onVisualizzaAvviso(){ }
+
+            public void onNascondiAvviso() { }
         });
     }
 
@@ -84,6 +89,8 @@ public class PresenterBacheca extends PresenterBase {
             context.getContext().startActivity(intentFromBachecaToVisualizzaAvviso);
         }
 
+        public void onNascondiAvviso() { }
+
         });
     }
 
@@ -96,6 +103,10 @@ public class PresenterBacheca extends PresenterBase {
 
             public void onVisualizzaAvviso() { }
 
+            public void onNascondiAvviso()
+            {
+                //TODO
+            }
 
         });
     }
