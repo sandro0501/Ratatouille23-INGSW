@@ -13,9 +13,9 @@ import retrofit2.http.Query;
 
 public interface BachecaService {
 
-    @GET("bacheca")
+    @GET("bacheca/{id}")
     Call<ResponseBody> getAvvisi(
-            @Query("uid") int idUtente
+            @Path("uid") int idUtente
     );
 
     @PUT("bacheca")

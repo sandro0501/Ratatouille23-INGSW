@@ -44,6 +44,7 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
     private ImageView bottoneCreazioneAvviso;
     private Utente utenteCorrente;
     private TextView textViewNumeroAvvisi;
+    private BachecaFragment context = this;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -81,7 +82,6 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
     public void onStart() {
         super.onStart();
         //Devi estrarre gli avvisi dell'utente
-        PresenterBacheca.getInstance().setAvvisi(this, utenteCorrente.getIdUtente());
         PresenterBacheca.getInstance().setBachecaAttiva(true);
         setNumeroAvvisiDaLeggere();
     }
@@ -105,6 +105,7 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
             public void onClick(View v)
             {
                 Intent intentFromBachecaToVCreazioneAvviso = new Intent(getContext(), CreazioneAvvisoActivity.class);
+                intentFromBachecaToVCreazioneAvviso.putExtra("Utente",utenteCorrente);
                 getContext().startActivity(intentFromBachecaToVCreazioneAvviso);
 
             }
@@ -117,6 +118,7 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        PresenterBacheca.getInstance().setAvvisi(context, utenteCorrente.getIdUtente());
         utenteCorrente = (Utente)getActivity().getIntent().getSerializableExtra("Utente");
         recyclerView = view.findViewById(R.id.recyclerViewAvvisi);
         avvisiVisibiliAdapter = new AvvisoRecyclerViewAdapter(getContext(), avvisiVisibili,this);
