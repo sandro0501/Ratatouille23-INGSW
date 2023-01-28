@@ -39,8 +39,8 @@ public class ServiceProdotto {
 		repository.save(prodotto);
 	}
 
-	public ArrayList<Prodotto> findAll(Ristorante ristorant) {
-		return repository.findAllByRistorante(ristorant.getIdRistorante());
+	public ArrayList<Prodotto> findAll(int ristorant) {
+		return repository.findAllByRistorante(ristorant);
 		
 	}
 

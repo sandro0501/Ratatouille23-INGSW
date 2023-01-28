@@ -27,6 +27,7 @@ import com.example.ratatouille23.R;
 
 import com.example.ratatouille23.Models.Avviso;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -43,6 +44,7 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
     private Utente utenteCorrente;
     private TextView textViewNumeroAvvisi;
     private BachecaFragment context = this;
+    private ArrayList<Utente> utentiCorrenti = new ArrayList<Utente>();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -57,6 +59,17 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
     public BachecaFragment() {
         // Required empty public constructor
     }
+    public void setUtentiCorrenti(ArrayList<Utente> utenti)
+    {
+        utentiCorrenti.clear();
+        utentiCorrenti.addAll(utenti);
+    }
+
+    public ArrayList<Utente> getUtentiCorrenti()
+    {
+        return utentiCorrenti;
+    }
+
 
     public static BachecaFragment newInstance(String param1, String param2) {
         BachecaFragment fragment = new BachecaFragment();
@@ -79,6 +92,8 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
     @Override
     public void onStart() {
         super.onStart();
+        PresenterBacheca.getInstance().setUtentiCorrenti(utenteCorrente.getIdRistorante().getIdRistorante(), context);
+        PresenterBacheca.getInstance().setAvvisi(context, utenteCorrente);
         //Devi estrarre gli avvisi dell'utente
         PresenterBacheca.getInstance().setBachecaAttiva(true);
         setNumeroAvvisiDaLeggere();

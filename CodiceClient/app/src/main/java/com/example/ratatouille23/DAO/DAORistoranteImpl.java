@@ -21,6 +21,7 @@ public class DAORistoranteImpl implements DAORistorante {
         public void onModificaRistorante();
     }
 
+
     public interface RistoranteRiceviCallbacks
     {
         public void onRicezioneRistorante(Ristorante ristorante);
@@ -30,6 +31,7 @@ public class DAORistoranteImpl implements DAORistorante {
     RistoranteService ristoranteService = retrofitRistorante.create(RistoranteService.class);
 
     @Override
+
     public void modificaRistorante(Ristorante ristorante, RistoranteModificaCallbacks callback) {
         Call<ResponseBody> callUpdateRistorante = ristoranteService.updateRistorante(ristorante);
 
@@ -44,6 +46,8 @@ public class DAORistoranteImpl implements DAORistorante {
                 }
             }
 
+           boolean successo = (response.body().equals("Tutto bene"));
+                    callback.onModificaRistorante(successo);
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.i("Problema failure", t.getMessage());

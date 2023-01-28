@@ -5,6 +5,8 @@ import android.content.Intent;
 import com.example.ratatouille23.DAO.DAOAvviso;
 import com.example.ratatouille23.DAO.DAOAvvisoImpl;
 import com.example.ratatouille23.DAO.DAOFactory;
+import com.example.ratatouille23.DAO.DAOUtente;
+import com.example.ratatouille23.DAO.DAOUtenteImpl;
 import com.example.ratatouille23.Handlers.AggiornaAvvisoHandler;
 import com.example.ratatouille23.Handlers.InserisciAvvisoHandler;
 import com.example.ratatouille23.Models.Avviso;
@@ -18,14 +20,14 @@ public class PresenterBacheca extends PresenterBase {
     private static PresenterBacheca instance;
 
     private DAOAvviso daoBacheca;
-
+    private DAOUtente daoUtente;
 
     static Boolean bachecaAttiva = true;
 
     private PresenterBacheca() {
         daoBacheca = DAOFactory.getInstance().getDAOAvviso();
+        daoUtente = DAOFactory.getInstance().getDAOUtente();
     };
-
     public static PresenterBacheca getInstance(){
 
         if (instance==null) {
@@ -43,9 +45,9 @@ public class PresenterBacheca extends PresenterBase {
         bachecaAttiva = valore;
     }
 
-    public void setAvvisi(BachecaFragment context, int uid)
+    public void setAvvisi(BachecaFragment context, Utente utente)
     {
-        daoBacheca.getAvvisi(uid, new DAOAvvisoImpl.BachecaCallbacks() {
+        daoBacheca.getAvvisi(utente, context,new DAOAvvisoImpl.BachecaCallbacks() {
             @Override
             public void onCaricamentoAvvisi(ArrayList<Avviso> avvisiUtenteNuovi, ArrayList<Avviso> avvisiUtenteLetti, ArrayList<Avviso> avvisiutenteNascosti) {
                 context.setAvvisiUtente(avvisiUtenteNuovi,avvisiUtenteLetti,avvisiutenteNascosti);
@@ -72,6 +74,17 @@ public class PresenterBacheca extends PresenterBase {
             public void onVisualizzaAvviso(){ }
 
             public void onNascondiAvviso() { }
+        });
+    }
+
+    public void setUtentiCorrenti(int rid, BachecaFragment context)
+    {
+        daoUtente.ottieniDipendenti(rid, new DAOUtenteImpl.GetDipendantiCallbacks() {
+            @Override
+            public void onRichiestaDipendenti(ArrayList<Utente> utenti)
+            {
+                context.setUtentiCorrenti(utenti);
+            }
         });
     }
 
@@ -109,4 +122,5 @@ public class PresenterBacheca extends PresenterBase {
 
         });
     }
+
 }

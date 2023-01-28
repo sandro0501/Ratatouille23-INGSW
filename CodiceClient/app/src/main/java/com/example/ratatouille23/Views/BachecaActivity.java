@@ -20,6 +20,8 @@ import com.example.ratatouille23.Presenters.PresenterBacheca;
 import com.example.ratatouille23.R;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
+
 
 public class BachecaActivity extends AppCompatActivity {
 
@@ -28,7 +30,7 @@ public class BachecaActivity extends AppCompatActivity {
     private NavigationView menu;
     private TextView textViewNomeRistorante;
     private Ristorante ristoranteCorrente;
-
+    private ArrayList<Utente> utentiCurr = new ArrayList<Utente>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

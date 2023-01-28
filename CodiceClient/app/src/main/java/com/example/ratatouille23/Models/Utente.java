@@ -12,6 +12,7 @@ public class Utente implements Serializable {
     private String nome;
     private String cognome;
     private String email;
+    private String ruolo;
     private ArrayList<Bacheca> bacheca = new ArrayList<>();
     private Ristorante idRistorante;
 
@@ -39,11 +40,29 @@ public class Utente implements Serializable {
     }
 
     public String getRuoloUtente() {
-        if (this instanceof Amministratore) return "Amministratore";
-        else if (this instanceof Supervisore) return "Supervisore";
-        else {
-            if (((Addetto)this).getRuolo().equals(ruoliPersonale.addettoAllaCucina)) return "Addetto alla cucina";
-            else return "Addetto al servizio";
+        if(this instanceof Gestore)
+        {
+            try
+            {
+                Amministratore amm = (Amministratore) this;
+                return "Amministratore";
+            }
+            catch(ClassCastException e)
+            {
+                return "Supervisore";
+            }
+        }
+        else
+        {
+            try
+            {
+                Addetto add = (Addetto) this;
+                return "Addetto alla cucina";
+            }
+            catch(ClassCastException e)
+            {
+                return "Addetto al servizio";
+            }
         }
     }
 

@@ -15,6 +15,7 @@ import com.example.ratatouille23.R;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class AvvisoRecyclerViewAdapter extends RecyclerView.Adapter<AvvisoRecyclerViewAdapter.MyViewHolder> {
@@ -48,8 +49,8 @@ public class AvvisoRecyclerViewAdapter extends RecyclerView.Adapter<AvvisoRecycl
         holder.autoreAvviso.setText(avvisi.get(position).getAvvisoAssociato().getAutore().getNomeCompleto());
         holder.oggettoAvviso.setText(avvisi.get(position).getAvvisoAssociato().getOggetto());
         holder.corpoAvviso.setText(avvisi.get(position).getAvvisoAssociato().getCorpo());
-        Date data = (java.sql.Date)avvisi.get(position).getAvvisoAssociato().getDataCreazione();
-        holder.dataAvviso.setText(new SimpleDateFormat("dd/MM").format(data));
+        LocalDate data = avvisi.get(position).getAvvisoAssociato().getDataCreazione();
+        holder.dataAvviso.setText(data.toString());
         holder.ruoloAutoreAvviso.setText(avvisi.get(position).getAvvisoAssociato().getAutore().getRuoloUtente());
 
     }
