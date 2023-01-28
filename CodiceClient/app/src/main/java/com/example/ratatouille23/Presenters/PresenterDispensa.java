@@ -1,6 +1,5 @@
 package com.example.ratatouille23.Presenters;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.example.ratatouille23.DAO.DAOFactory;

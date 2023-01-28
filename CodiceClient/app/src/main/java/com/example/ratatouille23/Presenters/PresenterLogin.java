@@ -1,7 +1,5 @@
 package com.example.ratatouille23.Presenters;
 
-import android.content.Intent;
-
 import com.example.ratatouille23.DAO.DAOFactory;
 import com.example.ratatouille23.DAO.DAOUtente;
 import com.example.ratatouille23.DAO.DAOUtenteImpl;

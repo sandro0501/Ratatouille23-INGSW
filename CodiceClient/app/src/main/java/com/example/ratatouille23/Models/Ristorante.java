@@ -1,7 +1,5 @@
 package com.example.ratatouille23.Models;
 
-import android.widget.ArrayAdapter;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 

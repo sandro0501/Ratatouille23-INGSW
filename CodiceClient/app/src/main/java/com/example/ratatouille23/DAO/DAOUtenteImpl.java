@@ -7,18 +7,18 @@ import com.example.ratatouille23.Exceptions.PrimoAccessoException;
 import com.example.ratatouille23.Handlers.LoginHandler;
 import com.example.ratatouille23.Handlers.RecoverHandler;
 import com.example.ratatouille23.InterfacceRetrofit.BaseCallback;
+import com.example.ratatouille23.InterfacceRetrofit.DipendentiService;
 import com.example.ratatouille23.InterfacceRetrofit.LoginService;
 import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Models.UtenteFactory;
-import com.example.ratatouille23.Presenters.PresenterLogin;
-import com.example.ratatouille23.Presenters.PresenterRistorante;
-import com.example.ratatouille23.Views.LoginActivity;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -47,8 +47,13 @@ public class DAOUtenteImpl implements DAOUtente {
         void onConfermaCodice();
     }
 
-    Retrofit retrofitLogin = new Retrofit.Builder().baseUrl("http://ec2-54-90-54-40.compute-1.amazonaws.com:8080/").addConverterFactory(GsonConverterFactory.create()).build();
+    public interface RecuperaDipendentiCallbacks {
+        void onDipendentiRicevuti(ArrayList<Utente> listaDipendenti);
+    }
+
+    Retrofit retrofitLogin = new Retrofit.Builder().baseUrl("http://100.26.153.81:8080/").addConverterFactory(GsonConverterFactory.create()).build();
     LoginService loginService = retrofitLogin.create(LoginService.class);
+    DipendentiService dipendentiService = retrofitLogin.create(DipendentiService.class);
 
     @Override
     public void controllaDatiLogin(Utente utenteCorrente, String password, LoginCallbacks callback) {
@@ -80,12 +85,12 @@ public class DAOUtenteImpl implements DAOUtente {
                         } catch (JSONException e) {
                             Log.i("Prova", e.getMessage());
 
-                        } catch (IOException e) {
-                            Log.i("Prova", "io");
                         } catch (LoginFallitoException e) {
                             callback.onAccessoErratoUtente();
                         } catch (PrimoAccessoException e) {
                             callback.onPrimoAccessoUtente(utenteCorrente, sessionePrimoLogin);
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
                     else {
@@ -124,7 +129,7 @@ public class DAOUtenteImpl implements DAOUtente {
                             Log.i("Prova", e.getMessage());
 
                         } catch (IOException e) {
-                            Log.i("Prova", "io");
+                            e.printStackTrace();
                         }
                     }
                     else {
@@ -180,6 +185,57 @@ public class DAOUtenteImpl implements DAOUtente {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
 
+            }
+        });
+    }
+
+    @Override
+    public void recuperaDipendentiRistorante(Ristorante ristorante, RecuperaDipendentiCallbacks callback) {
+        Call<ResponseBody> callDipendenti = dipendentiService.getDipendentiByIdRistorante(ristorante.getIdRistorante());
+        callDipendenti.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        JSONObject callJSON = new JSONObject(response.body().string());
+                        String successo = callJSON.getString("message");
+                        if (successo.equals("Tutto bene")) {
+                            JSONArray arrayDipedentiJSON = callJSON.getJSONArray("dipendenti");
+                            ArrayList<Utente> arrayDipendenti = new ArrayList<>();
+                            for (int i = 0; i < arrayDipedentiJSON.length(); i++) {
+                                JSONObject dipendenteJSON = arrayDipedentiJSON.getJSONObject(i);
+                                Utente dipendente = UtenteFactory.getInstance().getNuovoUtente(
+                                        dipendenteJSON.getString("nome"),
+                                        dipendenteJSON.getString("cognome"),
+                                        dipendenteJSON.getString("email"),
+                                        dipendenteJSON.getString("ruolo"),
+                                        dipendenteJSON.getBoolean("master")
+                                );
+                                dipendente.setIdUtente(dipendenteJSON.getInt("idUtente"));
+                                dipendente.setIdRistorante(ristorante);
+                                arrayDipendenti.add(dipendente);
+                            }
+                            callback.onDipendentiRicevuti(arrayDipendenti);
+                        }
+                        else {
+                            Log.i("NON TUTTO BENE", "");
+                        }
+
+                    }
+                    catch (JSONException e) {
+                        Log.i("JSON", "");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else {
+                    Log.i("NON successful", "");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.i("NON failure", "");
             }
         });
     }

@@ -2,7 +2,6 @@ package com.example.ratatouille23.DAO;
 
 import com.example.ratatouille23.Handlers.AggiornaAvvisoHandler;
 import com.example.ratatouille23.Handlers.InserisciAvvisoHandler;
-import com.example.ratatouille23.Models.Utente;
 
 public interface DAOAvviso {
 

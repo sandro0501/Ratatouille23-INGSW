@@ -1,30 +1,22 @@
 package com.example.ratatouille23.Views;
 
 import android.content.Context;
-import android.media.Image;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ratatouille23.Models.Allergene;
 import com.example.ratatouille23.Models.Elemento;
-import com.example.ratatouille23.Models.Prodotto;
 import com.example.ratatouille23.Models.SezioneMenu;
 import com.example.ratatouille23.Models.listaAllergeni;
 import com.example.ratatouille23.R;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class ElementoMenuRecyclerViewAdapter extends RecyclerView.Adapter<ElementoMenuRecyclerViewAdapter.MyViewHolder>{
 
