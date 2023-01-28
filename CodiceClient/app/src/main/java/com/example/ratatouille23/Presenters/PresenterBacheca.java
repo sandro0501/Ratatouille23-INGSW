@@ -10,7 +10,6 @@ import com.example.ratatouille23.DAO.DAOUtenteImpl;
 import com.example.ratatouille23.Handlers.AggiornaAvvisoHandler;
 import com.example.ratatouille23.Handlers.InserisciAvvisoHandler;
 import com.example.ratatouille23.Models.Avviso;
-import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Views.BachecaFragment;
 import com.example.ratatouille23.Views.CreazioneAvvisoActivity;
 

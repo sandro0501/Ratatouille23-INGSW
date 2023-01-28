@@ -3,7 +3,6 @@ package com.example.ratatouille23.Views;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +10,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.ratatouille23.Exceptions.CampiVuotiException;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Presenters.PresenterLogin;
 import com.example.ratatouille23.R;

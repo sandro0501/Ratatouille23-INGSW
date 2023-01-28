@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ratatouille23.Models.Avviso;
 import com.example.ratatouille23.Models.Bacheca;
 import com.example.ratatouille23.R;
 

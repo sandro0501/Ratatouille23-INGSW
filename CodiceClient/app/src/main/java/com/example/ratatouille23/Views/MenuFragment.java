@@ -39,7 +39,6 @@ import com.example.ratatouille23.R;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.function.LongFunction;
 
 /**
  * A simple {@link Fragment} subclass.

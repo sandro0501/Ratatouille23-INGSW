@@ -45,6 +45,7 @@ public class DAOAvvisoImpl implements DAOAvviso
     }
 
 
+
     Retrofit retrofitBacheca =  new Retrofit.Builder().baseUrl(DAOBaseUrl.baseUrl()).addConverterFactory(GsonConverterFactory.create()).build();
     Retrofit retrofitAvviso = new Retrofit.Builder().baseUrl(DAOBaseUrl.baseUrl()).addConverterFactory(GsonConverterFactory.create()).build();
     BachecaService bachecaService = retrofitBacheca.create(BachecaService.class);
@@ -76,6 +77,7 @@ public class DAOAvvisoImpl implements DAOAvviso
 
                         for (int x = 0; x < nuovi.length(); x++)
                         {
+
                             JSONArray avviso = nuovi.getJSONArray(x);
                             LocalDate date =  LocalDate.parse(avviso.getString(3));
                             for(int z = 0; z<utenti.size(); z++)
@@ -96,6 +98,7 @@ public class DAOAvvisoImpl implements DAOAvviso
 
                         for (int x = 0; x < letti.length(); x++)
                         {
+
                             JSONArray avviso = letti.getJSONArray(x);
                             LocalDate date =  LocalDate.parse(avviso.getString(3));
                             for(int z = 0; z<utenti.size(); z++)
@@ -116,6 +119,7 @@ public class DAOAvvisoImpl implements DAOAvviso
 
                         for (int x = 0; x < nascosti.length(); x++)
                         {
+
                             JSONArray avviso = nascosti.getJSONArray(x);
                             LocalDate date =  LocalDate.parse(avviso.getString(3));
                             for(int z = 0; z<utenti.size(); z++)
@@ -164,7 +168,9 @@ public class DAOAvvisoImpl implements DAOAvviso
                 {
                     try
                     {
+
                             callback.onAggiuntaAvviso(true);
+
 
                     }
                     catch (Exception e)
@@ -195,6 +201,7 @@ public class DAOAvvisoImpl implements DAOAvviso
                 {
                     try
                     {
+ 
                          callback.onVisualizzaAvviso();
                     }
                     catch(Exception e)

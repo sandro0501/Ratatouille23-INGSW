@@ -49,6 +49,7 @@ public class DAOUtenteImpl implements DAOUtente {
         void onConfermaCodice();
     }
 
+
     public interface GetDipendantiCallbacks
     {
         void onRichiestaDipendenti(ArrayList<Utente> utenti);

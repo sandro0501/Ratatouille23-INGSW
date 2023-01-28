@@ -22,6 +22,7 @@ import com.example.ratatouille23.Presenters.PresenterRistorante;
 import com.example.ratatouille23.R;
 
 import java.io.File;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,6 +53,8 @@ public class RistoranteFragment extends Fragment {
     private File fileLogo;
 
     private Ristorante ristoranteCorrente;
+
+    private static final int RICEZIONE_RISTORANTE = 2;
 
     public RistoranteFragment() {
         // Required empty public constructor
@@ -115,12 +118,14 @@ public class RistoranteFragment extends Fragment {
                 Intent i = new Intent(fragmentCorrente.getContext(), ModificaDettagliRistoranteActivity.class);
                 i.putExtra("FileLogo", fileLogo);
                 i.putExtra("RistoranteCorrente", ristoranteCorrente);
-                startActivity(i);
+                startActivityForResult(i, RICEZIONE_RISTORANTE);
             }
         });
 
         return fragmentCorrente;
     }
+
+
 
     @Override
     public void onStart() {
@@ -136,20 +141,38 @@ public class RistoranteFragment extends Fragment {
     }
 
     public void aggiornaRistorante() {
+        PresenterRistorante.getInstance().riceviRistorante(RistoranteFragment.this, ristoranteCorrente.getIdRistorante());
+    }
+
+    public void setRistorante(Ristorante ristoranteRicevuto) {
+        ristoranteCorrente = ristoranteRicevuto;
         textViewNome.setText(ristoranteCorrente.getDenominazione());
         textViewTelefono.setText(ristoranteCorrente.getNumeroTelefono());
         textViewIndirizzo.setText(ristoranteCorrente.getIndirizzo());
         textViewCitta.setText(ristoranteCorrente.getCitta());
         textViewTuristico.setText((ristoranteCorrente.isTuristico() ? "Il tuo ristorante è in una località turistica!": "Il tuo ristorante non è in una località turistica!"));
-        if (ristoranteCorrente.getUrlFoto() != null) {
+        if (ristoranteCorrente.getUrlFoto() != null && !ristoranteCorrente.getUrlFoto().isEmpty()) {
             String pathFoto = ristoranteCorrente.getUrlFoto();
-            Amplify.Storage.downloadFile(
+
+            AtomicBoolean fotoPresente = new AtomicBoolean(false);
+
+            Amplify.Storage.list(pathFoto,
+                    result -> {
+                        if (!result.getItems().isEmpty()) fotoPresente.set(true);
+                    },
+                    error -> Log.e("MyAmplifyApp", "List failure", error)
+            );
+
+            if (fotoPresente.get())
+                Amplify.Storage.downloadFile(
                     pathFoto,
                     new File(fragmentCorrente.getContext().getFilesDir() + "/" + pathFoto),
                     result -> setImmagine(result.getFile(), pathFoto),
                     error -> PresenterRistorante.getInstance().mostraAlert(getContext(), "Errore!", "L'immagine non è stata scaricata correttamente, riprovare")
 
-            );
+                );
         }
+        ((BachecaActivity)getActivity()).setNomeRistorante(ristoranteCorrente);
     }
+
 }

@@ -1,6 +1,7 @@
 package com.example.ratatouille23.DAO;
 
 import com.example.ratatouille23.Handlers.RecoverHandler;
+import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Models.Utente;
 
 public interface DAOUtente {
