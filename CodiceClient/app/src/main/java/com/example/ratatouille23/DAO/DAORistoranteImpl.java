@@ -32,7 +32,7 @@ public class DAORistoranteImpl implements DAORistorante {
         public void onModificaRistorante(boolean successo);
     }
 
-    Retrofit retrofitRistorante =  new Retrofit.Builder().baseUrl("http://ec2-54-90-54-40.compute-1.amazonaws.com:8080/").addConverterFactory(GsonConverterFactory.create()).build();
+    Retrofit retrofitRistorante =  new Retrofit.Builder().baseUrl(DAOBaseUrl.baseUrl()).addConverterFactory(GsonConverterFactory.create()).build();
     RistoranteService ristoranteService = retrofitRistorante.create(RistoranteService.class);
 
     @Override

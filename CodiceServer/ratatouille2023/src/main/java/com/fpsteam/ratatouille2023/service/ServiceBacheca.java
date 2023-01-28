@@ -42,7 +42,7 @@ public class ServiceBacheca {
 		rel.setIdUtente(ut);
 		rel.setVisibile(true);
 		//L'autore ha ovviamente visto il suo avviso
-		if(ut.equals(av.getAutore()))
+		if(ut.getIdUtente() == av.getAutore().getIdUtente())
 			rel.setVisualizzato(true);
 		else
 			rel.setVisualizzato(false);

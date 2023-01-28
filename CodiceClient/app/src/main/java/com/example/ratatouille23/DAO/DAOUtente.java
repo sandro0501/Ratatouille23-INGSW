@@ -12,4 +12,6 @@ public interface DAOUtente {
     void recuperaPassword(Utente utente, DAOUtenteImpl.RecuperaPasswordCallbacks callback);
 
     void confermaPassword(RecoverHandler handle, DAOUtenteImpl.RecuperaPasswordCallbacks callback);
+
+    void ottieniDipendenti(int rid, DAOUtenteImpl.GetDipendantiCallbacks callback);
 }

@@ -1,16 +1,19 @@
 package com.example.ratatouille23.Models;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Avviso implements Serializable {
 
+    private int idAvviso;
     private String oggetto;
     private String corpo;
-    private Date dataCreazione;
+    private LocalDate dataCreazione;
     private Gestore autore;
 
-    public Avviso(String oggetto, String corpo, Date dataCreazione, Gestore autore) {
+    public Avviso(int idAvviso,String oggetto, String corpo, LocalDate dataCreazione, Gestore autore) {
+        this.idAvviso = idAvviso;
         this.oggetto = oggetto;
         this.corpo = corpo;
         this.dataCreazione = dataCreazione;
@@ -27,7 +30,7 @@ public class Avviso implements Serializable {
         return corpo;
     }
 
-    public Date getDataCreazione() {
+    public LocalDate getDataCreazione() {
         return dataCreazione;
     }
 

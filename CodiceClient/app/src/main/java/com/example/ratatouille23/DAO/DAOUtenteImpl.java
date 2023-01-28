@@ -15,10 +15,12 @@ import com.example.ratatouille23.Presenters.PresenterLogin;
 import com.example.ratatouille23.Presenters.PresenterRistorante;
 import com.example.ratatouille23.Views.LoginActivity;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -47,7 +49,12 @@ public class DAOUtenteImpl implements DAOUtente {
         void onConfermaCodice();
     }
 
-    Retrofit retrofitLogin = new Retrofit.Builder().baseUrl("http://ec2-54-90-54-40.compute-1.amazonaws.com:8080/").addConverterFactory(GsonConverterFactory.create()).build();
+    public interface GetDipendantiCallbacks
+    {
+        void onRichiestaDipendenti(ArrayList<Utente> utenti);
+    }
+
+    Retrofit retrofitLogin = new Retrofit.Builder().baseUrl(DAOBaseUrl.baseUrl()).addConverterFactory(GsonConverterFactory.create()).build();
     LoginService loginService = retrofitLogin.create(LoginService.class);
 
     @Override
@@ -174,6 +181,50 @@ public class DAOUtenteImpl implements DAOUtente {
                 if(response.isSuccessful())
                 {
                     callback.onConfermaCodice();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void ottieniDipendenti(int rid, GetDipendantiCallbacks callback)
+    {
+        Call<ResponseBody> callConferma = loginService.estraiDipendenti(rid);
+        callConferma.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response)
+            {
+                if(response.isSuccessful())
+                {
+                    try
+                    {
+                        JSONObject body = new JSONObject(response.body().string());
+                        JSONArray utenti = body.getJSONArray("dipendenti");
+                        ArrayList<Utente> dipendenti = new ArrayList<Utente>();
+                        for(int x = 0; x<utenti.length(); x++)
+                        {
+                            JSONObject y = utenti.getJSONObject(x);
+                            Utente utenteCorrente = UtenteFactory.getInstance().getNuovoUtente(
+                                    y.getString("nome"),
+                                    y.getString("cognome"),
+                                    y.getString("email"),
+                                    y.getString("ruolo"),
+                                    y.getBoolean("master")
+                            );
+                            utenteCorrente.setIdUtente(y.getInt("idUtente"));
+                            dipendenti.add(utenteCorrente);
+                        }
+                        System.out.println(dipendenti);
+                        callback.onRichiestaDipendenti(dipendenti);
+                    }
+                    catch(Exception e)
+                    {
+                        System.out.println(e.getMessage());
+                    }
                 }
             }
 

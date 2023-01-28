@@ -9,6 +9,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface LoginService {
 
@@ -24,4 +25,6 @@ public interface LoginService {
     @POST("utente/recoverConfirm")
     Call<ResponseBody> confermaPassword(@Body RecoverHandler handler);
 
+    @GET("utente/{rid}")
+    Call<ResponseBody> estraiDipendenti(@Path("rid") int rid);
 }

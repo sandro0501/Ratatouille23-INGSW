@@ -1,6 +1,7 @@
 package com.example.ratatouille23.InterfacceRetrofit;
 
 import com.example.ratatouille23.Handlers.AggiornaAvvisoHandler;
+import com.example.ratatouille23.Handlers.HandlerAvvisi;
 import com.example.ratatouille23.Models.Utente;
 
 import okhttp3.ResponseBody;
@@ -13,7 +14,7 @@ import retrofit2.http.Query;
 
 public interface BachecaService {
 
-    @GET("bacheca/{id}")
+    @GET("bacheca/{uid}")
     Call<ResponseBody> getAvvisi(
             @Path("uid") int idUtente
     );
@@ -23,7 +24,7 @@ public interface BachecaService {
             @Body AggiornaAvvisoHandler handle
     );
 
-    @PUT("/visibile")
+    @PUT("bacheca/visibile")
     Call<ResponseBody> nascondiAvviso(
             @Body AggiornaAvvisoHandler handle
     );
