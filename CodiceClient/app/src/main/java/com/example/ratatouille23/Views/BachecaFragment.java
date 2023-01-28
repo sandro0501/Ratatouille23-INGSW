@@ -92,7 +92,7 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
     @Override
     public void onStart() {
         super.onStart();
-        PresenterBacheca.getInstance().setUtentiCorrenti(utenteCorrente.getIdRistorante().getIdRistorante(), context);
+        PresenterBacheca.getInstance().setUtentiCorrenti(utenteCorrente.getIdRistorante(), context);
         PresenterBacheca.getInstance().setAvvisi(context, utenteCorrente);
         //Devi estrarre gli avvisi dell'utente
         PresenterBacheca.getInstance().setBachecaAttiva(true);
@@ -132,7 +132,7 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
         super.onViewCreated(view, savedInstanceState);
 
         utenteCorrente = (Utente)getActivity().getIntent().getSerializableExtra("Utente");
-        PresenterBacheca.getInstance().setAvvisi(context, utenteCorrente.getIdUtente());
+        PresenterBacheca.getInstance().setAvvisi(context, utenteCorrente);
         recyclerView = view.findViewById(R.id.recyclerViewAvvisi);
         avvisiVisibiliAdapter = new AvvisoRecyclerViewAdapter(getContext(), avvisiVisibili,this);
         tuttiAvvisiAdapter = new AvvisoRecyclerViewAdapter(getContext(), tuttiAvvisi, this);

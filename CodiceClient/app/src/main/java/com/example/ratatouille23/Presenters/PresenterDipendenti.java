@@ -28,9 +28,9 @@ public class PresenterDipendenti extends PresenterBase {
     }
 
     public void recuperaDipendentiDaRistorante(DipendenteFragment context, Ristorante ristorante) {
-        daoUtente.recuperaDipendentiRistorante(ristorante, new DAOUtenteImpl.RecuperaDipendentiCallbacks() {
+        daoUtente.ottieniDipendenti(ristorante, new DAOUtenteImpl.DipendentiCallbacks() {
             @Override
-            public void onDipendentiRicevuti(ArrayList<Utente> listaDipendenti) {
+            public void onRichiestaDipendenti(ArrayList<Utente> listaDipendenti) {
                 context.setListaDipendenti(listaDipendenti);
             }
         });

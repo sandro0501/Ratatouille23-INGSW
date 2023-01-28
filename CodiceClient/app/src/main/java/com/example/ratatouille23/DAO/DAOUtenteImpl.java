@@ -11,9 +11,6 @@ import com.example.ratatouille23.InterfacceRetrofit.LoginService;
 import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Models.UtenteFactory;
-import com.example.ratatouille23.Presenters.PresenterLogin;
-import com.example.ratatouille23.Presenters.PresenterRistorante;
-import com.example.ratatouille23.Views.LoginActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,7 +47,7 @@ public class DAOUtenteImpl implements DAOUtente {
     }
 
 
-    public interface GetDipendantiCallbacks
+    public interface DipendentiCallbacks
     {
         void onRichiestaDipendenti(ArrayList<Utente> utenti);
     }
@@ -192,9 +189,9 @@ public class DAOUtenteImpl implements DAOUtente {
         });
     }
 
-    public void ottieniDipendenti(int rid, GetDipendantiCallbacks callback)
+    public void ottieniDipendenti(Ristorante ristorante, DipendentiCallbacks callback)
     {
-        Call<ResponseBody> callConferma = loginService.estraiDipendenti(rid);
+        Call<ResponseBody> callConferma = loginService.estraiDipendenti(ristorante.getIdRistorante());
         callConferma.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response)
@@ -217,15 +214,17 @@ public class DAOUtenteImpl implements DAOUtente {
                                     y.getBoolean("master")
                             );
                             utenteCorrente.setIdUtente(y.getInt("idUtente"));
+                            utenteCorrente.setIdRistorante(ristorante);
                             dipendenti.add(utenteCorrente);
                         }
-                        System.out.println(dipendenti);
                         callback.onRichiestaDipendenti(dipendenti);
                     }
                     catch(Exception e)
                     {
-                        System.out.println(e.getMessage());
                     }
+                }
+                else {
+
                 }
             }
 

@@ -10,6 +10,8 @@ import com.example.ratatouille23.DAO.DAOUtenteImpl;
 import com.example.ratatouille23.Handlers.AggiornaAvvisoHandler;
 import com.example.ratatouille23.Handlers.InserisciAvvisoHandler;
 import com.example.ratatouille23.Models.Avviso;
+import com.example.ratatouille23.Models.Ristorante;
+import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Views.BachecaFragment;
 import com.example.ratatouille23.Views.CreazioneAvvisoActivity;
 
@@ -77,9 +79,9 @@ public class PresenterBacheca extends PresenterBase {
         });
     }
 
-    public void setUtentiCorrenti(int rid, BachecaFragment context)
+    public void setUtentiCorrenti(Ristorante ristorante, BachecaFragment context)
     {
-        daoUtente.ottieniDipendenti(rid, new DAOUtenteImpl.GetDipendantiCallbacks() {
+        daoUtente.ottieniDipendenti(ristorante, new DAOUtenteImpl.DipendentiCallbacks() {
             @Override
             public void onRichiestaDipendenti(ArrayList<Utente> utenti)
             {

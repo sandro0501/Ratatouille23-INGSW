@@ -45,9 +45,6 @@ public class DAORistoranteImpl implements DAORistorante {
                     Log.i("Problema success", ((Integer)response.code()).toString());
                 }
             }
-
-           boolean successo = (response.body().equals("Tutto bene"));
-                    callback.onModificaRistorante(successo);
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.i("Problema failure", t.getMessage());
