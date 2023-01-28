@@ -68,7 +68,7 @@ public class BachecaActivity extends AppCompatActivity {
         NavHostFragment hostFragment =(NavHostFragment)getSupportFragmentManager().findFragmentById(R.id.navHostFragment);
         NavController controllerMenu = hostFragment.getNavController();
         NavigationUI.setupWithNavController(menu, controllerMenu);
-        Utente u = UtenteFactory.getInstance().getNuovoUtente("Genoveffa", "Arcobaleno", "emailprova", "Amministratore", true);
+        Utente u = UtenteFactory.getInstance().getNuovoUtente("Genoveffa", "Arcobaleno", "emailprova", "Supervisore", true);
 
         //simulazione login utente
             if (u.getRuoloUtente().equals("Addetto alla cucina")){

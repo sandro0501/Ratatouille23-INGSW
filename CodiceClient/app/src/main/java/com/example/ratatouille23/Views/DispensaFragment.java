@@ -405,5 +405,4 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
         adapterAutoComplete.getFilter().filter(editTextNomeProdotto.getText(), editTextNomeProdotto);
     }
 
-
 }
