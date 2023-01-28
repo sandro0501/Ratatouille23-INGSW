@@ -92,7 +92,6 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
     @Override
     public void onStart() {
         super.onStart();
-        PresenterBacheca.getInstance().setUtentiCorrenti(utenteCorrente.getIdRistorante(), context);
         PresenterBacheca.getInstance().setAvvisi(context, utenteCorrente);
         //Devi estrarre gli avvisi dell'utente
         PresenterBacheca.getInstance().setBachecaAttiva(true);
@@ -132,15 +131,11 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
         super.onViewCreated(view, savedInstanceState);
 
         utenteCorrente = (Utente)getActivity().getIntent().getSerializableExtra("Utente");
-        PresenterBacheca.getInstance().setAvvisi(context, utenteCorrente);
         recyclerView = view.findViewById(R.id.recyclerViewAvvisi);
         avvisiVisibiliAdapter = new AvvisoRecyclerViewAdapter(getContext(), avvisiVisibili,this);
         tuttiAvvisiAdapter = new AvvisoRecyclerViewAdapter(getContext(), tuttiAvvisi, this);
-        //recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(avvisiVisibiliAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        avvisiVisibiliAdapter.notifyDataSetChanged();
-        tuttiAvvisiAdapter.notifyDataSetChanged();
 
 
     }
@@ -148,7 +143,6 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
     @Override
     public void onAvvisoClicked(int posizioneAvviso) {
 
-        //cambiaAspettoAvvisoInVisiualizzato();
         visualizzaAvviso(posizioneAvviso);
 
     }
@@ -175,43 +169,6 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
             handle.avviso = avvisiVisibili.get(posizioneAvviso).getAvvisoAssociato();
             PresenterBacheca.getInstance().visualizzaAvviso(this,intentFromBachecaToVisualizzazioneAvviso,handle);
         }
-    }
-
-    private void cambiaAspettoAvvisoInVisiualizzato() {
-        ImageView imageViewAvvisi, imageViewNascondiAvviso;
-        TextView autoreAvviso, oggettoAvviso, corpoAvviso, dataAvviso, ruoloAutoreAvviso;
-
-        imageViewAvvisi = getView().findViewById(R.id.imageViewImmagineElementoMenuCard);
-        autoreAvviso = getView().findViewById(R.id.textViewTitoloPrincipaleElementoMenuCard);
-        oggettoAvviso = getView().findViewById(R.id.textViewDescrizionePrincipaleElementoMenuCard);
-        corpoAvviso = getView().findViewById(R.id.textViewDescrizioneSecondariaElementoMenuCard);
-        dataAvviso = getView().findViewById(R.id.textViewCostoElementoMenuCard);
-        ruoloAutoreAvviso = getView().findViewById(R.id.textViewTitoloSecondarioElementoMenuCard);
-        imageViewNascondiAvviso = getView().findViewById(R.id.imageViewVediIngredientiElementoMenuCard);
-
-        //cambia aspetto testo
-        Typeface verdanaFace = ResourcesCompat.getFont(getContext(), R.font.verdana);
-
-        autoreAvviso.setTypeface(verdanaFace);
-        ruoloAutoreAvviso.setTypeface(verdanaFace, Typeface.ITALIC);
-        oggettoAvviso.setTypeface(verdanaFace);
-        dataAvviso.setTypeface(verdanaFace);
-
-        autoreAvviso.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
-        ruoloAutoreAvviso.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
-        oggettoAvviso.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
-        corpoAvviso.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
-        dataAvviso.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
-
-        autoreAvviso.setTextColor(Color.parseColor("#5F5959"));
-        ruoloAutoreAvviso.setTextColor(Color.parseColor("#5F5959"));
-        oggettoAvviso.setTextColor(Color.parseColor("#5F5959"));
-        corpoAvviso.setTextColor(Color.parseColor("#5F5959"));
-        dataAvviso.setTextColor(Color.parseColor("#5F5959"));
-
-        //cambia icona notifica
-        imageViewAvvisi.setImageResource(R.drawable.icon_avviso_visto);
-        imageViewNascondiAvviso.setVisibility(View.VISIBLE);
     }
 
     public void setAvvisiUtente(ArrayList<Avviso> avvisiUtenteNuovi, ArrayList<Avviso> avvisiUtenteLetti, ArrayList<Avviso> avvisiUtenteNascosti)

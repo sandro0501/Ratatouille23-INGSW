@@ -49,6 +49,7 @@ public class PresenterBacheca extends PresenterBase {
 
     public void setAvvisi(BachecaFragment context, Utente utente)
     {
+        PresenterBacheca.getInstance().setUtentiCorrenti(utente.getIdRistorante(), context);
         daoBacheca.getAvvisi(utente, context,new DAOAvvisoImpl.BachecaCallbacks() {
             @Override
             public void onCaricamentoAvvisi(ArrayList<Avviso> avvisiUtenteNuovi, ArrayList<Avviso> avvisiUtenteLetti, ArrayList<Avviso> avvisiutenteNascosti) {
@@ -70,7 +71,7 @@ public class PresenterBacheca extends PresenterBase {
             public void onCaricamentoAvvisi(ArrayList<Avviso> avvisiUtenteNuovi, ArrayList<Avviso> avvisiUtenteLetti, ArrayList<Avviso> avvisiutenteNascosti){ }
 
             public void onAggiuntaAvviso(Boolean added) {
-                if(added)   context.mostraConfermaCreazioneAvvisoDialog();
+                if (added) context.mostraConfermaCreazioneAvvisoDialog();
                 else context.mostraErroreCreazioneAvvisoDialog();
             }
             public void onVisualizzaAvviso(){ }
