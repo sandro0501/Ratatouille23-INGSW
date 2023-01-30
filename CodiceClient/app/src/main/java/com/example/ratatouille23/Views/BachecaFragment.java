@@ -43,7 +43,6 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
     private TextView textViewNumeroAvvisi;
     private BachecaFragment context = this;
     private ArrayList<Utente> utentiCorrenti = new ArrayList<Utente>();
-    private boolean modalitaVediNascosti = false;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -135,16 +134,8 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
         bottoneOcchioAvvisi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (modalitaVediNascosti) {
-                    modalitaVediNascosti = false;
-                    Log.i("NON VEDI", "");
-                    recyclerView.setAdapter(avvisiVisibiliAdapter);
-                }
-                else {
-                    modalitaVediNascosti = true;
-                    Log.i("VEDI", "");
-                    recyclerView.setAdapter(tuttiAvvisiAdapter);
-                }
+                recyclerView.setAdapter(tuttiAvvisiAdapter);
+                bottoneOcchioAvvisi.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -210,10 +201,6 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
     {
         avvisiVisibili.clear();
         tuttiAvvisi.clear();
-
-        Log.i("NUOVI", avvisiUtenteNuovi.toString());
-        Log.i("LETTI", avvisiUtenteLetti.toString());
-        Log.i("NASCOSTI", avvisiUtenteNascosti.toString());
 
         for (Avviso avviso : avvisiUtenteNuovi){
             avvisiVisibili.add(new Bacheca(avviso, true, false));
