@@ -10,6 +10,7 @@ import com.example.ratatouille23.DAO.DAOUtenteImpl;
 import com.example.ratatouille23.Handlers.AggiornaAvvisoHandler;
 import com.example.ratatouille23.Handlers.InserisciAvvisoHandler;
 import com.example.ratatouille23.Models.Avviso;
+import com.example.ratatouille23.Models.Bacheca;
 import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Views.BachecaFragment;
@@ -49,7 +50,6 @@ public class PresenterBacheca extends PresenterBase {
 
     public void setAvvisi(BachecaFragment context, Utente utente)
     {
-        PresenterBacheca.getInstance().setUtentiCorrenti(utente.getIdRistorante(), context);
         daoBacheca.getAvvisi(utente, context,new DAOAvvisoImpl.BachecaCallbacks() {
             @Override
             public void onCaricamentoAvvisi(ArrayList<Avviso> avvisiUtenteNuovi, ArrayList<Avviso> avvisiUtenteLetti, ArrayList<Avviso> avvisiutenteNascosti) {
@@ -109,7 +109,7 @@ public class PresenterBacheca extends PresenterBase {
         });
     }
 
-    public void nascondiAvviso(AggiornaAvvisoHandler handler)
+    public void nascondiAvviso(BachecaFragment context, AggiornaAvvisoHandler handler)
     {
         daoBacheca.nascondiAvviso(handler, new DAOAvvisoImpl.BachecaCallbacks(){
             public void onCaricamentoAvvisi(ArrayList<Avviso> avvisiUtenteNuovi, ArrayList<Avviso> avvisiUtenteLetti, ArrayList<Avviso> avvisiutenteNascosti){}
@@ -120,7 +120,7 @@ public class PresenterBacheca extends PresenterBase {
 
             public void onNascondiAvviso()
             {
-                //TODO
+                PresenterBacheca.getInstance().setAvvisi(context, handler.utente);
             }
 
         });

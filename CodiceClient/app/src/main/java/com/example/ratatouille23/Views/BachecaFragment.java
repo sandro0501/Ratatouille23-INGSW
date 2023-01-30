@@ -1,18 +1,15 @@
 package com.example.ratatouille23.Views;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.TypedValue;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +24,6 @@ import com.example.ratatouille23.R;
 
 import com.example.ratatouille23.Models.Avviso;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -41,10 +37,13 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
     private AvvisoRecyclerViewAdapter avvisiVisibiliAdapter;
     private AvvisoRecyclerViewAdapter tuttiAvvisiAdapter;
     private ImageView bottoneCreazioneAvviso;
+    private ImageView bottoneReloadAvvisi;
+    private ImageView bottoneOcchioAvvisi;
     private Utente utenteCorrente;
     private TextView textViewNumeroAvvisi;
     private BachecaFragment context = this;
     private ArrayList<Utente> utentiCorrenti = new ArrayList<Utente>();
+    private boolean modalitaVediNascosti = false;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -63,6 +62,7 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
     {
         utentiCorrenti.clear();
         utentiCorrenti.addAll(utenti);
+        PresenterBacheca.getInstance().setAvvisi(context, utenteCorrente);
     }
 
     public ArrayList<Utente> getUtentiCorrenti()
@@ -92,7 +92,7 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
     @Override
     public void onStart() {
         super.onStart();
-        PresenterBacheca.getInstance().setAvvisi(context, utenteCorrente);
+        PresenterBacheca.getInstance().setUtentiCorrenti(utenteCorrente.getIdRistorante(), context);
         //Devi estrarre gli avvisi dell'utente
         PresenterBacheca.getInstance().setBachecaAttiva(true);
         setNumeroAvvisiDaLeggere();
@@ -111,6 +111,8 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
         View view = inflater.inflate(R.layout.fragment_bacheca, container, false);
         textViewNumeroAvvisi = view.findViewById(R.id.textViewNumeroAvvisi);
         bottoneCreazioneAvviso = (ImageView) view.findViewById(R.id.imageViewIconAddAvviso);
+        bottoneReloadAvvisi = view.findViewById(R.id.imageViewIconReloadAvvisi);
+        bottoneOcchioAvvisi = view.findViewById(R.id.imageViewIconViewAvvisiNascosti);
         bottoneCreazioneAvviso.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -120,6 +122,29 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
                 intentFromBachecaToVCreazioneAvviso.putExtra("Utente",utenteCorrente);
                 getContext().startActivity(intentFromBachecaToVCreazioneAvviso);
 
+            }
+        });
+
+        bottoneReloadAvvisi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PresenterBacheca.getInstance().setAvvisi(BachecaFragment.this, utenteCorrente);
+            }
+        });
+
+        bottoneOcchioAvvisi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (modalitaVediNascosti) {
+                    modalitaVediNascosti = false;
+                    Log.i("NON VEDI", "");
+                    recyclerView.setAdapter(avvisiVisibiliAdapter);
+                }
+                else {
+                    modalitaVediNascosti = true;
+                    Log.i("VEDI", "");
+                    recyclerView.setAdapter(tuttiAvvisiAdapter);
+                }
             }
         });
 
@@ -137,13 +162,23 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
         recyclerView.setAdapter(avvisiVisibiliAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
     }
 
     @Override
     public void onAvvisoClicked(int posizioneAvviso) {
 
         visualizzaAvviso(posizioneAvviso);
+
+    }
+
+    @Override
+    public void onOcchioAvvisoClicked(Bacheca avvisoScelto) {
+
+        AggiornaAvvisoHandler handler = new AggiornaAvvisoHandler();
+        handler.avviso = avvisoScelto.getAvvisoAssociato();
+        handler.utente = utenteCorrente;
+        PresenterBacheca.getInstance().nascondiAvviso(BachecaFragment.this, handler);
+        Log.i("PROVA", "PROVA NASCOSTO");
 
     }
 
@@ -174,6 +209,11 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
     public void setAvvisiUtente(ArrayList<Avviso> avvisiUtenteNuovi, ArrayList<Avviso> avvisiUtenteLetti, ArrayList<Avviso> avvisiUtenteNascosti)
     {
         avvisiVisibili.clear();
+        tuttiAvvisi.clear();
+
+        Log.i("NUOVI", avvisiUtenteNuovi.toString());
+        Log.i("LETTI", avvisiUtenteLetti.toString());
+        Log.i("NASCOSTI", avvisiUtenteNascosti.toString());
 
         for (Avviso avviso : avvisiUtenteNuovi){
             avvisiVisibili.add(new Bacheca(avviso, true, false));
@@ -196,12 +236,16 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
             }
         });
 
+
         Collections.sort(tuttiAvvisi,new Comparator<Bacheca>() {
             public int compare (Bacheca a1, Bacheca a2)
             {
                 return a1.getAvvisoAssociato().getDataCreazione().compareTo(a2.getAvvisoAssociato().getDataCreazione());
             }
         });
+
+        Collections.reverse(avvisiVisibili);
+        Collections.reverse(tuttiAvvisi);
 
         avvisiVisibiliAdapter.notifyDataSetChanged();
         tuttiAvvisiAdapter.notifyDataSetChanged();

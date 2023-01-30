@@ -80,6 +80,15 @@ public class AvvisoRecyclerViewAdapter extends RecyclerView.Adapter<AvvisoRecycl
             holder.imageViewNascondiAvviso.setVisibility(View.INVISIBLE);
         }
 
+        holder.imageViewNascondiAvviso.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (recyclerViewInterfaceAvviso != null) {
+                        recyclerViewInterfaceAvviso.onOcchioAvvisoClicked(avvisi.get(holder.getAdapterPosition()));
+                }
+            }
+        });
+
     }
 
     @Override
@@ -116,6 +125,7 @@ public class AvvisoRecyclerViewAdapter extends RecyclerView.Adapter<AvvisoRecycl
                     }
                 }
             });
+
         }
     }
 }

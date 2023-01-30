@@ -60,23 +60,12 @@ public class CreazioneAvvisoActivity extends AppCompatActivity {
     }
 
     public void mostraConfermaCreazioneAvvisoDialog() {
-        /*
-        AlertDialog.Builder alertConfermaCreazioneAvvisoBuilder = new AlertDialog.Builder(CreazioneAvvisoActivity.this);
-        alertConfermaCreazioneAvvisoBuilder.setMessage("Avviso creato e inviato correttamente!");
-        alertConfermaCreazioneAvvisoBuilder.setCancelable(true);
-        AlertDialog alertConfermaCreazioneAvviso = alertConfermaCreazioneAvvisoBuilder.create();
-        alertConfermaCreazioneAvviso.show(); */
         PresenterBacheca.getInstance().mostraAlert(CreazioneAvvisoActivity.this, "Avviso creato!", "Avviso creato ed inviato correttamente");
+        finish();
 
     }
 
     public void mostraErroreCreazioneAvvisoDialog() {
-        /*
-        AlertDialog.Builder alertConfermaCreazioneAvvisoBuilder = new AlertDialog.Builder(CreazioneAvvisoActivity.this);
-        alertConfermaCreazioneAvvisoBuilder.setMessage("Avviso creato e inviato correttamente!");
-        alertConfermaCreazioneAvvisoBuilder.setCancelable(true);
-        AlertDialog alertConfermaCreazioneAvviso = alertConfermaCreazioneAvvisoBuilder.create();
-        alertConfermaCreazioneAvviso.show(); */
         PresenterBacheca.getInstance().mostraAlert(CreazioneAvvisoActivity.this, "Errore!", "C'e stato un errore durante la creazione dell'avviso, si controlli che i campi non siano vuoti e si riprovi.");
     }
 }

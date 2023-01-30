@@ -153,6 +153,7 @@ public class ElementoMenuRecyclerViewAdapter extends RecyclerView.Adapter<Elemen
             listaIconeAllergeni.add(iconaLattosio);
             listaIconeAllergeni.add(iconaSedano);
             listaIconeAllergeni.add(iconaSoia);
+            listaIconeAllergeni.add(iconaNoci);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -151,28 +151,29 @@ public class RistoranteFragment extends Fragment {
         textViewIndirizzo.setText(ristoranteCorrente.getIndirizzo());
         textViewCitta.setText(ristoranteCorrente.getCitta());
         textViewTuristico.setText((ristoranteCorrente.isTuristico() ? "Il tuo ristorante è in una località turistica!": "Il tuo ristorante non è in una località turistica!"));
-        if (ristoranteCorrente.getUrlFoto() != null && !ristoranteCorrente.getUrlFoto().isEmpty()) {
+        if ((ristoranteCorrente.getUrlFoto() != null) && (!ristoranteCorrente.getUrlFoto().isEmpty())) {
             String pathFoto = ristoranteCorrente.getUrlFoto();
-
-            AtomicBoolean fotoPresente = new AtomicBoolean(false);
 
             Amplify.Storage.list(pathFoto,
                     result -> {
-                        if (!result.getItems().isEmpty()) fotoPresente.set(true);
+                        if (!result.getItems().isEmpty())
+                            setLogoDownload(pathFoto);
                     },
                     error -> Log.e("MyAmplifyApp", "List failure", error)
             );
-
-            if (fotoPresente.get())
-                Amplify.Storage.downloadFile(
-                    pathFoto,
-                    new File(fragmentCorrente.getContext().getFilesDir() + "/" + pathFoto),
-                    result -> setImmagine(result.getFile(), pathFoto),
-                    error -> PresenterRistorante.getInstance().mostraAlert(getContext(), "Errore!", "L'immagine non è stata scaricata correttamente, riprovare")
-
-                );
         }
+
         ((BachecaActivity)getActivity()).setNomeRistorante(ristoranteCorrente);
+    }
+
+    private void setLogoDownload(String path) {
+        Amplify.Storage.downloadFile(
+                path,
+                new File(fragmentCorrente.getContext().getFilesDir() + "/" + path),
+                result -> setImmagine(result.getFile(), path),
+                error -> PresenterRistorante.getInstance().mostraAlert(RistoranteFragment.this.getContext(), "Errore!", "L'immagine non è stata scaricata correttamente, riprovare")
+
+        );
     }
 
 }

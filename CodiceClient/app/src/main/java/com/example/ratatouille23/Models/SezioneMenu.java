@@ -54,4 +54,10 @@ public class SezioneMenu implements Serializable {
     public void setPosizione(int posizione) {
         this.posizione = posizione;
     }
+
+    @Override
+    public String toString() {
+        return titolo;
+    }
+
 }

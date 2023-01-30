@@ -231,7 +231,7 @@ public class DAOAvvisoImpl implements DAOAvviso
                 {
                     try
                     {
-                        JSONObject body = new JSONObject(response.body().toString());
+                        JSONObject body = new JSONObject(response.body().string());
                         if(body.getString("messaggio").equals("Tutto bene"))
                             callback.onNascondiAvviso();
                     }

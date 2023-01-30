@@ -16,12 +16,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -31,7 +33,9 @@ import com.example.ratatouille23.Models.Allergene;
 import com.example.ratatouille23.Models.Elemento;
 import com.example.ratatouille23.Models.Preparazione;
 import com.example.ratatouille23.Models.Prodotto;
+import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Models.SezioneMenu;
+import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Models.listaAllergeni;
 import com.example.ratatouille23.Presenters.PresenterMenu;
 import com.example.ratatouille23.R;
@@ -70,6 +74,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
     private Button bottoneConferma;
     private Button bottoneAnnulla;
 
+    private View fragmentCorrente;
 
     private RecyclerView recyclerViewMenu;
     private SezioneMenuRecyclerViewAdapter adapterSezioni;
@@ -82,7 +87,13 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
     private AlertDialog.Builder builderDialogElemento;
     private Dialog dialogElemento;
 
+    private Utente utenteCorrente;
+    private Ristorante ristoranteCorrente;
+
     private boolean modalitaEliminazione = false;
+    private boolean primoAccessoSpinner;
+
+    private CheckBox checkboxPesce, checkboxGlutine, checkboxUova, checkboxNoci, checkboxArachidi, checkboxSolfiti, checkboxCrostacei, checkboxMolluschi, checkboxLupini, checkboxSenape, checkboxSesamo, checkboxLattosio, checkboxSedano, checkboxSoia;
 
     public MenuFragment() {
         // Required empty public constructor
@@ -145,8 +156,8 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View fragmentCorrente = inflater.inflate(R.layout.fragment_menu, container, false);
-
+        fragmentCorrente = inflater.inflate(R.layout.fragment_menu, container, false);
+        primoAccessoSpinner = true;
         return fragmentCorrente;
     }
 
@@ -166,6 +177,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         adapterSezioni.notifyDataSetChanged();
 
         String sceltaElementoSezione[] = {"Aggiungi una sezione", "Aggiungi un piatto", "Placeholder"};
+
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(view.getContext(), R.layout.spinner_menu_layout, sceltaElementoSezione) {
             @Override
             public int getCount() {
@@ -175,7 +187,11 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
 
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_item_layout);
         spinnerSceltaAggiunta.setAdapter(spinnerAdapter);
-        spinnerSceltaAggiunta.setSelection(2);
+        spinnerSceltaAggiunta.setSelection(2, false);
+        Log.i("CREATE", "CREATE");
+
+        utenteCorrente = (Utente)getActivity().getIntent().getSerializableExtra("Utente");
+        ristoranteCorrente = utenteCorrente.getIdRistorante();
 
         iconaCestino.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,18 +207,23 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
 
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (spinnerAdapter.getItem(i).equals("Aggiungi una sezione")) {
-                    SezioneMenu nuovaSezione = new SezioneMenu("Nuova sezione", listaSezioni.size());
-                    listaSezioni.add(nuovaSezione);
-                    adapterSezioni.notifyDataSetChanged();
-                    spinnerSceltaAggiunta.setSelection(2);
-                }
-                else if (spinnerAdapter.getItem(i).equals("Aggiungi un piatto")){
-                    mostraDialogAggiuntaElemento();
-                    spinnerSceltaAggiunta.setSelection(2);
+
+                if (primoAccessoSpinner) {
+                    primoAccessoSpinner = false;
+                    spinnerSceltaAggiunta.setSelection(2, false);
                 }
                 else {
-                    spinnerSceltaAggiunta.setSelection(2);
+
+                    if (spinnerAdapter.getItem(i).equals("Aggiungi una sezione")) {
+                        SezioneMenu nuovaSezione = new SezioneMenu("Nuova sezione", listaSezioni.size());
+                        listaSezioni.add(nuovaSezione);
+                        adapterSezioni.notifyDataSetChanged();
+                        spinnerSceltaAggiunta.setSelection(2, false);
+
+                    } else if (spinnerAdapter.getItem(i).equals("Aggiungi un piatto")) {
+                        mostraDialogAggiuntaElemento();
+                        spinnerSceltaAggiunta.setSelection(2, false);
+                    }
                 }
             }
 
@@ -218,6 +239,12 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
 
     }
 
+    @Override
+    public void onStart() {
+        PresenterMenu.getInstance().aggiornaDatiRistorante(MenuFragment.this, ristoranteCorrente.getIdRistorante());
+        super.onStart();
+    }
+
     private void mostraDialogAggiuntaElemento() {
         final View viewAggiungiElemento = getLayoutInflater().inflate(R.layout.layout_aggiungi_elemento_dialog, null);
 
@@ -225,12 +252,100 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         builderDialogElemento.setView(viewAggiungiElemento);
         builderDialogElemento.setCancelable(true);
 
+        ArrayList<CheckBox> checkBoxAllergeni = new ArrayList<>();
+
+        checkboxPesce = viewAggiungiElemento.findViewById(R.id.checkBoxAllergenePesce);
+        checkboxGlutine = viewAggiungiElemento.findViewById(R.id.checkBoxAllergeneGlutine);
+        checkboxUova = viewAggiungiElemento.findViewById(R.id.checkBoxAllergeneUova);
+        checkboxNoci = viewAggiungiElemento.findViewById(R.id.checkBoxAllergeneNoci);
+        checkboxArachidi = viewAggiungiElemento.findViewById(R.id.checkBoxAllergeneArachidi);
+        checkboxSolfiti = viewAggiungiElemento.findViewById(R.id.checkBoxAllergeneSolfiti);
+        checkboxCrostacei = viewAggiungiElemento.findViewById(R.id.checkBoxAllergeneCrostacei);
+        checkboxMolluschi = viewAggiungiElemento.findViewById(R.id.checkBoxAllergeneFruttiDiMare);
+        checkboxLupini = viewAggiungiElemento.findViewById(R.id.checkBoxAllergeneLupini);
+        checkboxSenape = viewAggiungiElemento.findViewById(R.id.checkBoxAllergeneMostarda);
+        checkboxSesamo = viewAggiungiElemento.findViewById(R.id.checkBoxAllergeneSesamo);
+        checkboxLattosio = viewAggiungiElemento.findViewById(R.id.checkBoxAllergeneLatte);
+        checkboxSedano = viewAggiungiElemento.findViewById(R.id.checkBoxAllergeneSedano);
+        checkboxSoia = viewAggiungiElemento.findViewById(R.id.checkBoxAllergeneSoia);
+
+        checkboxPesce.setTag(listaAllergeni.Pesce);
+        checkboxGlutine.setTag(listaAllergeni.Glutine);
+        checkboxUova.setTag(listaAllergeni.Uova);
+        checkboxNoci.setTag(listaAllergeni.Noci);
+        checkboxArachidi.setTag(listaAllergeni.Arachidi);
+        checkboxSolfiti.setTag(listaAllergeni.Solfiti);
+        checkboxCrostacei.setTag(listaAllergeni.Crostacei);
+        checkboxMolluschi.setTag(listaAllergeni.Molluschi);
+        checkboxLupini.setTag(listaAllergeni.Lupini);
+        checkboxSenape.setTag(listaAllergeni.Senape);
+        checkboxSesamo.setTag(listaAllergeni.Sesamo);
+        checkboxLattosio.setTag(listaAllergeni.Lattosio);
+        checkboxSedano.setTag(listaAllergeni.Sedano);
+        checkboxSoia.setTag(listaAllergeni.Soia);
+
+        checkBoxAllergeni.add(checkboxPesce);
+        checkBoxAllergeni.add(checkboxMolluschi);
+        checkBoxAllergeni.add(checkboxArachidi);
+        checkBoxAllergeni.add(checkboxGlutine);
+        checkBoxAllergeni.add(checkboxUova);
+        checkBoxAllergeni.add(checkboxSolfiti);
+        checkBoxAllergeni.add(checkboxCrostacei);
+        checkBoxAllergeni.add(checkboxLupini);
+        checkBoxAllergeni.add(checkboxSenape);
+        checkBoxAllergeni.add(checkboxSesamo);
+        checkBoxAllergeni.add(checkboxLattosio);
+        checkBoxAllergeni.add(checkboxSedano);
+        checkBoxAllergeni.add(checkboxSoia);
+        checkBoxAllergeni.add(checkboxNoci);
+
+        titoloDialog = (TextView) viewAggiungiElemento.findViewById(R.id.textViewAggiungiElementoTitolo);
+        titoloPrincipaleElementoEditText = (EditText) viewAggiungiElemento.findViewById(R.id.EditTextTitoloPrincipaleElemento);
+        titoloSecondarioElementoEditText = (EditText) viewAggiungiElemento.findViewById(R.id.EditTextTitoloSecondarioElemento);
+        descrizionePrincipaleElementoEditText = (EditText) viewAggiungiElemento.findViewById(R.id.editTexDescrizionePrincipaleElemento);
+        descrizioneSecondariaElementoEditText = (EditText) viewAggiungiElemento.findViewById(R.id.editTextDescrizioneSecondariaElemento);
+        prezzoElementoEditText = (EditText) viewAggiungiElemento.findViewById(R.id.editTextCostoElemento);
+        sezioneElementoSpinner = (Spinner) viewAggiungiElemento.findViewById(R.id.spinnerSezioneElemento);
         bottoneConferma = (Button) viewAggiungiElemento.findViewById(R.id.bottoneAggiungiModificaElemento);
         bottoneAnnulla = (Button) viewAggiungiElemento.findViewById(R.id.bottoneAnnullaElemento);
+
+        bottoneConferma = (Button) viewAggiungiElemento.findViewById(R.id.bottoneAggiungiModificaElemento);
+        bottoneAnnulla = (Button) viewAggiungiElemento.findViewById(R.id.bottoneAnnullaElemento);
+
+        if(!ristoranteCorrente.isTuristico()){
+            titoloSecondarioElementoEditText.setEnabled(false);
+            titoloSecondarioElementoEditText.setHint("Per impostare un titolo secondario, rendere il ristorante turistico");
+            descrizioneSecondariaElementoEditText.setEnabled(false);
+            descrizioneSecondariaElementoEditText.setHint("Per impostare una descrizione secondaria, rendere il ristorante turistico");
+        } else {
+            titoloSecondarioElementoEditText.setEnabled(true);
+            descrizioneSecondariaElementoEditText.setEnabled(true);
+        }
+
+        ArrayAdapter<SezioneMenu> adapterSpinner = new ArrayAdapter<SezioneMenu>(getContext(), R.layout.spinner_layout, listaSezioni);
+        adapterSpinner.setDropDownViewResource(R.layout.spinner_item_layout);
+        sezioneElementoSpinner.setAdapter(adapterSpinner);
+
 
         bottoneConferma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SezioneMenu sezioneScelta = (SezioneMenu)spinnerSceltaAggiunta.getSelectedItem();
+                Elemento piattoDaAggiungere = new Elemento(
+                        titoloPrincipaleElementoEditText.getText().toString(),
+                        descrizionePrincipaleElementoEditText.getText().toString(),
+                        Double.parseDouble(prezzoElementoEditText.getText().toString()),
+                        sezioneScelta.getAppartenente().size()
+                        );
+                piattoDaAggiungere.setAppartiene(sezioneScelta);
+                ArrayList<Allergene> allergeniPiattoCorrente = new ArrayList<>();
+                for (CheckBox checkBox : checkBoxAllergeni) {
+                    if (checkBox.isChecked()) {
+                        allergeniPiattoCorrente.add(new Allergene((listaAllergeni) checkBox.getTag()));
+                    }
+                }
+                piattoDaAggiungere.setPresenta(allergeniPiattoCorrente);
+                //INVIA PIATTO FORMATO (piattoDaAggiungere)
                 PresenterMenu.getInstance().mostraAlert(getContext(), "Piatto aggiunto", "Piatto aggiunto correttamente al menù");
                 dialogElemento.dismiss();
             }
@@ -380,6 +495,53 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         builderDialogElemento.setView(viewModificaElemento);
         builderDialogElemento.setCancelable(true);
 
+        ArrayList<CheckBox> checkBoxAllergeni = new ArrayList<>();
+
+        checkboxPesce = viewModificaElemento.findViewById(R.id.checkBoxAllergenePesce);
+        checkboxGlutine = viewModificaElemento.findViewById(R.id.checkBoxAllergeneGlutine);
+        checkboxUova = viewModificaElemento.findViewById(R.id.checkBoxAllergeneUova);
+        checkboxNoci = viewModificaElemento.findViewById(R.id.checkBoxAllergeneNoci);
+        checkboxArachidi = viewModificaElemento.findViewById(R.id.checkBoxAllergeneArachidi);
+        checkboxSolfiti = viewModificaElemento.findViewById(R.id.checkBoxAllergeneSolfiti);
+        checkboxCrostacei = viewModificaElemento.findViewById(R.id.checkBoxAllergeneCrostacei);
+        checkboxMolluschi = viewModificaElemento.findViewById(R.id.checkBoxAllergeneFruttiDiMare);
+        checkboxLupini = viewModificaElemento.findViewById(R.id.checkBoxAllergeneLupini);
+        checkboxSenape = viewModificaElemento.findViewById(R.id.checkBoxAllergeneMostarda);
+        checkboxSesamo = viewModificaElemento.findViewById(R.id.checkBoxAllergeneSesamo);
+        checkboxLattosio = viewModificaElemento.findViewById(R.id.checkBoxAllergeneLatte);
+        checkboxSedano = viewModificaElemento.findViewById(R.id.checkBoxAllergeneSedano);
+        checkboxSoia = viewModificaElemento.findViewById(R.id.checkBoxAllergeneSoia);
+
+        checkboxPesce.setTag(listaAllergeni.Pesce);
+        checkboxGlutine.setTag(listaAllergeni.Glutine);
+        checkboxUova.setTag(listaAllergeni.Uova);
+        checkboxNoci.setTag(listaAllergeni.Noci);
+        checkboxArachidi.setTag(listaAllergeni.Arachidi);
+        checkboxSolfiti.setTag(listaAllergeni.Solfiti);
+        checkboxCrostacei.setTag(listaAllergeni.Crostacei);
+        checkboxMolluschi.setTag(listaAllergeni.Molluschi);
+        checkboxLupini.setTag(listaAllergeni.Lupini);
+        checkboxSenape.setTag(listaAllergeni.Senape);
+        checkboxSesamo.setTag(listaAllergeni.Sesamo);
+        checkboxLattosio.setTag(listaAllergeni.Lattosio);
+        checkboxSedano.setTag(listaAllergeni.Sedano);
+        checkboxSoia.setTag(listaAllergeni.Soia);
+
+        checkBoxAllergeni.add(checkboxPesce);
+        checkBoxAllergeni.add(checkboxMolluschi);
+        checkBoxAllergeni.add(checkboxArachidi);
+        checkBoxAllergeni.add(checkboxGlutine);
+        checkBoxAllergeni.add(checkboxUova);
+        checkBoxAllergeni.add(checkboxSolfiti);
+        checkBoxAllergeni.add(checkboxCrostacei);
+        checkBoxAllergeni.add(checkboxLupini);
+        checkBoxAllergeni.add(checkboxSenape);
+        checkBoxAllergeni.add(checkboxSesamo);
+        checkBoxAllergeni.add(checkboxLattosio);
+        checkBoxAllergeni.add(checkboxSedano);
+        checkBoxAllergeni.add(checkboxSoia);
+        checkBoxAllergeni.add(checkboxNoci);
+
         titoloDialog = (TextView) viewModificaElemento.findViewById(R.id.textViewAggiungiElementoTitolo);
         titoloDialog.setText("Modifica piatto del menù");
 
@@ -387,21 +549,23 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         titoloPrincipaleElementoEditText.append(elementoDaModificare.getDenominazionePrincipale());
 
         titoloSecondarioElementoEditText = (EditText) viewModificaElemento.findViewById(R.id.EditTextTitoloSecondarioElemento);
-        if(elementoDaModificare.getDenominazioneSecondaria().isEmpty()){
-            titoloSecondarioElementoEditText.setEnabled(false);
-            titoloSecondarioElementoEditText.setHint("Il piatto non presenta titolo secondario");
-        } else {
-            titoloSecondarioElementoEditText.append(elementoDaModificare.getDenominazioneSecondaria());
-        }
 
         descrizionePrincipaleElementoEditText = (EditText) viewModificaElemento.findViewById(R.id.editTexDescrizionePrincipaleElemento);
         descrizionePrincipaleElementoEditText.append(elementoDaModificare.getDescrizionePrincipale());
 
         descrizioneSecondariaElementoEditText = (EditText) viewModificaElemento.findViewById(R.id.editTextDescrizioneSecondariaElemento);
-        if(elementoDaModificare.getDenominazioneSecondaria().isEmpty()){
+
+
+
+        if(!ristoranteCorrente.isTuristico()){
+            titoloSecondarioElementoEditText.setEnabled(false);
+            titoloSecondarioElementoEditText.setHint("Per impostare un titolo secondario, rendere il ristorante turistico");
             descrizioneSecondariaElementoEditText.setEnabled(false);
-            descrizioneSecondariaElementoEditText.setHint("Il piatto non presenta descrizione secondaria");
+            descrizioneSecondariaElementoEditText.setHint("Per impostare una descrizione secondaria, rendere il ristorante turistico");
         } else {
+            titoloSecondarioElementoEditText.setEnabled(true);
+            descrizioneSecondariaElementoEditText.setEnabled(true);
+            titoloSecondarioElementoEditText.append(elementoDaModificare.getDenominazioneSecondaria());
             descrizioneSecondariaElementoEditText.append(elementoDaModificare.getDenominazioneSecondaria());
         }
 
@@ -409,9 +573,19 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         prezzoElementoEditText.append(String.valueOf(elementoDaModificare.getCosto()));
 
         sezioneElementoSpinner = (Spinner) viewModificaElemento.findViewById(R.id.spinnerSezioneElemento);
-        //get sezione scelta
 
-        //checkbox checckate?
+        ArrayAdapter<SezioneMenu> adapterSpinner = new ArrayAdapter<SezioneMenu>(getContext(), R.layout.spinner_layout, listaSezioni);
+        adapterSpinner.setDropDownViewResource(R.layout.spinner_item_layout);
+        sezioneElementoSpinner.setAdapter(adapterSpinner);
+
+        sezioneElementoSpinner.setSelection(adapterSpinner.getPosition(elementoDaModificare.getAppartiene()));
+
+        for (CheckBox checkBox : checkBoxAllergeni) {
+            for (Allergene allergene : elementoDaModificare.getPresenta()) {
+                if (allergene.getNome().equals(checkBox.getTag()))
+                    checkBox.setChecked(true);
+            }
+        }
 
         bottoneConferma = (Button) viewModificaElemento.findViewById(R.id.bottoneAggiungiModificaElemento);
         bottoneConferma.setText("Modifica");
@@ -421,7 +595,23 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         bottoneConferma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //eventuali controlli sulle edittext
+                elementoDaModificare.setDenominazionePrincipale(titoloPrincipaleElementoEditText.getText().toString());
+                elementoDaModificare.setDescrizionePrincipale(descrizionePrincipaleElementoEditText.getText().toString());
+                if (ristoranteCorrente.isTuristico()) {
+                    elementoDaModificare.setDenominazioneSecondaria(titoloSecondarioElementoEditText.getText().toString());
+                    elementoDaModificare.setDescrizioneSecondaria(descrizioneSecondariaElementoEditText.getText().toString());
+                }
+                elementoDaModificare.setCosto(Double.parseDouble(prezzoElementoEditText.getText().toString()));
+                elementoDaModificare.setAppartiene((SezioneMenu) spinnerSceltaAggiunta.getSelectedItem());
+
+                ArrayList<Allergene> allergeniPiattoCorrente = new ArrayList<>();
+                for (CheckBox checkBox : checkBoxAllergeni) {
+                    if (checkBox.isChecked()) {
+                        allergeniPiattoCorrente.add(new Allergene((listaAllergeni) checkBox.getTag()));
+                    }
+                }
+                elementoDaModificare.setPresenta(allergeniPiattoCorrente);
+
                 PresenterMenu.getInstance().mostraAlert(getContext(), "Piatto modificato", "Piatto modificato correttamente");
                 dialogElemento.dismiss();
             }
@@ -474,4 +664,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
     }
 
 
+    public void setRistoranteCorrente(Ristorante ristorante) {
+        ristoranteCorrente = ristorante;
+    }
 }

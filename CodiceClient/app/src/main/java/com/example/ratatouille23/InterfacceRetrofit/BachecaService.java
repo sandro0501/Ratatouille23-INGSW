@@ -23,7 +23,7 @@ public interface BachecaService {
             @Body AggiornaAvvisoHandler handle
     );
 
-    @PUT("bacheca/visibile")
+    @PUT("bacheca/visible")
     Call<ResponseBody> nascondiAvviso(
             @Body AggiornaAvvisoHandler handle
     );
