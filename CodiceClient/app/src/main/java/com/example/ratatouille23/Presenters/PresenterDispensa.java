@@ -6,6 +6,7 @@ import com.example.ratatouille23.DAO.DAOFactory;
 import com.example.ratatouille23.DAO.DAOProdotto;
 import com.example.ratatouille23.DAO.DAOProdottoImpl;
 import com.example.ratatouille23.Models.Prodotto;
+import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Views.DispensaFragment;
 
 import java.util.ArrayList;
@@ -53,5 +54,27 @@ public class PresenterDispensa extends PresenterBase {
             }
         });
 
+    }
+
+    public void AggiungiProdottoInDispensa(DispensaFragment context, Prodotto prodottoAggiunto){
+        daoProdotto.aggiungiProdotto(prodottoAggiunto, new DAOProdottoImpl.AggiuntaProdottoCallbacks() {
+            @Override
+            public void onAggiuntaProdotto(Boolean isAggiunto) {
+                if(isAggiunto){
+                    context.mostraDialogConfermaInserimentoProdotto();
+                } else {
+                    context.mostraDialogErroreInserimentoProdotto();
+                }
+            }
+        });
+    }
+
+    public void ottieniDispensaDaRistorante(DispensaFragment context, Ristorante ristorante){
+        daoProdotto.getDispensa(ristorante, new DAOProdottoImpl.OttenimentoDispensaCallbacks() {
+            @Override
+            public void onRichiestaDispensa(ArrayList<Prodotto> listaProdotti) {
+                context.riempiDispensa(listaProdotti);
+            }
+        });
     }
 }
