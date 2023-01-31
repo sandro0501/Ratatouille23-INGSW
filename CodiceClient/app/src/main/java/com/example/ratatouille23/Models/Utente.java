@@ -12,7 +12,6 @@ public class Utente implements Serializable {
     private String nome;
     private String cognome;
     private String email;
-    private String ruolo;
     private ArrayList<Bacheca> bacheca = new ArrayList<>();
     private Ristorante idRistorante;
 
