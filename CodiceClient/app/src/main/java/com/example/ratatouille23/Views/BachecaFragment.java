@@ -34,7 +34,7 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
     private ArrayList<Bacheca> avvisiVisibili = new ArrayList<>();
     private ArrayList<Bacheca> tuttiAvvisi = new ArrayList<>();
     private RecyclerView recyclerView;
-    private AvvisoRecyclerViewAdapter avvisiVisibiliAdapter;
+    private AvvisoRecyclerViewAdapter   avvisiVisibiliAdapter;
     private AvvisoRecyclerViewAdapter tuttiAvvisiAdapter;
     private ImageView bottoneCreazioneAvviso;
     private ImageView bottoneReloadAvvisi;

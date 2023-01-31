@@ -16,9 +16,9 @@ public class ServiceSezioneMenu {
 	@Autowired
 	private RepositorySezioneMenu repository;
 
-	public ArrayList<SezioneMenu> findByIdRistorante(Ristorante ristorante) {
+	public ArrayList<SezioneMenu> findByIdRistorante(int ristorante) {
 		
-		return repository.findByIdRistorante(ristorante.getIdRistorante());
+		return repository.findByIdRistorante(ristorante);
 	}
 
 	public void save(SezioneMenu sezione) 

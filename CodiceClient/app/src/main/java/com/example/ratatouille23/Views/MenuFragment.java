@@ -242,6 +242,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
     @Override
     public void onStart() {
         PresenterMenu.getInstance().aggiornaDatiRistorante(MenuFragment.this, ristoranteCorrente.getIdRistorante());
+        PresenterMenu.getInstance().estraiMenu(this, ristoranteCorrente);
         super.onStart();
     }
 
@@ -661,6 +662,13 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         listaElementiSelezionati.clear();
         for (CardView card : listaCardElementiSelezionati) card.setBackgroundColor(Color.parseColor("#FFFFFF"));
         listaCardElementiSelezionati.clear();
+    }
+
+
+    public void setListaSezioni(ArrayList<SezioneMenu> listaSezioni)
+    {
+        this.listaSezioni.clear();
+        this.listaSezioni.addAll(listaSezioni);
     }
 
 

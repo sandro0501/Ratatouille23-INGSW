@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,8 +51,8 @@ public class ControllerSezione {
 	
 	//Estraiamo tutte le sezioni e gli elementi delle sezioni, come anche tutte le preparazioni e tutti
 	//gli allergeni
-	@GetMapping("")
-	public ArrayList<MenuResponseHandler> estraiMenu(@RequestBody Ristorante ristorante)
+	@GetMapping("/{rid}")
+	public ArrayList<MenuResponseHandler> estraiMenu(@PathVariable("rid") int ristorante)
 	{
 		ArrayList<MenuResponseHandler> res = new ArrayList<MenuResponseHandler>();
 		for(SezioneMenu x : service.findByIdRistorante(ristorante))
@@ -72,7 +74,7 @@ public class ControllerSezione {
 	
 	//Questa viene chiamata dal client ogni volta che una sezione diventa vuota all'uscita dall'activity
 	//del menu. 
-	@DeleteMapping("")
+	@PatchMapping("")
 	public String delete(@RequestBody EliminaSezioniHandler handle)
 	{
 		ArrayList<SezioneMenu> sezioni = new ArrayList<SezioneMenu>();

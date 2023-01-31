@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,22 +27,26 @@ public class ControllerListaAllergeni {
 	private ServiceListaAllergeni service;
 	@Autowired
 	private ServiceAllergene serviceA;
+	
 	@PostMapping("")
-	public String save(@RequestBody HandleListaAllergeni handle)
+	public String save(@RequestBody ArrayList<HandleListaAllergeni> handle)
 	{
-		ListaAllergeni lista = new ListaAllergeni();
-		Allergene allergene = new Allergene();
-		Elemento elemento = new Elemento();
-		allergene.setIdAllergene(handle.idAllergene);
-		elemento.setIdElemento(handle.idElemento);
-		lista.setIdAllergene(allergene);
-		lista.setIdElemento(elemento);
 		serviceA.createIfNotThere();
-		service.save(lista);
+		for(int x = 0; x<handle.size(); x++)
+		{		
+			ListaAllergeni lista = new ListaAllergeni();
+			Allergene allergene = new Allergene();
+			Elemento elemento = new Elemento();
+			allergene.setIdAllergene(handle.get(x).idAllergene);
+			elemento.setIdElemento(handle.get(x).idElemento);
+			lista.setIdAllergene(allergene);
+			lista.setIdElemento(elemento);
+			service.save(lista);
+		}
 		return "Tutto bene";
 	}
 	
-	@DeleteMapping("")
+	@PatchMapping("")
 	public String delete(@RequestBody ArrayList<HandleListaAllergeni> handle)
 	{
 		

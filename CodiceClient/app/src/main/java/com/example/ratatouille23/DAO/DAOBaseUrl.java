@@ -3,6 +3,6 @@ package com.example.ratatouille23.DAO;
 public class DAOBaseUrl
 {
     public static String baseUrl (){
-            return "http://54.236.24.5:8080/";
+            return "http://100.26.247.69:8080/";
     }
 }

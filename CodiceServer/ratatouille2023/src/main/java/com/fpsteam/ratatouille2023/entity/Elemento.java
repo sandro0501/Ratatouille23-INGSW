@@ -44,6 +44,7 @@ public class Elemento {
 	@NotNull
 	@Min(0)
 	private int posizione;
+	//DEVI METTERE L'URL DELL'IMMAGINE
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name ="sezioneMenu")
 	private SezioneMenu sezioneMenu;

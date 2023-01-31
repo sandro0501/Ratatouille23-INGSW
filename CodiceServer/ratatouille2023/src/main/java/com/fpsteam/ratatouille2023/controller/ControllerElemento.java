@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,7 +47,7 @@ public class ControllerElemento {
 		
 	}
 
-	@DeleteMapping("")
+	@PatchMapping("")
 	public String delete(@RequestBody EliminaElementiHandler handle)
 	{
 		ArrayList<Elemento> elementi = new ArrayList<Elemento>();
