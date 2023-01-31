@@ -138,7 +138,6 @@ public class DAOAvvisoImpl implements DAOAvviso
                             avvisiNascosti.add(nuovo);
                         }
 
-
                         callback.onCaricamentoAvvisi(avvisiNuovi,avvisiLetti,avvisiNascosti);
                     }
                     catch (Exception e)

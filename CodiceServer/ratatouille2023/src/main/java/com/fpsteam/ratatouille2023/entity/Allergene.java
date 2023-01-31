@@ -67,8 +67,8 @@ public class Allergene {
 
 
 
-	public void setNome(Valid nome) {
-		this.nome = nome;
+	public void setNome(String nome) {
+		this.nome = Valid.valueOf(nome);
 	}
 
 	public Allergene(Valid v) {

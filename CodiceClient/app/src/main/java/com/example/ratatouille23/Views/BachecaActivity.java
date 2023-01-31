@@ -32,12 +32,14 @@ public class BachecaActivity extends AppCompatActivity {
     private Ristorante ristoranteCorrente;
     private ArrayList<Utente> utentiCurr = new ArrayList<Utente>();
 
+    Utente utenteCorrente;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bacheca);
 
-        Utente utenteCorrente = (Utente)getIntent().getSerializableExtra("Utente");
+        utenteCorrente = (Utente)getIntent().getSerializableExtra("Utente");
         ristoranteCorrente = utenteCorrente.getIdRistorante();
 
         textViewNomeRistorante = findViewById(R.id.textViewDenominazioneRistorante);
@@ -70,10 +72,9 @@ public class BachecaActivity extends AppCompatActivity {
         NavHostFragment hostFragment =(NavHostFragment)getSupportFragmentManager().findFragmentById(R.id.navHostFragment);
         NavController controllerMenu = hostFragment.getNavController();
         NavigationUI.setupWithNavController(menu, controllerMenu);
-        Utente u = UtenteFactory.getInstance().getNuovoUtente("Genoveffa", "Arcobaleno", "emailprova", "Amministratore", true);
 
         //simulazione login utente
-            if (u.getRuoloUtente().equals("Addetto alla cucina")){
+            if (utenteCorrente.getRuoloUtente().equals("Addetto alla cucina")){
                 MenuItem itemMenuGestioneRistorante = menu.getMenu().findItem(R.id.opzioneMenuGestisciRistorante);
                 itemMenuGestioneRistorante.setEnabled(false);
                 itemMenuGestioneRistorante.setVisible(false);
@@ -86,7 +87,7 @@ public class BachecaActivity extends AppCompatActivity {
                 itemMenuRegistraOrdini.setEnabled(false);
                 itemMenuRegistraOrdini.setVisible(false);
             }
-            else if (u.getRuoloUtente().equals("Addetto al servizio")){
+            else if (utenteCorrente.getRuoloUtente().equals("Addetto al servizio")){
                 MenuItem itemMenuGestioneRistorante = menu.getMenu().findItem(R.id.opzioneMenuGestisciRistorante);
                 itemMenuGestioneRistorante.setEnabled(false);
                 itemMenuGestioneRistorante.setVisible(false);
@@ -99,7 +100,7 @@ public class BachecaActivity extends AppCompatActivity {
                 itemMenuGestisciInventario.setEnabled(false);
                 itemMenuGestisciInventario.setVisible(false);
             }
-            else if (u.getRuoloUtente().equals("Amministratore")){
+            else if (utenteCorrente.getRuoloUtente().equals("Amministratore")){
                 MenuItem itemMenuGestisciInventario = menu.getMenu().findItem(R.id.opzioneMenuGestisciInventario);
                 itemMenuGestisciInventario.setEnabled(false);
                 itemMenuGestisciInventario.setVisible(false);

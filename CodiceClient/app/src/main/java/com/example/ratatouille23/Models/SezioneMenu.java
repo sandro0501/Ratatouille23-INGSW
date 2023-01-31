@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class SezioneMenu implements Serializable {
 
+    private int idAvviso;
     private String titolo;
     private int posizione;
     private ArrayList<Elemento> appartenente = new ArrayList<>();
@@ -22,6 +23,9 @@ public class SezioneMenu implements Serializable {
 
         for (Elemento el : appartenente) el.setAppartiene(this);
     }
+
+    public void setIdAvviso(int idAvviso){ this.idAvviso = idAvviso;}
+    public int getIdAvviso(){return idAvviso;}
 
     public boolean isInModifica() {
         return inModifica;

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class Elemento implements Serializable {
 
+    private int idElemento;
     private String denominazionePrincipale;
     private String denominazioneSecondaria = "";
     private String descrizionePrincipale;
@@ -72,11 +73,15 @@ public class Elemento implements Serializable {
         this.posizione = posizione;
     }
 
+    public void setIdElemento(int idElemento){ this.idElemento = idElemento;}
 
+    public int getIdElemento(){return idElemento;}
 
     public String getDenominazionePrincipale() {
         return denominazionePrincipale;
     }
+
+
 
     public void setDenominazionePrincipale(String denominazionePrincipale) {
         this.denominazionePrincipale = denominazionePrincipale;
