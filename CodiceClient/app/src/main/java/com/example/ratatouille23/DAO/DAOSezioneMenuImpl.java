@@ -62,8 +62,18 @@ public class DAOSezioneMenuImpl implements DAOSezioneMenu {
                                 //Estraggo l'elemento
                                 JSONObject currEleInd = elementi.getJSONObject(y);
                                 JSONObject currEle = currEleInd.getJSONObject("elemento");
+                                Elemento elemento;
                                 //Creo l'oggetto associato
-                                Elemento elemento = new Elemento(currEle.getString("denominazioneP"), currEle.getString("denominazioneS"),currEle.getString("descrizioneP"), currEle.getString("descrizioneS"), currEle.getInt("costo"), currEle.getInt("posizione"));
+                                try
+                                {
+                                    Elemento elementos = new Elemento(currEle.getString("denominazioneP"), currEle.getString("denominazioneS"), currEle.getString("descrizioneP"), currEle.getString("descrizioneS"), currEle.getDouble("costo"), currEle.getInt("posizione"));
+                                    elemento = elementos;
+                                }
+                                catch(Exception e)
+                                {
+                                    Elemento elementos = new Elemento(currEle.getString("denominazioneP"), currEle.getString("descrizioneP"), currEle.getDouble("costo"), currEle.getInt("posizione"));
+                                    elemento = elementos;
+                                }
                                 elemento.setIdElemento(currEle.getInt("idElemento"));
                                 //Prendo il jsonarray degli allergeni
                                 JSONArray allergeni = currEleInd.getJSONArray("allergeni");
@@ -81,7 +91,7 @@ public class DAOSezioneMenuImpl implements DAOSezioneMenu {
                                 elemento.setPresenta(listaAllergenis);
                                 ArrayList<Preparazione> listaPreparazioni = new ArrayList<Preparazione>();
                                 //estraggo il jsonarray delle preparazioni
-                                JSONArray nonHoPiuNomiAiutoComunqueSonoLePreparazioni = currSecInd.getJSONArray("preparazione");
+                                JSONArray nonHoPiuNomiAiutoComunqueSonoLePreparazioni = currEleInd.getJSONArray("preparazione");
                                 for(int z = 0; z< nonHoPiuNomiAiutoComunqueSonoLePreparazioni.length(); z++)
                                 {
                                     //Estraggo la preparazione corrente

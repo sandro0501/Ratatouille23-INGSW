@@ -169,7 +169,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         iconaCestino = view.findViewById(R.id.iconaCestinoMenu);
         textViewSpinner = view.findViewById(R.id.textViewSceltaAggiunta);
 
-        riempiSezioni();
+        //riempiSezioni();
 
         adapterSezioni = new SezioneMenuRecyclerViewAdapter(getContext(), listaSezioni, this);
         recyclerViewMenu.setAdapter(adapterSezioni);
@@ -431,49 +431,49 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         }
     };
 
-    private void riempiSezioni() {
-        Elemento el1 = new Elemento("Pasta al pesto", "Famosa pasta italiana", 5.15, 1);
-        Elemento el2 = new Elemento("Pasta al pomodoro", "Famosa pasta italiana", 5.64, 2);
-
-        Elemento el4 = new Elemento("Pasta alla siciliana", "Famosa pasta italiana", 8.64, 3);
-        Elemento el3 = new Elemento("Agnello alla brace", "Famosa carne italiana", 25.15, 1);
-        Elemento el5 = new Elemento("Fiorentina", "Famosa carne italiana", 25.15, 1);
-
-        ArrayList<Allergene> l1 = new ArrayList<>();
-        l1.add(new Allergene(listaAllergeni.Uova));
-        l1.add(new Allergene(listaAllergeni.Glutine));
-        ArrayList<Allergene> l2 = new ArrayList<>(l1);
-        l2.add(new Allergene(listaAllergeni.Lattosio));
-        el1.setPresenta(l1);
-        el3.setPresenta(l2);
-
-        Prodotto passata = new Prodotto("Passata di pomodoro", "Passata buona", "kg", "2.30", 10, 5);
-        Prodotto pasta = new Prodotto("Maccheroni", "maccarun", "kg", "1.00", 20, 10);
-        Double quantitaPassata = 2.00;
-        Double quantitaPasta = 3.00;
-
-        Preparazione preparazionePastaAlPomodoroUno = new Preparazione(passata, quantitaPassata);
-        Preparazione preparazionePastaAlPomodoroDue = new Preparazione(pasta, quantitaPasta);
-
-        ArrayList<Preparazione> preparazionePastaAlPomodoro = new ArrayList<Preparazione>();
-        preparazionePastaAlPomodoro.add(preparazionePastaAlPomodoroUno);
-        preparazionePastaAlPomodoro.add(preparazionePastaAlPomodoroDue);
-
-        el2.setPreparazione(preparazionePastaAlPomodoro);
-
-        ArrayList<Elemento> listaE1 = new ArrayList<>();
-        listaE1.add(el1);
-        listaE1.add(el2);
-        listaE1.add(el4);
-        ArrayList<Elemento> listaE2 = new ArrayList<>();
-        listaE2.add(el3);
-        listaE2.add(el5);
-        SezioneMenu s1 = new SezioneMenu("Primi piatti",1, listaE1);
-        SezioneMenu s2 = new SezioneMenu("Secondi piatti", 2, listaE2);
-
-        listaSezioni.add(s1);
-        listaSezioni.add(s2);
-    }
+//    private void riempiSezioni() {
+//        Elemento el1 = new Elemento("Pasta al pesto", "Famosa pasta italiana", 5.15, 1);
+//        Elemento el2 = new Elemento("Pasta al pomodoro", "Famosa pasta italiana", 5.64, 2);
+//
+//        Elemento el4 = new Elemento("Pasta alla siciliana", "Famosa pasta italiana", 8.64, 3);
+//        Elemento el3 = new Elemento("Agnello alla brace", "Famosa carne italiana", 25.15, 1);
+//        Elemento el5 = new Elemento("Fiorentina", "Famosa carne italiana", 25.15, 1);
+//
+//        ArrayList<Allergene> l1 = new ArrayList<>();
+//        l1.add(new Allergene(listaAllergeni.Uova));
+//        l1.add(new Allergene(listaAllergeni.Glutine));
+//        ArrayList<Allergene> l2 = new ArrayList<>(l1);
+//        l2.add(new Allergene(listaAllergeni.Lattosio));
+//        el1.setPresenta(l1);
+//        el3.setPresenta(l2);
+//
+//        Prodotto passata = new Prodotto("Passata di pomodoro", "Passata buona", "kg", "2.30", 10, 5);
+//        Prodotto pasta = new Prodotto("Maccheroni", "maccarun", "kg", "1.00", 20, 10);
+//        Double quantitaPassata = 2.00;
+//        Double quantitaPasta = 3.00;
+//
+//        Preparazione preparazionePastaAlPomodoroUno = new Preparazione(passata, quantitaPassata);
+//        Preparazione preparazionePastaAlPomodoroDue = new Preparazione(pasta, quantitaPasta);
+//
+//        ArrayList<Preparazione> preparazionePastaAlPomodoro = new ArrayList<Preparazione>();
+//        preparazionePastaAlPomodoro.add(preparazionePastaAlPomodoroUno);
+//        preparazionePastaAlPomodoro.add(preparazionePastaAlPomodoroDue);
+//
+//        el2.setPreparazione(preparazionePastaAlPomodoro);
+//
+//        ArrayList<Elemento> listaE1 = new ArrayList<>();
+//        listaE1.add(el1);
+//        listaE1.add(el2);
+//        listaE1.add(el4);
+//        ArrayList<Elemento> listaE2 = new ArrayList<>();
+//        listaE2.add(el3);
+//        listaE2.add(el5);
+//        SezioneMenu s1 = new SezioneMenu("Primi piatti",1, listaE1);
+//        SezioneMenu s2 = new SezioneMenu("Secondi piatti", 2, listaE2);
+//
+//        listaSezioni.add(s1);
+//        listaSezioni.add(s2);
+//    }
 
     @Override
     public void onElementoClicked(Elemento elementoCliccato, View itemView) {
@@ -669,6 +669,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
     {
         this.listaSezioni.clear();
         this.listaSezioni.addAll(listaSezioni);
+        adapterSezioni.notifyDataSetChanged();
     }
 
 

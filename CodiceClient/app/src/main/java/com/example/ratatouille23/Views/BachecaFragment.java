@@ -61,7 +61,6 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
     {
         utentiCorrenti.clear();
         utentiCorrenti.addAll(utenti);
-        PresenterBacheca.getInstance().setAvvisi(context, utenteCorrente);
     }
 
     public ArrayList<Utente> getUtentiCorrenti()
@@ -91,7 +90,7 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
     @Override
     public void onStart() {
         super.onStart();
-        PresenterBacheca.getInstance().setUtentiCorrenti(utenteCorrente.getIdRistorante(), context);
+        PresenterBacheca.getInstance().setUtentiCorrenti(utenteCorrente.getIdRistorante(), context, utenteCorrente);
         //Devi estrarre gli avvisi dell'utente
         PresenterBacheca.getInstance().setBachecaAttiva(true);
         setNumeroAvvisiDaLeggere();

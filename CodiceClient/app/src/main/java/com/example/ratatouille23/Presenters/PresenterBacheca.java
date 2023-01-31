@@ -80,13 +80,15 @@ public class PresenterBacheca extends PresenterBase {
         });
     }
 
-    public void setUtentiCorrenti(Ristorante ristorante, BachecaFragment context)
+    public void setUtentiCorrenti(Ristorante ristorante, BachecaFragment context, Utente utenteCorrente)
     {
         daoUtente.ottieniDipendenti(ristorante, new DAOUtenteImpl.DipendentiCallbacks() {
             @Override
             public void onRichiestaDipendenti(ArrayList<Utente> utenti)
             {
                 context.setUtentiCorrenti(utenti);
+
+                setAvvisi(context, utenteCorrente);
             }
         });
     }
