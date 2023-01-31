@@ -3,7 +3,9 @@ package com.example.ratatouille23.DAO;
 import android.util.Log;
 
 import com.example.ratatouille23.InterfacceRetrofit.OpenFootFactsService;
+import com.example.ratatouille23.InterfacceRetrofit.ProdottoService;
 import com.example.ratatouille23.Models.Prodotto;
+import com.example.ratatouille23.Models.Ristorante;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,8 +27,19 @@ public class DAOProdottoImpl implements DAOProdotto {
         void onCaricamentoListaProdottiOpenFoodFacts(ArrayList<Prodotto> listaProdottiOttenuta);
     }
 
+    public interface AggiuntaProdottoCallbacks {
+        void onAggiuntaProdotto(Boolean isAggiunto);
+    }
+
+    public interface  OttenimentoDispensaCallbacks {
+        void onRichiestaDispensa(ArrayList<Prodotto> dispensa);
+    }
+
     Retrofit retrofitOpenFoodFacts = new Retrofit.Builder().baseUrl("https://it.openfoodfacts.org/cgi/").addConverterFactory(GsonConverterFactory.create()).build();
     OpenFootFactsService openFootFactsService = retrofitOpenFoodFacts.create(OpenFootFactsService.class);
+
+    Retrofit retrofitProdotto = new Retrofit.Builder().baseUrl(DAOBaseUrl.baseUrl()).addConverterFactory(GsonConverterFactory.create()).build();
+    ProdottoService prodottoService = retrofitProdotto.create(ProdottoService.class);
 
     @Override
     public void getProdottiOpenFoodFactsDaStringa(String stringaIniziale, ProdottoCallbacks callback) {
@@ -65,6 +78,97 @@ public class DAOProdottoImpl implements DAOProdotto {
 
             }
         });
+
+    }
+
+    @Override
+    public void aggiungiProdotto(Prodotto prodotto, AggiuntaProdottoCallbacks callback) {
+        Call<ResponseBody> callAggiungiProdotto = prodottoService.insertProdotto(prodotto);
+
+        callAggiungiProdotto.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    try{
+                       callback.onAggiuntaProdotto(true);
+                    } catch (Exception e){
+                        Log.println(Log.VERBOSE,"Errore catch", e.getMessage());
+                        callback.onAggiuntaProdotto(false);
+
+                    }
+                }
+                else {
+                    Log.println(Log.VERBOSE,"Errore response", "Errore");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.println(Log.VERBOSE,"Errore failure", t.getMessage());
+            }
+        });
+
+    }
+
+    @Override
+    public void getDispensa(Ristorante ristorante, OttenimentoDispensaCallbacks callback) {
+        Call<ResponseBody> callDispensa = prodottoService.getDispensaByIdRistorante(ristorante.getIdRistorante());
+
+        callDispensa.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    try {
+                        JSONArray dispensaJSON = new JSONArray(response.body().string());
+                        ArrayList<Prodotto> dispensa = new ArrayList<Prodotto>();
+
+                        for(int i = 0; i<dispensaJSON.length(); i++){
+
+                            JSONObject prodottoJSON = dispensaJSON.getJSONObject(i);
+
+                            JSONObject ristoranteJSON = prodottoJSON.getJSONObject("ristorante");
+                            Ristorante ristoranteProdotto = new Ristorante(
+                                    ristoranteJSON.getInt("idRistorante"),
+                                    ristoranteJSON.getString("denominazione"),
+                                    ristoranteJSON.getString("numeroTelefono"),
+                                    ristoranteJSON.getString("indirizzo"),
+                                    ristoranteJSON.getString("citta"),
+                                    ristoranteJSON.getBoolean("turistico"),
+                                    ristoranteJSON.getString("urlFoto")
+                            );
+
+                            Prodotto prodotto = new Prodotto(
+                                    prodottoJSON.getInt("idProdotto"),
+                                    prodottoJSON.getString("nome"),
+                                    prodottoJSON.getString("descrizione"),
+                                    prodottoJSON.getString("unita"),
+                                    prodottoJSON.getString("costo"),
+                                    prodottoJSON.getDouble("quantita"),
+                                    prodottoJSON.getDouble("soglia"),
+                                    ristoranteProdotto
+                            );
+
+                            dispensa.add(prodotto);
+                        }
+                        callback.onRichiestaDispensa(dispensa);
+                    }
+                    catch (Exception e){
+                        Log.println(Log.VERBOSE,"Errore creazione oggetto", e.getMessage());
+
+                    }
+                }
+                else{
+                    Log.println(Log.VERBOSE,"Errore response", "Errore");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.println(Log.VERBOSE,"Errore failure", t.getMessage());
+            }
+        });
+
+
 
     }
 }
