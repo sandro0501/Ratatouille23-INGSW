@@ -53,15 +53,12 @@ public class Utente implements Serializable {
         }
         else
         {
-            try
-            {
-                Addetto add = (Addetto) this;
+            Addetto add = (Addetto) this;
+            if (add.getRuolo().equals(ruoliPersonale.addettoAllaCucina))
                 return "Addetto alla cucina";
-            }
-            catch(ClassCastException e)
-            {
+            else
                 return "Addetto al servizio";
-            }
+
         }
     }
 
