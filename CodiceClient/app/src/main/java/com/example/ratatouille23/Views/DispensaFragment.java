@@ -44,7 +44,7 @@ import java.util.ArrayList;
  */
 public class DispensaFragment extends Fragment implements RecyclerViewProdottoInterface{
 
-    private ArrayList<Prodotto> dispensa;
+    private ArrayList<Prodotto> dispensa = new ArrayList<>();
     private Ristorante ristoranteCorrente;
 
     private ProdottoRecyclerViewAdapter prodottoAdapter;
@@ -64,6 +64,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
     private EditText editTextUnitaMisuraProdotto;
     private EditText editTextCostoAcquistoProdotto;
     private EditText editTextSogliaProdotto;
+    private EditText editTextUnitaMisuraCostoProdotto;
     private EditText editTextModificaNomeProdotto;
     private EditText editTextModificaDescrizioneProdotto;
     private EditText editTextModificaQuantitaProdotto;
@@ -149,7 +150,6 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
         adapterAutoComplete.setNotifyOnChange(true);
 
         recyclerView = view.findViewById(R.id.recyclerViewDispensa);
-        riempiDispensa(dispensa);
         prodottoAdapter = new ProdottoRecyclerViewAdapter(getContext(),dispensa,this);
         recyclerView.setAdapter(prodottoAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -247,6 +247,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
         editTextDescrizioneProdotto = (EditText) viewAggiungiProdotto.findViewById(R.id.EditTextDescrizioneProdotto);
         editTextQuantitaProdotto = (EditText) viewAggiungiProdotto.findViewById(R.id.EditTextQuantitaProdotto);
         editTextUnitaMisuraProdotto = (EditText) viewAggiungiProdotto.findViewById(R.id.EditTextUnitaMisuraProdotto);
+        editTextUnitaMisuraCostoProdotto = viewAggiungiProdotto.findViewById(R.id.EditTextUnitaMisuraCostoAcquisto);
         editTextCostoAcquistoProdotto = (EditText) viewAggiungiProdotto.findViewById(R.id.EditTextCostoAcquistoProdotto);
         editTextSogliaProdotto = (EditText) viewAggiungiProdotto.findViewById(R.id.EditTextSogliaLimiteProdotto);
 
@@ -293,12 +294,12 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
                 prodotto.setNome(editTextNomeProdotto.getText().toString());
                 prodotto.setDescrizione(editTextDescrizioneProdotto.getText().toString());
                 prodotto.setUnita(editTextUnitaMisuraProdotto.getText().toString());
-                prodotto.setCostoAcquisto(editTextCostoAcquistoProdotto.getText().toString());
+                String costo = "€" + editTextCostoAcquistoProdotto.getText().toString() + "/" + editTextUnitaMisuraCostoProdotto.getText().toString();
+                prodotto.setCostoAcquisto(costo);
                 prodotto.setQuantita(Double.parseDouble(editTextQuantitaProdotto.getText().toString()));
                 prodotto.setSoglia(Double.parseDouble(editTextSogliaProdotto.getText().toString()));
                 prodotto.setUtilizzatoDa(ristoranteCorrente);
-
-                dialogAggiungiProdotto.dismiss();
+                PresenterDispensa.getInstance().AggiungiProdottoInDispensa(DispensaFragment.this, prodotto);
 
             }
         });
@@ -419,7 +420,9 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
     }
 
     public void mostraDialogConfermaInserimentoProdotto() {
-        PresenterDispensa.getInstance().mostraAlert(getContext(), "Prodotto aggiunto!", "Avviso creato ed inviato correttamente");
+        dialogAggiungiProdotto.dismiss();
+        PresenterDispensa.getInstance().mostraAlert(getContext(), "Prodotto aggiunto!", "Prodotto aggiunto correttamente");
+        PresenterDispensa.getInstance().ottieniDispensaDaRistorante(this, ristoranteCorrente);
     }
 
     public void mostraDialogErroreInserimentoProdotto() {

@@ -1,5 +1,7 @@
 package com.example.ratatouille23.Models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Prodotto implements Serializable {
@@ -8,9 +10,11 @@ public class Prodotto implements Serializable {
     private String nome;
     private String descrizione;
     private String unita;
+    @SerializedName("costo")
     private String costoAcquisto;
     private double quantita;
     private double soglia;
+    @SerializedName("ristorante")
     private Ristorante utilizzatoDa;
 
     public Prodotto(String nome, String descrizione, String unita, String costoAcquisto, double quantita, double soglia) {

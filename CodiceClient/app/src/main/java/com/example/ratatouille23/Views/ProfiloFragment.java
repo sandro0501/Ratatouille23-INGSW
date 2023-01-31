@@ -69,6 +69,7 @@ public class ProfiloFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(fragmentCorrente.getContext(), ModificaPasswordActivity.class);
+                i.putExtra("Utente", utenteCorrente);
                 startActivity(i);
             }
         });

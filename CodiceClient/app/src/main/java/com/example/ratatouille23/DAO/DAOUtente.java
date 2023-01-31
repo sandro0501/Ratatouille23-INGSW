@@ -1,6 +1,7 @@
 package com.example.ratatouille23.DAO;
 
 import com.example.ratatouille23.Handlers.AggiornaRuoloHandler;
+import com.example.ratatouille23.Handlers.ModificaPasswordHandler;
 import com.example.ratatouille23.Handlers.RecoverHandler;
 import com.example.ratatouille23.Handlers.RegistraUtenteHandler;
 import com.example.ratatouille23.Handlers.UtenteHandler;
@@ -25,4 +26,6 @@ public interface DAOUtente {
 
     void modificaDipendente(AggiornaRuoloHandler handler, DAOUtenteImpl.ModificaDipendenteCallbacks callback);
 
-}
+    void modificaPassword(ModificaPasswordHandler handler, DAOUtenteImpl.ModificaPasswordCallbacks callback);
+
+    }

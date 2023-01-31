@@ -1,14 +1,19 @@
 package com.example.ratatouille23.Presenters;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 import com.example.ratatouille23.DAO.DAOFactory;
 import com.example.ratatouille23.DAO.DAOUtente;
 import com.example.ratatouille23.DAO.DAOUtenteImpl;
 import com.example.ratatouille23.Exceptions.CampiVuotiException;
 import com.example.ratatouille23.Exceptions.CaratteriIllecitiException;
 import com.example.ratatouille23.Exceptions.ConfermaPasswordErrataException;
+import com.example.ratatouille23.Handlers.ModificaPasswordHandler;
 import com.example.ratatouille23.Handlers.RecoverHandler;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Views.ConfermaCodiceActivity;
+import com.example.ratatouille23.Views.ModificaPasswordActivity;
 import com.example.ratatouille23.Views.PasswordRecoveryActivity;
 import com.example.ratatouille23.Views.PrimoLoginModificaPasswordActivity;
 import com.example.ratatouille23.Views.LoginActivity;

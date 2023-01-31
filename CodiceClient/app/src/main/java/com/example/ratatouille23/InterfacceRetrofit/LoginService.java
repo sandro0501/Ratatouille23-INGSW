@@ -1,6 +1,7 @@
 package com.example.ratatouille23.InterfacceRetrofit;
 
 import com.example.ratatouille23.Handlers.LoginHandler;
+import com.example.ratatouille23.Handlers.ModificaPasswordHandler;
 import com.example.ratatouille23.Handlers.RecoverHandler;
 import com.example.ratatouille23.Models.Utente;
 
@@ -9,6 +10,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface LoginService {
@@ -27,4 +29,7 @@ public interface LoginService {
 
     @GET("utente/{rid}")
     Call<ResponseBody> estraiDipendenti(@Path("rid") int rid);
+
+    @PUT("utente")
+    Call<ResponseBody> modificaPassword(@Body ModificaPasswordHandler handler);
 }

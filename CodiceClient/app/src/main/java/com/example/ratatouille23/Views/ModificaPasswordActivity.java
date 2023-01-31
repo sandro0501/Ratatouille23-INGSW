@@ -14,7 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Presenters.PresenterAreaPersonale;
+import com.example.ratatouille23.Presenters.PresenterLogin;
 import com.example.ratatouille23.R;
 
 public class ModificaPasswordActivity extends AppCompatActivity {
@@ -24,6 +26,7 @@ public class ModificaPasswordActivity extends AppCompatActivity {
     private EditText editTextConfermaNuovaPassword;
     private Button bottoneModificaPassword;
     private Button bottoneAnnulla;
+    private Utente utenteCorrente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,8 @@ public class ModificaPasswordActivity extends AppCompatActivity {
         bottoneModificaPassword = findViewById(R.id.bottoneResettaPassword);
         bottoneAnnulla = findViewById(R.id.bottoneAnnullaModificaPassword);
 
+        utenteCorrente = ((Utente)getIntent().getSerializableExtra("Utente"));
+
         bottoneModificaPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,28 +48,17 @@ public class ModificaPasswordActivity extends AppCompatActivity {
                 String vecchiaPassword = editTextVecchiaPassword.getText().toString();
                 String nuovaPassword = editTextNuovaPassword.getText().toString();
                 String confermaPassword = editTextConfermaNuovaPassword.getText().toString();
-                Boolean passwordModificata;
-                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-
-                if (!vecchiaPassword.isEmpty() && !nuovaPassword.isEmpty() && !confermaPassword.isEmpty()) {
-                    if (nuovaPassword.equals(confermaPassword)){
-                        if (!vecchiaPassword.equals(nuovaPassword)) {
-                            passwordModificata = PresenterAreaPersonale.getInstance().bottoneModificaPasswordPremuto(vecchiaPassword, nuovaPassword);
-                            if (passwordModificata) {
-                                i.addFlags(FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(i);
-                            } else
-                                PresenterAreaPersonale.getInstance().mostraAlert(ModificaPasswordActivity.this, "Errore!", "La password non è stata " +
-                                        "modificata correttamente!");
-
-                        }
-                        else PresenterAreaPersonale.getInstance().mostraAlert(ModificaPasswordActivity.this, "Attenzione!", "La nuova password scelta " +
-                                "deve differire da quella attuale");
-                    }
-                    else PresenterAreaPersonale.getInstance().mostraAlert(ModificaPasswordActivity.this, "Attenzione!", "Le password inserite non coincidono!");
+                try {
+                    PresenterAreaPersonale.getInstance().modificaPasswordPremuto(
+                            ModificaPasswordActivity.this,
+                            utenteCorrente.getAccessToken(),
+                            vecchiaPassword,
+                            nuovaPassword,
+                            confermaPassword);
                 }
-                else PresenterAreaPersonale.getInstance().mostraAlert(ModificaPasswordActivity.this, "Attenzione!", "Uno o più campi obbligatori sono " +
-                        "stati lasciati vuoti");
+                catch (Exception e){
+                    PresenterAreaPersonale.getInstance().mostraAlert(ModificaPasswordActivity.this, "Attenzione!", e.getMessage());
+                }
             }
         });
 
@@ -101,5 +95,9 @@ public class ModificaPasswordActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    public void passwordModificataCorrettamente() {
+        finish();
     }
 }

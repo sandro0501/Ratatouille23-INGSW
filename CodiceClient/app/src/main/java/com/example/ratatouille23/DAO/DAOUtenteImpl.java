@@ -6,6 +6,7 @@ import com.example.ratatouille23.Exceptions.LoginFallitoException;
 import com.example.ratatouille23.Exceptions.PrimoAccessoException;
 import com.example.ratatouille23.Handlers.AggiornaRuoloHandler;
 import com.example.ratatouille23.Handlers.LoginHandler;
+import com.example.ratatouille23.Handlers.ModificaPasswordHandler;
 import com.example.ratatouille23.Handlers.RecoverHandler;
 import com.example.ratatouille23.Handlers.RegistraUtenteHandler;
 import com.example.ratatouille23.Handlers.UtenteHandler;
@@ -66,6 +67,10 @@ public class DAOUtenteImpl implements DAOUtente {
 
     public interface ModificaDipendenteCallbacks {
         void onModificaDipendente();
+    }
+
+    public interface ModificaPasswordCallbacks {
+        void onModificaPassword();
     }
 
     Retrofit retrofitLogin = new Retrofit.Builder().baseUrl(DAOBaseUrl.baseUrl()).addConverterFactory(GsonConverterFactory.create()).build();
@@ -346,6 +351,37 @@ public class DAOUtenteImpl implements DAOUtente {
                         String messaggio = bodyJSON.getString("messaggio");
                         if (messaggio.equals("Tutto bene"))
                             callback.onModificaDipendente();
+                        else {
+
+                        }
+                    }
+                    catch (Exception e) {
+
+                    }
+                }
+                else {
+                    Log.i("ERRORE", response.message() + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.i("ERRORE", t.getMessage());
+            }
+        });
+    }
+
+    public void modificaPassword(ModificaPasswordHandler handler, ModificaPasswordCallbacks callback) {
+        Call<ResponseBody> callConferma = loginService.modificaPassword(handler);
+        callConferma.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        JSONObject bodyJSON = new JSONObject(response.body().string());
+                        String messaggio = bodyJSON.getString("messaggio");
+                        if (messaggio.equals("Tutto bene"))
+                            callback.onModificaPassword();
                         else {
 
                         }
