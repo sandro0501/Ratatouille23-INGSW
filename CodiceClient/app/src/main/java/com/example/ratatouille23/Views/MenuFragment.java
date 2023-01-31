@@ -14,14 +14,16 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -31,8 +33,6 @@ import android.widget.TextView;
 
 import com.example.ratatouille23.Models.Allergene;
 import com.example.ratatouille23.Models.Elemento;
-import com.example.ratatouille23.Models.Preparazione;
-import com.example.ratatouille23.Models.Prodotto;
 import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Models.SezioneMenu;
 import com.example.ratatouille23.Models.Utente;
@@ -65,7 +65,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
     private TextView textViewSpinner;
 
     private TextView titoloDialog;
-    private EditText titoloPrincipaleElementoEditText;
+    private AutoCompleteTextView titoloPrincipaleElementoEditText;
     private EditText titoloSecondarioElementoEditText;
     private EditText descrizionePrincipaleElementoEditText;
     private EditText descrizioneSecondariaElementoEditText;
@@ -92,6 +92,8 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
 
     private boolean modalitaEliminazione = false;
     private boolean primoAccessoSpinner;
+
+    private ArrayAdapter<Elemento> adapterAutoComplete;
 
     private CheckBox checkboxPesce, checkboxGlutine, checkboxUova, checkboxNoci, checkboxArachidi, checkboxSolfiti, checkboxCrostacei, checkboxMolluschi, checkboxLupini, checkboxSenape, checkboxSesamo, checkboxLattosio, checkboxSedano, checkboxSoia;
 
@@ -169,7 +171,8 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         iconaCestino = view.findViewById(R.id.iconaCestinoMenu);
         textViewSpinner = view.findViewById(R.id.textViewSceltaAggiunta);
 
-        //riempiSezioni();
+        adapterAutoComplete = new ArrayAdapter<Elemento>(getContext(), R.layout.spinner_layout, new ArrayList<>());
+        adapterAutoComplete.setNotifyOnChange(true);
 
         adapterSezioni = new SezioneMenuRecyclerViewAdapter(getContext(), listaSezioni, this);
         recyclerViewMenu.setAdapter(adapterSezioni);
@@ -301,7 +304,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         checkBoxAllergeni.add(checkboxNoci);
 
         titoloDialog = (TextView) viewAggiungiElemento.findViewById(R.id.textViewAggiungiElementoTitolo);
-        titoloPrincipaleElementoEditText = (EditText) viewAggiungiElemento.findViewById(R.id.EditTextTitoloPrincipaleElemento);
+        titoloPrincipaleElementoEditText = (AutoCompleteTextView) viewAggiungiElemento.findViewById(R.id.EditTextTitoloPrincipaleElemento);
         titoloSecondarioElementoEditText = (EditText) viewAggiungiElemento.findViewById(R.id.EditTextTitoloSecondarioElemento);
         descrizionePrincipaleElementoEditText = (EditText) viewAggiungiElemento.findViewById(R.id.editTexDescrizionePrincipaleElemento);
         descrizioneSecondariaElementoEditText = (EditText) viewAggiungiElemento.findViewById(R.id.editTextDescrizioneSecondariaElemento);
@@ -327,11 +330,46 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         adapterSpinner.setDropDownViewResource(R.layout.spinner_item_layout);
         sezioneElementoSpinner.setAdapter(adapterSpinner);
 
+        titoloPrincipaleElementoEditText.setAdapter(adapterAutoComplete);
+
+        titoloPrincipaleElementoEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (titoloPrincipaleElementoEditText.getText().toString().length() >= titoloPrincipaleElementoEditText.getThreshold()) {
+                    PresenterMenu.getInstance().settaElementiDaIniziale(MenuFragment.this, titoloPrincipaleElementoEditText.getText().toString());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                adapterAutoComplete.clear();
+            }
+        });
+
+        titoloPrincipaleElementoEditText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Elemento elementoScelto = adapterAutoComplete.getItem(i);
+                descrizionePrincipaleElementoEditText.setText(elementoScelto.getDescrizionePrincipale());
+                for (CheckBox checkBox : checkBoxAllergeni) {
+                    for (Allergene allergene : elementoScelto.getPresenta()){
+                        if (allergene.getNome().equals(checkBox.getTag()))
+                            checkBox.setChecked(true);
+                    }
+                }
+
+            }
+        });
 
         bottoneConferma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SezioneMenu sezioneScelta = (SezioneMenu)spinnerSceltaAggiunta.getSelectedItem();
+                SezioneMenu sezioneScelta = (SezioneMenu)sezioneElementoSpinner.getSelectedItem();
                 Elemento piattoDaAggiungere = new Elemento(
                         titoloPrincipaleElementoEditText.getText().toString(),
                         descrizionePrincipaleElementoEditText.getText().toString(),
@@ -431,49 +469,6 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         }
     };
 
-//    private void riempiSezioni() {
-//        Elemento el1 = new Elemento("Pasta al pesto", "Famosa pasta italiana", 5.15, 1);
-//        Elemento el2 = new Elemento("Pasta al pomodoro", "Famosa pasta italiana", 5.64, 2);
-//
-//        Elemento el4 = new Elemento("Pasta alla siciliana", "Famosa pasta italiana", 8.64, 3);
-//        Elemento el3 = new Elemento("Agnello alla brace", "Famosa carne italiana", 25.15, 1);
-//        Elemento el5 = new Elemento("Fiorentina", "Famosa carne italiana", 25.15, 1);
-//
-//        ArrayList<Allergene> l1 = new ArrayList<>();
-//        l1.add(new Allergene(listaAllergeni.Uova));
-//        l1.add(new Allergene(listaAllergeni.Glutine));
-//        ArrayList<Allergene> l2 = new ArrayList<>(l1);
-//        l2.add(new Allergene(listaAllergeni.Lattosio));
-//        el1.setPresenta(l1);
-//        el3.setPresenta(l2);
-//
-//        Prodotto passata = new Prodotto("Passata di pomodoro", "Passata buona", "kg", "2.30", 10, 5);
-//        Prodotto pasta = new Prodotto("Maccheroni", "maccarun", "kg", "1.00", 20, 10);
-//        Double quantitaPassata = 2.00;
-//        Double quantitaPasta = 3.00;
-//
-//        Preparazione preparazionePastaAlPomodoroUno = new Preparazione(passata, quantitaPassata);
-//        Preparazione preparazionePastaAlPomodoroDue = new Preparazione(pasta, quantitaPasta);
-//
-//        ArrayList<Preparazione> preparazionePastaAlPomodoro = new ArrayList<Preparazione>();
-//        preparazionePastaAlPomodoro.add(preparazionePastaAlPomodoroUno);
-//        preparazionePastaAlPomodoro.add(preparazionePastaAlPomodoroDue);
-//
-//        el2.setPreparazione(preparazionePastaAlPomodoro);
-//
-//        ArrayList<Elemento> listaE1 = new ArrayList<>();
-//        listaE1.add(el1);
-//        listaE1.add(el2);
-//        listaE1.add(el4);
-//        ArrayList<Elemento> listaE2 = new ArrayList<>();
-//        listaE2.add(el3);
-//        listaE2.add(el5);
-//        SezioneMenu s1 = new SezioneMenu("Primi piatti",1, listaE1);
-//        SezioneMenu s2 = new SezioneMenu("Secondi piatti", 2, listaE2);
-//
-//        listaSezioni.add(s1);
-//        listaSezioni.add(s2);
-//    }
 
     @Override
     public void onElementoClicked(Elemento elementoCliccato, View itemView) {
@@ -546,7 +541,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         titoloDialog = (TextView) viewModificaElemento.findViewById(R.id.textViewAggiungiElementoTitolo);
         titoloDialog.setText("Modifica piatto del menù");
 
-        titoloPrincipaleElementoEditText = (EditText) viewModificaElemento.findViewById(R.id.EditTextTitoloPrincipaleElemento);
+        titoloPrincipaleElementoEditText = (AutoCompleteTextView) viewModificaElemento.findViewById(R.id.EditTextTitoloPrincipaleElemento);
         titoloPrincipaleElementoEditText.append(elementoDaModificare.getDenominazionePrincipale());
 
         titoloSecondarioElementoEditText = (EditText) viewModificaElemento.findViewById(R.id.EditTextTitoloSecondarioElemento);
@@ -592,6 +587,43 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         bottoneConferma.setText("Modifica");
 
         bottoneAnnulla = (Button) viewModificaElemento.findViewById(R.id.bottoneAnnullaElemento);
+
+
+        titoloPrincipaleElementoEditText.setAdapter(adapterAutoComplete);
+
+        titoloPrincipaleElementoEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (titoloPrincipaleElementoEditText.getText().toString().length() >= titoloPrincipaleElementoEditText.getThreshold()) {
+                    PresenterMenu.getInstance().settaElementiDaIniziale(MenuFragment.this, titoloPrincipaleElementoEditText.getText().toString());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                adapterAutoComplete.clear();
+            }
+        });
+
+        titoloPrincipaleElementoEditText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Elemento elementoScelto = adapterAutoComplete.getItem(i);
+                descrizionePrincipaleElementoEditText.setText(elementoScelto.getDescrizionePrincipale());
+                for (CheckBox checkBox : checkBoxAllergeni) {
+                    for (Allergene allergene : elementoScelto.getPresenta()){
+                        if (allergene.getNome().equals(checkBox.getTag()))
+                            checkBox.setChecked(true);
+                    }
+                }
+
+            }
+        });
 
         bottoneConferma.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -675,5 +707,10 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
 
     public void setRistoranteCorrente(Ristorante ristorante) {
         ristoranteCorrente = ristorante;
+    }
+
+    public void setupListaElementiOpenFoodFacts(ArrayList<Elemento> listaElementiOttenuta) {
+        adapterAutoComplete.addAll(listaElementiOttenuta);
+        adapterAutoComplete.getFilter().filter(null);
     }
 }

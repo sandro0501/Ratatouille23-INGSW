@@ -55,7 +55,10 @@ public class DAOProdottoImpl implements DAOProdotto {
                         for (int i = 0; i < jsonArrayProdotti.length(); i++) {
                             JSONObject jsonProdotto = jsonArrayProdotti.getJSONObject(i);
                             Prodotto prodotto = new Prodotto();
-                            prodotto.setNome((jsonProdotto.has("product_name") ? jsonProdotto.getString("product_name") : ""));
+                            if (jsonProdotto.has("product_name"))
+                                prodotto.setNome(jsonProdotto.getString("product_name"));
+                            else
+                                continue;
                             prodotto.setDescrizione((jsonProdotto.has("generic_name") ? jsonProdotto.getString("generic_name") : ""));
                             listaProdotti.add(prodotto);
                         }

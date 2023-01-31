@@ -65,7 +65,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
     private EditText editTextCostoAcquistoProdotto;
     private EditText editTextSogliaProdotto;
     private EditText editTextUnitaMisuraCostoProdotto;
-    private EditText editTextModificaNomeProdotto;
+    private AutoCompleteTextView editTextModificaNomeProdotto;
     private EditText editTextModificaDescrizioneProdotto;
     private EditText editTextModificaQuantitaProdotto;
     private EditText editTextModificaUnitaMisuraProdotto;
@@ -83,7 +83,6 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
     private ArrayList<CardView> listaCardProdottiSelezionati = new ArrayList<>();
 
     private ArrayAdapter<Prodotto> adapterAutoComplete;
-    private ArrayList<Prodotto> listaAutoComplete = new ArrayList<>();
 
     private boolean modalitaEliminazione = false;
 
@@ -146,7 +145,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
         Utente utenteCorrente = (Utente)getActivity().getIntent().getSerializableExtra("Utente");
         ristoranteCorrente = utenteCorrente.getIdRistorante();
 
-        adapterAutoComplete = new ArrayAdapter<Prodotto>(getContext(), R.layout.spinner_layout, listaAutoComplete);
+        adapterAutoComplete = new ArrayAdapter<Prodotto>(getContext(), R.layout.spinner_layout, new ArrayList<>());
         adapterAutoComplete.setNotifyOnChange(true);
 
         recyclerView = view.findViewById(R.id.recyclerViewDispensa);
@@ -358,7 +357,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
         builderDialogModificaProdotto.setView(viewModificaProdotto);
         builderDialogModificaProdotto.setCancelable(true);
 
-        editTextModificaNomeProdotto = (EditText) viewModificaProdotto.findViewById(R.id.EditTextNomeProdottoModifica);
+        editTextModificaNomeProdotto = (AutoCompleteTextView) viewModificaProdotto.findViewById(R.id.EditTextNomeProdottoModifica);
         editTextModificaDescrizioneProdotto = (EditText) viewModificaProdotto.findViewById(R.id.EditTextDescrizioneProdottoModifica);
         editTextModificaQuantitaProdotto = (EditText) viewModificaProdotto.findViewById(R.id.EditTextQuantitaProdottoModifica);
         editTextModificaUnitaMisuraProdotto = (EditText) viewModificaProdotto.findViewById(R.id.EditTextUnitaMisuraProdottoModifica);
@@ -377,6 +376,35 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
         editTextModificaCostoAcquistoProdotto.append(costoAcquistoProdotto.substring(costoAcquistoProdotto.indexOf("€") , costoAcquistoProdotto.indexOf("/")));
         editTextModificaUnitaMisuraCostoAcquistoProdotto.append(costoAcquistoProdotto.substring(costoAcquistoProdotto.lastIndexOf("/")+1));
 
+        editTextModificaNomeProdotto.setAdapter(adapterAutoComplete);
+
+        editTextModificaNomeProdotto.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (editTextModificaNomeProdotto.getText().toString().length() >= editTextModificaNomeProdotto.getThreshold()) {
+                    PresenterDispensa.getInstance().settaProdottiDaInizialeModifica(DispensaFragment.this, editTextModificaNomeProdotto.getText().toString());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                adapterAutoComplete.clear();
+            }
+        });
+
+        editTextModificaNomeProdotto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Prodotto prodottoScelto = adapterAutoComplete.getItem(i);
+                editTextModificaDescrizioneProdotto.setText(prodottoScelto.getDescrizione());
+
+            }
+        });
 
         bottoneAnnullaModificaProdotto = (Button) viewModificaProdotto.findViewById(R.id.bottoneAnnullaModificaProdotto);
         bottoneAnnullaModificaProdotto.setOnClickListener(new View.OnClickListener() {
@@ -410,7 +438,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
 
     public void setupListaProdottiOpenFoodFacts(ArrayList<Prodotto> lista){
         adapterAutoComplete.addAll(lista);
-        adapterAutoComplete.getFilter().filter(editTextNomeProdotto.getText(), editTextNomeProdotto);
+        adapterAutoComplete.getFilter().filter(null);
     }
 
     public void riempiDispensa(ArrayList<Prodotto> listaProdotti){
@@ -429,4 +457,8 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
         PresenterBacheca.getInstance().mostraAlert(getContext(), "Errore!", "C'e stato un errore durante l'inserimento del prodotto, si controlli che i campi non siano vuoti e si riprovi.");
     }
 
+    public void setupListaProdottiOpenFoodFactsModifica(ArrayList<Prodotto> listaProdottiOttenuta) {
+        adapterAutoComplete.addAll(listaProdottiOttenuta);
+        adapterAutoComplete.getFilter().filter(null);
+    }
 }

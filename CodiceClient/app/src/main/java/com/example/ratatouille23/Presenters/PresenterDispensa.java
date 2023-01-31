@@ -77,4 +77,16 @@ public class PresenterDispensa extends PresenterBase {
             }
         });
     }
+
+    public void settaProdottiDaInizialeModifica(DispensaFragment context, String stringaIniziale) {
+
+        daoProdotto.getProdottiOpenFoodFactsDaStringa(stringaIniziale, new DAOProdottoImpl.ProdottoCallbacks() {
+            @Override
+            public void onCaricamentoListaProdottiOpenFoodFacts(ArrayList<Prodotto> listaProdottiOttenuta) {
+                Log.i("Prova", listaProdottiOttenuta.toString());
+                context.setupListaProdottiOpenFoodFactsModifica(listaProdottiOttenuta);
+            }
+        });
+
+    }
 }

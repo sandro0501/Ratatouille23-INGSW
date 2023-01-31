@@ -73,6 +73,10 @@ public class Elemento implements Serializable {
         this.posizione = posizione;
     }
 
+    public Elemento() {
+
+    }
+
     public void setIdElemento(int idElemento){ this.idElemento = idElemento;}
 
     public int getIdElemento(){return idElemento;}
@@ -151,4 +155,8 @@ public class Elemento implements Serializable {
         this.appartiene = appartiene;
     }
 
+    @Override
+    public String toString() {
+        return denominazionePrincipale;
+    }
 }

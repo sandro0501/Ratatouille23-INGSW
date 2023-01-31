@@ -152,7 +152,7 @@
         app:layout_constraintStart_toEndOf="@+id/textViewNomeProdottoLabelModifica"
         app:layout_constraintTop_toBottomOf="@+id/textViewModificaProdottoTitoloDialog">
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/EditTextNomeProdottoModifica"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
