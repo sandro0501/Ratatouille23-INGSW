@@ -4,12 +4,14 @@ import java.io.Serializable;
 
 public class Prodotto implements Serializable {
 
+    private int idProdotto;
     private String nome;
     private String descrizione;
     private String unita;
     private String costoAcquisto;
     private double quantita;
     private double soglia;
+    private Ristorante utilizzatoDa;
 
     public Prodotto(String nome, String descrizione, String unita, String costoAcquisto, double quantita, double soglia) {
         this.nome = nome;
@@ -18,6 +20,27 @@ public class Prodotto implements Serializable {
         this.costoAcquisto = costoAcquisto;
         this.quantita = quantita;
         this.soglia = soglia;
+    }
+
+    public Prodotto(int idProdotto, String nome, String descrizione, String unita, String costoAcquisto, double quantita, double soglia) {
+        this.idProdotto = idProdotto;
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.unita = unita;
+        this.costoAcquisto = costoAcquisto;
+        this.quantita = quantita;
+        this.soglia = soglia;
+    }
+
+    public Prodotto(int idProdotto, String nome, String descrizione, String unita, String costoAcquisto, double quantita, double soglia, Ristorante utilizzatoDa) {
+        this.idProdotto = idProdotto;
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.unita = unita;
+        this.costoAcquisto = costoAcquisto;
+        this.quantita = quantita;
+        this.soglia = soglia;
+        this.utilizzatoDa = utilizzatoDa;
     }
 
     public Prodotto(String nome, String descrizione) {
@@ -75,6 +98,23 @@ public class Prodotto implements Serializable {
     public void setSoglia(double soglia) {
         this.soglia = soglia;
     }
+
+    public int getIdProdotto() {
+        return idProdotto;
+    }
+
+    public void setIdProdotto(int idProdotto) {
+        this.idProdotto = idProdotto;
+    }
+
+    public Ristorante getUtilizzatoDa() {
+        return utilizzatoDa;
+    }
+
+    public void setUtilizzatoDa(Ristorante utilizzatoDa) {
+        this.utilizzatoDa = utilizzatoDa;
+    }
+
 
     @Override
     public String toString(){
