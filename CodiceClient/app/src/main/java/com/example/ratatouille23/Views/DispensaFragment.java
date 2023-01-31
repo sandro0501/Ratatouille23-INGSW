@@ -28,6 +28,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ratatouille23.Models.Prodotto;
+import com.example.ratatouille23.Models.Ristorante;
+import com.example.ratatouille23.Models.Utente;
+import com.example.ratatouille23.Presenters.PresenterBacheca;
+import com.example.ratatouille23.Presenters.PresenterDipendenti;
 import com.example.ratatouille23.Presenters.PresenterDispensa;
 import com.example.ratatouille23.R;
 
@@ -41,6 +45,8 @@ import java.util.ArrayList;
 public class DispensaFragment extends Fragment implements RecyclerViewProdottoInterface{
 
     private ArrayList<Prodotto> dispensa;
+    private Ristorante ristoranteCorrente;
+
     private ProdottoRecyclerViewAdapter prodottoAdapter;
     private RecyclerView recyclerView;
     private ImageView bottoneAggiungiProdotto;
@@ -136,11 +142,14 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Utente utenteCorrente = (Utente)getActivity().getIntent().getSerializableExtra("Utente");
+        ristoranteCorrente = utenteCorrente.getIdRistorante();
+
         adapterAutoComplete = new ArrayAdapter<Prodotto>(getContext(), R.layout.spinner_layout, listaAutoComplete);
         adapterAutoComplete.setNotifyOnChange(true);
 
         recyclerView = view.findViewById(R.id.recyclerViewDispensa);
-        riempiDispensa();
+        riempiDispensa(dispensa);
         prodottoAdapter = new ProdottoRecyclerViewAdapter(getContext(),dispensa,this);
         recyclerView.setAdapter(prodottoAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -279,7 +288,16 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
             public void onClick(View view) {
                 //metodo controller aggiungi prodotto che interagisce col DB
                 Log.println(Log.VERBOSE,"ADD","AGGIUNGI");
-                PresenterDispensa.getInstance().mostraAlert(getContext(),"Prodotto aggiunto", "Prodotto aggiunto correttamente alla dispensa!");
+
+                Prodotto prodotto = new Prodotto();
+                prodotto.setNome(editTextNomeProdotto.getText().toString());
+                prodotto.setDescrizione(editTextDescrizioneProdotto.getText().toString());
+                prodotto.setUnita(editTextUnitaMisuraProdotto.getText().toString());
+                prodotto.setCostoAcquisto(editTextCostoAcquistoProdotto.getText().toString());
+                prodotto.setQuantita(Double.parseDouble(editTextQuantitaProdotto.getText().toString()));
+                prodotto.setSoglia(Double.parseDouble(editTextSogliaProdotto.getText().toString()));
+                prodotto.setUtilizzatoDa(ristoranteCorrente);
+
                 dialogAggiungiProdotto.dismiss();
 
             }
@@ -295,24 +313,6 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
         dialogAggiungiProdotto = builderDialogAggiungiProdotto.create();
         dialogAggiungiProdotto.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
         dialogAggiungiProdotto.show();
-    }
-
-    private void riempiDispensa(){
-        dispensa = new ArrayList<>();
-
-        String[] nomeProdotto = getResources().getStringArray(R.array.nome_prodotto);
-        String[] descrizoneProdotto = getResources().getStringArray(R.array.descrizione_prodotto);
-        String[] unitaProdotto = getResources().getStringArray(R.array.unita_prodotto);
-        String[] costoAcquistoProdotto = getResources().getStringArray(R.array.costoacq_prodotto);
-        String[] quantitaProdotto = getResources().getStringArray(R.array.quantita_prodotto);
-        String[] sogliaProdotto = getResources().getStringArray(R.array.soglia_prodotto);
-
-
-        for(int i=0; i<nomeProdotto.length; i++){
-            Prodotto prodotto = new Prodotto(nomeProdotto[i],descrizoneProdotto[i],unitaProdotto[i],costoAcquistoProdotto[i],
-                    Double.parseDouble(quantitaProdotto[i]),Double.parseDouble(sogliaProdotto[i]));
-            dispensa.add(prodotto);
-        }
     }
 
     @Override
@@ -400,9 +400,30 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
         dialogModificaProdotto.show();
     }
 
+    @Override
+    public void onStart() {
+        PresenterDispensa.getInstance().ottieniDispensaDaRistorante(this, ristoranteCorrente);
+
+        super.onStart();
+    }
+
     public void setupListaProdottiOpenFoodFacts(ArrayList<Prodotto> lista){
         adapterAutoComplete.addAll(lista);
         adapterAutoComplete.getFilter().filter(editTextNomeProdotto.getText(), editTextNomeProdotto);
+    }
+
+    public void riempiDispensa(ArrayList<Prodotto> listaProdotti){
+        dispensa.clear();
+        dispensa.addAll(listaProdotti);
+        prodottoAdapter.notifyDataSetChanged();
+    }
+
+    public void mostraDialogConfermaInserimentoProdotto() {
+        PresenterDispensa.getInstance().mostraAlert(getContext(), "Prodotto aggiunto!", "Avviso creato ed inviato correttamente");
+    }
+
+    public void mostraDialogErroreInserimentoProdotto() {
+        PresenterBacheca.getInstance().mostraAlert(getContext(), "Errore!", "C'e stato un errore durante l'inserimento del prodotto, si controlli che i campi non siano vuoti e si riprovi.");
     }
 
 }
