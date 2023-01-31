@@ -3,8 +3,12 @@ package com.example.ratatouille23.Presenters;
 import com.example.ratatouille23.DAO.DAOFactory;
 import com.example.ratatouille23.DAO.DAOUtente;
 import com.example.ratatouille23.DAO.DAOUtenteImpl;
+import com.example.ratatouille23.Handlers.AggiornaRuoloHandler;
+import com.example.ratatouille23.Handlers.RegistraUtenteHandler;
+import com.example.ratatouille23.Handlers.UtenteHandler;
 import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Models.Utente;
+import com.example.ratatouille23.Views.AggiuntaDipendenteActivity;
 import com.example.ratatouille23.Views.DipendenteFragment;
 
 import java.util.ArrayList;
@@ -32,6 +36,33 @@ public class PresenterDipendenti extends PresenterBase {
             @Override
             public void onRichiestaDipendenti(ArrayList<Utente> listaDipendenti) {
                 context.setListaDipendenti(listaDipendenti);
+            }
+        });
+    }
+
+    public void rimuoviDipendente(DipendenteFragment context, UtenteHandler utente) {
+        daoUtente.rimuoviDipendente(utente, new DAOUtenteImpl.RimuoviDipendenteCallbacks() {
+            @Override
+            public void onEliminazioneDipendente() {
+                context.dipendenteLicenziato();
+            }
+        });
+    }
+
+    public void aggiungiDipendente(AggiuntaDipendenteActivity context, RegistraUtenteHandler handler) {
+        daoUtente.aggiungiDipendente(handler, new DAOUtenteImpl.AggiungiDipendenteCallbacks() {
+            @Override
+            public void onAggiuntaDipendente() {
+                context.dipendenteAggiunto();
+            }
+        });
+    }
+
+    public void modificaDipendente(DipendenteFragment context, AggiornaRuoloHandler handler) {
+        daoUtente.modificaDipendente(handler, new DAOUtenteImpl.ModificaDipendenteCallbacks() {
+            @Override
+            public void onModificaDipendente() {
+                context.ruoloDipendenteModificato();
             }
         });
     }

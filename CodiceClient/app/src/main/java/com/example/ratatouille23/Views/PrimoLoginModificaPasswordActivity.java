@@ -1,9 +1,12 @@
 package com.example.ratatouille23.Views;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +27,7 @@ public class PrimoLoginModificaPasswordActivity extends AppCompatActivity {
     private ImageView iconaVecchiaPassword;
     private Button bottoneModificaPassword;
     private Button bottoneAnnulla;
+    private ConstraintLayout constraintLayoutVecchiaPassword;
 
 
     @Override
@@ -39,11 +43,13 @@ public class PrimoLoginModificaPasswordActivity extends AppCompatActivity {
         iconaOcchioVecchiaPassword = findViewById(R.id.iconaOcchioVecchiaPassword);
         iconaVecchiaPassword = findViewById(R.id.iconaVecchiaPassword);
         textViewVecchiaPassword = findViewById(R.id.textViewVecchiaPassword);
+        constraintLayoutVecchiaPassword = findViewById(R.id.constraintLayout6);
 
         iconaVecchiaPassword.setVisibility(View.INVISIBLE);
         iconaOcchioVecchiaPassword.setVisibility(View.INVISIBLE);
         textViewVecchiaPassword.setVisibility(View.INVISIBLE);
         editTextVecchiaPassword.setVisibility(View.INVISIBLE);
+        constraintLayoutVecchiaPassword.setVisibility(View.INVISIBLE);
 
         Utente utenteCorrente = (Utente)getIntent().getSerializableExtra("Utente");
         String sessione = getIntent().getStringExtra("Session");
@@ -74,5 +80,28 @@ public class PrimoLoginModificaPasswordActivity extends AppCompatActivity {
         Intent i = new Intent(getApplicationContext(), BachecaActivity.class);
         i.putExtra("Utente", utenteControllato);
         startActivity(i);
+    }
+
+    public void occhioSchermataModificaPasswordPremuto(View view) {
+
+        EditText editTextAssociata;
+
+         if (view.getId() == R.id.iconaOcchioNuovaPassword)
+            editTextAssociata = editTextNuovaPassword;
+        else
+            editTextAssociata = editTextConfermaNuovaPassword;
+
+        if (editTextAssociata.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
+
+            ((ImageView)(view)).setImageResource(R.drawable.occhiosbarrato);
+            editTextAssociata.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+
+        } else {
+
+            ((ImageView)(view)).setImageResource(R.drawable.occhiopassword);
+            editTextAssociata.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+        }
+
     }
 }

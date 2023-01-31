@@ -4,9 +4,13 @@ import android.util.Log;
 
 import com.example.ratatouille23.Exceptions.LoginFallitoException;
 import com.example.ratatouille23.Exceptions.PrimoAccessoException;
+import com.example.ratatouille23.Handlers.AggiornaRuoloHandler;
 import com.example.ratatouille23.Handlers.LoginHandler;
 import com.example.ratatouille23.Handlers.RecoverHandler;
+import com.example.ratatouille23.Handlers.RegistraUtenteHandler;
+import com.example.ratatouille23.Handlers.UtenteHandler;
 import com.example.ratatouille23.InterfacceRetrofit.BaseCallback;
+import com.example.ratatouille23.InterfacceRetrofit.DipendentiService;
 import com.example.ratatouille23.InterfacceRetrofit.LoginService;
 import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Models.Utente;
@@ -52,8 +56,21 @@ public class DAOUtenteImpl implements DAOUtente {
         void onRichiestaDipendenti(ArrayList<Utente> utenti);
     }
 
+    public interface RimuoviDipendenteCallbacks{
+        void onEliminazioneDipendente();
+    }
+
+    public interface AggiungiDipendenteCallbacks {
+        void onAggiuntaDipendente();
+    }
+
+    public interface ModificaDipendenteCallbacks {
+        void onModificaDipendente();
+    }
+
     Retrofit retrofitLogin = new Retrofit.Builder().baseUrl(DAOBaseUrl.baseUrl()).addConverterFactory(GsonConverterFactory.create()).build();
     LoginService loginService = retrofitLogin.create(LoginService.class);
+    DipendentiService dipendentiService = retrofitLogin.create(DipendentiService.class);
 
     @Override
     public void controllaDatiLogin(Utente utenteCorrente, String password, LoginCallbacks callback) {
@@ -235,6 +252,60 @@ public class DAOUtenteImpl implements DAOUtente {
         });
     }
 
+    @Override
+    public void rimuoviDipendente(UtenteHandler utente, RimuoviDipendenteCallbacks callback) {
+        Call<ResponseBody> callConferma = dipendentiService.deleteDipendente(utente);
+        callConferma.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response)
+            {
+                if(response.isSuccessful())
+                {
+                    callback.onEliminazioneDipendente();
+                }
+                else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    @Override
+    public void aggiungiDipendente(RegistraUtenteHandler handler, AggiungiDipendenteCallbacks callback) {
+        Call<ResponseBody> callConferma = dipendentiService.insertDipendente(handler);
+        callConferma.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        JSONObject bodyJSON = new JSONObject(response.body().string());
+                        String messaggio = bodyJSON.getString("messaggio");
+                        if (messaggio.equals("Tutto bene"))
+                            callback.onAggiuntaDipendente();
+                        else {
+
+                        }
+                    }
+                    catch (Exception e) {
+
+                    }
+                }
+                else {
+                    Log.i("ERRORE", response.message() + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.i("ERRORE", t.getMessage());
+            }
+        });
+    }
 
     private Utente formaUtenteDaJSON (JSONObject jsonLoginUtente) throws JSONException {
         JSONObject utenteCorrenteJson = jsonLoginUtente.getJSONObject("utente");
@@ -262,6 +333,37 @@ public class DAOUtenteImpl implements DAOUtente {
         );
         utenteCorrente.setIdRistorante(ristoranteUtente);
         return utenteCorrente;
+    }
+
+    public void modificaDipendente(AggiornaRuoloHandler handler, ModificaDipendenteCallbacks callback) {
+        Call<ResponseBody> callConferma = dipendentiService.updateDipendente(handler);
+        callConferma.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        JSONObject bodyJSON = new JSONObject(response.body().string());
+                        String messaggio = bodyJSON.getString("messaggio");
+                        if (messaggio.equals("Tutto bene"))
+                            callback.onModificaDipendente();
+                        else {
+
+                        }
+                    }
+                    catch (Exception e) {
+
+                    }
+                }
+                else {
+                    Log.i("ERRORE", response.message() + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.i("ERRORE", t.getMessage());
+            }
+        });
     }
 
 }

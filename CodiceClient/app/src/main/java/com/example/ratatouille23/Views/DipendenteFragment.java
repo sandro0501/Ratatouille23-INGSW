@@ -2,6 +2,7 @@ package com.example.ratatouille23.Views;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -15,12 +16,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.ratatouille23.Handlers.AggiornaRuoloHandler;
+import com.example.ratatouille23.Handlers.UtenteHandler;
+import com.example.ratatouille23.Models.Amministratore;
 import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Models.UtenteFactory;
@@ -58,6 +63,7 @@ public class DipendenteFragment extends Fragment implements RecyclerViewDipenden
     private Spinner spinnerRuoloDipendente;
     private Button bottoneLicenzia;
 
+    private Utente utenteCorrente;
     private Ristorante ristoranteCorrente;
 
     public DipendenteFragment() {
@@ -103,6 +109,7 @@ public class DipendenteFragment extends Fragment implements RecyclerViewDipenden
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(fragmentCorrente.getContext(), AggiuntaDipendenteActivity.class);
+                i.putExtra("Utente", utenteCorrente);
                 startActivity(i);
             }
         });
@@ -116,13 +123,13 @@ public class DipendenteFragment extends Fragment implements RecyclerViewDipenden
 
         recyclerView = view.findViewById(R.id.recyclerViewDipendenti);
         dipendenteAdapter = new DipendenteRecyclerViewAdapter(getContext(),dipendenti,this);
-        //recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(dipendenteAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         dipendenteAdapter.notifyDataSetChanged();
 
-        Utente utenteCorrente = (Utente)getActivity().getIntent().getSerializableExtra("Utente");
+        utenteCorrente = (Utente)getActivity().getIntent().getSerializableExtra("Utente");
         ristoranteCorrente = utenteCorrente.getIdRistorante();
+
     }
 
     @Override
@@ -144,7 +151,12 @@ public class DipendenteFragment extends Fragment implements RecyclerViewDipenden
         spinnerRuoloDipendente = viewVisualizzaDipendente.findViewById(R.id.spinnerRuoliDipendenteVisualizza);
         bottoneLicenzia = viewVisualizzaDipendente.findViewById(R.id.buttonLicenziaDipendente);
 
-        String ruoli [] = new String[] {"Amministratore", "Supervisore", "Addetto alla cucina", "Addetto al servizio"};
+        String ruoli [];
+
+        if (((Amministratore)utenteCorrente).isSuperA())
+            ruoli = new String[] {"Amministratore", "Supervisore", "Addetto alla cucina", "Addetto al servizio"};
+        else
+            ruoli = new String[] {"Supervisore", "Addetto alla cucina", "Addetto al servizio"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(viewVisualizzaDipendente.getContext(), R.layout.spinner_layout, ruoli);
         adapter.setDropDownViewResource(R.layout.spinner_item_layout);
         spinnerRuoloDipendente.setAdapter(adapter);
@@ -155,17 +167,30 @@ public class DipendenteFragment extends Fragment implements RecyclerViewDipenden
         int posizioneRuoloCorrente = adapter.getPosition(dipendenteScelto.getRuoloUtente());
         spinnerRuoloDipendente.setSelection(posizioneRuoloCorrente);
 
-        bottoneLicenzia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialogVisualizzaDipendente.dismiss();
-            }
-        });
-
         dialogVisualizzaDipendente = builderDialogVisualizzaDipendente.create();
         dialogVisualizzaDipendente.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
         dialogVisualizzaDipendente.show();
 
+
+        dialogVisualizzaDipendente.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                UtenteHandler handlerUtente = new UtenteHandler(dipendenteScelto);
+                handlerUtente.ruolo = ruoli[spinnerRuoloDipendente.getSelectedItemPosition()];
+                AggiornaRuoloHandler handler = new AggiornaRuoloHandler();
+                handler.utente = handlerUtente;
+                handler.ristorante = utenteCorrente.getIdRistorante();
+                PresenterDipendenti.getInstance().modificaDipendente(DipendenteFragment.this, handler);
+            }
+        });
+
+
+        bottoneLicenzia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PresenterDipendenti.getInstance().rimuoviDipendente(DipendenteFragment.this, new UtenteHandler(dipendenteScelto));
+            }
+        });
 
     }
 
@@ -177,7 +202,33 @@ public class DipendenteFragment extends Fragment implements RecyclerViewDipenden
 
     public void setListaDipendenti(ArrayList<Utente> listaDipendenti) {
         dipendenti.clear();
-        dipendenti.addAll(listaDipendenti);
+
+        for (Utente dipendente : listaDipendenti) {
+            if (dipendente.getRuoloUtente().equals("Amministratore")) {
+                if (!((Amministratore)dipendente).isSuperA()) {
+                    if (utenteCorrente.getRuoloUtente().equals("Amministratore") && ((Amministratore)utenteCorrente).isSuperA())
+                        dipendenti.add(dipendente);
+                }
+            }
+            else if (dipendente.getRuoloUtente().equals("Supervisore")) {
+                if (utenteCorrente.getRuoloUtente().equals("Amministratore"))
+                    dipendenti.add(dipendente);
+            }
+            else
+                dipendenti.add(dipendente);
+        }
+
         dipendenteAdapter.notifyDataSetChanged();
     }
+
+    public void dipendenteLicenziato() {
+        dialogVisualizzaDipendente.dismiss();
+        PresenterDipendenti.getInstance().recuperaDipendentiDaRistorante(this, ristoranteCorrente);
+    }
+
+    public void ruoloDipendenteModificato() {
+        PresenterDipendenti.getInstance().recuperaDipendentiDaRistorante(this, ristoranteCorrente);
+    }
+
+
 }
