@@ -168,12 +168,16 @@ public class ControllerUtente {
 
 	            ApiGatewayResponse response = caller.execute(HttpMethodName.GET, "/modifypass", new ByteArrayInputStream(jsonRequest.getBytes()));
 	            //Non facciamo controlli siccome assumiamo che questi vengano gia fatti nella schermata dei dati
-	            
-	            res.messaggio = "Tutto bene";
+	            JSONObject body = new JSONObject(response.getBody());
+	            if(body.has("errorMessage"))
+	            	res.messaggio = body.getString("errorMessage");
+	            else
+	            	res.messaggio = "Tutto bene";
 			}
 			else
 			{//significa che stiamo aggiornando l'entita e non la password
 				Utente mod = handle.utente;
+				
 				mod.setidRistorante(handle.ristorante);
 				service.updateUtente(mod);
 				res.messaggio = "Tutto bene";

@@ -41,5 +41,11 @@ public class ServiceSezioneMenu {
 		}
 		return "Tutto bene";
 	}
+
+	public void update(SezioneMenu sezione) {
+		SezioneMenu sezCurr = repository.findById(sezione.getIdAvviso()).get();
+		sezCurr = sezione;
+		save(sezCurr);
+	}
 	
 }

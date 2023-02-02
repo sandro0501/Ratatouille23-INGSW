@@ -43,6 +43,8 @@ public class ServiceUtente {
 	
 	public void updateUtente(Utente utente) {
 		Utente mod = repository.findById(utente.getIdUtente()).get();
+		if ((mod.getRuolo() == "Amministratore" || mod.getRuolo() == "Supervisore") && (utente.getRuolo() != "Amministratore" && utente.getRuolo() != "Supervisore"))
+			repAvv.deleteAll(repAvv.findByUid(mod.getIdUtente()));
 		mod = utente;
 		repository.save(mod);
 	}
@@ -54,8 +56,8 @@ public class ServiceUtente {
 
 	public String delete(Utente utente) {
 		//Prima eliminiamo tutti gli avvisi e POI le bachece associate
-		repAvv.deleteAll(repAvv.findByUid(utente.getIdUtente()));
 		repBac.deleteAll(repBac.findByUid(utente.getIdUtente()));
+		repAvv.deleteAll(repAvv.findByUid(utente.getIdUtente()));
 		//Infine l'utente
 		repository.delete(repository.findById(utente.getIdUtente()).get());
 		return "Tutto bene";

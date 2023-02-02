@@ -17,6 +17,7 @@ import com.fpsteam.ratatouille2023.entity.Elemento;
 import com.fpsteam.ratatouille2023.entity.Prodotto;
 import com.fpsteam.ratatouille2023.handlers.EliminaElementiHandler;
 import com.fpsteam.ratatouille2023.handlers.EliminaProdottiHandler;
+import com.fpsteam.ratatouille2023.handlers.HandleElemento;
 import com.fpsteam.ratatouille2023.service.ServiceElemento;
 
 @RestController
@@ -26,17 +27,21 @@ public class ControllerElemento {
 	private ServiceElemento service;
 
 	@PostMapping("")
-	public String aggiungiElemento(@RequestBody Elemento elemento)
+	public String aggiungiElemento(@RequestBody HandleElemento handle)
 	{
+		Elemento elemento = handle.elemento;
+		elemento.setSezioneMenu(handle.sezione);
 		service.save(elemento);
 		return "Tutto bene";
 	}
 	
 	@PutMapping("")
-	public String aggiornaElemento(@RequestBody Elemento elemento)
+	public String aggiornaElemento(@RequestBody HandleElemento handle)
 	{
 		try
 		{
+			Elemento elemento = handle.elemento;
+			elemento.setSezioneMenu(handle.sezione);
 			service.update(elemento);
 			return "Tutto bene";
 		}

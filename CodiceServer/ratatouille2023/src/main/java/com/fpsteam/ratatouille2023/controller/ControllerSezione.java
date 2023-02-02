@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,6 +42,14 @@ public class ControllerSezione {
 	private ServiceProdotto serviceProdotto;
 	@Autowired
 	private ServiceSezioneMenu service;
+	
+	@PutMapping("")
+	public String modificaSezione(@RequestBody SezioneMenu sezione)
+	{
+		service.update(sezione);
+		return "Tutto bene";
+	}
+	
 	
 	@PostMapping("")
 	public String aggiungiSezione(@RequestBody SezioneMenu sezione)
