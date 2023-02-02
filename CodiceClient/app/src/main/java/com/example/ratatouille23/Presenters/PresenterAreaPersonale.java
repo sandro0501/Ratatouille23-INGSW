@@ -5,6 +5,7 @@ import com.example.ratatouille23.DAO.DAOUtente;
 import com.example.ratatouille23.DAO.DAOUtenteImpl;
 import com.example.ratatouille23.Exceptions.CampiVuotiException;
 import com.example.ratatouille23.Exceptions.ConfermaPasswordErrataException;
+import com.example.ratatouille23.Exceptions.PasswordNonAdeguataException;
 import com.example.ratatouille23.Exceptions.PasswordUgualeException;
 import com.example.ratatouille23.Handlers.ModificaPasswordHandler;
 import com.example.ratatouille23.Views.ModificaPasswordActivity;
@@ -27,31 +28,29 @@ public class PresenterAreaPersonale extends PresenterBase {
 
     }
 
-    public void modificaPasswordPremuto(ModificaPasswordActivity context, String accessKey, String vecchiaPassword, String nuovaPassword, String confermaPassword) throws ConfermaPasswordErrataException, CampiVuotiException, PasswordUgualeException {
+    public void modificaPasswordPremuto(ModificaPasswordActivity context, String accessKey, String vecchiaPassword, String nuovaPassword, String confermaPassword) throws ConfermaPasswordErrataException, CampiVuotiException, PasswordUgualeException, PasswordNonAdeguataException {
 
-        if (!vecchiaPassword.isEmpty() && !nuovaPassword.isEmpty() && !confermaPassword.isEmpty()) {
-            if (nuovaPassword.equals(confermaPassword)){
-                if (!vecchiaPassword.equals(nuovaPassword)) {
+        if (vecchiaPassword.isEmpty() || nuovaPassword.isEmpty() || confermaPassword.isEmpty()) throw new PasswordUgualeException();
+        if (!nuovaPassword.equals(confermaPassword)) throw new CampiVuotiException();
+        if (vecchiaPassword.equals(nuovaPassword)) throw new PasswordUgualeException();
+        if (!PresenterLogin.getInstance().soddisfaRequisiti(nuovaPassword)) throw new PasswordNonAdeguataException();
 
-                    ModificaPasswordHandler handler = new ModificaPasswordHandler();
-                    handler.accessToken = accessKey;
-                    handler.old = vecchiaPassword;
-                    handler.newp = nuovaPassword;
+        ModificaPasswordHandler handler = new ModificaPasswordHandler();
+        handler.accessToken = accessKey;
+        handler.old = vecchiaPassword;
+        handler.newp = nuovaPassword;
 
-                    daoUtente.modificaPassword(handler, new DAOUtenteImpl.ModificaPasswordCallbacks() {
-                        @Override
-                        public void onModificaPassword() {
-                            context.passwordModificataCorrettamente();
-                        }
-                    });
-
-                }
-                else throw new PasswordUgualeException();
+        daoUtente.modificaPassword(handler, new DAOUtenteImpl.ModificaPasswordCallbacks() {
+            @Override
+            public void onModificaPassword() {
+                context.passwordModificataCorrettamente();
             }
-            else throw new ConfermaPasswordErrataException();
-        }
-        else throw new CampiVuotiException();
 
+            @Override
+            public void onVecchiaPasswordErrata() {
+                PresenterAreaPersonale.getInstance().mostraAlert(context, "Errore!", "La password inserita è errata!");
+            }
+        });
 
     }
 

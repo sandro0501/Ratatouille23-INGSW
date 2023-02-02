@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ratatouille23.Models.Elemento;
 import com.example.ratatouille23.Models.SezioneMenu;
+import com.example.ratatouille23.Presenters.PresenterMenu;
 import com.example.ratatouille23.R;
 
 import java.util.ArrayList;
@@ -72,7 +73,7 @@ public class SezioneMenuRecyclerViewAdapter extends RecyclerView.Adapter<Sezione
             @Override
             public void onClick(View view) {
                 if (!((MenuFragment)recyclerViewInterfaceSezioni).isModalitaEliminazione()) {
-                    holder.sezioneCorrente.setInModifica(!holder.sezioneCorrente.isInModifica());
+                    holder.inModifica = !holder.inModifica;
                     impostaGraficamenteModalitaModifica(holder, holder.sezioneCorrente);
                 }
             }
@@ -81,8 +82,7 @@ public class SezioneMenuRecyclerViewAdapter extends RecyclerView.Adapter<Sezione
         holder.iconaEliminaSezione.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listaSezioni.remove(holder.getAdapterPosition());
-                ((MenuFragment)recyclerViewInterfaceSezioni).getAdapterSezioni().notifyItemRemoved(holder.getAdapterPosition());
+                PresenterMenu.getInstance().rimuoviSezione(((MenuFragment)recyclerViewInterfaceSezioni), listaSezioni.get(holder.getAdapterPosition()));
             }
         });
 
@@ -106,13 +106,13 @@ public class SezioneMenuRecyclerViewAdapter extends RecyclerView.Adapter<Sezione
     }
 
     private void impostaGraficamenteModalitaModifica(MyViewHolder holder, SezioneMenu sezioneMenu) {
-        if (!sezioneMenu.isInModifica()) {
+        if (!holder.inModifica) {
             holder.iconaMatitaModificaSezione.setImageResource(R.drawable.icona_matita);
             holder.editTextTitoloSezione.setEnabled(false);
             holder.titoloCorrente = holder.editTextTitoloSezione.getText().toString();
             holder.editTextTitoloSezione.setText(holder.titoloCorrente);
             holder.iconaEliminaSezione.setVisibility(View.INVISIBLE);
-            sezioneMenu.setInModifica(false);
+            holder.inModifica = false;
         }
         else {
             holder.iconaMatitaModificaSezione.setImageResource(R.drawable.icona_spunta_modifica);
@@ -120,7 +120,7 @@ public class SezioneMenuRecyclerViewAdapter extends RecyclerView.Adapter<Sezione
             holder.editTextTitoloSezione.requestFocus();
             holder.editTextTitoloSezione.setSelection(holder.editTextTitoloSezione.getText().length());
             holder.iconaEliminaSezione.setVisibility(View.VISIBLE);
-            sezioneMenu.setInModifica(true);
+            holder.inModifica = true;
         }
     }
 
@@ -140,6 +140,7 @@ public class SezioneMenuRecyclerViewAdapter extends RecyclerView.Adapter<Sezione
         private String titoloCorrente;
         private SezioneMenu sezioneCorrente;
         private ImageView iconaDragNDrop;
+        private boolean inModifica = false;
 
         public MyViewHolder(@NonNull View itemView, RecyclerViewSezioneMenuInterface recyclerViewInterfaceSezioni) {
             super(itemView);

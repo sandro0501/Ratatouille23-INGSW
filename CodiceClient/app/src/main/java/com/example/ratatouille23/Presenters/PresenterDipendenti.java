@@ -55,6 +55,16 @@ public class PresenterDipendenti extends PresenterBase {
             public void onAggiuntaDipendente() {
                 context.dipendenteAggiunto();
             }
+
+            @Override
+            public void onUtenteGiaPresente() {
+                PresenterDipendenti.getInstance().mostraAlert(context, "Errore!", "L'email inserita è già utilizzata da un altro utente!");
+            }
+
+            @Override
+            public void onUtenteLicenziatoPrecedentemente() {
+                PresenterDipendenti.getInstance().mostraAlertFinishActivity(context, "Attenzione!", "L'utente lavorava per questo ristorante in passato e dovrà utilizzare la sua ultima password per accedere!");
+            }
         });
     }
 

@@ -4,4 +4,5 @@ public class ModificaPasswordHandler {
     public String old;
     public String newp;
     public String accessToken;
+    public boolean passc = true;
 }

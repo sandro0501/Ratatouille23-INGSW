@@ -1,19 +1,26 @@
 package com.example.ratatouille23.Models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Elemento implements Serializable {
 
     private int idElemento;
+    @SerializedName("denominazioneP")
     private String denominazionePrincipale;
+    @SerializedName("denominazioneS")
     private String denominazioneSecondaria = "";
+    @SerializedName("descrizioneP")
     private String descrizionePrincipale;
+    @SerializedName("descrizioneS")
     private String descrizioneSecondaria = "";
     private Double costo;
     private int posizione;
     private ArrayList<Allergene> presenta = new ArrayList<>();
     private ArrayList<Preparazione> preparazione = new ArrayList<>();
+    @SerializedName("sezioneMenu")
     private SezioneMenu appartiene;
 
     public Elemento(String denominazionePrincipale, String denominazioneSecondaria, String descrizionePrincipale, String descrizioneSecondaria, Double costo, int posizione, ArrayList<Allergene> presenta, ArrayList<Preparazione> preparazione, SezioneMenu appartiene) {

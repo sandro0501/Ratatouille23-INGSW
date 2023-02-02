@@ -3,6 +3,8 @@ package com.example.ratatouille23.Views;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
@@ -76,10 +78,22 @@ public class PrimoLoginModificaPasswordActivity extends AppCompatActivity {
     }
 
     public void passwordModificataCorrettamente(Utente utenteControllato) {
-        PresenterLogin.getInstance().mostraAlert(PrimoLoginModificaPasswordActivity.this, "Successo!", "La password è stata modificata correttamente!\nEffettuare nuovamente il login.");
         Intent i = new Intent(getApplicationContext(), BachecaActivity.class);
         i.putExtra("Utente", utenteControllato);
-        startActivity(i);
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setCancelable(false);
+        dialog.setTitle("Successo!");
+        dialog.setMessage("La password è stata modificata correttamente!\nEffettuare nuovamente il login.");
+        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int j) {
+                startActivity(i);
+            }
+        });
+        final AlertDialog alert = dialog.create();
+        alert.show();
+
     }
 
     public void occhioSchermataModificaPasswordPremuto(View view) {

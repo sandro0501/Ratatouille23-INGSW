@@ -1,5 +1,8 @@
 package com.example.ratatouille23.DAO;
 
+import android.util.Log;
+
+import com.example.ratatouille23.Handlers.EliminaSezioniHandler;
 import com.example.ratatouille23.InterfacceRetrofit.LoginService;
 import com.example.ratatouille23.InterfacceRetrofit.SezioneMenuService;
 import com.example.ratatouille23.Models.Allergene;
@@ -24,7 +27,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DAOSezioneMenuImpl implements DAOSezioneMenu {
 
     public interface EstraiMenuCallbacks {
-        public void onEstratto(ArrayList<SezioneMenu> listaSezioni);
+        void onEstratto(ArrayList<SezioneMenu> listaSezioni);
+    }
+
+    public interface AggiungiSezioneCallbacks {
+        void onAggiuntaSezione();
+    }
+
+    public interface RimuoviSezioneCallbacks {
+        void onRimozioneSezione();
     }
 
     Retrofit retrofitSezione = new Retrofit.Builder().baseUrl(DAOBaseUrl.baseUrl()).addConverterFactory(GsonConverterFactory.create()).build();
@@ -120,6 +131,61 @@ public class DAOSezioneMenuImpl implements DAOSezioneMenu {
                     {
                         System.out.println(e.getMessage());
                     }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void aggiungiSezioneMenu(SezioneMenu sezione, AggiungiSezioneCallbacks callback) {
+        Call<ResponseBody> callAggiunta = sezioneMenuService.insertSezione(sezione);
+        callAggiunta.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        String messaggio = response.body().string();
+                        Log.i("messaggio", messaggio);
+                        if (messaggio.equals("Tutto bene"))
+                            callback.onAggiuntaSezione();
+                    }
+                    catch (Exception e) {
+                        Log.i("Exception", e.getMessage());
+                    }
+                }
+                else {
+                    Log.i("response", ((Integer)response.code()).toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void rimuoviSezioneMenu(EliminaSezioniHandler handler, RimuoviSezioneCallbacks callback) {
+        Call<ResponseBody> callAggiunta = sezioneMenuService.deleteSezione(handler);
+        callAggiunta.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        String messaggio = response.body().string();
+                        if (messaggio.equals("Tutto bene"))
+                            callback.onRimozioneSezione();
+                    }
+                    catch (Exception e) {
+                        Log.i("Exception", e.getMessage());
+                    }
+                }
+                else {
+                    Log.i("response", response.message());
                 }
             }
 

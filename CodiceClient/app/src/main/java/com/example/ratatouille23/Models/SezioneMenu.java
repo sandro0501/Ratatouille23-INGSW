@@ -9,7 +9,7 @@ public class SezioneMenu implements Serializable {
     private String titolo;
     private int posizione;
     private ArrayList<Elemento> appartenente = new ArrayList<>();
-    private boolean inModifica = false;
+    private Ristorante ristorante;
 
     public SezioneMenu(String nome, int posizione) {
         this.titolo = nome;
@@ -25,15 +25,8 @@ public class SezioneMenu implements Serializable {
     }
 
     public void setIdAvviso(int idAvviso){ this.idAvviso = idAvviso;}
+
     public int getIdAvviso(){return idAvviso;}
-
-    public boolean isInModifica() {
-        return inModifica;
-    }
-
-    public void setInModifica(boolean inModifica) {
-        this.inModifica = inModifica;
-    }
 
     public ArrayList<Elemento> getAppartenente() {
         return appartenente;
@@ -57,6 +50,14 @@ public class SezioneMenu implements Serializable {
 
     public void setPosizione(int posizione) {
         this.posizione = posizione;
+    }
+
+    public Ristorante getRistorante() {
+        return ristorante;
+    }
+
+    public void setRistorante(Ristorante ristorante) {
+        this.ristorante = ristorante;
     }
 
     @Override

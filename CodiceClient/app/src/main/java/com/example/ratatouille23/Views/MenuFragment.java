@@ -219,8 +219,8 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
 
                     if (spinnerAdapter.getItem(i).equals("Aggiungi una sezione")) {
                         SezioneMenu nuovaSezione = new SezioneMenu("Nuova sezione", listaSezioni.size());
-                        listaSezioni.add(nuovaSezione);
-                        adapterSezioni.notifyDataSetChanged();
+                        nuovaSezione.setRistorante(ristoranteCorrente);
+                        PresenterMenu.getInstance().aggiungiSezione(MenuFragment.this, nuovaSezione);
                         spinnerSceltaAggiunta.setSelection(2, false);
 
                     } else if (spinnerAdapter.getItem(i).equals("Aggiungi un piatto")) {
@@ -376,6 +376,8 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
                         Double.parseDouble(prezzoElementoEditText.getText().toString()),
                         sezioneScelta.getAppartenente().size()
                         );
+                piattoDaAggiungere.setDenominazioneSecondaria(titoloSecondarioElementoEditText.getText().toString());
+                piattoDaAggiungere.setDescrizioneSecondaria(descrizioneSecondariaElementoEditText.getText().toString());
                 piattoDaAggiungere.setAppartiene(sezioneScelta);
                 ArrayList<Allergene> allergeniPiattoCorrente = new ArrayList<>();
                 for (CheckBox checkBox : checkBoxAllergeni) {
@@ -384,9 +386,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
                     }
                 }
                 piattoDaAggiungere.setPresenta(allergeniPiattoCorrente);
-                //INVIA PIATTO FORMATO (piattoDaAggiungere)
-                PresenterMenu.getInstance().mostraAlert(getContext(), "Piatto aggiunto", "Piatto aggiunto correttamente al menù");
-                dialogElemento.dismiss();
+                PresenterMenu.getInstance().aggiungiElemento(MenuFragment.this, piattoDaAggiungere);
             }
         });
 
@@ -479,7 +479,6 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
             //modifica elemento
             Log.println(Log.VERBOSE, "aa", elementoCliccato.getDenominazionePrincipale());
             mostraDialogModificaElemento(elementoCliccato);
-
 
         }
     }
@@ -645,8 +644,8 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
                 }
                 elementoDaModificare.setPresenta(allergeniPiattoCorrente);
 
-                PresenterMenu.getInstance().mostraAlert(getContext(), "Piatto modificato", "Piatto modificato correttamente");
                 dialogElemento.dismiss();
+                PresenterMenu.getInstance().mostraAlert(getContext(), "Piatto modificato", "Piatto modificato correttamente");
             }
         });
 
@@ -699,6 +698,9 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
 
     public void setListaSezioni(ArrayList<SezioneMenu> listaSezioni)
     {
+        for (SezioneMenu sezione : listaSezioni)
+            sezione.setRistorante(ristoranteCorrente);
+
         this.listaSezioni.clear();
         this.listaSezioni.addAll(listaSezioni);
         adapterSezioni.notifyDataSetChanged();
@@ -712,5 +714,15 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
     public void setupListaElementiOpenFoodFacts(ArrayList<Elemento> listaElementiOttenuta) {
         adapterAutoComplete.addAll(listaElementiOttenuta);
         adapterAutoComplete.getFilter().filter(null);
+    }
+
+    public void aggiornaMenu() {
+        PresenterMenu.getInstance().estraiMenu(this, ristoranteCorrente);
+    }
+
+    public void elementoAggiuntoCorrettamente() {
+        dialogElemento.dismiss();
+        PresenterMenu.getInstance().mostraAlert(getContext(), "Piatto aggiunto", "Piatto aggiunto correttamente al menù");
+        PresenterMenu.getInstance().estraiMenu(this, ristoranteCorrente);
     }
 }

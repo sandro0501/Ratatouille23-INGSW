@@ -39,6 +39,8 @@ public class DAOUtenteImpl implements DAOUtente {
         void onPrimoAccessoUtente(Utente utente, String session);
 
         void onAccessoErratoUtente();
+
+        void onAccessoUtenteLicenziato();
     }
 
     public interface ModificaPasswordPrimoLoginCallbacks {
@@ -49,6 +51,7 @@ public class DAOUtenteImpl implements DAOUtente {
     {
         void onRichiestaCodice();
         void onConfermaCodice();
+        void onCodiceErrato();
     }
 
 
@@ -63,6 +66,8 @@ public class DAOUtenteImpl implements DAOUtente {
 
     public interface AggiungiDipendenteCallbacks {
         void onAggiuntaDipendente();
+        void onUtenteGiaPresente();
+        void onUtenteLicenziatoPrecedentemente();
     }
 
     public interface ModificaDipendenteCallbacks {
@@ -71,6 +76,7 @@ public class DAOUtenteImpl implements DAOUtente {
 
     public interface ModificaPasswordCallbacks {
         void onModificaPassword();
+        void onVecchiaPasswordErrata();
     }
 
     Retrofit retrofitLogin = new Retrofit.Builder().baseUrl(DAOBaseUrl.baseUrl()).addConverterFactory(GsonConverterFactory.create()).build();
@@ -100,7 +106,10 @@ public class DAOUtenteImpl implements DAOUtente {
                                 Utente utenteCorrente = formaUtenteDaJSON(jsonLoginUtente);
                                 callback.onAccessoCorrettoUtente(utenteCorrente);
 
-                            } else {
+                            } else if (successo.equals("Non sei associato a nessun ristorante!")) {
+                                callback.onAccessoUtenteLicenziato();
+                            }
+                            else {
                                 throw new LoginFallitoException();
                             }
 
@@ -116,13 +125,13 @@ public class DAOUtenteImpl implements DAOUtente {
                         }
                     }
                     else {
-                        callback.onErroreDiConnessione(response);
+                        callback.onErroreDiHTTP(response);
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Log.i("Prova", t.getMessage());
+                    callback.erroreConnessioneGenerico();
                 }
             });
         }
@@ -200,7 +209,20 @@ public class DAOUtenteImpl implements DAOUtente {
             {
                 if(response.isSuccessful())
                 {
-                    callback.onConfermaCodice();
+                    try {
+                        JSONObject bodyJSON = new JSONObject(response.body().string());
+                        String messaggio = bodyJSON.getString("messaggio");
+                        if (messaggio.equals("Tutto bene"))
+                            callback.onConfermaCodice();
+                        else if (messaggio.equals("")){
+                            callback.onCodiceErrato();
+                        }
+                    }
+                    catch (Exception e) {
+                    }
+                }
+                else {
+
                 }
             }
 
@@ -269,13 +291,13 @@ public class DAOUtenteImpl implements DAOUtente {
                     callback.onEliminazioneDipendente();
                 }
                 else {
-
+                    Log.i("HTTP", ((Integer)response.code()).toString());
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                Log.i("FAILURE", t.getMessage());
             }
         });
     }
@@ -292,12 +314,14 @@ public class DAOUtenteImpl implements DAOUtente {
                         String messaggio = bodyJSON.getString("messaggio");
                         if (messaggio.equals("Tutto bene"))
                             callback.onAggiuntaDipendente();
-                        else {
-
+                        else if (messaggio.equals("could not execute statement; SQL [n/a]; constraint [utente.UK_gxvq4mjswnupehxnp35vawmo2]")){
+                            callback.onUtenteGiaPresente();
+                        }
+                        else if (messaggio.equals("UsernameExistsException")) {
+                            callback.onUtenteLicenziatoPrecedentemente();
                         }
                     }
                     catch (Exception e) {
-
                     }
                 }
                 else {
@@ -372,6 +396,7 @@ public class DAOUtenteImpl implements DAOUtente {
     }
 
     public void modificaPassword(ModificaPasswordHandler handler, ModificaPasswordCallbacks callback) {
+        Log.i("HANDLER", handler.accessToken +"\n" + handler.old + "\n" + handler.newp + "\n" + handler.passc);
         Call<ResponseBody> callConferma = loginService.modificaPassword(handler);
         callConferma.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -382,12 +407,15 @@ public class DAOUtenteImpl implements DAOUtente {
                         String messaggio = bodyJSON.getString("messaggio");
                         if (messaggio.equals("Tutto bene"))
                             callback.onModificaPassword();
+                        else if (messaggio.contains("Incorrect username or password.")){
+                            callback.onVecchiaPasswordErrata();
+                        }
                         else {
-
+                            Log.i("MESSAGGIO", messaggio);
                         }
                     }
                     catch (Exception e) {
-
+                        Log.i("Exception", e.getMessage());
                     }
                 }
                 else {

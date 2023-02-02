@@ -9,6 +9,7 @@ import com.example.ratatouille23.DAO.DAORistorante;
 import com.example.ratatouille23.DAO.DAORistoranteImpl;
 import com.example.ratatouille23.DAO.DAOSezioneMenu;
 import com.example.ratatouille23.DAO.DAOSezioneMenuImpl;
+import com.example.ratatouille23.Handlers.EliminaSezioniHandler;
 import com.example.ratatouille23.Models.Elemento;
 import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Models.SezioneMenu;
@@ -68,4 +69,36 @@ public class PresenterMenu extends PresenterBase {
             }
         });
     }
+
+    public void aggiungiSezione(MenuFragment context, SezioneMenu sezione) {
+        daoSezioneMenu.aggiungiSezioneMenu(sezione, new DAOSezioneMenuImpl.AggiungiSezioneCallbacks() {
+            @Override
+            public void onAggiuntaSezione() {
+                context.aggiornaMenu();
+            }
+        });
+    }
+
+    public void rimuoviSezione(MenuFragment context, SezioneMenu sezione) {
+        EliminaSezioniHandler handler = new EliminaSezioniHandler();
+        ArrayList<SezioneMenu> listaSezioni = new ArrayList<>();
+        listaSezioni.add(sezione);
+        handler.sezioni = listaSezioni;
+        daoSezioneMenu.rimuoviSezioneMenu(handler, new DAOSezioneMenuImpl.RimuoviSezioneCallbacks() {
+            @Override
+            public void onRimozioneSezione() {
+                context.aggiornaMenu();
+            }
+        });
+    }
+
+    public void aggiungiElemento(MenuFragment context, Elemento elemento) {
+        daoElemento.insertElemento(elemento, new DAOElementoImpl.AggiuntaElementiCallbacks() {
+            @Override
+            public void onAggiuntaElemento() {
+                context.elementoAggiuntoCorrettamente();
+            }
+        });
+    }
+
 }

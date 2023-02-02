@@ -149,10 +149,10 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
                             @Override
                             public void onClick(View view) {
                                 //codice db
+                                dialogEliminaIngrediente.dismiss();
                                 PresenterDispensa.getInstance().mostraAlert(VisualizzazioneIngredientiElementoActivity.this, "Eliminazione effettuata", "Eliminazione dei prodotti selezionati effettuata correttamente!");
                                 disattivaModalitaEliminazione();
                                 deselezionaTuttiProdotti();
-                                dialogEliminaIngrediente.dismiss();
                             }
                         });
 

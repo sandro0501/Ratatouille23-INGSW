@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.ratatouille23.Exceptions.PasswordNonAdeguataException;
 import com.example.ratatouille23.Presenters.PresenterLogin;
 import com.example.ratatouille23.R;
 
@@ -59,14 +60,13 @@ public class ConfermaCodiceActivity extends AppCompatActivity {
                 String codice = editTextCodice.getText().toString();
                 String password = editTextPassword.getText().toString();
                 String confermaPassword = editTextConfermaPassword.getText().toString();
-                if (!codice.isEmpty() && !password.isEmpty() && !confermaPassword.isEmpty()) {
-                    if (password.equals(confermaPassword)){
-                        PresenterLogin.getInstance().bottoneResettaPasswordConCodicePremuto(email, codice, password,context);
-                    }
-                    else PresenterLogin.getInstance().mostraAlert(ConfermaCodiceActivity.this, "Attenzione!", "Le password inserite non coincidono!");
+
+                try {
+                    PresenterLogin.getInstance().bottoneResettaPasswordConCodicePremuto(email, codice, password, confermaPassword, context);
+                } catch (Exception e) {
+                    PresenterLogin.getInstance().mostraAlert(ConfermaCodiceActivity.this, "Attenzione", e.getMessage());
                 }
-                else PresenterLogin.getInstance().mostraAlert(ConfermaCodiceActivity.this, "Attenzione!", "Uno o più campi obbligatori sono " +
-                        "stati lasciati vuoti");
+
             }
         });
 

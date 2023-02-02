@@ -2,6 +2,7 @@ package com.example.ratatouille23.DAO;
 
 import android.util.Log;
 
+import com.example.ratatouille23.InterfacceRetrofit.ElementoService;
 import com.example.ratatouille23.InterfacceRetrofit.OpenFootFactsService;
 import com.example.ratatouille23.InterfacceRetrofit.ProdottoService;
 import com.example.ratatouille23.Models.Allergene;
@@ -30,8 +31,13 @@ public class DAOElementoImpl implements DAOElemento {
         void onCaricamentoListaElementiOpenFoodFacts (ArrayList<Elemento> listaElementiOttenuta);
     }
 
+    public interface AggiuntaElementiCallbacks {
+        void onAggiuntaElemento ();
+    }
+
     Retrofit retrofitOpenFoodFacts = new Retrofit.Builder().baseUrl("https://it.openfoodfacts.org/cgi/").addConverterFactory(GsonConverterFactory.create()).build();
     OpenFootFactsService openFootFactsService = retrofitOpenFoodFacts.create(OpenFootFactsService.class);
+    ElementoService elementoService = retrofitOpenFoodFacts.create(ElementoService.class);
 
     @Override
     public void getElementiOpenFoodFactsDaStringa(String stringaIniziale, ElementiFoodFactsCallbacks callback) {
@@ -116,6 +122,33 @@ public class DAOElementoImpl implements DAOElemento {
                 }
                 else {
                     Log.i("HTTP EXCEPTION", "");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void insertElemento(Elemento elementoDaAggiungere, AggiuntaElementiCallbacks callback) {
+        Call<ResponseBody> call = elementoService.aggiungiElemento(elementoDaAggiungere);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        String messaggio = response.body().string();
+                        if (messaggio.equals("Tutto bene"))
+                            callback.onAggiuntaElemento();
+                    }
+                    catch (Exception e) {
+                        Log.i("Exception", e.getMessage());
+                    }
+                }
+                else {
+                    Log.i("response", response.message());
                 }
             }
 

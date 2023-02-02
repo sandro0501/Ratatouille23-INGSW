@@ -92,7 +92,7 @@ public class DAOAvvisoImpl implements DAOAvviso
                                             false
                                             );
                             }
-                            Avviso nuovo = new Avviso(avviso.getInt(0),avviso.getString(1),avviso.getString(2),date,gestore);
+                            Avviso nuovo = new Avviso(avviso.getInt(0),avviso.getString(2),avviso.getString(1),date,gestore);
                             avvisiNuovi.add(nuovo);
                         }
 
@@ -113,7 +113,7 @@ public class DAOAvvisoImpl implements DAOAvviso
                                             false
                                     );
                             }
-                            Avviso nuovo = new Avviso(avviso.getInt(0),avviso.getString(1),avviso.getString(2),date,gestore);
+                            Avviso nuovo = new Avviso(avviso.getInt(0),avviso.getString(2),avviso.getString(1),date,gestore);
                             avvisiLetti.add(nuovo);
                         }
 
@@ -134,7 +134,7 @@ public class DAOAvvisoImpl implements DAOAvviso
                                             false
                                     );
                             }
-                            Avviso nuovo = new Avviso(avviso.getInt(0),avviso.getString(1),avviso.getString(2),date,gestore);
+                            Avviso nuovo = new Avviso(avviso.getInt(0),avviso.getString(2),avviso.getString(1),date,gestore);
                             avvisiNascosti.add(nuovo);
                         }
 

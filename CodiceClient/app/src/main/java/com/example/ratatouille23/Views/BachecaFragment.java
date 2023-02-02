@@ -155,9 +155,9 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
     }
 
     @Override
-    public void onAvvisoClicked(int posizioneAvviso) {
+    public void onAvvisoClicked(Bacheca avvisoCliccato) {
 
-        visualizzaAvviso(posizioneAvviso);
+        visualizzaAvviso(avvisoCliccato);
 
     }
 
@@ -172,26 +172,26 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
 
     }
 
-    private void visualizzaAvviso(int posizioneAvviso) {
+    private void visualizzaAvviso(Bacheca avvisoCliccato) {
         Intent intentFromBachecaToVisualizzazioneAvviso = new Intent(getContext(), VisualizzazioneAvvisoActivity.class);
 
         //passa i dati dal fragment all'activity
-        intentFromBachecaToVisualizzazioneAvviso.putExtra("OGGETTO", avvisiVisibili.get(posizioneAvviso).getAvvisoAssociato().getOggetto());
-        intentFromBachecaToVisualizzazioneAvviso.putExtra("AUTORE", avvisiVisibili.get(posizioneAvviso).getAvvisoAssociato().getAutore().getNomeCompleto());
-        intentFromBachecaToVisualizzazioneAvviso.putExtra("RUOLOAUOTORE", avvisiVisibili.get(posizioneAvviso).getAvvisoAssociato().getAutore().getRuoloUtente());
-        intentFromBachecaToVisualizzazioneAvviso.putExtra("DATACREAZIONE", avvisiVisibili.get(posizioneAvviso).getAvvisoAssociato().getDataCreazione());
-        intentFromBachecaToVisualizzazioneAvviso.putExtra("CORPO", avvisiVisibili.get(posizioneAvviso).getAvvisoAssociato().getCorpo());
+        intentFromBachecaToVisualizzazioneAvviso.putExtra("OGGETTO", avvisoCliccato.getAvvisoAssociato().getOggetto());
+        intentFromBachecaToVisualizzazioneAvviso.putExtra("AUTORE", avvisoCliccato.getAvvisoAssociato().getAutore().getNomeCompleto());
+        intentFromBachecaToVisualizzazioneAvviso.putExtra("RUOLOAUOTORE", avvisoCliccato.getAvvisoAssociato().getAutore().getRuoloUtente());
+        intentFromBachecaToVisualizzazioneAvviso.putExtra("DATACREAZIONE", avvisoCliccato.getAvvisoAssociato().getDataCreazione());
+        intentFromBachecaToVisualizzazioneAvviso.putExtra("CORPO", avvisoCliccato.getAvvisoAssociato().getCorpo());
 
-        if(avvisiVisibili.get(posizioneAvviso).isVisualizzato())
+        if(avvisoCliccato.isVisualizzato())
         {
             getContext().startActivity(intentFromBachecaToVisualizzazioneAvviso);
         }
         else
         {
-            avvisiVisibili.get(posizioneAvviso).setVisualizzato(true);
+            avvisoCliccato.setVisualizzato(true);
             AggiornaAvvisoHandler handle = new AggiornaAvvisoHandler();
             handle.utente = utenteCorrente;
-            handle.avviso = avvisiVisibili.get(posizioneAvviso).getAvvisoAssociato();
+            handle.avviso = avvisoCliccato.getAvvisoAssociato();
             PresenterBacheca.getInstance().visualizzaAvviso(this,intentFromBachecaToVisualizzazioneAvviso,handle);
         }
     }

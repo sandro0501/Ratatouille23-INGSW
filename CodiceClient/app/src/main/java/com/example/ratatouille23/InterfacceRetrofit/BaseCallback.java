@@ -5,6 +5,8 @@ import retrofit2.Response;
 
 public interface BaseCallback {
 
-    void onErroreDiConnessione(Response<ResponseBody> response);
+    void onErroreDiHTTP(Response<ResponseBody> response);
+
+    void erroreConnessioneGenerico();
 
 }

@@ -28,7 +28,7 @@ public class AvvisoRecyclerViewAdapter extends RecyclerView.Adapter<AvvisoRecycl
 	private final RecyclerViewAvvisoInterface recyclerViewInterfaceAvviso;
 
     private Context context;
-    private ArrayList<Bacheca> avvisi;
+    protected ArrayList<Bacheca> avvisi;
 
     public AvvisoRecyclerViewAdapter(Context context, ArrayList<Bacheca> avvisi, RecyclerViewAvvisoInterface recyclerViewInterfaceAvviso){
         this.context = context;
@@ -97,7 +97,7 @@ public class AvvisoRecyclerViewAdapter extends RecyclerView.Adapter<AvvisoRecycl
         return avvisi.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder{
         //una specie di metodo onCreate che prende gli elementi di cui sono formate le card dal file xml
         ImageView imageViewAvvisi, imageViewNascondiAvviso;
         TextView autoreAvviso, oggettoAvviso, corpoAvviso, dataAvviso, ruoloAutoreAvviso;
@@ -119,7 +119,7 @@ public class AvvisoRecyclerViewAdapter extends RecyclerView.Adapter<AvvisoRecycl
                     if (recyclerViewInterfaceAvviso != null) {
                         int posizioneAvviso = getAdapterPosition();
                         if(posizioneAvviso!=RecyclerView.NO_POSITION){
-                            recyclerViewInterfaceAvviso.onAvvisoClicked(posizioneAvviso);
+                            recyclerViewInterfaceAvviso.onAvvisoClicked(avvisi.get(posizioneAvviso));
                         }
 
                     }

@@ -419,8 +419,8 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
             @Override
             public void onClick(View view) {
                 Log.println(Log.VERBOSE,"MOD","MODIFICA");
-                PresenterDispensa.getInstance().mostraAlert(getContext(),"Prodotto modificato", "Informazioni del prodotto modificate correttamente!");
                 dialogModificaProdotto.dismiss();
+                PresenterDispensa.getInstance().mostraAlert(getContext(),"Prodotto modificato", "Informazioni del prodotto modificate correttamente!");
             }
         });
 
