@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.ratatouille23.InterfacceRetrofit.RistoranteService;
 import com.example.ratatouille23.Models.Ristorante;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONObject;
 
@@ -27,7 +28,7 @@ public class DAORistoranteImpl implements DAORistorante {
         public void onRicezioneRistorante(Ristorante ristorante);
     }
 
-    Retrofit retrofitRistorante =  new Retrofit.Builder().baseUrl(DAOBaseUrl.baseUrl()).addConverterFactory(GsonConverterFactory.create()).build();
+    Retrofit retrofitRistorante =  new Retrofit.Builder().baseUrl(DAOBaseUrl.baseUrl()).addConverterFactory(GsonConverterFactory.create(new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create())).build();
     RistoranteService ristoranteService = retrofitRistorante.create(RistoranteService.class);
 
     @Override

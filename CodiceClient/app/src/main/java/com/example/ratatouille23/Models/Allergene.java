@@ -1,11 +1,14 @@
 package com.example.ratatouille23.Models;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 
 public class Allergene implements Serializable {
 
+    @Expose
     private int idAllergene;
-
+    @Expose
     private listaAllergeni nome;
 
     public Allergene(listaAllergeni nome) {

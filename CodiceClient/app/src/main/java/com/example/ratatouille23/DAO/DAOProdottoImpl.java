@@ -6,6 +6,7 @@ import com.example.ratatouille23.InterfacceRetrofit.OpenFootFactsService;
 import com.example.ratatouille23.InterfacceRetrofit.ProdottoService;
 import com.example.ratatouille23.Models.Prodotto;
 import com.example.ratatouille23.Models.Ristorante;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,10 +36,10 @@ public class DAOProdottoImpl implements DAOProdotto {
         void onRichiestaDispensa(ArrayList<Prodotto> dispensa);
     }
 
-    Retrofit retrofitOpenFoodFacts = new Retrofit.Builder().baseUrl("https://it.openfoodfacts.org/cgi/").addConverterFactory(GsonConverterFactory.create()).build();
+    Retrofit retrofitOpenFoodFacts = new Retrofit.Builder().baseUrl("https://it.openfoodfacts.org/cgi/").addConverterFactory(GsonConverterFactory.create(new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create())).build();
     OpenFootFactsService openFootFactsService = retrofitOpenFoodFacts.create(OpenFootFactsService.class);
 
-    Retrofit retrofitProdotto = new Retrofit.Builder().baseUrl(DAOBaseUrl.baseUrl()).addConverterFactory(GsonConverterFactory.create()).build();
+    Retrofit retrofitProdotto = new Retrofit.Builder().baseUrl(DAOBaseUrl.baseUrl()).addConverterFactory(GsonConverterFactory.create(new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create())).build();
     ProdottoService prodottoService = retrofitProdotto.create(ProdottoService.class);
 
     @Override

@@ -1,19 +1,28 @@
 package com.example.ratatouille23.Models;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
 public class Prodotto implements Serializable {
 
+    @Expose
     private int idProdotto;
+    @Expose
     private String nome;
+    @Expose
     private String descrizione;
+    @Expose
     private String unita;
+    @Expose
     @SerializedName("costo")
     private String costoAcquisto;
+    @Expose
     private double quantita;
+    @Expose
     private double soglia;
+    @Expose
     @SerializedName("ristorante")
     private Ristorante utilizzatoDa;
 

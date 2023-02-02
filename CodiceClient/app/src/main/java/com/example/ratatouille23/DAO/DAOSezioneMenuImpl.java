@@ -11,6 +11,7 @@ import com.example.ratatouille23.Models.Preparazione;
 import com.example.ratatouille23.Models.Prodotto;
 import com.example.ratatouille23.Models.SezioneMenu;
 import com.example.ratatouille23.Models.listaAllergeni;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -42,7 +43,7 @@ public class DAOSezioneMenuImpl implements DAOSezioneMenu {
         void onRimozioneSezione();
     }
 
-    Retrofit retrofitSezione = new Retrofit.Builder().baseUrl(DAOBaseUrl.baseUrl()).addConverterFactory(GsonConverterFactory.create()).build();
+    Retrofit retrofitSezione = new Retrofit.Builder().baseUrl(DAOBaseUrl.baseUrl()).addConverterFactory(GsonConverterFactory.create(new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create())).build();
     SezioneMenuService sezioneMenuService = retrofitSezione.create(SezioneMenuService.class);
 
     public void estraiMenu(int idrist, EstraiMenuCallbacks callback) {
@@ -120,8 +121,8 @@ public class DAOSezioneMenuImpl implements DAOSezioneMenu {
                                 }
                                 //aggiungo la preparazione all'elemento
                                 elemento.setPreparazione(listaPreparazioni);
-                                //aggiungo l'elemento alla lista
                                 elemento.setAppartiene(sezione);
+                                //aggiungo l'elemento alla lista
                                 listaElementi.add(elemento);
                             }
                             //aggiungo la lista degli elementi alla sezione

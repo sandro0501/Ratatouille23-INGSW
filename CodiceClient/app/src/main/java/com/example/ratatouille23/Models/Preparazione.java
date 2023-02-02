@@ -1,9 +1,14 @@
 package com.example.ratatouille23.Models;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 
 public class Preparazione implements Serializable  {
+
+    @Expose
     Prodotto prodottoAssociato;
+    @Expose
     double quantitaNecessaria;
 
     public Preparazione(Prodotto prodottoAssociato, double quantitaNecessaria) {

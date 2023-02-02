@@ -1,15 +1,24 @@
 package com.example.ratatouille23.Models;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class SezioneMenu implements Serializable {
 
+    @Expose
     private int idAvviso;
+    @Expose
     private String titolo;
+    @Expose
     private int posizione;
+    @Expose(serialize = false)
     private ArrayList<Elemento> appartenente = new ArrayList<>();
+    @Expose
     private Ristorante ristorante;
+    @Expose
+    private boolean inModifica = false;
 
     public SezioneMenu(String nome, int posizione) {
         this.titolo = nome;
@@ -58,6 +67,14 @@ public class SezioneMenu implements Serializable {
 
     public void setRistorante(Ristorante ristorante) {
         this.ristorante = ristorante;
+    }
+
+    public boolean isInModifica() {
+        return inModifica;
+    }
+
+    public void setInModifica(boolean inModifica) {
+        this.inModifica = inModifica;
     }
 
     @Override

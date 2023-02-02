@@ -1,11 +1,16 @@
 package com.example.ratatouille23.Models;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 
 public class Bacheca implements Serializable {
 
+    @Expose
     Avviso avvisoAssociato;
+    @Expose
     boolean visibile;
+    @Expose
     boolean visualizzato;
 
     public Bacheca(Avviso avvisoAssociato, boolean visibile, boolean visualizzato) {

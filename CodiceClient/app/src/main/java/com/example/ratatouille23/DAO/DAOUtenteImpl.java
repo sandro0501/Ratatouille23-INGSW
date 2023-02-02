@@ -16,6 +16,7 @@ import com.example.ratatouille23.InterfacceRetrofit.LoginService;
 import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Models.UtenteFactory;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -80,7 +81,7 @@ public class DAOUtenteImpl implements DAOUtente {
         void onVecchiaPasswordErrata();
     }
 
-    Retrofit retrofitLogin = new Retrofit.Builder().baseUrl(DAOBaseUrl.baseUrl()).addConverterFactory(GsonConverterFactory.create()).build();
+    Retrofit retrofitLogin = new Retrofit.Builder().baseUrl(DAOBaseUrl.baseUrl()).addConverterFactory(GsonConverterFactory.create(new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create())).build();
     LoginService loginService = retrofitLogin.create(LoginService.class);
     DipendentiService dipendentiService = retrofitLogin.create(DipendentiService.class);
 
