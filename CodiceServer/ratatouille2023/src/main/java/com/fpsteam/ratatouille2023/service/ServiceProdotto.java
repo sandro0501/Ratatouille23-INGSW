@@ -10,6 +10,7 @@ import com.fpsteam.ratatouille2023.entity.Preparazione;
 import com.fpsteam.ratatouille2023.entity.Prodotto;
 import com.fpsteam.ratatouille2023.entity.Ristorante;
 import com.fpsteam.ratatouille2023.handlers.RichiestaPreparazioneHandler;
+import com.fpsteam.ratatouille2023.repository.RepositoryPreparazione;
 import com.fpsteam.ratatouille2023.repository.RepositoryProdotto;
 
 import jakarta.persistence.Tuple;
@@ -18,6 +19,8 @@ import jakarta.persistence.Tuple;
 public class ServiceProdotto {
 	@Autowired
 	private RepositoryProdotto repository;
+	@Autowired
+	private RepositoryPreparazione repP;
 		
 	public ArrayList<RichiestaPreparazioneHandler> findByElemento(Elemento elemento)
 	{
@@ -59,6 +62,8 @@ public class ServiceProdotto {
 	public String delete(ArrayList<Prodotto> prodotto) {
 		for(int x = 0; x<prodotto.size(); x++)
 		{
+			repP.deleteAll(repP.findByPrId(prodotto.get(x).getIdProdotto()));
+			
 			Prodotto res = repository.findById(prodotto.get(x).getIdProdotto()).get();
 			repository.delete(res);
 		}

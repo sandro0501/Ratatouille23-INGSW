@@ -9,12 +9,17 @@ import org.springframework.stereotype.Service;
 import com.fpsteam.ratatouille2023.entity.Elemento;
 import com.fpsteam.ratatouille2023.entity.Ristorante;
 import com.fpsteam.ratatouille2023.entity.SezioneMenu;
+import com.fpsteam.ratatouille2023.repository.RepositoryElemento;
 import com.fpsteam.ratatouille2023.repository.RepositorySezioneMenu;
 
 @Service
 public class ServiceSezioneMenu {
 	@Autowired
 	private RepositorySezioneMenu repository;
+	@Autowired
+	private ServiceElemento serviceEl;
+	@Autowired
+	private RepositoryElemento repEl;
 
 	public ArrayList<SezioneMenu> findByIdRistorante(int ristorante) {
 		
@@ -29,6 +34,8 @@ public class ServiceSezioneMenu {
 	public String delete(ArrayList<SezioneMenu> sezioni) {
 		for(int x = 0; x<sezioni.size(); x++)
 		{
+			serviceEl.delete(repEl.findBySezione(sezioni.get(x).getIdAvviso()));
+			
 			SezioneMenu res = repository.findById(sezioni.get(x).getIdAvviso()).get();
 			repository.delete(res);
 		}

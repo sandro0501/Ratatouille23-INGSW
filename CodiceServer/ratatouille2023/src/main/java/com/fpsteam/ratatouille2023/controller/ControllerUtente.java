@@ -149,7 +149,7 @@ public class ControllerUtente {
 		
 		try 
 		{
-			if(handle.utente == null)
+			if(handle.passc)
 			{//vuol dire che stiamo aggiornando la password e non l'entita
 				JsonApiGatewayCaller caller = new JsonApiGatewayCaller(
 	                    AWS_IAM_ACCESS_KEY,

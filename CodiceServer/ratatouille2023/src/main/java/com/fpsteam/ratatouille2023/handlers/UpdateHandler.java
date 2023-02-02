@@ -9,4 +9,5 @@ public class UpdateHandler {
 	public String accessToken;
 	public String old;
 	public String newp;
+	public boolean passc;
 }

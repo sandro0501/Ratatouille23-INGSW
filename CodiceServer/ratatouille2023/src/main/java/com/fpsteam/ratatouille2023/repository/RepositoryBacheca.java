@@ -1,5 +1,6 @@
 package com.fpsteam.ratatouille2023.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -33,4 +34,10 @@ public interface RepositoryBacheca extends JpaRepository<Bacheca,BachecaId> {
 			nativeQuery = true
 			)
 	Bacheca findById(int id_avv, int id_ute);
+	
+	@Query(
+			value= "SELECT * FROM bacheca WHERE id_utente = ?1",
+			nativeQuery = true
+			)
+	ArrayList<Bacheca> findByUid(int uid);
 }

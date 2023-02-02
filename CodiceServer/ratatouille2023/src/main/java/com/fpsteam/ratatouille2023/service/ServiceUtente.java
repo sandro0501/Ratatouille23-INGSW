@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.fpsteam.ratatouille2023.entity.Ristorante;
 import com.fpsteam.ratatouille2023.entity.Utente;
+import com.fpsteam.ratatouille2023.repository.RepositoryAvviso;
+import com.fpsteam.ratatouille2023.repository.RepositoryBacheca;
 import com.fpsteam.ratatouille2023.repository.RepositoryUtente;
 
 @Service
@@ -16,6 +18,10 @@ public class ServiceUtente {
 	private RepositoryUtente repository;
 	@Autowired
 	private ServiceRistorante servRistorante;
+	@Autowired
+	private RepositoryAvviso repAvv;
+	@Autowired
+	private RepositoryBacheca repBac;
 	
 	public List<Utente> estraiDipendenti(Ristorante ristorante)
 	{
@@ -47,6 +53,10 @@ public class ServiceUtente {
 	}
 
 	public String delete(Utente utente) {
+		//Prima eliminiamo tutti gli avvisi e POI le bachece associate
+		repAvv.deleteAll(repAvv.findByUid(utente.getIdUtente()));
+		repBac.deleteAll(repBac.findByUid(utente.getIdUtente()));
+		//Infine l'utente
 		repository.delete(repository.findById(utente.getIdUtente()).get());
 		return "Tutto bene";
 	}
