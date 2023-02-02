@@ -2,6 +2,7 @@ package com.example.ratatouille23.DAO;
 
 import android.util.Log;
 
+import com.example.ratatouille23.Handlers.HandleElemento;
 import com.example.ratatouille23.InterfacceRetrofit.ElementoService;
 import com.example.ratatouille23.InterfacceRetrofit.OpenFootFactsService;
 import com.example.ratatouille23.InterfacceRetrofit.ProdottoService;
@@ -38,7 +39,8 @@ public class DAOElementoImpl implements DAOElemento {
     Retrofit retrofitOpenFoodFacts = new Retrofit.Builder().baseUrl("https://it.openfoodfacts.org/cgi/").addConverterFactory(GsonConverterFactory.create()).build();
     OpenFootFactsService openFootFactsService = retrofitOpenFoodFacts.create(OpenFootFactsService.class);
 
-    ElementoService elementoService = retrofitOpenFoodFacts.create(ElementoService.class);
+    Retrofit retrofitServer = new Retrofit.Builder().baseUrl(DAOBaseUrl.baseUrl()).addConverterFactory(GsonConverterFactory.create()).build();
+    ElementoService elementoService = retrofitServer.create(ElementoService.class);
 
     @Override
     public void getElementiOpenFoodFactsDaStringa(String stringaIniziale, ElementiFoodFactsCallbacks callback) {
@@ -134,7 +136,7 @@ public class DAOElementoImpl implements DAOElemento {
     }
 
     public void insertElemento(Elemento elementoDaAggiungere, AggiuntaElementiCallbacks callback) {
-        Call<ResponseBody> call = elementoService.aggiungiElemento(elementoDaAggiungere);
+        Call<ResponseBody> call = elementoService.aggiungiElemento(new HandleElemento(elementoDaAggiungere));
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
