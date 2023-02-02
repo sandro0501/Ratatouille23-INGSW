@@ -37,6 +37,8 @@ import com.example.ratatouille23.Presenters.PresenterDispensa;
 import com.example.ratatouille23.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -430,11 +432,8 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
                 prodottoDaModificare.setQuantita(Double.parseDouble(editTextModificaQuantitaProdotto.getText().toString()));
                 prodottoDaModificare.setSoglia(Double.parseDouble(editTextModificaSogliaProdotto.getText().toString()));
                 prodottoDaModificare.setUtilizzatoDa(ristoranteCorrente);
+
                 PresenterDispensa.getInstance().ModificaProdottoInDispensa(DispensaFragment.this, prodottoDaModificare);
-
-                dialogModificaProdotto.dismiss();
-                PresenterDispensa.getInstance().mostraAlert(getContext(),"Prodotto modificato", "Informazioni del prodotto modificate correttamente!");
-
             }
         });
 
@@ -457,6 +456,12 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
 
     public void riempiDispensa(ArrayList<Prodotto> listaProdotti){
         dispensa.clear();
+        Collections.sort(listaProdotti, new Comparator<Prodotto>() {
+            @Override
+            public int compare(Prodotto prodottoUno, Prodotto prodottoDue) {
+                return prodottoUno.getNome().compareTo(prodottoDue.getNome());
+            }
+        });
         dispensa.addAll(listaProdotti);
         prodottoAdapter.notifyDataSetChanged();
     }

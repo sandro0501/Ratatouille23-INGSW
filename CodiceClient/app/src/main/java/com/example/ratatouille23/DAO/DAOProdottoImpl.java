@@ -131,8 +131,8 @@ public class DAOProdottoImpl implements DAOProdotto {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful()){
                     try{
-                        JSONObject bodyJSON = new JSONObject(response.body().string());
-                        String messaggio = bodyJSON.getString("messaggio");
+                        //JSONObject bodyJSON = new JSONObject();
+                        String messaggio = response.body().string();
                         if(messaggio.equals("Tutto bene")){
                             callback.onModificaProdotto();
                         } else {
