@@ -73,6 +73,11 @@ public class SezioneMenuRecyclerViewAdapter extends RecyclerView.Adapter<Sezione
             @Override
             public void onClick(View view) {
                 if (!((MenuFragment)recyclerViewInterfaceSezioni).isModalitaEliminazione()) {
+                    if(holder.inModifica)
+                    {
+                        holder.sezioneCorrente.setTitolo(holder.editTextTitoloSezione.getText().toString());
+                        PresenterMenu.getInstance().modificaSezione(holder.sezioneCorrente);
+                    }
                     holder.inModifica = !holder.inModifica;
                     impostaGraficamenteModalitaModifica(holder, holder.sezioneCorrente);
                 }

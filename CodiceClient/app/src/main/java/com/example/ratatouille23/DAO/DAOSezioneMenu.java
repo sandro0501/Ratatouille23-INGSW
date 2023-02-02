@@ -8,6 +8,8 @@ public interface DAOSezioneMenu {
 
     void aggiungiSezioneMenu(SezioneMenu sezione, DAOSezioneMenuImpl.AggiungiSezioneCallbacks callback);
 
+    void modificaSezioneMenu(SezioneMenu sezione, DAOSezioneMenuImpl.ModificaSezioneCallbacks callback);
+
     void rimuoviSezioneMenu(EliminaSezioniHandler handler, DAOSezioneMenuImpl.RimuoviSezioneCallbacks callback);
 
 }
