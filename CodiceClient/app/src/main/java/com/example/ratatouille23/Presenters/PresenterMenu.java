@@ -109,7 +109,7 @@ public class PresenterMenu extends PresenterBase {
         daoElemento.insertElemento(elemento, new DAOElementoImpl.AggiuntaElementiCallbacks() {
             @Override
             public void onAggiuntaElemento(Elemento elwithid) {
-               impostaAllergeni(elwithid, elemento.getPresenta(), context, true);
+               impostaAllergeni(elwithid, elemento.getPresenta(), context, false);
             }
         });
     }
@@ -118,16 +118,16 @@ public class PresenterMenu extends PresenterBase {
         daoElemento.modificaElemento(elemento, new DAOElementoImpl.ModificaElementoCallbacks() {
             @Override
             public void onModificato() {
-                impostaAllergeni(elemento, allergeni, context, false);
+                impostaAllergeni(elemento, allergeni, context, true);
             }
         });
     }
 
-    public void impostaAllergeni(Elemento elemento, ArrayList<Allergene> allergeni, MenuFragment context,boolean ne) {
+    public void impostaAllergeni(Elemento elemento, ArrayList<Allergene> allergeni, MenuFragment context,boolean modifica) {
         daoElemento.impostaAllergeni(elemento, allergeni, new DAOElementoImpl.ImpostaAllergeniCallbacks() {
             @Override
             public void onImpostati() {
-                if(ne)
+                if(modifica)
                     context.elementoModificato();
                 else
                     context.elementoAggiuntoCorrettamente();

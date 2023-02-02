@@ -121,6 +121,7 @@ public class DAOSezioneMenuImpl implements DAOSezioneMenu {
                                 //aggiungo la preparazione all'elemento
                                 elemento.setPreparazione(listaPreparazioni);
                                 //aggiungo l'elemento alla lista
+                                elemento.setAppartiene(sezione);
                                 listaElementi.add(elemento);
                             }
                             //aggiungo la lista degli elementi alla sezione
