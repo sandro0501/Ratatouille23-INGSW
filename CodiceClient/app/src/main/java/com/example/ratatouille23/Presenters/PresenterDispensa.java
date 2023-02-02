@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.ratatouille23.DAO.DAOFactory;
 import com.example.ratatouille23.DAO.DAOProdotto;
 import com.example.ratatouille23.DAO.DAOProdottoImpl;
+import com.example.ratatouille23.Handlers.EliminaProdottiHandler;
 import com.example.ratatouille23.Models.Prodotto;
 import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Views.DispensaFragment;
@@ -65,6 +66,24 @@ public class PresenterDispensa extends PresenterBase {
                 } else {
                     context.mostraDialogErroreInserimentoProdotto();
                 }
+            }
+        });
+    }
+
+    public void ModificaProdottoInDispensa (DispensaFragment context, Prodotto prodottoDaModificare){
+        daoProdotto.modificaProdotto(prodottoDaModificare, new DAOProdottoImpl.ModificaProdottoCallbacks() {
+            @Override
+            public void onModificaProdotto() {
+                context.prodottoInDispensaModificato();
+            }
+        });
+    }
+
+    public void EliminaProdottoInDispensa (DispensaFragment context, EliminaProdottiHandler listaProdottiDaEliminare){
+        daoProdotto.eliminaProdotto(listaProdottiDaEliminare, new DAOProdottoImpl.EliminazioneProdottoCallbacks() {
+            @Override
+            public void onEliminazioneProdotto() {
+                context.prodottoInDispensaEliminato();
             }
         });
     }
