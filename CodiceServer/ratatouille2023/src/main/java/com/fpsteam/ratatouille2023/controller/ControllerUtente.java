@@ -66,7 +66,11 @@ public class ControllerUtente {
 					             "\"code\" : \"" + handle.code + "\""+
 					             "}";
 			ApiGatewayResponse response = caller.execute(HttpMethodName.POST, "/passrecover", new ByteArrayInputStream(jsonRequest.getBytes()));
-			return response.getBody();
+			JSONObject body = new JSONObject(response.getBody());
+            if(body.has("errorType"))
+            	return body.getString("errorType");
+            else
+            	return "Tutto bene";
 		}
 		catch(Exception e)
 		{
@@ -317,6 +321,8 @@ public class ControllerUtente {
 		    res.idToken = body.getString("IdToken");
 		    res.accessToken = body.getString("AccessToken");
 			res.utente =  service.giveUtente(utente);
+			if (res.utente == null)
+				throw new Exception("Non sei associato a nessun ristorante!");
 			res.messaggio = "Tutto bene";
 			
 			return res;

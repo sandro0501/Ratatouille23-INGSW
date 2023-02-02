@@ -79,6 +79,16 @@ public class PresenterMenu extends PresenterBase {
         });
     }
 
+    public void modificaSezione(SezioneMenu sezione)
+    {
+        daoSezioneMenu.modificaSezioneMenu(sezione, new DAOSezioneMenuImpl.ModificaSezioneCallbacks() {
+            @Override
+            public void onModificato() {
+
+            }
+        });
+    }
+
     public void rimuoviSezione(MenuFragment context, SezioneMenu sezione) {
         EliminaSezioniHandler handler = new EliminaSezioniHandler();
         ArrayList<SezioneMenu> listaSezioni = new ArrayList<>();

@@ -26,6 +26,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DAOSezioneMenuImpl implements DAOSezioneMenu {
 
+    public interface ModificaSezioneCallbacks{
+        void onModificato();
+    }
+
     public interface EstraiMenuCallbacks {
         void onEstratto(ArrayList<SezioneMenu> listaSezioni);
     }
@@ -165,6 +169,31 @@ public class DAOSezioneMenuImpl implements DAOSezioneMenu {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
 
+            }
+        });
+    }
+
+    @Override
+    public void modificaSezioneMenu(SezioneMenu sezione, ModificaSezioneCallbacks callback) {
+        Call<ResponseBody> callModifica = sezioneMenuService.modificaSezione(sezione);
+        callModifica.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful())
+                {
+
+                    System.out.println("Success");
+                    callback.onModificato();
+                }
+                else
+                {
+                    System.out.println(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                System.out.println("Failure");
             }
         });
     }
