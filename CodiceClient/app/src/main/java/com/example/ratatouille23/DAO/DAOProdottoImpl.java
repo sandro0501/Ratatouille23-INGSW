@@ -2,6 +2,7 @@ package com.example.ratatouille23.DAO;
 
 import android.util.Log;
 
+import com.example.ratatouille23.Handlers.EliminaProdottiHandler;
 import com.example.ratatouille23.InterfacceRetrofit.OpenFootFactsService;
 import com.example.ratatouille23.InterfacceRetrofit.ProdottoService;
 import com.example.ratatouille23.Models.Prodotto;
@@ -29,6 +30,14 @@ public class DAOProdottoImpl implements DAOProdotto {
 
     public interface AggiuntaProdottoCallbacks {
         void onAggiuntaProdotto(Boolean isAggiunto);
+    }
+
+    public interface EliminazioneProdottoCallbacks {
+        void onEliminazioneProdotto();
+    }
+
+    public interface ModificaProdottoCallbacks {
+        void onModificaProdotto();
     }
 
     public interface  OttenimentoDispensaCallbacks {
@@ -93,7 +102,7 @@ public class DAOProdottoImpl implements DAOProdotto {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful()){
                     try{
-                       callback.onAggiuntaProdotto(true);
+                        callback.onAggiuntaProdotto(true);
                     } catch (Exception e){
                         Log.println(Log.VERBOSE,"Errore catch", e.getMessage());
                         callback.onAggiuntaProdotto(false);
@@ -108,6 +117,64 @@ public class DAOProdottoImpl implements DAOProdotto {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.println(Log.VERBOSE,"Errore failure", t.getMessage());
+            }
+        });
+
+    }
+
+    @Override
+    public void modificaProdotto(Prodotto prodotto, ModificaProdottoCallbacks callback) {
+        Call<ResponseBody> callModifica = prodottoService.updateProdotto(prodotto);
+
+        callModifica.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    try{
+                        JSONObject bodyJSON = new JSONObject(response.body().string());
+                        String messaggio = bodyJSON.getString("messaggio");
+                        if(messaggio.equals("Tutto bene")){
+                            callback.onModificaProdotto();
+                        } else {
+                            Log.println(Log.VERBOSE, "ErroreMessaggio", response.message());
+                        }
+
+                    } catch (Exception e){
+                        e.printStackTrace();
+                        Log.println(Log.VERBOSE, "ErroreCatch", e.getMessage());
+                    }
+
+                }else {
+                    Log.println(Log.VERBOSE, "ErroreResponse", response.message() + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.println(Log.VERBOSE, "ErroreFailure",  t.getMessage());
+            }
+        });
+
+    }
+
+    @Override
+    public void eliminaProdotto(EliminaProdottiHandler listaProdottiDaEliminare, EliminazioneProdottoCallbacks callback) {
+        Call<ResponseBody> callEliminazione = prodottoService.deleteProdotto(listaProdottiDaEliminare);
+
+        callEliminazione.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    callback.onEliminazioneProdotto();
+                }
+                else{
+                    Log.println(Log.VERBOSE, "ErroreMessaggio", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.println(Log.VERBOSE, "ErroreFailure",  t.getMessage());
             }
         });
 

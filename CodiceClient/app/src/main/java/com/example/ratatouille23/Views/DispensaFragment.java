@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ratatouille23.Handlers.EliminaProdottiHandler;
 import com.example.ratatouille23.Models.Prodotto;
 import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Models.Utente;
@@ -198,10 +199,10 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
                             @Override
                             public void onClick(View view) {
                                 //codice db
-                                PresenterDispensa.getInstance().mostraAlert(getContext(), "Eliminazione effettuata", "Eliminazione dei prodotti selezionati effettuata correttamente!");
-                                disattivaModalitaEliminazione();
-                                deselezionaTuttiProdotti();
-                                dialogEliminaProdotto.dismiss();
+                                PresenterDispensa.getInstance().EliminaProdottoInDispensa(DispensaFragment.this, new EliminaProdottiHandler(listaProdottiSelezionati));
+
+
+
                             }
                         });
 
@@ -419,8 +420,21 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
             @Override
             public void onClick(View view) {
                 Log.println(Log.VERBOSE,"MOD","MODIFICA");
+
+                Prodotto prodottoDaModificare = dispensa.get(posizioneProdotto);
+                prodottoDaModificare.setNome(editTextModificaNomeProdotto.getText().toString());
+                prodottoDaModificare.setDescrizione(editTextModificaDescrizioneProdotto.getText().toString());
+                prodottoDaModificare.setUnita(editTextModificaUnitaMisuraProdotto.getText().toString());
+                String costoModificato = "€"+editTextModificaCostoAcquistoProdotto.getText().toString()+"/"+editTextModificaUnitaMisuraProdotto.getText().toString();
+                prodottoDaModificare.setCostoAcquisto(costoModificato);
+                prodottoDaModificare.setQuantita(Double.parseDouble(editTextModificaQuantitaProdotto.getText().toString()));
+                prodottoDaModificare.setSoglia(Double.parseDouble(editTextModificaSogliaProdotto.getText().toString()));
+                prodottoDaModificare.setUtilizzatoDa(ristoranteCorrente);
+                PresenterDispensa.getInstance().ModificaProdottoInDispensa(DispensaFragment.this, prodottoDaModificare);
+
                 dialogModificaProdotto.dismiss();
                 PresenterDispensa.getInstance().mostraAlert(getContext(),"Prodotto modificato", "Informazioni del prodotto modificate correttamente!");
+
             }
         });
 
@@ -460,5 +474,19 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
     public void setupListaProdottiOpenFoodFactsModifica(ArrayList<Prodotto> listaProdottiOttenuta) {
         adapterAutoComplete.addAll(listaProdottiOttenuta);
         adapterAutoComplete.getFilter().filter(null);
+    }
+
+    public void prodottoInDispensaModificato() {
+        PresenterDispensa.getInstance().mostraAlert(getContext(),"Prodotto modificato", "Informazioni del prodotto modificate correttamente!");
+        dialogModificaProdotto.dismiss();
+        PresenterDispensa.getInstance().ottieniDispensaDaRistorante(DispensaFragment.this, ristoranteCorrente);
+    }
+
+    public void prodottoInDispensaEliminato() {
+        PresenterDispensa.getInstance().mostraAlert(getContext(), "Eliminazione effettuata", "Eliminazione dei prodotti selezionati effettuata correttamente!");
+        disattivaModalitaEliminazione();
+        deselezionaTuttiProdotti();
+        dialogEliminaProdotto.dismiss();
+        PresenterDispensa.getInstance().ottieniDispensaDaRistorante(DispensaFragment.this, ristoranteCorrente);
     }
 }
