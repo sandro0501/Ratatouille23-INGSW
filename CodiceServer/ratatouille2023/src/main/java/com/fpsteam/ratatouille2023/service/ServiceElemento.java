@@ -25,8 +25,8 @@ public class ServiceElemento {
 		return repository.findBySezione(sezione.getIdAvviso());
 	}
 
-	public void save(Elemento elemento) {
-		repository.save(elemento);
+	public Elemento save(Elemento elemento) {
+		return repository.save(elemento);
 	}
 
 	public void update(Elemento elemento) {

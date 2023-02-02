@@ -643,7 +643,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
                     }
                 }
                 elementoDaModificare.setPresenta(allergeniPiattoCorrente);
-
+                PresenterMenu.getInstance().modificaElemento(elementoDaModificare, elementoDaModificare.getPresenta(),MenuFragment.this);
                 dialogElemento.dismiss();
                 PresenterMenu.getInstance().mostraAlert(getContext(), "Piatto modificato", "Piatto modificato correttamente");
             }
@@ -723,6 +723,12 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
     public void elementoAggiuntoCorrettamente() {
         dialogElemento.dismiss();
         PresenterMenu.getInstance().mostraAlert(getContext(), "Piatto aggiunto", "Piatto aggiunto correttamente al menù");
+        PresenterMenu.getInstance().estraiMenu(this, ristoranteCorrente);
+    }
+
+    public void elementoModificato() {
+        dialogElemento.dismiss();
+        PresenterMenu.getInstance().mostraAlert(getContext(), "Piatto modificato!", "Il piatto e' stato correttamente aggiornato.");
         PresenterMenu.getInstance().estraiMenu(this, ristoranteCorrente);
     }
 }
