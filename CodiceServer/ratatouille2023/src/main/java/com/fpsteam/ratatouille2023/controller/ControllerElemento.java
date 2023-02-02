@@ -27,12 +27,11 @@ public class ControllerElemento {
 	private ServiceElemento service;
 
 	@PostMapping("")
-	public String aggiungiElemento(@RequestBody HandleElemento handle)
+	public Elemento aggiungiElemento(@RequestBody HandleElemento handle)
 	{
 		Elemento elemento = handle.elemento;
 		elemento.setSezioneMenu(handle.sezione);
-		service.save(elemento);
-		return "Tutto bene";
+		return service.save(elemento);
 	}
 	
 	@PutMapping("")

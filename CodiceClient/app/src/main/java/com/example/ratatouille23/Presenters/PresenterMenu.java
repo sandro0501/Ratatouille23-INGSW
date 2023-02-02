@@ -1,6 +1,7 @@
 package com.example.ratatouille23.Presenters;
 
 import android.util.Log;
+import android.view.Menu;
 
 import com.example.ratatouille23.DAO.DAOElemento;
 import com.example.ratatouille23.DAO.DAOElementoImpl;
@@ -10,9 +11,11 @@ import com.example.ratatouille23.DAO.DAORistoranteImpl;
 import com.example.ratatouille23.DAO.DAOSezioneMenu;
 import com.example.ratatouille23.DAO.DAOSezioneMenuImpl;
 import com.example.ratatouille23.Handlers.EliminaSezioniHandler;
+import com.example.ratatouille23.Models.Allergene;
 import com.example.ratatouille23.Models.Elemento;
 import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Models.SezioneMenu;
+import com.example.ratatouille23.Models.listaAllergeni;
 import com.example.ratatouille23.Views.MenuFragment;
 
 import java.util.ArrayList;
@@ -105,10 +108,33 @@ public class PresenterMenu extends PresenterBase {
     public void aggiungiElemento(MenuFragment context, Elemento elemento) {
         daoElemento.insertElemento(elemento, new DAOElementoImpl.AggiuntaElementiCallbacks() {
             @Override
-            public void onAggiuntaElemento() {
-                context.elementoAggiuntoCorrettamente();
+            public void onAggiuntaElemento(Elemento elwithid) {
+               impostaAllergeni(elwithid, elemento.getPresenta(), context, true);
             }
         });
     }
+
+    public void modificaElemento(Elemento elemento, ArrayList<Allergene> allergeni, MenuFragment context){
+        daoElemento.modificaElemento(elemento, new DAOElementoImpl.ModificaElementoCallbacks() {
+            @Override
+            public void onModificato() {
+                impostaAllergeni(elemento, allergeni, context, false);
+            }
+        });
+    }
+
+    public void impostaAllergeni(Elemento elemento, ArrayList<Allergene> allergeni, MenuFragment context,boolean ne) {
+        daoElemento.impostaAllergeni(elemento, allergeni, new DAOElementoImpl.ImpostaAllergeniCallbacks() {
+            @Override
+            public void onImpostati() {
+                if(ne)
+                    context.elementoModificato();
+                else
+                    context.elementoAggiuntoCorrettamente();
+            }
+        });
+
+    }
+
 
 }

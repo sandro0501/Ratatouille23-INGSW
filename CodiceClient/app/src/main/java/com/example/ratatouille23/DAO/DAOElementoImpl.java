@@ -8,6 +8,7 @@ import com.example.ratatouille23.InterfacceRetrofit.OpenFootFactsService;
 import com.example.ratatouille23.InterfacceRetrofit.ProdottoService;
 import com.example.ratatouille23.Models.Allergene;
 import com.example.ratatouille23.Models.Elemento;
+import com.example.ratatouille23.Models.HandleAllergeni;
 import com.example.ratatouille23.Models.Prodotto;
 import com.example.ratatouille23.Models.listaAllergeni;
 
@@ -28,19 +29,77 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DAOElementoImpl implements DAOElemento {
 
+    public interface ModificaElementoCallbacks{
+        void onModificato();
+    }
+
+    public interface ImpostaAllergeniCallbacks {
+        void onImpostati();
+    }
+
     public interface ElementiFoodFactsCallbacks {
         void onCaricamentoListaElementiOpenFoodFacts (ArrayList<Elemento> listaElementiOttenuta);
     }
 
     public interface AggiuntaElementiCallbacks {
-        void onAggiuntaElemento ();
+        void onAggiuntaElemento (Elemento elwithid);
     }
 
     Retrofit retrofitOpenFoodFacts = new Retrofit.Builder().baseUrl("https://it.openfoodfacts.org/cgi/").addConverterFactory(GsonConverterFactory.create()).build();
-    OpenFootFactsService openFootFactsService = retrofitOpenFoodFacts.create(OpenFootFactsService.class);
+    Retrofit retrofitElemento = new Retrofit.Builder().baseUrl(DAOBaseUrl.baseUrl()).addConverterFactory(GsonConverterFactory.create()).build();
 
-    Retrofit retrofitServer = new Retrofit.Builder().baseUrl(DAOBaseUrl.baseUrl()).addConverterFactory(GsonConverterFactory.create()).build();
-    ElementoService elementoService = retrofitServer.create(ElementoService.class);
+    OpenFootFactsService openFootFactsService = retrofitOpenFoodFacts.create(OpenFootFactsService.class);
+    ElementoService elementoService = retrofitElemento.create(ElementoService.class);
+
+    @Override
+    public void modificaElemento(Elemento elemento, ModificaElementoCallbacks callback) {
+        HandleElemento handle = new HandleElemento();
+        handle.elemento = elemento;
+        handle.sezione = elemento.getAppartiene();
+        Call<ResponseBody> callModificaElemento = elementoService.modificaElemento(handle);
+        callModificaElemento.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful())
+                {
+                    callback.onModificato();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    @Override
+    public void impostaAllergeni(Elemento elemento, ArrayList<Allergene> allergeni, ImpostaAllergeniCallbacks callback) {
+        ArrayList<HandleAllergeni> lista = new ArrayList<HandleAllergeni>();
+        for(Allergene x : allergeni)
+        {
+            HandleAllergeni curr = new HandleAllergeni();
+            curr.idElemento = elemento.getIdElemento();
+            curr.idAllergene = x.getIdAllergene();
+            lista.add(curr);
+        }
+
+        Call<ResponseBody> chiamataImpostaAllergeni = elementoService.impostaAllergeni(lista);
+        chiamataImpostaAllergeni.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful())
+                {
+                    callback.onImpostati();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
 
     @Override
     public void getElementiOpenFoodFactsDaStringa(String stringaIniziale, ElementiFoodFactsCallbacks callback) {
@@ -142,9 +201,10 @@ public class DAOElementoImpl implements DAOElemento {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     try {
-                        String messaggio = response.body().string();
-                        if (messaggio.equals("Tutto bene"))
-                            callback.onAggiuntaElemento();
+                        JSONObject body = new JSONObject(response.body().string());
+                        Elemento el = new Elemento();
+                        el.setIdElemento(body.getInt("idElemento"));
+                        callback.onAggiuntaElemento(el);
                     }
                     catch (Exception e) {
                         Log.i("Exception", e.getMessage());
