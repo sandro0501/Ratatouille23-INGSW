@@ -222,8 +222,9 @@ public class ControllerUtente {
             JSONObject body = new JSONObject(response.getBody());
             if(body.has("errorType"))
             	res.messaggio = body.getString("errorType");
-            service.saveUtenteSecondario(utente);
-            res.messaggio = "Tutto bene";
+            else
+            	res.messaggio = "Tutto bene";
+        	service.saveUtenteSecondario(utente);
 			return res;
 		}
 		catch(Exception e)

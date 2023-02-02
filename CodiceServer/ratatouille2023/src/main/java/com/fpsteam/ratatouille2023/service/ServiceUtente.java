@@ -1,10 +1,12 @@
 package com.fpsteam.ratatouille2023.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fpsteam.ratatouille2023.entity.Avviso;
 import com.fpsteam.ratatouille2023.entity.Ristorante;
 import com.fpsteam.ratatouille2023.entity.Utente;
 import com.fpsteam.ratatouille2023.repository.RepositoryAvviso;
@@ -43,8 +45,15 @@ public class ServiceUtente {
 	
 	public void updateUtente(Utente utente) {
 		Utente mod = repository.findById(utente.getIdUtente()).get();
-		if ((mod.getRuolo() == "Amministratore" || mod.getRuolo() == "Supervisore") && (utente.getRuolo() != "Amministratore" && utente.getRuolo() != "Supervisore"))
-			repAvv.deleteAll(repAvv.findByUid(mod.getIdUtente()));
+		if ((mod.getRuolo().equals("Amministratore") || mod.getRuolo().equals("Supervisore")) && (!utente.getRuolo().equals("Amministratore") && !utente.getRuolo().equals("Supervisore")))
+			{
+				ArrayList<Avviso> avvisi = repAvv.findByUid(mod.getIdUtente());
+				for(Avviso x : avvisi)
+				{
+					repBac.deleteAll(repBac.findByAid(x.getIdAvviso()));
+				}
+				repAvv.deleteAll(avvisi);
+			}
 		mod = utente;
 		repository.save(mod);
 	}
@@ -57,7 +66,12 @@ public class ServiceUtente {
 	public String delete(Utente utente) {
 		//Prima eliminiamo tutti gli avvisi e POI le bachece associate
 		repBac.deleteAll(repBac.findByUid(utente.getIdUtente()));
-		repAvv.deleteAll(repAvv.findByUid(utente.getIdUtente()));
+		ArrayList<Avviso> avvisi = repAvv.findByUid(utente.getIdUtente());
+		for(Avviso x : avvisi)
+		{
+			repBac.deleteAll(repBac.findByAid(x.getIdAvviso()));
+		}
+		repAvv.deleteAll(avvisi);
 		//Infine l'utente
 		repository.delete(repository.findById(utente.getIdUtente()).get());
 		return "Tutto bene";

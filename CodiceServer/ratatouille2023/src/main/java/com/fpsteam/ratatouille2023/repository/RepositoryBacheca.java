@@ -40,4 +40,10 @@ public interface RepositoryBacheca extends JpaRepository<Bacheca,BachecaId> {
 			nativeQuery = true
 			)
 	ArrayList<Bacheca> findByUid(int uid);
+	
+	@Query(
+			value= "SELECT * FROM bacheca WHERE id_avviso = ?1",
+			nativeQuery = true
+			)
+	ArrayList<Bacheca> findByAid(int idAvviso);
 }
