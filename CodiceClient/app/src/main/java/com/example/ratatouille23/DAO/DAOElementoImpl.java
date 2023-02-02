@@ -53,9 +53,7 @@ public class DAOElementoImpl implements DAOElemento {
 
     @Override
     public void modificaElemento(Elemento elemento, ModificaElementoCallbacks callback) {
-        HandleElemento handle = new HandleElemento();
-        handle.elemento = elemento;
-        handle.sezione = elemento.getAppartiene();
+        HandleElemento handle = new HandleElemento(elemento);
         Call<ResponseBody> callModificaElemento = elementoService.modificaElemento(handle);
         callModificaElemento.enqueue(new Callback<ResponseBody>() {
             @Override

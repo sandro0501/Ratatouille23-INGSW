@@ -634,7 +634,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
                     elementoDaModificare.setDescrizioneSecondaria(descrizioneSecondariaElementoEditText.getText().toString());
                 }
                 elementoDaModificare.setCosto(Double.parseDouble(prezzoElementoEditText.getText().toString()));
-                elementoDaModificare.setAppartiene((SezioneMenu) spinnerSceltaAggiunta.getSelectedItem());
+                elementoDaModificare.setAppartiene((SezioneMenu) sezioneElementoSpinner.getSelectedItem());
 
                 ArrayList<Allergene> allergeniPiattoCorrente = new ArrayList<>();
                 for (CheckBox checkBox : checkBoxAllergeni) {
@@ -644,8 +644,6 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
                 }
                 elementoDaModificare.setPresenta(allergeniPiattoCorrente);
                 PresenterMenu.getInstance().modificaElemento(elementoDaModificare, elementoDaModificare.getPresenta(),MenuFragment.this);
-                dialogElemento.dismiss();
-                PresenterMenu.getInstance().mostraAlert(getContext(), "Piatto modificato", "Piatto modificato correttamente");
             }
         });
 
