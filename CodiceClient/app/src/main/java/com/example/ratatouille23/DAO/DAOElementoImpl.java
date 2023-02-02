@@ -37,6 +37,7 @@ public class DAOElementoImpl implements DAOElemento {
 
     Retrofit retrofitOpenFoodFacts = new Retrofit.Builder().baseUrl("https://it.openfoodfacts.org/cgi/").addConverterFactory(GsonConverterFactory.create()).build();
     OpenFootFactsService openFootFactsService = retrofitOpenFoodFacts.create(OpenFootFactsService.class);
+
     ElementoService elementoService = retrofitOpenFoodFacts.create(ElementoService.class);
 
     @Override

@@ -88,6 +88,11 @@ public class PresenterLogin extends PresenterBase {
             public void onModificaPasswordUtente(Utente utenteControllato) {
                 context.passwordModificataCorrettamente(utenteControllato);
             }
+
+            @Override
+            public void onModificaPasswordUtenteLicenziato() {
+                PresenterLogin.getInstance().mostraAlertFinishActivity(context, "Errore!", "Sei stato licenziato, non puoi più accedere a questa applicazione!");
+            }
         });
     }
 
@@ -126,6 +131,7 @@ public class PresenterLogin extends PresenterBase {
             public void onCodiceErrato() {
 
             }
+
         });
 
     }
@@ -155,6 +161,7 @@ public class PresenterLogin extends PresenterBase {
             public void onCodiceErrato() {
                 PresenterLogin.getInstance().mostraAlert(context, "Errore!", "Il codice inserito è errato!");
             }
+
         });
 
     }

@@ -45,6 +45,7 @@ public class DAOUtenteImpl implements DAOUtente {
 
     public interface ModificaPasswordPrimoLoginCallbacks {
         void onModificaPasswordUtente(Utente utenteControllato);
+        void onModificaPasswordUtenteLicenziato();
     }
 
     public interface RecuperaPasswordCallbacks
@@ -98,6 +99,7 @@ public class DAOUtenteImpl implements DAOUtente {
                         try {
                             JSONObject jsonLoginUtente = new JSONObject(response.body().string());
                             String successo = jsonLoginUtente.getString("messaggio");
+                            Log.i("successo", successo);
                             if (successo.equals("NEW_PASSWORD_REQUIRED")) {
                                 sessionePrimoLogin = jsonLoginUtente.getString("session");
                                 throw new PrimoAccessoException();
@@ -154,8 +156,13 @@ public class DAOUtenteImpl implements DAOUtente {
                     if (response.isSuccessful()) {
                         try {
                             JSONObject jsonLoginUtente = new JSONObject(response.body().string());
-                            Utente utenteCorrente = formaUtenteDaJSON(jsonLoginUtente);
-                            callback.onModificaPasswordUtente(utenteCorrente);
+                            if (jsonLoginUtente.getString("messaggio").equals("Tutto bene")) {
+                                Utente utenteCorrente = formaUtenteDaJSON(jsonLoginUtente);
+                                callback.onModificaPasswordUtente(utenteCorrente);
+                            }
+                            else if (jsonLoginUtente.getString("messaggio").equals("Non sei associato a nessun ristorante!")) {
+                                callback.onModificaPasswordUtenteLicenziato();
+                            }
                         } catch (JSONException e) {
                             Log.i("Prova", e.getMessage());
 
@@ -210,24 +217,25 @@ public class DAOUtenteImpl implements DAOUtente {
                 if(response.isSuccessful())
                 {
                     try {
-                        JSONObject bodyJSON = new JSONObject(response.body().string());
-                        String messaggio = bodyJSON.getString("messaggio");
-                        if (messaggio.equals("Tutto bene"))
-                            callback.onConfermaCodice();
-                        else if (messaggio.equals("")){
+                        String messaggio = (response.body().string());
+                        Log.i("messaggio", messaggio);
+                         if (messaggio.equals("CodeMismatchException")){
                             callback.onCodiceErrato();
                         }
+                        else
+                            callback.onConfermaCodice();
                     }
                     catch (Exception e) {
+                        Log.i("Exception", e.getMessage());
                     }
                 }
                 else {
-
+                    Log.i("Exception", response.message());
                 }
             }
-
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.i("Failure", t.getMessage());
 
             }
         });

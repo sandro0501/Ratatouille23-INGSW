@@ -84,7 +84,7 @@ public class PrimoLoginModificaPasswordActivity extends AppCompatActivity {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setCancelable(false);
         dialog.setTitle("Successo!");
-        dialog.setMessage("La password è stata modificata correttamente!\nEffettuare nuovamente il login.");
+        dialog.setMessage("La password è stata modificata correttamente!");
         dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int j) {
