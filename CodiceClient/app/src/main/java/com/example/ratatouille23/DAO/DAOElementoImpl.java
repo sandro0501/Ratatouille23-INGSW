@@ -2,6 +2,7 @@ package com.example.ratatouille23.DAO;
 
 import android.util.Log;
 
+import com.example.ratatouille23.Handlers.EliminaElementiHandler;
 import com.example.ratatouille23.Handlers.HandleElemento;
 import com.example.ratatouille23.Handlers.HandlePreparazione;
 import com.example.ratatouille23.InterfacceRetrofit.ElementoService;
@@ -46,6 +47,10 @@ public class DAOElementoImpl implements DAOElemento {
 
     public interface AggiuntaElementiCallbacks {
         void onAggiuntaElemento (Elemento elwithid);
+    }
+
+    public interface EliminaElementiCallbacks {
+        void onEliminazioneElementi ();
     }
 
     Retrofit retrofitOpenFoodFacts = new Retrofit.Builder().baseUrl("https://it.openfoodfacts.org/cgi/").addConverterFactory(GsonConverterFactory.create(new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create())).build();
@@ -244,6 +249,26 @@ public class DAOElementoImpl implements DAOElemento {
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                     callback.onImpostata(false);
                     System.out.println("Failure");
+            }
+        });
+    }
+
+    public void deleteElementi(EliminaElementiHandler handler, EliminaElementiCallbacks callbacks) {
+        Call<ResponseBody> call = elementoService.eliminaElementi(handler);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    callbacks.onEliminazioneElementi();
+                }
+                else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
             }
         });
     }

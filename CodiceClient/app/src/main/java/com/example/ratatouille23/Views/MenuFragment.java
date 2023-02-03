@@ -1,14 +1,18 @@
 package com.example.ratatouille23.Views;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -18,7 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +36,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.amplifyframework.core.Amplify;
 import com.example.ratatouille23.Models.Allergene;
 import com.example.ratatouille23.Models.Elemento;
 import com.example.ratatouille23.Models.Ristorante;
@@ -40,8 +44,12 @@ import com.example.ratatouille23.Models.SezioneMenu;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Models.listaAllergeni;
 import com.example.ratatouille23.Presenters.PresenterMenu;
+import com.example.ratatouille23.Presenters.PresenterRistorante;
 import com.example.ratatouille23.R;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -57,6 +65,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final int PICK_IMAGE = 5;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -98,6 +107,10 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
     private ArrayAdapter<Elemento> adapterAutoComplete;
 
     private CheckBox checkboxPesce, checkboxGlutine, checkboxUova, checkboxNoci, checkboxArachidi, checkboxSolfiti, checkboxCrostacei, checkboxMolluschi, checkboxLupini, checkboxSenape, checkboxSesamo, checkboxLattosio, checkboxSedano, checkboxSoia;
+    private AppCompatImageButton bottoneModificaFoto;
+    private ImageView logoElemento;
+    private Uri uriLogoCorrente;
+    private boolean fotoModificata = false;
 
     public MenuFragment() {
         // Required empty public constructor
@@ -315,9 +328,8 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         sezioneElementoSpinner = (Spinner) viewAggiungiElemento.findViewById(R.id.spinnerSezioneElemento);
         bottoneConferma = (Button) viewAggiungiElemento.findViewById(R.id.bottoneAggiungiModificaElemento);
         bottoneAnnulla = (Button) viewAggiungiElemento.findViewById(R.id.bottoneAnnullaElemento);
-
-        bottoneConferma = (Button) viewAggiungiElemento.findViewById(R.id.bottoneAggiungiModificaElemento);
-        bottoneAnnulla = (Button) viewAggiungiElemento.findViewById(R.id.bottoneAnnullaElemento);
+        bottoneModificaFoto = viewAggiungiElemento.findViewById(R.id.imageButtonSceltaFotoElemento);
+        logoElemento = viewAggiungiElemento.findViewById(R.id.iconaLogoElemento);
 
         if(!ristoranteCorrente.isTuristico()){
             titoloSecondarioElementoEditText.setEnabled(false);
@@ -393,12 +405,24 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
             }
         });
 
+        bottoneModificaFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+            }
+        });
+
         bottoneAnnulla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialogElemento.dismiss();
             }
         });
+
+
 
         dialogElemento = builderDialogElemento.create();
         dialogElemento.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
@@ -407,10 +431,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
     }
 
     private void eliminaProdottiSelezionati() {
-        for (SezioneMenu sezioneCorrente : listaSezioni) {
-            sezioneCorrente.getAppartenente().removeAll(listaElementiSelezionati);
-        }
-        ((SezioneMenuRecyclerViewAdapter)recyclerViewMenu.getAdapter()).notifyDataSetChanged();
+        PresenterMenu.getInstance().eliminaElementi(this, listaElementiSelezionati);
         attivaDisattivaModalitaEliminazione();
     }
 
@@ -453,9 +474,6 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
 
             Collections.swap(listaSezioni, posizioneIniziale, posizioneFinale);
 
-            listaSezioni.get(posizioneIniziale).setPosizione(posizioneIniziale);
-            listaSezioni.get(posizioneFinale).setPosizione(posizioneFinale);
-
             recyclerView.getAdapter().notifyItemMoved(posizioneIniziale, posizioneFinale);
 
             return false;
@@ -474,19 +492,19 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
 
 
     @Override
-    public void onElementoClicked(Elemento elementoCliccato, View itemView) {
+    public void onElementoClicked(Elemento elementoCliccato, File fileImmagine, View itemView) {
         if (modalitaEliminazione) {
             selezionaDeseleziona(elementoCliccato, itemView);
         }
         else {
             //modifica elemento
             Log.println(Log.VERBOSE, "aa", elementoCliccato.getDenominazionePrincipale());
-            mostraDialogModificaElemento(elementoCliccato);
+            mostraDialogModificaElemento(elementoCliccato, fileImmagine);
 
         }
     }
 
-    private void mostraDialogModificaElemento(Elemento elementoDaModificare) {
+    private void mostraDialogModificaElemento(Elemento elementoDaModificare, File fileImmagine) {
         final View viewModificaElemento = getLayoutInflater().inflate(R.layout.layout_aggiungi_elemento_dialog, null);
 
         builderDialogElemento = new AlertDialog.Builder(getContext(), R.style.WrapContentDialog);
@@ -552,8 +570,12 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         descrizionePrincipaleElementoEditText.append(elementoDaModificare.getDescrizionePrincipale());
 
         descrizioneSecondariaElementoEditText = (EditText) viewModificaElemento.findViewById(R.id.editTextDescrizioneSecondariaElemento);
-
-
+        bottoneModificaFoto = viewModificaElemento.findViewById(R.id.imageButtonSceltaFotoElemento);
+        logoElemento = viewModificaElemento.findViewById(R.id.iconaLogoElemento);
+        if (fileImmagine != null) {
+            Bitmap bitmapLogo  = BitmapFactory.decodeFile(fileImmagine.getAbsolutePath());
+            logoElemento.setImageBitmap(bitmapLogo);
+        }
 
         if(!ristoranteCorrente.isTuristico()){
             titoloSecondarioElementoEditText.setEnabled(false);
@@ -564,7 +586,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
             titoloSecondarioElementoEditText.setEnabled(true);
             descrizioneSecondariaElementoEditText.setEnabled(true);
             titoloSecondarioElementoEditText.append(elementoDaModificare.getDenominazioneSecondaria());
-            descrizioneSecondariaElementoEditText.append(elementoDaModificare.getDenominazioneSecondaria());
+            descrizioneSecondariaElementoEditText.append(elementoDaModificare.getDescrizioneSecondaria());
         }
 
         prezzoElementoEditText = (EditText) viewModificaElemento.findViewById(R.id.editTextCostoElemento);
@@ -646,7 +668,21 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
                     }
                 }
                 elementoDaModificare.setPresenta(allergeniPiattoCorrente);
-                PresenterMenu.getInstance().modificaElemento(elementoDaModificare, elementoDaModificare.getPresenta(),MenuFragment.this);
+
+                if (fotoModificata) {
+
+                    InputStream streamLogo = null;
+                    try {
+                        streamLogo = getActivity().getContentResolver().openInputStream(uriLogoCorrente);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    uploadS3Modifica(streamLogo, uriLogoCorrente, elementoDaModificare);
+                    fotoModificata = false;
+
+                }
+                else
+                    PresenterMenu.getInstance().modificaElemento(elementoDaModificare, elementoDaModificare.getPresenta(),MenuFragment.this);
             }
         });
 
@@ -657,9 +693,45 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
             }
         });
 
+        bottoneModificaFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+            }
+        });
+
         dialogElemento = builderDialogElemento.create();
         dialogElemento.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
         dialogElemento.show();
+    }
+
+    private void uploadS3Modifica(InputStream streamLogo, Uri uriLogoCorrente, Elemento elemento) {
+        Amplify.Storage.uploadInputStream(
+                ((Integer)elemento.getIdElemento()).toString()+"_LogoElemento.jpg",
+                streamLogo,
+                result -> {
+                    PresenterMenu.getInstance().modificaElemento(elemento, elemento.getPresenta(),MenuFragment.this);
+                } ,
+                storageFailure -> PresenterRistorante.getInstance().mostraAlert(MenuFragment.this.getContext(), "Errore!", "L'immagine non è stata caricata correttamente, riprovare")
+        );
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
+            if (data == null) {
+                //error
+                return;
+            }
+
+            uriLogoCorrente = data.getData();
+            logoElemento.setImageURI(uriLogoCorrente);
+            fotoModificata = true;
+        }
     }
 
     @Override
@@ -688,7 +760,17 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
     public void onStop() {
         modalitaEliminazione = true;
         attivaDisattivaModalitaEliminazione();
+        bloccaOrdineMenu();
         super.onStop();
+    }
+
+    private void bloccaOrdineMenu() {
+        for (SezioneMenu sezione : listaSezioni) {
+            sezione.setPosizione(listaSezioni.indexOf(sezione));
+            for (Elemento elemento : sezione.getAppartenente())
+                elemento.setPosizione(sezione.getAppartenente().indexOf(elemento));
+        }
+        PresenterMenu.getInstance().settaPosizioniMenu(this, listaSezioni);
     }
 
     private void deselezionaTuttiElementi() {
@@ -722,15 +804,60 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         PresenterMenu.getInstance().estraiMenu(this, ristoranteCorrente);
     }
 
-    public void elementoAggiuntoCorrettamente() {
-        dialogElemento.dismiss();
-        PresenterMenu.getInstance().mostraAlert(getContext(), "Piatto aggiunto", "Piatto aggiunto correttamente al menù");
-        PresenterMenu.getInstance().estraiMenu(this, ristoranteCorrente);
+    public void elementoAggiuntoCorrettamente(Elemento elemento) {
+
+        if (fotoModificata) {
+            InputStream streamLogo = null;
+            try {
+                streamLogo = getActivity().getContentResolver().openInputStream(uriLogoCorrente);
+            } catch (FileNotFoundException e) {
+                Log.i("FILE NOT FOUND", "");
+                e.printStackTrace();
+            }
+            Log.i("PROVA", "");
+            fotoModificata = false;
+            uploadS3Aggiunta(streamLogo, uriLogoCorrente, elemento);
+        }
+        else {
+            dialogElemento.dismiss();
+            PresenterMenu.getInstance().mostraAlert(getContext(), "Piatto aggiunto", "Piatto aggiunto correttamente al menù");
+            PresenterMenu.getInstance().estraiMenu(this, ristoranteCorrente);
+        }
+
     }
 
     public void elementoModificato() {
         dialogElemento.dismiss();
         PresenterMenu.getInstance().mostraAlert(getContext(), "Piatto modificato!", "Il piatto e' stato correttamente aggiornato.");
         PresenterMenu.getInstance().estraiMenu(this, ristoranteCorrente);
+    }
+
+    public void setListaSezioniPerAggiungereNuovoLogo(ArrayList<SezioneMenu> listaSezioni, Elemento elemento) {
+        setListaSezioni(listaSezioni);
+        SezioneMenu sezioneNellaLista = listaSezioni.get(elemento.getAppartiene().getPosizione());
+        Elemento elementoConId = sezioneNellaLista.getAppartenente().get(elemento.getPosizione());
+
+
+
+    }
+
+    private void uploadS3Aggiunta(InputStream streamLogo, Uri uriLogoCorrente, Elemento elemento) {
+        Amplify.Storage.uploadInputStream(
+                ((Integer)elemento.getIdElemento()).toString()+"_LogoElemento.jpg",
+                streamLogo,
+                result -> {
+                    Log.i("SUCCESSO", "");
+                    dialogElemento.dismiss();
+                    PresenterMenu.getInstance().mostraAlert(getContext(), "Piatto aggiunto", "Piatto aggiunto correttamente al menù");
+                    PresenterMenu.getInstance().estraiMenu(this, ristoranteCorrente);
+                } ,
+                storageFailure -> {
+                    Log.i("FALLIMENTO", "");
+                    dialogElemento.dismiss();
+                    PresenterRistorante.getInstance().mostraAlert(MenuFragment.this.getContext(), "Errore!", "Il piatto è stato aggiunto ma l'immagine non è stata caricata correttamente!");
+                    PresenterMenu.getInstance().estraiMenu(this, ristoranteCorrente);
+                }
+        );
+
     }
 }

@@ -1,7 +1,11 @@
 package com.example.ratatouille23.Views;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -10,12 +14,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amplifyframework.core.Amplify;
 import com.example.ratatouille23.Models.Allergene;
 import com.example.ratatouille23.Models.Elemento;
 import com.example.ratatouille23.Models.SezioneMenu;
 import com.example.ratatouille23.Models.listaAllergeni;
+import com.example.ratatouille23.Presenters.PresenterRistorante;
 import com.example.ratatouille23.R;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class ElementoMenuRecyclerViewAdapter extends RecyclerView.Adapter<ElementoMenuRecyclerViewAdapter.MyViewHolder>{
@@ -43,11 +50,14 @@ public class ElementoMenuRecyclerViewAdapter extends RecyclerView.Adapter<Elemen
     @Override
     public void onBindViewHolder(@NonNull ElementoMenuRecyclerViewAdapter.MyViewHolder holder, int position) {
 
-        holder.textViewTitoloPrincipale.setText(listaElementi.get(position).getDenominazionePrincipale());
-        holder.textViewTitoloSecondario.setText(listaElementi.get(position).getDenominazioneSecondaria());
-        holder.textViewDescrizionePrincipale.setText(listaElementi.get(position).getDescrizionePrincipale());
-        holder.textViewDescrizioneSecondaria.setText(listaElementi.get(position).getDescrizioneSecondaria());
-        holder.textViewCosto.setText("€" + listaElementi.get(position).getCosto().toString());
+        Elemento elementoCorrente = listaElementi.get(position);
+
+        holder.textViewTitoloPrincipale.setText(elementoCorrente.getDenominazionePrincipale());
+        holder.textViewTitoloSecondario.setText(elementoCorrente.getDenominazioneSecondaria());
+        holder.textViewDescrizionePrincipale.setText(elementoCorrente.getDescrizionePrincipale());
+        holder.textViewDescrizioneSecondaria.setText(elementoCorrente.getDescrizioneSecondaria());
+
+        holder.textViewCosto.setText("€" + elementoCorrente.getCosto().toString());
         boolean iconaDaMostrare;
 
         if (!listaElementi.isEmpty()) holder.sezioneCorrente = listaElementi.get(0).getAppartiene();
@@ -62,6 +72,25 @@ public class ElementoMenuRecyclerViewAdapter extends RecyclerView.Adapter<Elemen
             if (iconaDaMostrare) icona.setVisibility(View.VISIBLE);
             else icona.setVisibility(View.INVISIBLE);
         }
+
+        if (elementoCorrente.getAppartiene().getRistorante().isTuristico()){
+            holder.textViewTitoloSecondario.setVisibility(View.VISIBLE);
+            holder.textViewDescrizioneSecondaria.setVisibility(View.VISIBLE);
+        }
+        else {
+            holder.textViewTitoloSecondario.setVisibility(View.INVISIBLE);
+            holder.textViewDescrizioneSecondaria.setVisibility(View.INVISIBLE);
+        }
+
+        String pathFoto = ((Integer)elementoCorrente.getIdElemento()).toString()+"_LogoElemento.jpg";
+        Amplify.Storage.list(pathFoto,
+                result -> {
+                    if (!result.getItems().isEmpty())
+                        holder.setLogoDownload(pathFoto);
+        },
+                error -> Log.e("MyAmplifyApp", "List failure", error)
+        );
+
     }
 
     @Override
@@ -98,6 +127,7 @@ public class ElementoMenuRecyclerViewAdapter extends RecyclerView.Adapter<Elemen
         ImageView iconaSoia;
 
         SezioneMenu sezioneCorrente;
+        File fileImmagine;
 
         public MyViewHolder(@NonNull View itemView, RecyclerViewElementoMenuInterface recyclerViewInterfaceElemento) {
             super(itemView);
@@ -161,7 +191,7 @@ public class ElementoMenuRecyclerViewAdapter extends RecyclerView.Adapter<Elemen
                     if (recyclerViewInterfaceElemento != null) {
                         int posizioneElemento = getAdapterPosition();
                         if(posizioneElemento!=RecyclerView.NO_POSITION){
-                            recyclerViewInterfaceElemento.onElementoClicked(listaElementi.get(posizioneElemento), view);
+                            recyclerViewInterfaceElemento.onElementoClicked(listaElementi.get(posizioneElemento), fileImmagine, view);
                         }
 
                     }
@@ -181,6 +211,21 @@ public class ElementoMenuRecyclerViewAdapter extends RecyclerView.Adapter<Elemen
                 }
             });
 
+        }
+
+        public void setLogoDownload(String pathFoto) {
+            Amplify.Storage.downloadFile(
+                    pathFoto,
+                    new File(((MenuFragment)recyclerViewInterfaceElemento).getContext().getFilesDir() + "/" + pathFoto),
+                    result -> {
+                        File fileLogo = result.getFile();
+                        Bitmap bitmapLogo  = BitmapFactory.decodeFile(fileLogo.getAbsolutePath());
+                        immagineElemento.setImageBitmap(bitmapLogo);
+                        fileImmagine = fileLogo;
+                    },
+                    error -> PresenterRistorante.getInstance().mostraAlert(((MenuFragment)recyclerViewInterfaceElemento).getContext(), "Errore!", "L'immagine non è stata scaricata correttamente, riprovare")
+
+            );
         }
     }
 

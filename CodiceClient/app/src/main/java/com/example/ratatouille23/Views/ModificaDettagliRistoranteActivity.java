@@ -45,6 +45,8 @@ public class ModificaDettagliRistoranteActivity extends AppCompatActivity {
     private static final int PICK_IMAGE = 1;
 
     private static final int RICEZIONE_RISTORANTE = 2;
+    private boolean immagineModificata = false;
+    private Uri uriLogo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,16 +99,29 @@ public class ModificaDettagliRistoranteActivity extends AppCompatActivity {
         bottoneConferma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Ristorante ristoranteTemporaneo = new Ristorante(
-                        ristoranteCorrente.getIdRistorante(),
-                        textViewNome.getText().toString(),
-                        textViewTelefono.getText().toString(),
-                        textViewIndirizzo.getText().toString(),
-                        textViewCitta.getText().toString(),
-                        checkBoxTuristico.isChecked(),
-                    ((Integer)ristoranteCorrente.getIdRistorante()).toString()+"_LogoRistorante.jpg"
-                );
-                PresenterRistorante.getInstance().confermaModifichePremuto(ModificaDettagliRistoranteActivity.this, ristoranteTemporaneo);
+
+                if (immagineModificata) {
+                    InputStream streamLogo = null;
+                    try {
+                        streamLogo = getContentResolver().openInputStream(uriLogo);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    uploadS3(streamLogo, uriLogo);
+                }
+                else {
+                    Ristorante ristoranteTemporaneo = new Ristorante(
+                            ristoranteCorrente.getIdRistorante(),
+                            textViewNome.getText().toString(),
+                            textViewTelefono.getText().toString(),
+                            textViewIndirizzo.getText().toString(),
+                            textViewCitta.getText().toString(),
+                            checkBoxTuristico.isChecked(),
+                            ((Integer)ristoranteCorrente.getIdRistorante()).toString()+"_LogoRistorante.jpg"
+                    );
+                    PresenterRistorante.getInstance().confermaModifichePremuto(ModificaDettagliRistoranteActivity.this, ristoranteTemporaneo);
+                }
+
             }
         });
 
@@ -132,15 +147,9 @@ public class ModificaDettagliRistoranteActivity extends AppCompatActivity {
                 return;
             }
 
-            Uri uri = data.getData();
-            InputStream streamLogo = null;
-            try {
-                streamLogo = getContentResolver().openInputStream(uri);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            uploadS3(streamLogo, uri);
-
+            uriLogo = data.getData();
+            imageViewLogoRistorante.setImageURI(uriLogo);
+            immagineModificata = true;
         }
     }
 
@@ -148,13 +157,26 @@ public class ModificaDettagliRistoranteActivity extends AppCompatActivity {
         Amplify.Storage.uploadInputStream(
                 ((Integer)ristoranteCorrente.getIdRistorante()).toString()+"_LogoRistorante.jpg",
                 streamLogo,
-                result -> setLogoRistorante(uri),
+                result -> effettuaModifiche(uri),
                 storageFailure -> PresenterRistorante.getInstance().mostraAlert(ModificaDettagliRistoranteActivity.this.getApplicationContext(), "Errore!", "L'immagine non è stata caricata correttamente, riprovare")
         );
     }
 
+    private void effettuaModifiche(Uri uri) {
+        setLogoRistorante(uri);
+        Ristorante ristoranteTemporaneo = new Ristorante(
+                ristoranteCorrente.getIdRistorante(),
+                textViewNome.getText().toString(),
+                textViewTelefono.getText().toString(),
+                textViewIndirizzo.getText().toString(),
+                textViewCitta.getText().toString(),
+                checkBoxTuristico.isChecked(),
+                ristoranteCorrente.getUrlFoto()
+        );
+        PresenterRistorante.getInstance().confermaModifichePremuto(ModificaDettagliRistoranteActivity.this, ristoranteTemporaneo);
+    }
+
     private void setLogoRistorante(Uri uri) {
-        imageViewLogoRistorante.setImageURI(uri);
         ristoranteCorrente.setUrlFoto(((Integer)ristoranteCorrente.getIdRistorante()).toString()+"_LogoRistorante.jpg");
     }
 

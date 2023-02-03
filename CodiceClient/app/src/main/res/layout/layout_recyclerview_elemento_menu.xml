@@ -22,20 +22,19 @@
             android:layout_height="match_parent"
             android:background="@drawable/elemento_menu_bg">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageViewImmagineElementoMenuCard"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:src="@color/colorGrey"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.02"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.481" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textViewTitoloPrincipaleElementoMenuCard"
@@ -63,6 +62,7 @@
                 android:maxWidth="240dp"
                 android:singleLine="true"
                 android:text="Nome secondario"
+                android:paddingRight="10dp"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:textStyle="italic"
@@ -96,6 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:paddingRight="10dp"
                 android:fontFamily="@font/verdana_font"
                 android:maxWidth="240dp"
                 android:singleLine="true"

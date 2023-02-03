@@ -10,6 +10,7 @@ import com.example.ratatouille23.DAO.DAORistorante;
 import com.example.ratatouille23.DAO.DAORistoranteImpl;
 import com.example.ratatouille23.DAO.DAOSezioneMenu;
 import com.example.ratatouille23.DAO.DAOSezioneMenuImpl;
+import com.example.ratatouille23.Handlers.EliminaElementiHandler;
 import com.example.ratatouille23.Handlers.EliminaSezioniHandler;
 import com.example.ratatouille23.Handlers.HandlePreparazione;
 import com.example.ratatouille23.Models.Allergene;
@@ -134,7 +135,7 @@ public class PresenterMenu extends PresenterBase {
                 if(modifica)
                     context.elementoModificato();
                 else
-                    context.elementoAggiuntoCorrettamente();
+                    context.elementoAggiuntoCorrettamente(elemento);
             }
         });
 
@@ -154,5 +155,37 @@ public class PresenterMenu extends PresenterBase {
         });
     }
 
+
+    public void settaPosizioniMenu(MenuFragment context, ArrayList<SezioneMenu> listaSezioni) {
+        for (SezioneMenu sezione : listaSezioni) {
+
+            daoSezioneMenu.modificaSezioneMenu(sezione, new DAOSezioneMenuImpl.ModificaSezioneCallbacks() {
+                @Override
+                public void onModificato() {
+
+                }
+            });
+
+            for (Elemento elemento : sezione.getAppartenente()) {
+                daoElemento.modificaElemento(elemento, new DAOElementoImpl.ModificaElementoCallbacks() {
+                    @Override
+                    public void onModificato() {
+
+                    }
+                });
+            }
+        }
+
+    }
+
+    public void eliminaElementi(MenuFragment context, ArrayList<Elemento> listaElementi) {
+        EliminaElementiHandler handler = new EliminaElementiHandler(listaElementi);
+        daoElemento.deleteElementi(handler, new DAOElementoImpl.EliminaElementiCallbacks() {
+            @Override
+            public void onEliminazioneElementi() {
+                context.aggiornaMenu();
+            }
+        });
+    }
 
 }

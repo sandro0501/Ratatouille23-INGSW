@@ -80,16 +80,10 @@ public class DAOSezioneMenuImpl implements DAOSezioneMenu {
                                 JSONObject currEle = currEleInd.getJSONObject("elemento");
                                 Elemento elemento;
                                 //Creo l'oggetto associato
-//                                try
-//                                {
-                                    Elemento elementos = new Elemento(currEle.getString("denominazioneP"), currEle.getString("denominazioneS"), currEle.getString("descrizioneP"), currEle.getString("descrizioneS"), currEle.getDouble("costo"), currEle.getInt("posizione"));
-                                    elemento = elementos;
-//                                }
-//                                catch(Exception e)
-//                                {
-//                                    Elemento elementos = new Elemento(currEle.getString("denominazioneP"), currEle.getString("descrizioneP"), currEle.getDouble("costo"), currEle.getInt("posizione"));
-//                                    elemento = elementos;
-//                                }
+                                Elemento elementos = new Elemento(currEle.getString("denominazioneP"), currEle.getString("denominazioneS"), currEle.getString("descrizioneP"), currEle.getString("descrizioneS"), currEle.getDouble("costo"), currEle.getInt("posizione"));
+                                if (elementos.getDenominazioneSecondaria().equals("null")) elementos.setDenominazioneSecondaria("");
+                                if (elementos.getDescrizioneSecondaria().equals("null")) elementos.setDescrizioneSecondaria("");
+                                elemento = elementos;
                                 elemento.setIdElemento(currEle.getInt("idElemento"));
                                 //Prendo il jsonarray degli allergeni
                                 JSONArray allergeni = currEleInd.getJSONArray("allergeni");
