@@ -140,7 +140,6 @@
                 android:layout_width="31dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="30dp"
-                android:src="@drawable/conferma_icon"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewDescrizioneSecondariaElementoMenuCard"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"

@@ -241,7 +241,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
     private void mostraDialogInserimentoProdotto() {
         final View viewAggiungiProdotto = getLayoutInflater().inflate(R.layout.layout_aggiungi_prodotto_dialog, null);
 
-        builderDialogAggiungiProdotto = new AlertDialog.Builder(getContext());
+        builderDialogAggiungiProdotto = new AlertDialog.Builder(getContext(), R.style.WrapContentDialog);
         builderDialogAggiungiProdotto.setView(viewAggiungiProdotto);
         builderDialogAggiungiProdotto.setCancelable(true);
 
@@ -356,7 +356,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
     private void mostraDialogModificaProdotto(int posizioneProdotto) {
         final View viewModificaProdotto = getLayoutInflater().inflate(R.layout.layout_modifica_prodotto_dialog, null);
 
-        builderDialogModificaProdotto = new AlertDialog.Builder(getContext());
+        builderDialogModificaProdotto = new AlertDialog.Builder(getContext(), R.style.WrapContentDialog);
         builderDialogModificaProdotto.setView(viewModificaProdotto);
         builderDialogModificaProdotto.setCancelable(true);
 

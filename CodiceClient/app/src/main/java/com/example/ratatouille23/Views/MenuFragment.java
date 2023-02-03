@@ -489,7 +489,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
     private void mostraDialogModificaElemento(Elemento elementoDaModificare) {
         final View viewModificaElemento = getLayoutInflater().inflate(R.layout.layout_aggiungi_elemento_dialog, null);
 
-        builderDialogElemento = new AlertDialog.Builder(getContext());
+        builderDialogElemento = new AlertDialog.Builder(getContext(), R.style.WrapContentDialog);
         builderDialogElemento.setView(viewModificaElemento);
         builderDialogElemento.setCancelable(true);
 
