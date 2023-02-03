@@ -2,12 +2,10 @@ package com.example.ratatouille23.Handlers;
 
 import com.google.gson.annotations.Expose;
 
-public class RecoverHandler
+public class HandleAllergeni
 {
     @Expose
-    public String email;
+    public int idElemento;
     @Expose
-    public String password;
-    @Expose
-    public String code;
+    public int idAllergene;
 }

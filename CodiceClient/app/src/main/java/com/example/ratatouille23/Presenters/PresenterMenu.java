@@ -59,6 +59,7 @@ public class PresenterMenu extends PresenterBase {
         daoSezioneMenu.estraiMenu(ristoranteCorrente.getIdRistorante(), new DAOSezioneMenuImpl.EstraiMenuCallbacks() {
             @Override
             public void onEstratto(ArrayList<SezioneMenu> listaSezioni) {
+
                 context.setListaSezioni(listaSezioni);
             }
         });

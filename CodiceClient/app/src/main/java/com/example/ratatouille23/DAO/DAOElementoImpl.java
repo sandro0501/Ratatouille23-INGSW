@@ -6,12 +6,10 @@ import com.example.ratatouille23.Handlers.HandleElemento;
 import com.example.ratatouille23.Handlers.HandlePreparazione;
 import com.example.ratatouille23.InterfacceRetrofit.ElementoService;
 import com.example.ratatouille23.InterfacceRetrofit.OpenFootFactsService;
-import com.example.ratatouille23.InterfacceRetrofit.ProdottoService;
 import com.example.ratatouille23.Models.Allergene;
 import com.example.ratatouille23.Models.Elemento;
-import com.example.ratatouille23.Models.HandleAllergeni;
-import com.example.ratatouille23.Models.Prodotto;
-import com.example.ratatouille23.Models.listaAllergeni;
+import com.example.ratatouille23.Handlers.HandleAllergeni;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,8 +48,8 @@ public class DAOElementoImpl implements DAOElemento {
         void onAggiuntaElemento (Elemento elwithid);
     }
 
-    Retrofit retrofitOpenFoodFacts = new Retrofit.Builder().baseUrl("https://it.openfoodfacts.org/cgi/").addConverterFactory(GsonConverterFactory.create()).build();
-    Retrofit retrofitElemento = new Retrofit.Builder().baseUrl(DAOBaseUrl.baseUrl()).addConverterFactory(GsonConverterFactory.create()).build();
+    Retrofit retrofitOpenFoodFacts = new Retrofit.Builder().baseUrl("https://it.openfoodfacts.org/cgi/").addConverterFactory(GsonConverterFactory.create(new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create())).build();
+    Retrofit retrofitElemento = new Retrofit.Builder().baseUrl(DAOBaseUrl.baseUrl()).addConverterFactory(GsonConverterFactory.create(new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create())).build();
 
     OpenFootFactsService openFootFactsService = retrofitOpenFoodFacts.create(OpenFootFactsService.class);
     ElementoService elementoService = retrofitElemento.create(ElementoService.class);

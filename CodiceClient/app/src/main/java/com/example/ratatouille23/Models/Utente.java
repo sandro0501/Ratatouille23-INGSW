@@ -1,18 +1,27 @@
 package com.example.ratatouille23.Models;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Utente implements Serializable {
 
-
+    @Expose
     private int idUtente;
+    @Expose
     private String idToken;
+    @Expose
     private String accessToken;
+    @Expose
     private String nome;
+    @Expose
     private String cognome;
+    @Expose
     private String email;
+    @Expose(serialize = false)
     private ArrayList<Bacheca> bacheca = new ArrayList<>();
+    @Expose
     private Ristorante idRistorante;
 
     public Utente() {};

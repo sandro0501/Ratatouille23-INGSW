@@ -4,17 +4,25 @@ import com.example.ratatouille23.Models.Amministratore;
 import com.example.ratatouille23.Models.Bacheca;
 import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Models.Utente;
+import com.google.gson.annotations.Expose;
 
 import java.util.ArrayList;
 
 public class UtenteHandler {
 
+    @Expose
     public int idUtente;
+    @Expose
     public String nome;
+    @Expose
     public String cognome;
+    @Expose
     public String email;
+    @Expose
     public String ruolo;
+    @Expose
     public boolean master;
+    @Expose
     public Ristorante idRistorante;
 
     public UtenteHandler (Utente utente) {

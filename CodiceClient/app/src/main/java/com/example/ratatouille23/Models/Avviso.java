@@ -1,15 +1,22 @@
 package com.example.ratatouille23.Models;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 
 public class Avviso implements Serializable {
 
+    @Expose
     private int idAvviso;
+    @Expose
     private String oggetto;
+    @Expose
     private String corpo;
+    @Expose
     private LocalDate dataCreazione;
+    @Expose
     private Gestore autore;
 
     public Avviso(int idAvviso,String oggetto, String corpo, LocalDate dataCreazione, Gestore autore) {

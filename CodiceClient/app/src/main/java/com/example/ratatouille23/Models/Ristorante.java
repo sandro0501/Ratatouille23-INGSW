@@ -1,20 +1,31 @@
 package com.example.ratatouille23.Models;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Ristorante implements Serializable {
 
+    @Expose
     private int idRistorante;
+    @Expose
     private String denominazione;
+    @Expose
     private String numeroTelefono;
+    @Expose
     private String indirizzo;
+    @Expose
     private String citta;
+    @Expose
     private boolean turistico;
+    @Expose
     private String urlFoto;
 
-    private transient ArrayList<SezioneMenu> offre = new ArrayList<>();
-    private transient ArrayList<Prodotto> utilizza = new ArrayList<>();
+    @Expose(serialize = false)
+    private ArrayList<SezioneMenu> offre = new ArrayList<>();
+    @Expose(serialize = false)
+    private ArrayList<Prodotto> utilizza = new ArrayList<>();
 
     public Ristorante() {}
 

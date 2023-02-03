@@ -73,12 +73,12 @@ public class SezioneMenuRecyclerViewAdapter extends RecyclerView.Adapter<Sezione
             @Override
             public void onClick(View view) {
                 if (!((MenuFragment)recyclerViewInterfaceSezioni).isModalitaEliminazione()) {
-                    if(holder.inModifica)
+                    if(holder.sezioneCorrente.isInModifica())
                     {
                         holder.sezioneCorrente.setTitolo(holder.editTextTitoloSezione.getText().toString());
                         PresenterMenu.getInstance().modificaSezione(holder.sezioneCorrente);
                     }
-                    holder.inModifica = !holder.inModifica;
+                    holder.sezioneCorrente.setInModifica(!holder.sezioneCorrente.isInModifica());
                     impostaGraficamenteModalitaModifica(holder, holder.sezioneCorrente);
                 }
             }
@@ -111,13 +111,12 @@ public class SezioneMenuRecyclerViewAdapter extends RecyclerView.Adapter<Sezione
     }
 
     private void impostaGraficamenteModalitaModifica(MyViewHolder holder, SezioneMenu sezioneMenu) {
-        if (!holder.inModifica) {
+        if (!sezioneMenu.isInModifica()) {
             holder.iconaMatitaModificaSezione.setImageResource(R.drawable.icona_matita);
             holder.editTextTitoloSezione.setEnabled(false);
             holder.titoloCorrente = holder.editTextTitoloSezione.getText().toString();
             holder.editTextTitoloSezione.setText(holder.titoloCorrente);
             holder.iconaEliminaSezione.setVisibility(View.INVISIBLE);
-            holder.inModifica = false;
         }
         else {
             holder.iconaMatitaModificaSezione.setImageResource(R.drawable.icona_spunta_modifica);
@@ -125,7 +124,6 @@ public class SezioneMenuRecyclerViewAdapter extends RecyclerView.Adapter<Sezione
             holder.editTextTitoloSezione.requestFocus();
             holder.editTextTitoloSezione.setSelection(holder.editTextTitoloSezione.getText().length());
             holder.iconaEliminaSezione.setVisibility(View.VISIBLE);
-            holder.inModifica = true;
         }
     }
 
@@ -145,7 +143,6 @@ public class SezioneMenuRecyclerViewAdapter extends RecyclerView.Adapter<Sezione
         private String titoloCorrente;
         private SezioneMenu sezioneCorrente;
         private ImageView iconaDragNDrop;
-        private boolean inModifica = false;
 
         public MyViewHolder(@NonNull View itemView, RecyclerViewSezioneMenuInterface recyclerViewInterfaceSezioni) {
             super(itemView);
