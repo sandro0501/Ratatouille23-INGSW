@@ -274,7 +274,7 @@
                 android:backgroundTint="#5F5959"
                 android:ems="10"
                 android:fontFamily="@font/verdana_font"
-                android:inputType="textPersonName"
+                android:inputType="numberDecimal"
                 android:singleLine="true"
                 android:textColor="#000000"
                 android:textCursorDrawable="@drawable/color_cursor"

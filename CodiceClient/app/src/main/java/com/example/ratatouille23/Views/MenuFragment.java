@@ -2,6 +2,7 @@ package com.example.ratatouille23.Views;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -256,6 +257,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         builderDialogElemento.setView(viewAggiungiElemento);
         builderDialogElemento.setCancelable(true);
 
+
         ArrayList<CheckBox> checkBoxAllergeni = new ArrayList<>();
 
         checkboxPesce = viewAggiungiElemento.findViewById(R.id.checkBoxAllergenePesce);
@@ -399,6 +401,15 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
 
         dialogElemento = builderDialogElemento.create();
         dialogElemento.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
+        dialogElemento.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                dialogElemento.getWindow().setLayout(
+                        viewAggiungiElemento.getWidth(),
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                );
+            }
+        });
         dialogElemento.show();
 
     }
