@@ -254,7 +254,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
     private void mostraDialogAggiuntaElemento() {
         final View viewAggiungiElemento = getLayoutInflater().inflate(R.layout.layout_aggiungi_elemento_dialog, null);
 
-        builderDialogElemento = new AlertDialog.Builder(getContext());
+        builderDialogElemento = new AlertDialog.Builder(getContext(), R.style.WrapContentDialog);
         builderDialogElemento.setView(viewAggiungiElemento);
         builderDialogElemento.setCancelable(true);
 
@@ -402,8 +402,6 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
 
         dialogElemento = builderDialogElemento.create();
         dialogElemento.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
-        dialogElemento.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        dialogElemento.getWindow().setGravity(Gravity.CENTER);
         dialogElemento.show();
 
     }
