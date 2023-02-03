@@ -6,7 +6,10 @@ import com.google.gson.annotations.Expose;
 
 public class HandlePreparazione
 {
+    @Expose
     public Elemento idElemento;
+    @Expose
     public Prodotto idProdotto;
+    @Expose
     public double quantita;
 }

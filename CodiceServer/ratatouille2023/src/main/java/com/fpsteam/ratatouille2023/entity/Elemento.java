@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -33,6 +34,7 @@ public class Elemento {
 	@NotNull
 	private String denominazioneP;
 	@Column(name="denominazioneS")
+	@JsonProperty("denominazioneS")
 	private String denominasioneS;
 	@NotNull
 	private String descrizioneP;

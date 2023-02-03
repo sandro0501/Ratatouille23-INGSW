@@ -21,7 +21,7 @@ import jakarta.validation.constraints.NotNull;
 
 
 @Entity
-@Table(name = "sezioneMenu", uniqueConstraints = { @UniqueConstraint (name = "SezioneUnicaPerRistorante", columnNames = {"titolo","ristorante"}) } )
+@Table(name = "sezioneMenu")
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class SezioneMenu {
 	
