@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -401,15 +402,8 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
 
         dialogElemento = builderDialogElemento.create();
         dialogElemento.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
-        dialogElemento.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                dialogElemento.getWindow().setLayout(
-                        viewAggiungiElemento.getWidth(),
-                        ViewGroup.LayoutParams.WRAP_CONTENT
-                );
-            }
-        });
+        dialogElemento.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        dialogElemento.getWindow().setGravity(Gravity.CENTER);
         dialogElemento.show();
 
     }
