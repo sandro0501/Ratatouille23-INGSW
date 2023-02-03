@@ -23,8 +23,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name="elemento",
-uniqueConstraints = { @UniqueConstraint (name = "ElementoUnicoPPerSezione", columnNames = {"denominazioneP","sezioneMenu"}),
-				      @UniqueConstraint (name = "ElementoUnicoSPerSezione", columnNames = {"denominazioneS","sezioneMenu"})})
+uniqueConstraints = { @UniqueConstraint (name = "ElementoUnicoPPerSezione", columnNames = {"denominazioneP","sezioneMenu"})})
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Elemento {
 

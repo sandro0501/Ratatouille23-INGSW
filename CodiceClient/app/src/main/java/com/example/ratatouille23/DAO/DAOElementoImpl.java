@@ -2,6 +2,7 @@ package com.example.ratatouille23.DAO;
 
 import android.util.Log;
 
+import com.example.ratatouille23.Handlers.EliminaPreparazioniHandler;
 import com.example.ratatouille23.Handlers.HandleElemento;
 import com.example.ratatouille23.Handlers.HandlePreparazione;
 import com.example.ratatouille23.InterfacceRetrofit.ElementoService;
@@ -27,6 +28,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DAOElementoImpl implements DAOElemento {
+
+    public interface EliminapreparazioneCallbacks{
+        void onEliminati(boolean esito);
+    }
 
     public interface ImpostaPreparazioneCallbacks{
         void onImpostata(boolean esito);
@@ -244,6 +249,27 @@ public class DAOElementoImpl implements DAOElemento {
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                     callback.onImpostata(false);
                     System.out.println("Failure");
+            }
+        });
+    }
+
+    @Override
+    public void eliminaPreparazione(EliminaPreparazioniHandler preparazioni, EliminapreparazioneCallbacks callback) {
+        Call<ResponseBody> call = elementoService.eliminaPreparazioni(preparazioni);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful())
+                {
+                    callback.onEliminati(true);
+                }
+                else
+                    callback.onEliminati(false);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    callback.onEliminati(false);
             }
         });
     }

@@ -1,5 +1,6 @@
 package com.example.ratatouille23.InterfacceRetrofit;
 
+import com.example.ratatouille23.Handlers.EliminaPreparazioniHandler;
 import com.example.ratatouille23.Handlers.HandleAllergeni;
 import com.example.ratatouille23.Handlers.HandleElemento;
 import com.example.ratatouille23.Handlers.HandlePreparazione;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 
@@ -29,5 +31,8 @@ public interface ElementoService {
 
     @POST("preparazione")
     Call<ResponseBody> impostaPreparazione(@Body HandlePreparazione preparazione);
+
+    @PATCH("preparazione")
+    Call<ResponseBody> eliminaPreparazioni(@Body EliminaPreparazioniHandler preparazioni);
 
 }
