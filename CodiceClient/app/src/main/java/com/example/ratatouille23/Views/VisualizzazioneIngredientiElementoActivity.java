@@ -202,7 +202,7 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
 
     private void mostraRicercaProdottiInDispensa(){
         final View viewAggiuntaIngrediente = getLayoutInflater().inflate(R.layout.layout_ricerca_prodotto_per_elemento, null);
-        builderDialogAggiuntaIngrediente = new AlertDialog.Builder(VisualizzazioneIngredientiElementoActivity.this);
+        builderDialogAggiuntaIngrediente = new AlertDialog.Builder(VisualizzazioneIngredientiElementoActivity.this, R.style.WrapContentDialog);
         builderDialogAggiuntaIngrediente.setView(viewAggiuntaIngrediente);
         builderDialogAggiuntaIngrediente.setCancelable(true);
 
