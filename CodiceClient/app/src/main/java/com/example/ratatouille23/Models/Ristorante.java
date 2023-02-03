@@ -13,8 +13,8 @@ public class Ristorante implements Serializable {
     private boolean turistico;
     private String urlFoto;
 
-    private ArrayList<SezioneMenu> offre = new ArrayList<>();
-    private ArrayList<Prodotto> utilizza = new ArrayList<>();
+    private transient ArrayList<SezioneMenu> offre = new ArrayList<>();
+    private transient ArrayList<Prodotto> utilizza = new ArrayList<>();
 
     public Ristorante() {}
 

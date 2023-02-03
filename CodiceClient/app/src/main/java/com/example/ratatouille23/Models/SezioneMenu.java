@@ -8,7 +8,7 @@ public class SezioneMenu implements Serializable {
     private int idAvviso;
     private String titolo;
     private int posizione;
-    private ArrayList<Elemento> appartenente = new ArrayList<>();
+    private transient ArrayList<Elemento> appartenente = new ArrayList<>();
     private Ristorante ristorante;
 
     public SezioneMenu(String nome, int posizione) {

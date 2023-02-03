@@ -3,6 +3,7 @@ package com.example.ratatouille23.DAO;
 import android.util.Log;
 
 import com.example.ratatouille23.Handlers.HandleElemento;
+import com.example.ratatouille23.Handlers.HandlePreparazione;
 import com.example.ratatouille23.InterfacceRetrofit.ElementoService;
 import com.example.ratatouille23.InterfacceRetrofit.OpenFootFactsService;
 import com.example.ratatouille23.InterfacceRetrofit.ProdottoService;
@@ -28,6 +29,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DAOElementoImpl implements DAOElemento {
+
+    public interface ImpostaPreparazioneCallbacks{
+        void onImpostata(boolean esito);
+    }
 
     public interface ModificaElementoCallbacks{
         void onModificato();
@@ -216,6 +221,31 @@ public class DAOElementoImpl implements DAOElemento {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
 
+            }
+        });
+    }
+
+    @Override
+    public void impostaPreparazione(HandlePreparazione preparazione, DAOElementoImpl.ImpostaPreparazioneCallbacks callback) {
+        Call<ResponseBody> call = elementoService.impostaPreparazione(preparazione);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful())
+                {
+                    System.out.println("Success");
+                    callback.onImpostata(true);
+                }
+                else{
+                    callback.onImpostata(false);
+                    System.out.println(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    callback.onImpostata(false);
+                    System.out.println("Failure");
             }
         });
     }

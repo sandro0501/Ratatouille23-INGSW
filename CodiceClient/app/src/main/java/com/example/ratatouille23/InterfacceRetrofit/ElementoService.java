@@ -1,8 +1,10 @@
 package com.example.ratatouille23.InterfacceRetrofit;
 
 import com.example.ratatouille23.Handlers.HandleElemento;
+import com.example.ratatouille23.Handlers.HandlePreparazione;
 import com.example.ratatouille23.Models.Elemento;
 import com.example.ratatouille23.Models.HandleAllergeni;
+import com.example.ratatouille23.Models.Preparazione;
 
 import java.util.ArrayList;
 
@@ -23,5 +25,8 @@ public interface ElementoService {
 
     @POST("listaallergeni")
     Call<ResponseBody> impostaAllergeni(@Body ArrayList<HandleAllergeni> lista);
+
+    @POST("preparazione")
+    Call<ResponseBody> impostaPreparazione(@Body HandlePreparazione preparazione);
 
 }

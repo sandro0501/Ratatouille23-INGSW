@@ -663,6 +663,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
     public void onVediIngredientiElementoClicked(Elemento elemento, View view) {
         Intent i = new Intent(getContext(), VisualizzazioneIngredientiElementoActivity.class);
         i.putExtra("Elemento selezionato", (Serializable) elemento);
+        i.putExtra("Preparazione",(Serializable)elemento.getPreparazione());
         startActivity(i);
     }
 

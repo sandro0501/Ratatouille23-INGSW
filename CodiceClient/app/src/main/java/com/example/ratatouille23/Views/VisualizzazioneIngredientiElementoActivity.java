@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ratatouille23.Models.Elemento;
+import com.example.ratatouille23.Models.Preparazione;
 import com.example.ratatouille23.Models.Prodotto;
 import com.example.ratatouille23.Presenters.PresenterDispensa;
 import com.example.ratatouille23.Presenters.PresenterMenu;
@@ -66,6 +67,7 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
     private ArrayList<Prodotto> listaProdottiSelezionati = new ArrayList<>();
     private ArrayList<CardView> listaCardProdottiSelezionati = new ArrayList<>();
     private boolean modalitaEliminazione = false;
+    private boolean esito;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,7 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
         setContentView(R.layout.activity_visualizzazione_ingredienti_elemento);
 
         elemento = ((Elemento)getIntent().getExtras().get("Elemento selezionato"));
+        elemento.setPreparazione((ArrayList<Preparazione>)getIntent().getSerializableExtra("Preparazione"));
 
         onIndietroPremuto();
         inizializzaPannelloIngredienti();
@@ -205,7 +208,28 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
 
         pannelloProdottiInDispensa = viewAggiuntaIngrediente.findViewById(R.id.recyclerViewDispensaElemento);
         ricercaProdottiVuota = viewAggiuntaIngrediente.findViewById(R.id.textViewRicercaVuotaProdottoInDispensa);
-        riempiDispensa();
+        PresenterDispensa.getInstance().ottieniDispensaRistorante(VisualizzazioneIngredientiElementoActivity.this ,elemento.getAppartiene().getRistorante());
+    }
+
+    public void riempiDispensa(ArrayList<Prodotto> lista){
+        dispensa = new ArrayList<>();
+        dispensa.addAll(lista);
+//
+//        String[] nomeProdotto = getResources().getStringArray(R.array.nome_prodotto);
+//        String[] descrizoneProdotto = getResources().getStringArray(R.array.descrizione_prodotto);
+//        String[] unitaProdotto = getResources().getStringArray(R.array.unita_prodotto);
+//        String[] costoAcquistoProdotto = getResources().getStringArray(R.array.costoacq_prodotto);
+//        String[] quantitaProdotto = getResources().getStringArray(R.array.quantita_prodotto);
+//        String[] sogliaProdotto = getResources().getStringArray(R.array.soglia_prodotto);
+//
+//
+//        for(int i=0; i<nomeProdotto.length; i++){
+//            Prodotto prodotto = new Prodotto(nomeProdotto[i],descrizoneProdotto[i],unitaProdotto[i],costoAcquistoProdotto[i],
+//                    Double.parseDouble(quantitaProdotto[i]),Double.parseDouble(sogliaProdotto[i]));
+//
+//            dispensa.add(prodotto);
+//        }
+        final View viewAggiuntaIngrediente = getLayoutInflater().inflate(R.layout.layout_ricerca_prodotto_per_elemento, null);
         prodottiInDispensaAdapter = new AggiuntaIngredientiRecyclerViewAdapter(viewAggiuntaIngrediente.getContext(), dispensa, this);
         pannelloProdottiInDispensa.setAdapter(prodottiInDispensaAdapter);
         pannelloProdottiInDispensa.setLayoutManager(new LinearLayoutManager(viewAggiuntaIngrediente.getContext()));
@@ -244,24 +268,6 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
         dialogAggiuntaIngrediente = builderDialogAggiuntaIngrediente.create();
         dialogAggiuntaIngrediente.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
         dialogAggiuntaIngrediente.show();
-    }
-
-    private void riempiDispensa(){
-        dispensa = new ArrayList<>();
-
-        String[] nomeProdotto = getResources().getStringArray(R.array.nome_prodotto);
-        String[] descrizoneProdotto = getResources().getStringArray(R.array.descrizione_prodotto);
-        String[] unitaProdotto = getResources().getStringArray(R.array.unita_prodotto);
-        String[] costoAcquistoProdotto = getResources().getStringArray(R.array.costoacq_prodotto);
-        String[] quantitaProdotto = getResources().getStringArray(R.array.quantita_prodotto);
-        String[] sogliaProdotto = getResources().getStringArray(R.array.soglia_prodotto);
-
-
-        for(int i=0; i<nomeProdotto.length; i++){
-            Prodotto prodotto = new Prodotto(nomeProdotto[i],descrizoneProdotto[i],unitaProdotto[i],costoAcquistoProdotto[i],
-                    Double.parseDouble(quantitaProdotto[i]),Double.parseDouble(sogliaProdotto[i]));
-            dispensa.add(prodotto);
-        }
     }
 
     private void filtraProdottiInDispensa(String nomeProdotto) {
@@ -318,16 +324,9 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
                         quantitaProdottoSelezionato = viewAggiuntaIngredienteSelezionato.findViewById(R.id.EditTextQuantitaProdottoSelezionato);
 
                         if (quantitaProdottoSelezionato.getText().toString().trim().length() != 0) {
-                            PresenterMenu.getInstance().mostraAlert(VisualizzazioneIngredientiElementoActivity.this, "Prodotto selezionato aggiunto",
-                                    "Hai aggiunto correttamente all'elemento del menù " + quantitaProdottoSelezionato.getText() + " " +
-                                            unitaMisuraProdottoCorrente + " del prodotto " + nomeProdottoCorrente);
+                            System.out.println(prodottoSelezionato.getIdProdotto() + elemento.getIdElemento());
+                            PresenterMenu.getInstance().impostaPreparazione(elemento,prodottoSelezionato,Double.parseDouble(quantitaProdottoSelezionato.getText().toString()),VisualizzazioneIngredientiElementoActivity.this);
 
-                    /*
-                    Preparazione p = new Preparazione(prodottoCorrente, Double.parseDouble(quantitaProdottoSelezionato.getText().toString()));
-                    elemento.getPreparazione().add(p); */
-
-                            dialogAggiuntaIngredienteSelezionato.dismiss();
-                            dialogAggiuntaIngrediente.dismiss();
                         } else {
                             PresenterMenu.getInstance().mostraAlert(VisualizzazioneIngredientiElementoActivity.this, "Attenzione",
                                     "Non hai specificato la quantità necessaria alla preparazione per il prodotto selezionato");
@@ -366,5 +365,30 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
             listaCardProdottiSelezionati.remove(cardProdotto);
         }
     }
+
+    public void setEsito(boolean esito)
+    {
+        this.esito = esito;
+    }
+
+    public void tentativoImpostato(boolean esito)
+    {
+        if(esito) {
+            PresenterMenu.getInstance().mostraAlert(VisualizzazioneIngredientiElementoActivity.this, "Prodotto selezionato aggiunto",
+                    "Hai aggiunto correttamente all'elemento del menù " + quantitaProdottoSelezionato.getText() + " " +
+                            unitaMisuraProdottoCorrente + " del prodotto " + nomeProdottoCorrente);
+                    /*
+                    Preparazione p = new Preparazione(prodottoCorrente, Double.parseDouble(quantitaProdottoSelezionato.getText().toString()));
+                    elemento.getPreparazione().add(p); */
+
+            dialogAggiuntaIngredienteSelezionato.dismiss();
+            dialogAggiuntaIngrediente.dismiss();
+        }
+        else{
+            PresenterMenu.getInstance().mostraAlert(VisualizzazioneIngredientiElementoActivity.this, "Prodotto non aggiunto",
+                    "C'e' stato un problema durante la comunicazione al server, si consiglia di riprovare.");
+        }
+    }
+
 }
 

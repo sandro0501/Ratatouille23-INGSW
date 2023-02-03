@@ -18,8 +18,8 @@ public class Elemento implements Serializable {
     private String descrizioneSecondaria = "";
     private Double costo;
     private int posizione;
-    private ArrayList<Allergene> presenta = new ArrayList<>();
-    private ArrayList<Preparazione> preparazione = new ArrayList<>();
+    private transient ArrayList<Allergene> presenta = new ArrayList<>();
+    private transient ArrayList<Preparazione> preparazione = new ArrayList<>();
     @SerializedName("sezioneMenu")
     private SezioneMenu appartiene;
 
