@@ -192,12 +192,9 @@ public class DAOProdottoImpl implements DAOProdotto {
                     try {
                         JSONArray dispensaJSON = new JSONArray(response.body().string());
                         ArrayList<Prodotto> dispensa = new ArrayList<Prodotto>();
-
-                        for(int i = 0; i<dispensaJSON.length(); i++){
-
-                            JSONObject prodottoJSON = dispensaJSON.getJSONObject(i);
-
-                            JSONObject ristoranteJSON = prodottoJSON.getJSONObject("ristorante");
+                        if(dispensaJSON.length()>0) {
+                            JSONObject prodott0JSON = dispensaJSON.getJSONObject(0);
+                            JSONObject ristoranteJSON = prodott0JSON.getJSONObject("ristorante");
                             Ristorante ristoranteProdotto = new Ristorante(
                                     ristoranteJSON.getInt("idRistorante"),
                                     ristoranteJSON.getString("denominazione"),
@@ -207,19 +204,24 @@ public class DAOProdottoImpl implements DAOProdotto {
                                     ristoranteJSON.getBoolean("turistico"),
                                     ristoranteJSON.getString("urlFoto")
                             );
+                            for (int i = 0; i < dispensaJSON.length(); i++) {
 
-                            Prodotto prodotto = new Prodotto(
-                                    prodottoJSON.getInt("idProdotto"),
-                                    prodottoJSON.getString("nome"),
-                                    prodottoJSON.getString("descrizione"),
-                                    prodottoJSON.getString("unita"),
-                                    prodottoJSON.getString("costo"),
-                                    prodottoJSON.getDouble("quantita"),
-                                    prodottoJSON.getDouble("soglia"),
-                                    ristoranteProdotto
-                            );
+                                JSONObject prodottoJSON = dispensaJSON.getJSONObject(i);
 
-                            dispensa.add(prodotto);
+
+                                Prodotto prodotto = new Prodotto(
+                                        prodottoJSON.getInt("idProdotto"),
+                                        prodottoJSON.getString("nome"),
+                                        prodottoJSON.getString("descrizione"),
+                                        prodottoJSON.getString("unita"),
+                                        prodottoJSON.getString("costo"),
+                                        prodottoJSON.getDouble("quantita"),
+                                        prodottoJSON.getDouble("soglia"),
+                                        ristoranteProdotto
+                                );
+
+                                dispensa.add(prodotto);
+                            }
                         }
                         callback.onRichiestaDispensa(dispensa);
                     }

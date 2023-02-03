@@ -13,7 +13,7 @@ import jakarta.persistence.Tuple;
 public interface RepositoryProdotto extends JpaRepository<Prodotto,Integer>{
 	
 	@Query(
-			value="SELECT p.id_prodotto, p.nome, p.unita, pr.quantita FROM prodotto as p, preparazione as pr WHERE pr.id_prodotto = p.id_prodotto AND pr.id_elemento = ?1",
+			value="SELECT p.id_prodotto, p.nome, p.descrizione, p.unita, pr.quantita FROM prodotto as p, preparazione as pr WHERE pr.id_prodotto = p.id_prodotto AND pr.id_elemento = ?1",
 			nativeQuery = true
 			)
 	ArrayList<Tuple> findByElemento(int idElemento);

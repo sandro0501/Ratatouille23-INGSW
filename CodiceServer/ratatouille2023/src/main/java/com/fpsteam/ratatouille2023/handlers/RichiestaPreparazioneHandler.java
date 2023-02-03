@@ -4,9 +4,16 @@ public class RichiestaPreparazioneHandler
 {
 	public int id_prodotto;
 	public String nome;
+	public String descrizione;
 	public String unita;
 	public double quantita;
 	
+	public String getDescrizione() {
+		return descrizione;
+	}
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
 	public int getId_prodotto() {
 		return id_prodotto;
 	}
@@ -31,10 +38,11 @@ public class RichiestaPreparazioneHandler
 	public void setQuantita(double quantita) {
 		this.quantita = quantita;
 	}
-	public RichiestaPreparazioneHandler(int id_prodotto, String nome, String unita, double quantita) {
+	public RichiestaPreparazioneHandler(int id_prodotto, String nome, String unita, String descrizione, double quantita) {
 		super();
 		this.id_prodotto = id_prodotto;
 		this.nome = nome;
+		this.descrizione = descrizione;
 		this.unita = unita;
 		this.quantita = quantita;
 	}

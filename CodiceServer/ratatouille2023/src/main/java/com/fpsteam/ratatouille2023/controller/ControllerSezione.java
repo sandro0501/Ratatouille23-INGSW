@@ -75,7 +75,7 @@ public class ControllerSezione {
 				for(Allergene z : serviceAllergene.findByElemento(y.elemento))
 					y.allergeni.add(z);
 				for(RichiestaPreparazioneHandler z : serviceProdotto.findByElemento(y.elemento))
-					y.preparazione.add(new ProdottoHandler( new Prodotto(z.id_prodotto, z.nome, z.unita),z.quantita));
+					y.preparazione.add(new ProdottoHandler( new Prodotto(z.id_prodotto, z.nome, z.descrizione, z.unita),z.quantita));
 			}
 		
 		return res;

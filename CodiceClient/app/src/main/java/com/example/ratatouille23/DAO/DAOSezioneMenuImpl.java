@@ -80,16 +80,16 @@ public class DAOSezioneMenuImpl implements DAOSezioneMenu {
                                 JSONObject currEle = currEleInd.getJSONObject("elemento");
                                 Elemento elemento;
                                 //Creo l'oggetto associato
-                                try
-                                {
+//                                try
+//                                {
                                     Elemento elementos = new Elemento(currEle.getString("denominazioneP"), currEle.getString("denominazioneS"), currEle.getString("descrizioneP"), currEle.getString("descrizioneS"), currEle.getDouble("costo"), currEle.getInt("posizione"));
                                     elemento = elementos;
-                                }
-                                catch(Exception e)
-                                {
-                                    Elemento elementos = new Elemento(currEle.getString("denominazioneP"), currEle.getString("descrizioneP"), currEle.getDouble("costo"), currEle.getInt("posizione"));
-                                    elemento = elementos;
-                                }
+//                                }
+//                                catch(Exception e)
+//                                {
+//                                    Elemento elementos = new Elemento(currEle.getString("denominazioneP"), currEle.getString("descrizioneP"), currEle.getDouble("costo"), currEle.getInt("posizione"));
+//                                    elemento = elementos;
+//                                }
                                 elemento.setIdElemento(currEle.getInt("idElemento"));
                                 //Prendo il jsonarray degli allergeni
                                 JSONArray allergeni = currEleInd.getJSONArray("allergeni");
@@ -114,6 +114,7 @@ public class DAOSezioneMenuImpl implements DAOSezioneMenu {
                                     JSONObject currPrepInd = nonHoPiuNomiAiutoComunqueSonoLePreparazioni.getJSONObject(z);
                                     //Creo il prodotto
                                     JSONObject currProdJS = currPrepInd.getJSONObject("prodotto");
+                                    System.out.println(currProdJS.getString("descrizione"));
                                     Prodotto prodotto = new Prodotto(currProdJS.getString("nome"), currProdJS.getString("descrizione"), currProdJS.getString("unita"), currProdJS.getString("costo"), currProdJS.getDouble("quantita"), currProdJS.getDouble("soglia"));
                                     //Creo la preparazione
                                     Preparazione preparazione = new Preparazione(prodotto, currPrepInd.getDouble("quantita"));

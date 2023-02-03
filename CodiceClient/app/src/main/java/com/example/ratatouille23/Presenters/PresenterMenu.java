@@ -11,12 +11,15 @@ import com.example.ratatouille23.DAO.DAORistoranteImpl;
 import com.example.ratatouille23.DAO.DAOSezioneMenu;
 import com.example.ratatouille23.DAO.DAOSezioneMenuImpl;
 import com.example.ratatouille23.Handlers.EliminaSezioniHandler;
+import com.example.ratatouille23.Handlers.HandlePreparazione;
 import com.example.ratatouille23.Models.Allergene;
 import com.example.ratatouille23.Models.Elemento;
+import com.example.ratatouille23.Models.Prodotto;
 import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Models.SezioneMenu;
 import com.example.ratatouille23.Models.listaAllergeni;
 import com.example.ratatouille23.Views.MenuFragment;
+import com.example.ratatouille23.Views.VisualizzazioneIngredientiElementoActivity;
 
 import java.util.ArrayList;
 
@@ -135,6 +138,20 @@ public class PresenterMenu extends PresenterBase {
             }
         });
 
+    }
+
+    public void impostaPreparazione(Elemento elemento, Prodotto prodotto, double quantita, VisualizzazioneIngredientiElementoActivity context)
+    {
+        HandlePreparazione handle = new HandlePreparazione();
+        handle.idElemento = elemento;
+        handle.idProdotto = prodotto;
+        handle.quantita = quantita;
+        daoElemento.impostaPreparazione(handle, new DAOElementoImpl.ImpostaPreparazioneCallbacks() {
+            @Override
+            public void onImpostata(boolean esito) {
+                context.tentativoImpostato(esito);
+            }
+        });
     }
 
 

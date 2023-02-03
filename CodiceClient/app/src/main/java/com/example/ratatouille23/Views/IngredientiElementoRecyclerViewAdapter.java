@@ -41,6 +41,7 @@ public class IngredientiElementoRecyclerViewAdapter extends RecyclerView.Adapter
         holder.costoAcquistoProdottoLabel.setVisibility(View.INVISIBLE);
 
         holder.nomeProdotto.setText(elemento.getPreparazione().get(position).getProdottoAssociato().getNome());
+        System.out.println(elemento.getPreparazione().get(position).getProdottoAssociato().getDescrizione());
         holder.descrizioneProdotto.setText(elemento.getPreparazione().get(position).getProdottoAssociato().getDescrizione());
 
         holder.quantitaProdotto.setTextColor(Color.BLACK);

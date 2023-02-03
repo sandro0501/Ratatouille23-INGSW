@@ -30,7 +30,7 @@ public class ServiceProdotto {
 		
 		for(Tuple x : res)
 		{
-			ret.add(new RichiestaPreparazioneHandler((int)x.get(0),(String)x.get(1),(String)x.get(2),(double)x.get(3)));
+			ret.add(new RichiestaPreparazioneHandler((int)x.get(0),(String)x.get(1),(String)x.get(2),(String) x.get(3),(double)x.get(4)));
 		}
 		
 		

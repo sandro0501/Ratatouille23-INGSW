@@ -61,10 +61,11 @@ public class Prodotto {
 		
 	}
 
-	public Prodotto(int idProdotto, @NotNull String nome, @NotNull String unita) {
+	public Prodotto(int idProdotto, @NotNull String nome, @NotNull String unita, String descrizione) {
 		super();
 		this.idProdotto = idProdotto;
 		this.nome = nome;
+		this.descrizione = descrizione;
 		this.unita = unita;
 	}
 
