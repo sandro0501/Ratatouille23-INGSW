@@ -1,6 +1,6 @@
 package com.example.ratatouille23.DAO;
 
-import com.example.ratatouille23.Handlers.EliminaElementiHandler;
+import com.example.ratatouille23.Handlers.EliminaPreparazioniHandler;
 import com.example.ratatouille23.Handlers.HandlePreparazione;
 import com.example.ratatouille23.Models.Allergene;
 import com.example.ratatouille23.Models.Elemento;
@@ -20,5 +20,7 @@ public interface DAOElemento {
     void impostaPreparazione(HandlePreparazione preparazione, DAOElementoImpl.ImpostaPreparazioneCallbacks callback);
 
     void deleteElementi(EliminaElementiHandler handler, DAOElementoImpl.EliminaElementiCallbacks callbacks);
+
+    void eliminaPreparazione(EliminaPreparazioniHandler preparazioni, DAOElementoImpl.EliminapreparazioneCallbacks callback);
 
 }

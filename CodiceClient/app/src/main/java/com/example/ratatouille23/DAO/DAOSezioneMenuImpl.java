@@ -111,6 +111,7 @@ public class DAOSezioneMenuImpl implements DAOSezioneMenu {
                                     System.out.println(currProdJS.getString("descrizione"));
                                     Prodotto prodotto = new Prodotto(currProdJS.getString("nome"), currProdJS.getString("descrizione"), currProdJS.getString("unita"), currProdJS.getString("costo"), currProdJS.getDouble("quantita"), currProdJS.getDouble("soglia"));
                                     //Creo la preparazione
+                                    prodotto.setIdProdotto(currProdJS.getInt("idProdotto"));
                                     Preparazione preparazione = new Preparazione(prodotto, currPrepInd.getDouble("quantita"));
                                     listaPreparazioni.add(preparazione);
                                 }

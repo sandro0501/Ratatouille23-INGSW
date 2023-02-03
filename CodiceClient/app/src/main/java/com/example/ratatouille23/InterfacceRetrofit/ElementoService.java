@@ -1,6 +1,6 @@
 package com.example.ratatouille23.InterfacceRetrofit;
 
-import com.example.ratatouille23.Handlers.EliminaElementiHandler;
+import com.example.ratatouille23.Handlers.EliminaPreparazioniHandler;
 import com.example.ratatouille23.Handlers.HandleAllergeni;
 import com.example.ratatouille23.Handlers.HandleElemento;
 import com.example.ratatouille23.Handlers.HandlePreparazione;
@@ -34,5 +34,8 @@ public interface ElementoService {
 
     @PATCH("elemento")
     Call<ResponseBody> eliminaElementi(@Body EliminaElementiHandler handler);
+
+    @PATCH("preparazione")
+    Call<ResponseBody> eliminaPreparazioni(@Body EliminaPreparazioniHandler preparazioni);
 
 }

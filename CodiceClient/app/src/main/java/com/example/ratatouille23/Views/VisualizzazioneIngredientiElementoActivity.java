@@ -20,6 +20,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ratatouille23.Handlers.EliminaPreparazioniHandler;
+import com.example.ratatouille23.Handlers.HandlePreparazione;
 import com.example.ratatouille23.Models.Elemento;
 import com.example.ratatouille23.Models.Preparazione;
 import com.example.ratatouille23.Models.Prodotto;
@@ -75,7 +77,6 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
         setContentView(R.layout.activity_visualizzazione_ingredienti_elemento);
 
         elemento = ((Elemento)getIntent().getExtras().get("Elemento selezionato"));
-        elemento.setPreparazione((ArrayList<Preparazione>)getIntent().getSerializableExtra("Preparazione"));
 
         onIndietroPremuto();
         inizializzaPannelloIngredienti();
@@ -151,11 +152,16 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
                         bottoneConfermaEliminazioneIngrediente.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                //codice db
-                                dialogEliminaIngrediente.dismiss();
-                                PresenterDispensa.getInstance().mostraAlert(VisualizzazioneIngredientiElementoActivity.this, "Eliminazione effettuata", "Eliminazione dei prodotti selezionati effettuata correttamente!");
-                                disattivaModalitaEliminazione();
-                                deselezionaTuttiProdotti();
+                                EliminaPreparazioniHandler handle = new EliminaPreparazioniHandler();
+                                handle.preparazioni = new ArrayList<HandlePreparazione>();
+                                for(Prodotto x : listaProdottiSelezionati)
+                                {
+                                    HandlePreparazione curr = new HandlePreparazione();
+                                    curr.idElemento = elemento;
+                                    curr.idProdotto = x;
+                                    handle.preparazioni.add(curr);
+                                }
+                                PresenterMenu.getInstance().eliminaPreparazione(handle, VisualizzazioneIngredientiElementoActivity.this);
                             }
                         });
 
@@ -214,21 +220,7 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
     public void riempiDispensa(ArrayList<Prodotto> lista){
         dispensa = new ArrayList<>();
         dispensa.addAll(lista);
-//
-//        String[] nomeProdotto = getResources().getStringArray(R.array.nome_prodotto);
-//        String[] descrizoneProdotto = getResources().getStringArray(R.array.descrizione_prodotto);
-//        String[] unitaProdotto = getResources().getStringArray(R.array.unita_prodotto);
-//        String[] costoAcquistoProdotto = getResources().getStringArray(R.array.costoacq_prodotto);
-//        String[] quantitaProdotto = getResources().getStringArray(R.array.quantita_prodotto);
-//        String[] sogliaProdotto = getResources().getStringArray(R.array.soglia_prodotto);
-//
-//
-//        for(int i=0; i<nomeProdotto.length; i++){
-//            Prodotto prodotto = new Prodotto(nomeProdotto[i],descrizoneProdotto[i],unitaProdotto[i],costoAcquistoProdotto[i],
-//                    Double.parseDouble(quantitaProdotto[i]),Double.parseDouble(sogliaProdotto[i]));
-//
-//            dispensa.add(prodotto);
-//        }
+
         final View viewAggiuntaIngrediente = getLayoutInflater().inflate(R.layout.layout_ricerca_prodotto_per_elemento, null);
         prodottiInDispensaAdapter = new AggiuntaIngredientiRecyclerViewAdapter(viewAggiuntaIngrediente.getContext(), dispensa, this);
         pannelloProdottiInDispensa.setAdapter(prodottiInDispensaAdapter);
@@ -366,10 +358,6 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
         }
     }
 
-    public void setEsito(boolean esito)
-    {
-        this.esito = esito;
-    }
 
     public void tentativoImpostato(boolean esito)
     {
@@ -383,6 +371,32 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
 
             dialogAggiuntaIngredienteSelezionato.dismiss();
             dialogAggiuntaIngrediente.dismiss();
+        }
+        else{
+            PresenterMenu.getInstance().mostraAlert(VisualizzazioneIngredientiElementoActivity.this, "Prodotto non aggiunto",
+                    "C'e' stato un problema durante la comunicazione al server, si consiglia di riprovare.");
+        }
+    }
+
+    public void tentativoRimozione(boolean esito)
+    {
+        if(esito)
+        {
+            dialogEliminaIngrediente.dismiss();
+            PresenterDispensa.getInstance().mostraAlert(VisualizzazioneIngredientiElementoActivity.this, "Eliminazione effettuata", "Eliminazione dei prodotti selezionati effettuata correttamente!");
+            disattivaModalitaEliminazione();
+            ArrayList<Preparazione> toRemove = new ArrayList<Preparazione>();
+            for(Prodotto x : listaProdottiSelezionati)
+            {
+                for(int y = 0; y<elemento.getPreparazione().size(); y++)
+                {
+                    if(elemento.getPreparazione().get(y).getProdottoAssociato().getIdProdotto() == x.getIdProdotto())
+                        toRemove.add(elemento.getPreparazione().get(y));
+                }
+            }
+            elemento.getPreparazione().removeAll(toRemove);
+            ingredientiElementoAdapter.notifyDataSetChanged();
+            deselezionaTuttiProdotti();
         }
         else{
             PresenterMenu.getInstance().mostraAlert(VisualizzazioneIngredientiElementoActivity.this, "Prodotto non aggiunto",

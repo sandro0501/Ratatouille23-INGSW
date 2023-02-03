@@ -10,7 +10,7 @@ import com.example.ratatouille23.DAO.DAORistorante;
 import com.example.ratatouille23.DAO.DAORistoranteImpl;
 import com.example.ratatouille23.DAO.DAOSezioneMenu;
 import com.example.ratatouille23.DAO.DAOSezioneMenuImpl;
-import com.example.ratatouille23.Handlers.EliminaElementiHandler;
+import com.example.ratatouille23.Handlers.EliminaPreparazioniHandler;
 import com.example.ratatouille23.Handlers.EliminaSezioniHandler;
 import com.example.ratatouille23.Handlers.HandlePreparazione;
 import com.example.ratatouille23.Models.Allergene;
@@ -184,6 +184,16 @@ public class PresenterMenu extends PresenterBase {
             @Override
             public void onEliminazioneElementi() {
                 context.aggiornaMenu();
+            }
+        });
+    }
+
+    public void eliminaPreparazione(EliminaPreparazioniHandler handle, VisualizzazioneIngredientiElementoActivity context)
+    {
+        daoElemento.eliminaPreparazione(handle, new DAOElementoImpl.EliminapreparazioneCallbacks() {
+            @Override
+            public void onEliminati(boolean esito) {
+                context.tentativoRimozione(esito);
             }
         });
     }
