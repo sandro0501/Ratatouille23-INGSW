@@ -180,9 +180,9 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
 
                         textViewEliminazioneProdotto = (TextView) viewEliminaProdotto.findViewById(R.id.textViewEliminaProdottoDescrizioneDialog);
                         if (listaProdottiSelezionati.size() == 1) {
-                            textViewEliminazioneProdotto.setText("Sei sicuro di voler eliminare il prodotto selezionato?");
+                            textViewEliminazioneProdotto.setText("Si è sicuri di voler eliminare il prodotto selezionato?");
                         } else {
-                            textViewEliminazioneProdotto.setText("Sei sicuro di voler eliminare i " + listaProdottiSelezionati.size() + " prodotti selezionati?");
+                            textViewEliminazioneProdotto.setText("Si è sicuri di voler eliminare i " + listaProdottiSelezionati.size() + " prodotti selezionati?");
                         }
 
                         bottoneAnnullaEliminazioneProdotto = (Button) viewEliminaProdotto.findViewById(R.id.bottoneAnnullaEliminaProdotto);
