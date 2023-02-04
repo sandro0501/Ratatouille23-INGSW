@@ -169,7 +169,7 @@ public class DAOProdottoImpl implements DAOProdotto {
                     callback.onEliminazioneProdotto();
                 }
                 else{
-                    Log.println(Log.VERBOSE, "ErroreMessaggio", response.message());
+                    Log.println(Log.VERBOSE, "ErroreMessaggio", response.message()+response.code());
                 }
             }
 

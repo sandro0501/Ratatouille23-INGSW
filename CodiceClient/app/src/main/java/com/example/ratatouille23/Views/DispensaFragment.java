@@ -32,7 +32,6 @@ import com.example.ratatouille23.Models.Prodotto;
 import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Presenters.PresenterBacheca;
-import com.example.ratatouille23.Presenters.PresenterDipendenti;
 import com.example.ratatouille23.Presenters.PresenterDispensa;
 import com.example.ratatouille23.R;
 
@@ -292,17 +291,20 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
                 //metodo controller aggiungi prodotto che interagisce col DB
                 Log.println(Log.VERBOSE,"ADD","AGGIUNGI");
 
-                Prodotto prodotto = new Prodotto();
-                prodotto.setNome(editTextNomeProdotto.getText().toString());
-                prodotto.setDescrizione(editTextDescrizioneProdotto.getText().toString());
-                prodotto.setUnita(editTextUnitaMisuraProdotto.getText().toString());
-                String costo = "€" + editTextCostoAcquistoProdotto.getText().toString() + "/" + editTextUnitaMisuraCostoProdotto.getText().toString();
-                prodotto.setCostoAcquisto(costo);
-                prodotto.setQuantita(Double.parseDouble(editTextQuantitaProdotto.getText().toString()));
-                prodotto.setSoglia(Double.parseDouble(editTextSogliaProdotto.getText().toString()));
-                prodotto.setUtilizzatoDa(ristoranteCorrente);
-                PresenterDispensa.getInstance().AggiungiProdottoInDispensa(DispensaFragment.this, prodotto);
-
+                    if (areEditTextInserimentoEmpty()) {
+                        mostraDialogErroreInserimentoProdotto();
+                    } else {
+                        Prodotto prodotto = new Prodotto();
+                        prodotto.setNome(editTextNomeProdotto.getText().toString());
+                        prodotto.setDescrizione(editTextDescrizioneProdotto.getText().toString());
+                        prodotto.setUnita(editTextUnitaMisuraProdotto.getText().toString());
+                        String costo = "€" + editTextCostoAcquistoProdotto.getText().toString() + "/" + editTextUnitaMisuraCostoProdotto.getText().toString();
+                        prodotto.setCostoAcquisto(costo);
+                        prodotto.setQuantita(Double.parseDouble(editTextQuantitaProdotto.getText().toString()));
+                        prodotto.setSoglia(Double.parseDouble(editTextSogliaProdotto.getText().toString()));
+                        prodotto.setUtilizzatoDa(ristoranteCorrente);
+                        PresenterDispensa.getInstance().AggiungiProdottoInDispensa(DispensaFragment.this, prodotto);
+                    }
             }
         });
 
@@ -423,17 +425,21 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
             public void onClick(View view) {
                 Log.println(Log.VERBOSE,"MOD","MODIFICA");
 
-                Prodotto prodottoDaModificare = dispensa.get(posizioneProdotto);
-                prodottoDaModificare.setNome(editTextModificaNomeProdotto.getText().toString());
-                prodottoDaModificare.setDescrizione(editTextModificaDescrizioneProdotto.getText().toString());
-                prodottoDaModificare.setUnita(editTextModificaUnitaMisuraProdotto.getText().toString());
-                String costoModificato = "€"+editTextModificaCostoAcquistoProdotto.getText().toString()+"/"+editTextModificaUnitaMisuraProdotto.getText().toString();
-                prodottoDaModificare.setCostoAcquisto(costoModificato);
-                prodottoDaModificare.setQuantita(Double.parseDouble(editTextModificaQuantitaProdotto.getText().toString()));
-                prodottoDaModificare.setSoglia(Double.parseDouble(editTextModificaSogliaProdotto.getText().toString()));
-                prodottoDaModificare.setUtilizzatoDa(ristoranteCorrente);
+                if(areEditTextModificaEmpty()){
+                  mostraDialogErroreModificaProdotto();
+                } else {
+                    Prodotto prodottoDaModificare = dispensa.get(posizioneProdotto);
+                    prodottoDaModificare.setNome(editTextModificaNomeProdotto.getText().toString());
+                    prodottoDaModificare.setDescrizione(editTextModificaDescrizioneProdotto.getText().toString());
+                    prodottoDaModificare.setUnita(editTextModificaUnitaMisuraProdotto.getText().toString());
+                    String costoModificato = "€"+editTextModificaCostoAcquistoProdotto.getText().toString()+"/"+editTextModificaUnitaMisuraProdotto.getText().toString();
+                    prodottoDaModificare.setCostoAcquisto(costoModificato);
+                    prodottoDaModificare.setQuantita(Double.parseDouble(editTextModificaQuantitaProdotto.getText().toString()));
+                    prodottoDaModificare.setSoglia(Double.parseDouble(editTextModificaSogliaProdotto.getText().toString()));
+                    prodottoDaModificare.setUtilizzatoDa(ristoranteCorrente);
 
-                PresenterDispensa.getInstance().ModificaProdottoInDispensa(DispensaFragment.this, prodottoDaModificare);
+                    PresenterDispensa.getInstance().ModificaProdottoInDispensa(DispensaFragment.this, prodottoDaModificare);
+                }
             }
         });
 
@@ -468,12 +474,16 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
 
     public void mostraDialogConfermaInserimentoProdotto() {
         dialogAggiungiProdotto.dismiss();
-        PresenterDispensa.getInstance().mostraAlert(getContext(), "Prodotto aggiunto!", "Prodotto aggiunto correttamente");
+        PresenterDispensa.getInstance().mostraAlert(getContext(), "Prodotto aggiunto!", "Prodotto aggiunto correttamente alla dispensa");
         PresenterDispensa.getInstance().ottieniDispensaDaRistorante(this, ristoranteCorrente);
     }
 
     public void mostraDialogErroreInserimentoProdotto() {
-        PresenterBacheca.getInstance().mostraAlert(getContext(), "Errore!", "C'e stato un errore durante l'inserimento del prodotto, si controlli che i campi non siano vuoti e si riprovi.");
+        PresenterBacheca.getInstance().mostraAlert(getContext(), "Attenzione!", "C'è stato un errore durante l'inserimento del prodotto.\nSi controlli che i campi contrassegnati dall'asterisco non siano vuoti e si riprovi.");
+    }
+
+    public void mostraDialogErroreModificaProdotto() {
+        PresenterBacheca.getInstance().mostraAlert(getContext(), "Attenzione!", "C'è stato un errore durante la modifica del prodotto.\nSi controlli che i campi contrassegnati dall'asterisco non siano vuoti e si riprovi.");
     }
 
     public void setupListaProdottiOpenFoodFactsModifica(ArrayList<Prodotto> listaProdottiOttenuta) {
@@ -494,4 +504,30 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
         dialogEliminaProdotto.dismiss();
         PresenterDispensa.getInstance().ottieniDispensaDaRistorante(DispensaFragment.this, ristoranteCorrente);
     }
+
+    public Boolean areEditTextInserimentoEmpty() {
+        if (editTextNomeProdotto.getText().toString().matches("") ||
+                editTextUnitaMisuraProdotto.getText().toString().matches("") ||
+                editTextCostoAcquistoProdotto.getText().toString().matches("") ||
+                editTextUnitaMisuraCostoProdotto.getText().toString().matches("") ||
+                editTextQuantitaProdotto.getText().toString().matches("") ||
+                editTextSogliaProdotto.getText().toString().matches("")){
+            return  true;
+        }
+        return false;
+    }
+
+    public Boolean areEditTextModificaEmpty() {
+        if(editTextModificaNomeProdotto.getText().toString().matches("")||
+                editTextModificaUnitaMisuraProdotto.getText().toString().matches("") ||
+                editTextModificaSogliaProdotto.getText().toString().matches("") ||
+                editTextModificaCostoAcquistoProdotto.getText().toString().matches("") ||
+                editTextModificaUnitaMisuraCostoAcquistoProdotto.getText().toString().matches("") ||
+                editTextModificaQuantitaProdotto.getText().toString().matches("")){
+            return true;
+        }
+        return false;
+    }
+
+
 }
