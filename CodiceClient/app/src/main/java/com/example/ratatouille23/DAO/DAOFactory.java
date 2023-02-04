@@ -35,4 +35,5 @@ public class DAOFactory {
     public DAOUtente getDAOUtente() {
         return new DAOUtenteImpl();
     }
+
 }

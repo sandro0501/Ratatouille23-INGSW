@@ -28,7 +28,7 @@ public class DAORistoranteImpl implements DAORistorante {
         public void onRicezioneRistorante(Ristorante ristorante);
     }
 
-    Retrofit retrofitRistorante =  new Retrofit.Builder().baseUrl(DAOBaseUrl.baseUrl()).addConverterFactory(GsonConverterFactory.create(new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create())).build();
+    Retrofit retrofitRistorante =  new Retrofit.Builder().baseUrl(DAOBaseUrl.getBaseUrl()).addConverterFactory(GsonConverterFactory.create(new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create())).build();
     RistoranteService ristoranteService = retrofitRistorante.create(RistoranteService.class);
 
     @Override

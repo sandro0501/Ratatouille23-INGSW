@@ -81,7 +81,7 @@ public class DAOUtenteImpl implements DAOUtente {
         void onVecchiaPasswordErrata();
     }
 
-    Retrofit retrofitLogin = new Retrofit.Builder().baseUrl(DAOBaseUrl.baseUrl()).addConverterFactory(GsonConverterFactory.create(new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create())).build();
+    Retrofit retrofitLogin = new Retrofit.Builder().baseUrl(DAOBaseUrl.getBaseUrl()).addConverterFactory(GsonConverterFactory.create(new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create())).build();
     LoginService loginService = retrofitLogin.create(LoginService.class);
     DipendentiService dipendentiService = retrofitLogin.create(DipendentiService.class);
 

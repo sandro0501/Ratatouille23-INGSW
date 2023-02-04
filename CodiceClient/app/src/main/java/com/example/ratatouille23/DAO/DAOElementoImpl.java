@@ -2,6 +2,7 @@ package com.example.ratatouille23.DAO;
 
 import android.util.Log;
 
+import com.example.ratatouille23.Handlers.EliminaElementiHandler;
 import com.example.ratatouille23.Handlers.EliminaPreparazioniHandler;
 import com.example.ratatouille23.Handlers.HandleElemento;
 import com.example.ratatouille23.Handlers.HandlePreparazione;
@@ -58,7 +59,7 @@ public class DAOElementoImpl implements DAOElemento {
     }
 
     Retrofit retrofitOpenFoodFacts = new Retrofit.Builder().baseUrl("https://it.openfoodfacts.org/cgi/").addConverterFactory(GsonConverterFactory.create(new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create())).build();
-    Retrofit retrofitElemento = new Retrofit.Builder().baseUrl(DAOBaseUrl.baseUrl()).addConverterFactory(GsonConverterFactory.create(new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create())).build();
+    Retrofit retrofitElemento = new Retrofit.Builder().baseUrl(DAOBaseUrl.getBaseUrl()).addConverterFactory(GsonConverterFactory.create(new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create())).build();
 
     OpenFootFactsService openFootFactsService = retrofitOpenFoodFacts.create(OpenFootFactsService.class);
     ElementoService elementoService = retrofitElemento.create(ElementoService.class);

@@ -1,5 +1,6 @@
 package com.example.ratatouille23.InterfacceRetrofit;
 
+import com.example.ratatouille23.Handlers.EliminaElementiHandler;
 import com.example.ratatouille23.Handlers.EliminaPreparazioniHandler;
 import com.example.ratatouille23.Handlers.HandleAllergeni;
 import com.example.ratatouille23.Handlers.HandleElemento;

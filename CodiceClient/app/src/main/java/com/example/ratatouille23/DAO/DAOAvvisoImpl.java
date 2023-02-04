@@ -5,21 +5,16 @@ import com.example.ratatouille23.Handlers.InserisciAvvisoHandler;
 import com.example.ratatouille23.InterfacceRetrofit.AvvisoService;
 import com.example.ratatouille23.InterfacceRetrofit.BachecaService;
 import com.example.ratatouille23.Models.Avviso;
-import com.example.ratatouille23.Models.Bacheca;
 import com.example.ratatouille23.Models.Gestore;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Models.UtenteFactory;
-import com.example.ratatouille23.Presenters.PresenterBacheca;
 import com.example.ratatouille23.Views.BachecaFragment;
 import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.sql.Array;
 import java.time.LocalDate;
-import java.util.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import okhttp3.ResponseBody;
@@ -47,8 +42,8 @@ public class DAOAvvisoImpl implements DAOAvviso
 
 
 
-    Retrofit retrofitBacheca =  new Retrofit.Builder().baseUrl(DAOBaseUrl.baseUrl()).addConverterFactory(GsonConverterFactory.create(new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create())).build();
-    Retrofit retrofitAvviso = new Retrofit.Builder().baseUrl(DAOBaseUrl.baseUrl()).addConverterFactory(GsonConverterFactory.create()).build();
+    Retrofit retrofitBacheca =  new Retrofit.Builder().baseUrl(DAOBaseUrl.getBaseUrl()).addConverterFactory(GsonConverterFactory.create(new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create())).build();
+    Retrofit retrofitAvviso = new Retrofit.Builder().baseUrl(DAOBaseUrl.getBaseUrl()).addConverterFactory(GsonConverterFactory.create()).build();
     BachecaService bachecaService = retrofitBacheca.create(BachecaService.class);
 
     AvvisoService avvisoService = retrofitBacheca.create(AvvisoService.class);

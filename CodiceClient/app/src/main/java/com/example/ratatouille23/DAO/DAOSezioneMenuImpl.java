@@ -3,7 +3,6 @@ package com.example.ratatouille23.DAO;
 import android.util.Log;
 
 import com.example.ratatouille23.Handlers.EliminaSezioniHandler;
-import com.example.ratatouille23.InterfacceRetrofit.LoginService;
 import com.example.ratatouille23.InterfacceRetrofit.SezioneMenuService;
 import com.example.ratatouille23.Models.Allergene;
 import com.example.ratatouille23.Models.Elemento;
@@ -43,7 +42,7 @@ public class DAOSezioneMenuImpl implements DAOSezioneMenu {
         void onRimozioneSezione();
     }
 
-    Retrofit retrofitSezione = new Retrofit.Builder().baseUrl(DAOBaseUrl.baseUrl()).addConverterFactory(GsonConverterFactory.create(new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create())).build();
+    Retrofit retrofitSezione = new Retrofit.Builder().baseUrl(DAOBaseUrl.getBaseUrl()).addConverterFactory(GsonConverterFactory.create(new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create())).build();
     SezioneMenuService sezioneMenuService = retrofitSezione.create(SezioneMenuService.class);
 
     public void estraiMenu(int idrist, EstraiMenuCallbacks callback) {
