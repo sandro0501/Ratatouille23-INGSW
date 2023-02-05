@@ -25,6 +25,9 @@ import com.example.ratatouille23.Views.VisualizzazioneIngredientiElementoActivit
 
 import java.util.ArrayList;
 
+import okhttp3.ResponseBody;
+import retrofit2.Response;
+
 public class PresenterMenu extends PresenterBase {
 
     private static PresenterMenu instance;
@@ -51,6 +54,16 @@ public class PresenterMenu extends PresenterBase {
     public void aggiornaDatiRistorante(MenuFragment menuFragment, int idRistorante) {
         daoRistorante.getRistorante(idRistorante, new DAORistoranteImpl.RistoranteRiceviCallbacks() {
             @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(menuFragment.getActivity(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(menuFragment.getActivity());
+            }
+
+            @Override
             public void onRicezioneRistorante(Ristorante ristorante) {
                 menuFragment.setRistoranteCorrente(ristorante);
             }
@@ -60,8 +73,17 @@ public class PresenterMenu extends PresenterBase {
     public void estraiMenu(MenuFragment context, Ristorante ristoranteCorrente) {
         daoSezioneMenu.estraiMenu(ristoranteCorrente.getIdRistorante(), new DAOSezioneMenuImpl.EstraiMenuCallbacks() {
             @Override
-            public void onEstratto(ArrayList<SezioneMenu> listaSezioni) {
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getActivity(), response);
+            }
 
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getActivity());
+            }
+
+            @Override
+            public void onEstratto(ArrayList<SezioneMenu> listaSezioni) {
                 context.setListaSezioni(listaSezioni);
             }
         });
@@ -71,6 +93,16 @@ public class PresenterMenu extends PresenterBase {
 
     public void settaElementiDaIniziale(MenuFragment context, String stringaIniziale) {
         daoElemento.getElementiOpenFoodFactsDaStringa(stringaIniziale, new DAOElementoImpl.ElementiFoodFactsCallbacks() {
+            @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getActivity(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getActivity());
+            }
+
             @Override
             public void onCaricamentoListaElementiOpenFoodFacts(ArrayList<Elemento> listaElementiOttenuta) {
                 Log.i("Prova", listaElementiOttenuta.toString());
@@ -82,15 +114,35 @@ public class PresenterMenu extends PresenterBase {
     public void aggiungiSezione(MenuFragment context, SezioneMenu sezione) {
         daoSezioneMenu.aggiungiSezioneMenu(sezione, new DAOSezioneMenuImpl.AggiungiSezioneCallbacks() {
             @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getActivity(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getActivity());
+            }
+
+            @Override
             public void onAggiuntaSezione() {
                 context.aggiornaMenu();
             }
         });
     }
 
-    public void modificaSezione(SezioneMenu sezione)
+    public void modificaSezione(MenuFragment context, SezioneMenu sezione)
     {
         daoSezioneMenu.modificaSezioneMenu(sezione, new DAOSezioneMenuImpl.ModificaSezioneCallbacks() {
+            @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getActivity(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getActivity());
+            }
+
             @Override
             public void onModificato() {
 
@@ -105,6 +157,16 @@ public class PresenterMenu extends PresenterBase {
         handler.sezioni = listaSezioni;
         daoSezioneMenu.rimuoviSezioneMenu(handler, new DAOSezioneMenuImpl.RimuoviSezioneCallbacks() {
             @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getActivity(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getActivity());
+            }
+
+            @Override
             public void onRimozioneSezione() {
                 context.aggiornaMenu();
             }
@@ -113,6 +175,16 @@ public class PresenterMenu extends PresenterBase {
 
     public void aggiungiElemento(MenuFragment context, Elemento elemento) {
         daoElemento.insertElemento(elemento, new DAOElementoImpl.AggiuntaElementiCallbacks() {
+            @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getActivity(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getActivity());
+            }
+
             @Override
             public void onAggiuntaElemento(Elemento elwithid) {
                impostaAllergeni(elwithid, elemento.getPresenta(), context, false);
@@ -123,6 +195,16 @@ public class PresenterMenu extends PresenterBase {
     public void modificaElemento(Elemento elemento, ArrayList<Allergene> allergeni, MenuFragment context){
         daoElemento.modificaElemento(elemento, new DAOElementoImpl.ModificaElementoCallbacks() {
             @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getActivity(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getActivity());
+            }
+
+            @Override
             public void onModificato() {
                 impostaAllergeni(elemento, allergeni, context, true);
             }
@@ -131,6 +213,16 @@ public class PresenterMenu extends PresenterBase {
 
     public void impostaAllergeni(Elemento elemento, ArrayList<Allergene> allergeni, MenuFragment context,boolean modifica) {
         daoElemento.impostaAllergeni(elemento, allergeni, new DAOElementoImpl.ImpostaAllergeniCallbacks() {
+            @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getActivity(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getActivity());
+            }
+
             @Override
             public void onImpostati() {
                 if(modifica)
@@ -150,6 +242,16 @@ public class PresenterMenu extends PresenterBase {
         handle.quantita = quantita;
         daoElemento.impostaPreparazione(handle, new DAOElementoImpl.ImpostaPreparazioneCallbacks() {
             @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getBaseContext(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getBaseContext());
+            }
+
+            @Override
             public void onImpostata(boolean esito) {
                 context.tentativoImpostato(esito);
             }
@@ -162,6 +264,16 @@ public class PresenterMenu extends PresenterBase {
 
             daoSezioneMenu.modificaSezioneMenu(sezione, new DAOSezioneMenuImpl.ModificaSezioneCallbacks() {
                 @Override
+                public void onErroreDiHTTP(Response<ResponseBody> response) {
+                    mostraAlertErroreHTTP(context.getActivity(), response);
+                }
+
+                @Override
+                public void onErroreConnessioneGenerico() {
+                    mostraAlertErroreConnessione(context.getActivity());
+                }
+
+                @Override
                 public void onModificato() {
 
                 }
@@ -169,6 +281,16 @@ public class PresenterMenu extends PresenterBase {
 
             for (Elemento elemento : sezione.getAppartenente()) {
                 daoElemento.modificaElemento(elemento, new DAOElementoImpl.ModificaElementoCallbacks() {
+                    @Override
+                    public void onErroreDiHTTP(Response<ResponseBody> response) {
+                        mostraAlertErroreHTTP(context.getActivity(), response);
+                    }
+
+                    @Override
+                    public void onErroreConnessioneGenerico() {
+                        mostraAlertErroreConnessione(context.getActivity());
+                    }
+
                     @Override
                     public void onModificato() {
 
@@ -183,6 +305,16 @@ public class PresenterMenu extends PresenterBase {
         EliminaElementiHandler handler = new EliminaElementiHandler(listaElementi);
         daoElemento.deleteElementi(handler, new DAOElementoImpl.EliminaElementiCallbacks() {
             @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getActivity(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getActivity());
+            }
+
+            @Override
             public void onEliminazioneElementi() {
                 context.aggiornaMenu();
             }
@@ -192,6 +324,16 @@ public class PresenterMenu extends PresenterBase {
     public void eliminaPreparazione(EliminaPreparazioniHandler handle, VisualizzazioneIngredientiElementoActivity context)
     {
         daoElemento.eliminaPreparazione(handle, new DAOElementoImpl.EliminapreparazioneCallbacks() {
+            @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getBaseContext(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getBaseContext());
+            }
+
             @Override
             public void onEliminati(boolean esito) {
                 context.tentativoRimozione(esito);

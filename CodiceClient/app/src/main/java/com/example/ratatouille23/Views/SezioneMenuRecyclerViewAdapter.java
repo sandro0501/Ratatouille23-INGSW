@@ -76,7 +76,7 @@ public class SezioneMenuRecyclerViewAdapter extends RecyclerView.Adapter<Sezione
                     if(holder.sezioneCorrente.isInModifica())
                     {
                         holder.sezioneCorrente.setTitolo(holder.editTextTitoloSezione.getText().toString());
-                        PresenterMenu.getInstance().modificaSezione(holder.sezioneCorrente);
+                        PresenterMenu.getInstance().modificaSezione(((MenuFragment)recyclerViewInterfaceSezioni), holder.sezioneCorrente);
                     }
                     holder.sezioneCorrente.setInModifica(!holder.sezioneCorrente.isInModifica());
                     impostaGraficamenteModalitaModifica(holder, holder.sezioneCorrente);

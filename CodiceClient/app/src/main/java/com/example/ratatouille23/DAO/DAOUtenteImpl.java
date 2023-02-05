@@ -10,7 +10,7 @@ import com.example.ratatouille23.Handlers.ModificaPasswordHandler;
 import com.example.ratatouille23.Handlers.RecoverHandler;
 import com.example.ratatouille23.Handlers.RegistraUtenteHandler;
 import com.example.ratatouille23.Handlers.UtenteHandler;
-import com.example.ratatouille23.InterfacceRetrofit.BaseCallback;
+import com.example.ratatouille23.InterfacceRetrofit.BaseCallbacks;
 import com.example.ratatouille23.InterfacceRetrofit.DipendentiService;
 import com.example.ratatouille23.InterfacceRetrofit.LoginService;
 import com.example.ratatouille23.Models.Ristorante;
@@ -34,7 +34,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DAOUtenteImpl implements DAOUtente {
 
-    public interface LoginCallbacks extends BaseCallback {
+    public interface LoginCallbacks extends BaseCallbacks {
         void onAccessoCorrettoUtente(Utente utenteControllato);
 
         void onPrimoAccessoUtente(Utente utente, String session);
@@ -44,12 +44,12 @@ public class DAOUtenteImpl implements DAOUtente {
         void onAccessoUtenteLicenziato();
     }
 
-    public interface ModificaPasswordPrimoLoginCallbacks {
+    public interface ModificaPasswordPrimoLoginCallbacks extends  BaseCallbacks {
         void onModificaPasswordUtente(Utente utenteControllato);
         void onModificaPasswordUtenteLicenziato();
     }
 
-    public interface RecuperaPasswordCallbacks
+    public interface RecuperaPasswordCallbacks extends  BaseCallbacks
     {
         void onRichiestaCodice();
         void onConfermaCodice();
@@ -57,26 +57,26 @@ public class DAOUtenteImpl implements DAOUtente {
     }
 
 
-    public interface DipendentiCallbacks
+    public interface DipendentiCallbacks extends BaseCallbacks
     {
         void onRichiestaDipendenti(ArrayList<Utente> utenti);
     }
 
-    public interface RimuoviDipendenteCallbacks{
+    public interface RimuoviDipendenteCallbacks extends BaseCallbacks{
         void onEliminazioneDipendente();
     }
 
-    public interface AggiungiDipendenteCallbacks {
+    public interface AggiungiDipendenteCallbacks extends BaseCallbacks {
         void onAggiuntaDipendente();
         void onUtenteGiaPresente();
         void onUtenteLicenziatoPrecedentemente();
     }
 
-    public interface ModificaDipendenteCallbacks {
+    public interface ModificaDipendenteCallbacks extends BaseCallbacks {
         void onModificaDipendente();
     }
 
-    public interface ModificaPasswordCallbacks {
+    public interface ModificaPasswordCallbacks extends BaseCallbacks {
         void onModificaPassword();
         void onVecchiaPasswordErrata();
     }
@@ -134,7 +134,7 @@ public class DAOUtenteImpl implements DAOUtente {
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    callback.erroreConnessioneGenerico();
+                    callback.onErroreConnessioneGenerico();
                 }
             });
         }
@@ -172,13 +172,13 @@ public class DAOUtenteImpl implements DAOUtente {
                         }
                     }
                     else {
-                        Log.i("Prova", "noSUCCESS");
+                        callback.onErroreDiHTTP(response);
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Log.i("Prova", t.getMessage());
+                    callback.onErroreConnessioneGenerico();
                 }
             });
         }
@@ -198,11 +198,13 @@ public class DAOUtenteImpl implements DAOUtente {
                 {
                     callback.onRichiestaCodice();
                 }
+                else
+                    callback.onErroreDiHTTP(response);
             }
 
             public void onFailure(Call<ResponseBody> call, Throwable t)
             {
-
+                callback.onErroreConnessioneGenerico();
             }
         });
     }
@@ -231,12 +233,12 @@ public class DAOUtenteImpl implements DAOUtente {
                     }
                 }
                 else {
-                    Log.i("Exception", response.message());
+                    callback.onErroreDiHTTP(response);
                 }
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.i("Failure", t.getMessage());
+                callback.onErroreConnessioneGenerico();
 
             }
         });
@@ -277,13 +279,13 @@ public class DAOUtenteImpl implements DAOUtente {
                     }
                 }
                 else {
-
+                    callback.onErroreDiHTTP(response);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                callback.onErroreConnessioneGenerico();
             }
         });
     }
@@ -300,13 +302,13 @@ public class DAOUtenteImpl implements DAOUtente {
                     callback.onEliminazioneDipendente();
                 }
                 else {
-                    Log.i("HTTP", ((Integer)response.code()).toString());
+                    callback.onErroreDiHTTP(response);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.i("FAILURE", t.getMessage());
+                callback.onErroreConnessioneGenerico();
             }
         });
     }
@@ -334,13 +336,13 @@ public class DAOUtenteImpl implements DAOUtente {
                     }
                 }
                 else {
-                    Log.i("ERRORE", response.message() + response.code());
+                    callback.onErroreDiHTTP(response);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.i("ERRORE", t.getMessage());
+                callback.onErroreConnessioneGenerico();
             }
         });
     }
@@ -393,13 +395,13 @@ public class DAOUtenteImpl implements DAOUtente {
                     }
                 }
                 else {
-                    Log.i("ERRORE", response.message() + response.code());
+                    callback.onErroreDiHTTP(response);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.i("ERRORE", t.getMessage());
+                callback.onErroreConnessioneGenerico();
             }
         });
     }
@@ -428,13 +430,13 @@ public class DAOUtenteImpl implements DAOUtente {
                     }
                 }
                 else {
-                    Log.i("ERRORE", response.message() + response.code());
+                    callback.onErroreDiHTTP(response);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.i("ERRORE", t.getMessage());
+                callback.onErroreConnessioneGenerico();
             }
         });
     }

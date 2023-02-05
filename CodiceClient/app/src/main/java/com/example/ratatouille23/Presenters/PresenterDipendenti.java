@@ -13,6 +13,9 @@ import com.example.ratatouille23.Views.DipendenteFragment;
 
 import java.util.ArrayList;
 
+import okhttp3.ResponseBody;
+import retrofit2.Response;
+
 public class PresenterDipendenti extends PresenterBase {
 
     private static PresenterDipendenti instance;
@@ -34,6 +37,16 @@ public class PresenterDipendenti extends PresenterBase {
     public void recuperaDipendentiDaRistorante(DipendenteFragment context, Ristorante ristorante) {
         daoUtente.ottieniDipendenti(ristorante, new DAOUtenteImpl.DipendentiCallbacks() {
             @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getActivity(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getActivity());
+            }
+
+            @Override
             public void onRichiestaDipendenti(ArrayList<Utente> listaDipendenti) {
                 context.setListaDipendenti(listaDipendenti);
             }
@@ -43,6 +56,16 @@ public class PresenterDipendenti extends PresenterBase {
     public void rimuoviDipendente(DipendenteFragment context, UtenteHandler utente) {
         daoUtente.rimuoviDipendente(utente, new DAOUtenteImpl.RimuoviDipendenteCallbacks() {
             @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getActivity(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getActivity());
+            }
+
+            @Override
             public void onEliminazioneDipendente() {
                 context.dipendenteLicenziato();
             }
@@ -51,6 +74,16 @@ public class PresenterDipendenti extends PresenterBase {
 
     public void aggiungiDipendente(AggiuntaDipendenteActivity context, RegistraUtenteHandler handler) {
         daoUtente.aggiungiDipendente(handler, new DAOUtenteImpl.AggiungiDipendenteCallbacks() {
+            @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getBaseContext(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getBaseContext());
+            }
+
             @Override
             public void onAggiuntaDipendente() {
                 context.dipendenteAggiunto();
@@ -70,6 +103,16 @@ public class PresenterDipendenti extends PresenterBase {
 
     public void modificaDipendente(DipendenteFragment context, AggiornaRuoloHandler handler) {
         daoUtente.modificaDipendente(handler, new DAOUtenteImpl.ModificaDipendenteCallbacks() {
+            @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getActivity(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getActivity());
+            }
+
             @Override
             public void onModificaDipendente() {
                 context.ruoloDipendenteModificato();
