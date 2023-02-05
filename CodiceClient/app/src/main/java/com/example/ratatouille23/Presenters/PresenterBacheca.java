@@ -18,6 +18,9 @@ import com.example.ratatouille23.Views.CreazioneAvvisoActivity;
 
 import java.util.ArrayList;
 
+import okhttp3.ResponseBody;
+import retrofit2.Response;
+
 public class PresenterBacheca extends PresenterBase {
 
     private static PresenterBacheca instance;
@@ -52,6 +55,16 @@ public class PresenterBacheca extends PresenterBase {
     {
         daoBacheca.getAvvisi(utente, context,new DAOAvvisoImpl.BachecaCallbacks() {
             @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getActivity(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getActivity());
+            }
+
+            @Override
             public void onCaricamentoAvvisi(ArrayList<Avviso> avvisiUtenteNuovi, ArrayList<Avviso> avvisiUtenteLetti, ArrayList<Avviso> avvisiutenteNascosti) {
                 context.setAvvisiUtente(avvisiUtenteNuovi,avvisiUtenteLetti,avvisiutenteNascosti);
             }
@@ -68,6 +81,16 @@ public class PresenterBacheca extends PresenterBase {
     public void insertAvviso(CreazioneAvvisoActivity context, InserisciAvvisoHandler handler)
     {
         daoBacheca.insertAvviso(handler, new DAOAvvisoImpl.BachecaCallbacks() {
+            @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getBaseContext(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context);
+            }
+
             public void onCaricamentoAvvisi(ArrayList<Avviso> avvisiUtenteNuovi, ArrayList<Avviso> avvisiUtenteLetti, ArrayList<Avviso> avvisiutenteNascosti){ }
 
             public void onAggiuntaAvviso(Boolean added) {
@@ -84,6 +107,16 @@ public class PresenterBacheca extends PresenterBase {
     {
         daoUtente.ottieniDipendenti(ristorante, new DAOUtenteImpl.DipendentiCallbacks() {
             @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getActivity(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getActivity());
+            }
+
+            @Override
             public void onRichiestaDipendenti(ArrayList<Utente> utenti)
             {
                 context.setUtentiCorrenti(utenti);
@@ -97,13 +130,23 @@ public class PresenterBacheca extends PresenterBase {
     {
 
         daoBacheca.visualizzaAvviso(handler, new DAOAvvisoImpl.BachecaCallbacks() {
-        public void onCaricamentoAvvisi(ArrayList<Avviso> avvisiUtenteNuovi, ArrayList<Avviso> avvisiUtenteLetti, ArrayList<Avviso> avvisiutenteNascosti){ }
+            @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getActivity(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getActivity());
+            }
+
+            public void onCaricamentoAvvisi(ArrayList<Avviso> avvisiUtenteNuovi, ArrayList<Avviso> avvisiUtenteLetti, ArrayList<Avviso> avvisiutenteNascosti){ }
 
         public void onAggiuntaAvviso(Boolean added) { }
 
         public void onVisualizzaAvviso()
         {
-            context.getContext().startActivity(intentFromBachecaToVisualizzaAvviso);
+            context.getActivity().startActivity(intentFromBachecaToVisualizzaAvviso);
         }
 
         public void onNascondiAvviso() { }
@@ -114,6 +157,16 @@ public class PresenterBacheca extends PresenterBase {
     public void nascondiAvviso(BachecaFragment context, AggiornaAvvisoHandler handler)
     {
         daoBacheca.nascondiAvviso(handler, new DAOAvvisoImpl.BachecaCallbacks(){
+            @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getActivity(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getActivity());
+            }
+
             public void onCaricamentoAvvisi(ArrayList<Avviso> avvisiUtenteNuovi, ArrayList<Avviso> avvisiUtenteLetti, ArrayList<Avviso> avvisiutenteNascosti){}
 
             public void onAggiuntaAvviso(Boolean added) { }

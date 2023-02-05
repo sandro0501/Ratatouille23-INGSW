@@ -3,6 +3,7 @@ package com.example.ratatouille23.DAO;
 import android.util.Log;
 
 import com.example.ratatouille23.Handlers.EliminaSezioniHandler;
+import com.example.ratatouille23.InterfacceRetrofit.BaseCallbacks;
 import com.example.ratatouille23.InterfacceRetrofit.SezioneMenuService;
 import com.example.ratatouille23.Models.Allergene;
 import com.example.ratatouille23.Models.Elemento;
@@ -26,19 +27,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DAOSezioneMenuImpl implements DAOSezioneMenu {
 
-    public interface ModificaSezioneCallbacks{
+    public interface ModificaSezioneCallbacks extends BaseCallbacks {
         void onModificato();
     }
 
-    public interface EstraiMenuCallbacks {
+    public interface EstraiMenuCallbacks extends BaseCallbacks {
         void onEstratto(ArrayList<SezioneMenu> listaSezioni);
     }
 
-    public interface AggiungiSezioneCallbacks {
+    public interface AggiungiSezioneCallbacks extends BaseCallbacks {
         void onAggiuntaSezione();
     }
 
-    public interface RimuoviSezioneCallbacks {
+    public interface RimuoviSezioneCallbacks extends BaseCallbacks {
         void onRimozioneSezione();
     }
 
@@ -133,11 +134,13 @@ public class DAOSezioneMenuImpl implements DAOSezioneMenu {
                         System.out.println(e.getMessage());
                     }
                 }
+                else
+                    callback.onErroreDiHTTP(response);
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                callback.onErroreConnessioneGenerico();
             }
         });
     }
@@ -159,13 +162,13 @@ public class DAOSezioneMenuImpl implements DAOSezioneMenu {
                     }
                 }
                 else {
-                    Log.i("response", ((Integer)response.code()).toString());
+                    callback.onErroreDiHTTP(response);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                callback.onErroreConnessioneGenerico();
             }
         });
     }
@@ -184,13 +187,13 @@ public class DAOSezioneMenuImpl implements DAOSezioneMenu {
                 }
                 else
                 {
-                    System.out.println(response.code());
+                    callback.onErroreDiHTTP(response);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                System.out.println("Failure");
+                callback.onErroreConnessioneGenerico();
             }
         });
     }
@@ -211,13 +214,13 @@ public class DAOSezioneMenuImpl implements DAOSezioneMenu {
                     }
                 }
                 else {
-                    Log.i("response", response.message());
+                    callback.onErroreDiHTTP(response);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                callback.onErroreConnessioneGenerico();
             }
         });
     }

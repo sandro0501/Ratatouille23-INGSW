@@ -4,6 +4,7 @@ import com.example.ratatouille23.Handlers.AggiornaAvvisoHandler;
 import com.example.ratatouille23.Handlers.InserisciAvvisoHandler;
 import com.example.ratatouille23.InterfacceRetrofit.AvvisoService;
 import com.example.ratatouille23.InterfacceRetrofit.BachecaService;
+import com.example.ratatouille23.InterfacceRetrofit.BaseCallbacks;
 import com.example.ratatouille23.Models.Avviso;
 import com.example.ratatouille23.Models.Gestore;
 import com.example.ratatouille23.Models.Utente;
@@ -27,20 +28,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DAOAvvisoImpl implements DAOAvviso
 {
 
-    public interface BachecaCallbacks
+    public interface BachecaCallbacks extends BaseCallbacks
     {
         public void onCaricamentoAvvisi(ArrayList<Avviso> avvisiUtenteNuovi,ArrayList<Avviso> avvisiUtenteLetti,ArrayList<Avviso> avvisiUtenteNascosti);
         public void onAggiuntaAvviso(Boolean added);
         public void onVisualizzaAvviso();
         public void onNascondiAvviso();
     }
-
-    public interface CreazioneAvvisoCallback
-    {
-        public void onOttenuti(ArrayList<Utente> utenti);
-    }
-
-
 
     Retrofit retrofitBacheca =  new Retrofit.Builder().baseUrl(DAOBaseUrl.getBaseUrl()).addConverterFactory(GsonConverterFactory.create(new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create())).build();
     Retrofit retrofitAvviso = new Retrofit.Builder().baseUrl(DAOBaseUrl.getBaseUrl()).addConverterFactory(GsonConverterFactory.create()).build();
@@ -141,12 +135,14 @@ public class DAOAvvisoImpl implements DAOAvviso
                         System.out.println(e.getMessage());
                     }
                 }
+                else
+                    callback.onErroreDiHTTP(response);
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t)
             {
-
+                callback.onErroreConnessioneGenerico();
             }
         });
     }
@@ -170,16 +166,17 @@ public class DAOAvvisoImpl implements DAOAvviso
                     }
                     catch (Exception e)
                     {
-                        System.out.println(e.getMessage());
                         callback.onAggiuntaAvviso(false);
                     }
                 }
+                else
+                    callback.onErroreDiHTTP(response);
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t)
             {
-
+                callback.onErroreConnessioneGenerico();
             }
         });
     }
@@ -204,12 +201,15 @@ public class DAOAvvisoImpl implements DAOAvviso
 
                     }
                 }
+                else
+                    callback.onErroreDiHTTP(response);
+
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t)
             {
-
+                callback.onErroreConnessioneGenerico();
             }
         });
     }
@@ -235,12 +235,14 @@ public class DAOAvvisoImpl implements DAOAvviso
 
                     }
                 }
+                else
+                    callback.onErroreDiHTTP(response);
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t)
             {
-
+                callback.onErroreConnessioneGenerico();
             }
         });
     }

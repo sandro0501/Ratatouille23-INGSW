@@ -3,6 +3,7 @@ package com.example.ratatouille23.DAO;
 import android.util.Log;
 
 import com.example.ratatouille23.Handlers.EliminaProdottiHandler;
+import com.example.ratatouille23.InterfacceRetrofit.BaseCallbacks;
 import com.example.ratatouille23.InterfacceRetrofit.OpenFootFactsService;
 import com.example.ratatouille23.InterfacceRetrofit.ProdottoService;
 import com.example.ratatouille23.Models.Prodotto;
@@ -25,23 +26,23 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DAOProdottoImpl implements DAOProdotto {
 
-    public interface ProdottoCallbacks {
+    public interface ProdottoCallbacks extends BaseCallbacks {
         void onCaricamentoListaProdottiOpenFoodFacts(ArrayList<Prodotto> listaProdottiOttenuta);
     }
 
-    public interface AggiuntaProdottoCallbacks {
+    public interface AggiuntaProdottoCallbacks extends BaseCallbacks {
         void onAggiuntaProdotto(Boolean isAggiunto);
     }
 
-    public interface EliminazioneProdottoCallbacks {
+    public interface EliminazioneProdottoCallbacks extends BaseCallbacks {
         void onEliminazioneProdotto();
     }
 
-    public interface ModificaProdottoCallbacks {
+    public interface ModificaProdottoCallbacks extends BaseCallbacks {
         void onModificaProdotto();
     }
 
-    public interface  OttenimentoDispensaCallbacks {
+    public interface  OttenimentoDispensaCallbacks extends BaseCallbacks {
         void onRichiestaDispensa(ArrayList<Prodotto> dispensa);
     }
 
@@ -82,13 +83,13 @@ public class DAOProdottoImpl implements DAOProdotto {
                     }
                 }
                 else {
-                    Log.i("HTTP EXCEPTION", "");
+                    callback.onErroreDiHTTP(response);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                callback.onErroreConnessioneGenerico();
             }
         });
 
@@ -111,13 +112,13 @@ public class DAOProdottoImpl implements DAOProdotto {
                     }
                 }
                 else {
-                    Log.println(Log.VERBOSE,"Errore response", "Errore");
+                    callback.onErroreDiHTTP(response);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.println(Log.VERBOSE,"Errore failure", t.getMessage());
+                callback.onErroreConnessioneGenerico();
             }
         });
 
@@ -145,14 +146,14 @@ public class DAOProdottoImpl implements DAOProdotto {
                         Log.println(Log.VERBOSE, "ErroreCatch", e.getMessage());
                     }
 
-                }else {
-                    Log.println(Log.VERBOSE, "ErroreResponse", response.message() + response.code());
+                } else {
+                    callback.onErroreDiHTTP(response);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.println(Log.VERBOSE, "ErroreFailure",  t.getMessage());
+                callback.onErroreConnessioneGenerico();
             }
         });
 
@@ -169,13 +170,13 @@ public class DAOProdottoImpl implements DAOProdotto {
                     callback.onEliminazioneProdotto();
                 }
                 else{
-                    Log.println(Log.VERBOSE, "ErroreMessaggio", response.message());
+                    callback.onErroreDiHTTP(response);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.println(Log.VERBOSE, "ErroreFailure",  t.getMessage());
+                callback.onErroreConnessioneGenerico();
             }
         });
 
@@ -231,13 +232,13 @@ public class DAOProdottoImpl implements DAOProdotto {
                     }
                 }
                 else{
-                    Log.println(Log.VERBOSE,"Errore response", "Errore");
+                    callback.onErroreDiHTTP(response);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.println(Log.VERBOSE,"Errore failure", t.getMessage());
+                callback.onErroreConnessioneGenerico();
             }
         });
 

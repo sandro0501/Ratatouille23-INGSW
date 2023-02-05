@@ -10,6 +10,9 @@ import com.example.ratatouille23.Exceptions.PasswordUgualeException;
 import com.example.ratatouille23.Handlers.ModificaPasswordHandler;
 import com.example.ratatouille23.Views.ModificaPasswordActivity;
 
+import okhttp3.ResponseBody;
+import retrofit2.Response;
+
 public class PresenterAreaPersonale extends PresenterBase {
 
     private static PresenterAreaPersonale instance;
@@ -41,6 +44,16 @@ public class PresenterAreaPersonale extends PresenterBase {
         handler.newp = nuovaPassword;
 
         daoUtente.modificaPassword(handler, new DAOUtenteImpl.ModificaPasswordCallbacks() {
+            @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getBaseContext(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getBaseContext());
+            }
+
             @Override
             public void onModificaPassword() {
                 context.passwordModificataCorrettamente();

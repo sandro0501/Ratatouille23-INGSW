@@ -6,6 +6,7 @@ import com.example.ratatouille23.Handlers.EliminaElementiHandler;
 import com.example.ratatouille23.Handlers.EliminaPreparazioniHandler;
 import com.example.ratatouille23.Handlers.HandleElemento;
 import com.example.ratatouille23.Handlers.HandlePreparazione;
+import com.example.ratatouille23.InterfacceRetrofit.BaseCallbacks;
 import com.example.ratatouille23.InterfacceRetrofit.ElementoService;
 import com.example.ratatouille23.InterfacceRetrofit.OpenFootFactsService;
 import com.example.ratatouille23.Models.Allergene;
@@ -30,31 +31,31 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DAOElementoImpl implements DAOElemento {
 
-    public interface EliminapreparazioneCallbacks{
+    public interface EliminapreparazioneCallbacks extends BaseCallbacks {
         void onEliminati(boolean esito);
     }
 
-    public interface ImpostaPreparazioneCallbacks{
+    public interface ImpostaPreparazioneCallbacks extends BaseCallbacks {
         void onImpostata(boolean esito);
     }
 
-    public interface ModificaElementoCallbacks{
+    public interface ModificaElementoCallbacks extends BaseCallbacks {
         void onModificato();
     }
 
-    public interface ImpostaAllergeniCallbacks {
+    public interface ImpostaAllergeniCallbacks extends BaseCallbacks {
         void onImpostati();
     }
 
-    public interface ElementiFoodFactsCallbacks {
+    public interface ElementiFoodFactsCallbacks extends BaseCallbacks {
         void onCaricamentoListaElementiOpenFoodFacts (ArrayList<Elemento> listaElementiOttenuta);
     }
 
-    public interface AggiuntaElementiCallbacks {
+    public interface AggiuntaElementiCallbacks extends BaseCallbacks {
         void onAggiuntaElemento (Elemento elwithid);
     }
 
-    public interface EliminaElementiCallbacks {
+    public interface EliminaElementiCallbacks extends BaseCallbacks {
         void onEliminazioneElementi ();
     }
 
@@ -75,11 +76,13 @@ public class DAOElementoImpl implements DAOElemento {
                 {
                     callback.onModificato();
                 }
+                else
+                    callback.onErroreDiHTTP(response);
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                callback.onErroreConnessioneGenerico();
             }
         });
     }
@@ -103,11 +106,13 @@ public class DAOElementoImpl implements DAOElemento {
                 {
                     callback.onImpostati();
                 }
+                else
+                    callback.onErroreDiHTTP(response);
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                callback.onErroreConnessioneGenerico();
             }
         });
     }
@@ -194,13 +199,13 @@ public class DAOElementoImpl implements DAOElemento {
                     }
                 }
                 else {
-                    Log.i("HTTP EXCEPTION", "");
+                    callback.onErroreDiHTTP(response);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                callback.onErroreConnessioneGenerico();
             }
         });
     }
@@ -222,13 +227,13 @@ public class DAOElementoImpl implements DAOElemento {
                     }
                 }
                 else {
-                    Log.i("response", response.message());
+                    callback.onErroreDiHTTP(response);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                callback.onErroreConnessioneGenerico();
             }
         });
     }
@@ -246,7 +251,6 @@ public class DAOElementoImpl implements DAOElemento {
                 }
                 else{
                     callback.onImpostata(false);
-                    System.out.println(response.code());
                 }
             }
 
@@ -267,13 +271,13 @@ public class DAOElementoImpl implements DAOElemento {
                     callbacks.onEliminazioneElementi();
                 }
                 else {
-
+                    callbacks.onErroreDiHTTP(response);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                callbacks.onErroreConnessioneGenerico();
             }
         });
     }

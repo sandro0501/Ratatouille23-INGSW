@@ -52,7 +52,7 @@ public class PresenterLogin extends PresenterBase {
             }
 
             @Override
-            public void erroreConnessioneGenerico() {
+            public void onErroreConnessioneGenerico() {
                 PresenterLogin.getInstance().mostraAlertErroreConnessione(context);
             }
 
@@ -84,6 +84,16 @@ public class PresenterLogin extends PresenterBase {
         else if (!nuovaPassword.equals(nuovaPasswordConferma)) throw new ConfermaPasswordErrataException();
         else if (!soddisfaRequisiti(nuovaPassword)) throw new PasswordNonAdeguataException();
         daoUtente.modificaPasswordPrimoLogin(utente, sessione, nuovaPassword, new DAOUtenteImpl.ModificaPasswordPrimoLoginCallbacks() {
+            @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getBaseContext(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getBaseContext());
+            }
+
             @Override
             public void onModificaPasswordUtente(Utente utenteControllato) {
                 context.passwordModificataCorrettamente(utenteControllato);
@@ -120,6 +130,16 @@ public class PresenterLogin extends PresenterBase {
         utente.setEmail(email);
         daoUtente.recuperaPassword(utente, new DAOUtenteImpl.RecuperaPasswordCallbacks() {
             @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getBaseContext(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getBaseContext());
+            }
+
+            @Override
             public void onRichiestaCodice()
             {
                 context.avviaConfermaCodice(email);
@@ -148,6 +168,16 @@ public class PresenterLogin extends PresenterBase {
         if (!soddisfaRequisiti(password)) throw new PasswordNonAdeguataException();
 
         daoUtente.confermaPassword(handle, new DAOUtenteImpl.RecuperaPasswordCallbacks() {
+            @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getBaseContext(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getBaseContext());
+            }
+
             @Override
             public void onRichiestaCodice() { }
 

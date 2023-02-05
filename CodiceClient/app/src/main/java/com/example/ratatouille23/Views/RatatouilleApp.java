@@ -30,6 +30,11 @@ public class RatatouilleApp extends Application {
         super.onCreate();
         configuraS3();
 
+        downloadIP();
+
+    }
+
+    private void downloadIP() {
         Amplify.Storage.downloadFile(
                 "INDIRIZZO_IP_SERVER.txt",
                 new File((getFilesDir() + "/" + "INDIRIZZO_IP_SERVER.txt")),
@@ -42,13 +47,12 @@ public class RatatouilleApp extends Application {
                         setIndirizzoIP(indirizzoIP);
                         fileReader.close();
                     } catch (FileNotFoundException e) {
-
+                        PresenterLogin.getInstance().mostraAlertErroreConnessione(RatatouilleApp.this);
                     }
                 },
-                error -> PresenterLogin.getInstance().mostraAlertErroreConnessione(this)
+                error -> PresenterLogin.getInstance().mostraAlertErroreConnessione(RatatouilleApp.this)
 
         );
-
     }
 
     private void setIndirizzoIP(String indirizzoIP) {

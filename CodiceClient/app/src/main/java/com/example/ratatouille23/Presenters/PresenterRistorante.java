@@ -7,6 +7,9 @@ import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Views.ModificaDettagliRistoranteActivity;
 import com.example.ratatouille23.Views.RistoranteFragment;
 
+import okhttp3.ResponseBody;
+import retrofit2.Response;
+
 public class PresenterRistorante extends PresenterBase {
 
     private static PresenterRistorante instance;
@@ -29,6 +32,16 @@ public class PresenterRistorante extends PresenterBase {
     public void confermaModifichePremuto(ModificaDettagliRistoranteActivity context, Ristorante ristoranteCorrente) {
         daoRistorante.modificaRistorante(ristoranteCorrente, new DAORistoranteImpl.RistoranteModificaCallbacks() {
             @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getBaseContext(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getBaseContext());
+            }
+
+            @Override
             public void onModificaRistorante() {
                 context.modificheEffettuate();
             }
@@ -37,6 +50,16 @@ public class PresenterRistorante extends PresenterBase {
 
     public void riceviRistorante(RistoranteFragment context, int idRistorante) {
         daoRistorante.getRistorante(idRistorante, new DAORistoranteImpl.RistoranteRiceviCallbacks() {
+            @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getActivity(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getActivity());
+            }
+
             @Override
             public void onRicezioneRistorante(Ristorante ristorante) {
                 context.setRistorante(ristorante);

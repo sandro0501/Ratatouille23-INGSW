@@ -2,6 +2,7 @@ package com.example.ratatouille23.DAO;
 
 import android.util.Log;
 
+import com.example.ratatouille23.InterfacceRetrofit.BaseCallbacks;
 import com.example.ratatouille23.InterfacceRetrofit.RistoranteService;
 import com.example.ratatouille23.Models.Ristorante;
 import com.google.gson.GsonBuilder;
@@ -17,13 +18,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DAORistoranteImpl implements DAORistorante {
 
-    public interface RistoranteModificaCallbacks
+    public interface RistoranteModificaCallbacks extends BaseCallbacks
     {
         public void onModificaRistorante();
     }
 
 
-    public interface RistoranteRiceviCallbacks
+    public interface RistoranteRiceviCallbacks extends BaseCallbacks
     {
         public void onRicezioneRistorante(Ristorante ristorante);
     }
@@ -43,12 +44,12 @@ public class DAORistoranteImpl implements DAORistorante {
                     callback.onModificaRistorante();
                 }
                 else {
-                    Log.i("Problema success", ((Integer)response.code()).toString());
+                    callback.onErroreDiHTTP(response);
                 }
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.i("Problema failure", t.getMessage());
+                callback.onErroreConnessioneGenerico();
             }
         });
     }
@@ -80,13 +81,13 @@ public class DAORistoranteImpl implements DAORistorante {
                     }
                 }
                 else {
-                    Log.i("Problema success", ((Integer)response.code()).toString());
+                    callback.onErroreDiHTTP(response);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.i("Problema failure", t.getMessage());
+                callback.onErroreConnessioneGenerico();
             }
         });
     }

@@ -399,7 +399,7 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
             deselezionaTuttiProdotti();
         }
         else{
-            PresenterMenu.getInstance().mostraAlert(VisualizzazioneIngredientiElementoActivity.this, "Prodotto non aggiunto",
+            PresenterMenu.getInstance().mostraAlert(VisualizzazioneIngredientiElementoActivity.this, "Prodotto non rimosso",
                     "C'e' stato un problema durante la comunicazione al server, si consiglia di riprovare.");
         }
     }

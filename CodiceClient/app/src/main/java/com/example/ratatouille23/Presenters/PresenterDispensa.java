@@ -13,6 +13,9 @@ import com.example.ratatouille23.Views.VisualizzazioneIngredientiElementoActivit
 
 import java.util.ArrayList;
 
+import okhttp3.ResponseBody;
+import retrofit2.Response;
+
 public class PresenterDispensa extends PresenterBase {
 
     private static PresenterDispensa instance;
@@ -50,6 +53,16 @@ public class PresenterDispensa extends PresenterBase {
 
         daoProdotto.getProdottiOpenFoodFactsDaStringa(stringaIniziale, new DAOProdottoImpl.ProdottoCallbacks() {
             @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getActivity(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getActivity());
+            }
+
+            @Override
             public void onCaricamentoListaProdottiOpenFoodFacts(ArrayList<Prodotto> listaProdottiOttenuta) {
                 Log.i("Prova", listaProdottiOttenuta.toString());
                 context.setupListaProdottiOpenFoodFacts(listaProdottiOttenuta);
@@ -62,6 +75,16 @@ public class PresenterDispensa extends PresenterBase {
     {
         daoProdotto.getDispensa(ristorante, new DAOProdottoImpl.OttenimentoDispensaCallbacks() {
             @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getBaseContext(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getBaseContext());
+            }
+
+            @Override
             public void onRichiestaDispensa(ArrayList<Prodotto> listaProdotti) {
                 context.riempiDispensa(listaProdotti);
             }
@@ -70,6 +93,16 @@ public class PresenterDispensa extends PresenterBase {
 
     public void AggiungiProdottoInDispensa(DispensaFragment context, Prodotto prodottoAggiunto){
         daoProdotto.aggiungiProdotto(prodottoAggiunto, new DAOProdottoImpl.AggiuntaProdottoCallbacks() {
+            @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getActivity(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getActivity());
+            }
+
             @Override
             public void onAggiuntaProdotto(Boolean isAggiunto) {
                 if(isAggiunto){
@@ -84,6 +117,16 @@ public class PresenterDispensa extends PresenterBase {
     public void ModificaProdottoInDispensa (DispensaFragment context, Prodotto prodottoDaModificare){
         daoProdotto.modificaProdotto(prodottoDaModificare, new DAOProdottoImpl.ModificaProdottoCallbacks() {
             @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getActivity(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getActivity());
+            }
+
+            @Override
             public void onModificaProdotto() {
                 context.prodottoInDispensaModificato();
             }
@@ -92,6 +135,16 @@ public class PresenterDispensa extends PresenterBase {
 
     public void EliminaProdottoInDispensa (DispensaFragment context, EliminaProdottiHandler listaProdottiDaEliminare){
         daoProdotto.eliminaProdotto(listaProdottiDaEliminare, new DAOProdottoImpl.EliminazioneProdottoCallbacks() {
+            @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getActivity(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getActivity());
+            }
+
             @Override
             public void onEliminazioneProdotto() {
                 context.prodottoInDispensaEliminato();
@@ -102,6 +155,16 @@ public class PresenterDispensa extends PresenterBase {
     public void ottieniDispensaDaRistorante(DispensaFragment context, Ristorante ristorante){
         daoProdotto.getDispensa(ristorante, new DAOProdottoImpl.OttenimentoDispensaCallbacks() {
             @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getActivity(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getActivity());
+            }
+
+            @Override
             public void onRichiestaDispensa(ArrayList<Prodotto> listaProdotti) {
                 context.riempiDispensa(listaProdotti);
             }
@@ -111,6 +174,16 @@ public class PresenterDispensa extends PresenterBase {
     public void settaProdottiDaInizialeModifica(DispensaFragment context, String stringaIniziale) {
 
         daoProdotto.getProdottiOpenFoodFactsDaStringa(stringaIniziale, new DAOProdottoImpl.ProdottoCallbacks() {
+            @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context.getActivity(), response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context.getActivity());
+            }
+
             @Override
             public void onCaricamentoListaProdottiOpenFoodFacts(ArrayList<Prodotto> listaProdottiOttenuta) {
                 Log.i("Prova", listaProdottiOttenuta.toString());
