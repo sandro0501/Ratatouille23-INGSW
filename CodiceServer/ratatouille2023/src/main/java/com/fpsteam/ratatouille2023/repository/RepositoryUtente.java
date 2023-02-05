@@ -18,7 +18,5 @@ public interface RepositoryUtente extends JpaRepository<Utente,Integer>{
 	@Query(value = "SELECT * FROM utente WHERE id_ristorante = ?2 AND ruolo = ?1", nativeQuery = true)
 	ArrayList<Utente> findByRank(String string, int id_ristorante);
 
-	@Query(value = "SELECT * FROM utente WHERE id_ristorante = ?1", nativeQuery = true)
-	Utente findCounter(int idRistorante);
 
 }

@@ -113,7 +113,7 @@ public class ControllerBacheca {
 			}
 			else
 			{
-				utenteFormato = repUt.findCounter(utente.getidRistorante().getIdRistorante());
+				utenteFormato = utenteSistema.get(0);
 			}
 			ArrayList<Avviso> avvisiSistema = repAvv.findByUid(utenteFormato.getIdUtente());
 			Avviso avvisoSistema;
@@ -127,6 +127,8 @@ public class ControllerBacheca {
 			{
 				avvisoSistema = new Avviso("Monitorazione dispensa",corpoAvviso,new Date(System.currentTimeMillis()));
 			}
+			if(corpoAvviso.equals("Nessun prodotto in scadenza!")) servAvv.saveAvvisoSistemaTransiente(avvisoSistema);
+			else servAvv.saveAvvisoSistemaUrgente(avvisoSistema);
 		}
 			
 			
