@@ -21,8 +21,6 @@ public class PresenterLogin extends PresenterBase {
 
     private DAOUtente daoUtente;
 
-
-
     private static PresenterLogin instance;
 
     private PresenterLogin() {

@@ -29,35 +29,8 @@ public class RatatouilleApp extends Application {
     public void onCreate() {
         super.onCreate();
         configuraS3();
-
-        downloadIP();
-
     }
 
-    private void downloadIP() {
-        Amplify.Storage.downloadFile(
-                "INDIRIZZO_IP_SERVER.txt",
-                new File((getFilesDir() + "/" + "INDIRIZZO_IP_SERVER.txt")),
-                result -> {
-                    File fileIP = result.getFile();
-                    try {
-                        Scanner fileReader = new Scanner(fileIP);
-                        String indirizzoIP = fileReader.nextLine();
-                        Log.i("STringa", indirizzoIP);
-                        setIndirizzoIP(indirizzoIP);
-                        fileReader.close();
-                    } catch (FileNotFoundException e) {
-                        PresenterLogin.getInstance().mostraAlertErroreConnessione(RatatouilleApp.this);
-                    }
-                },
-                error -> PresenterLogin.getInstance().mostraAlertErroreConnessione(RatatouilleApp.this)
-
-        );
-    }
-
-    private void setIndirizzoIP(String indirizzoIP) {
-        DAOBaseUrl.setBaseUrl(indirizzoIP);
-    }
 
     public void configuraS3() {
         try {
