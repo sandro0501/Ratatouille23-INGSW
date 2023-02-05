@@ -45,6 +45,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        downloadIP();
+
         benvenuto = findViewById(R.id.benvenuto);
 
         SpannableString testoBenvenuto = new SpannableString("Benvenuto!\nEffettua il login!");
@@ -69,9 +71,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email = editTextEmail.getText().toString();
                 String password = editTextPass.getText().toString();
-                downloadIP();
-                if (DAOBaseUrl.getBaseUrl() == null)
+                if (DAOBaseUrl.getBaseUrl() == null) {
                     PresenterLogin.mostraAlert(LoginActivity.this, "Errore di connessione!", "Verificare se la connessione è attiva e riprovare");
+                    downloadIP();
+                }
                 else {
 
                     try {

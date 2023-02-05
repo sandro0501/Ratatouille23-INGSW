@@ -46,8 +46,6 @@ public class RatatouilleApp extends Application {
                         try {
                             Scanner fileReader = new Scanner(fileIP);
                             String indirizzoIP = fileReader.nextLine();
-                            Log.i("Stringa", indirizzoIP);
-                            setIndirizzoIP(indirizzoIP);
                             fileReader.close();
                         } catch (FileNotFoundException e) {
                             System.out.println("Stocazzo");
