@@ -57,7 +57,7 @@ public class Utente {
 
 	
 	
-	public Utente(String nome, String cognome, String email, String password, Ristorante idRistorante, String ruolo) {
+	public Utente(String nome, String cognome, String email, Ristorante idRistorante, String ruolo) {
 		super();
 		this.nome = nome;
 		this.cognome = cognome;

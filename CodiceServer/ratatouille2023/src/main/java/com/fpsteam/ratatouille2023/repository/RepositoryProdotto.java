@@ -23,4 +23,11 @@ public interface RepositoryProdotto extends JpaRepository<Prodotto,Integer>{
 			nativeQuery = true
 			)
 	ArrayList<Prodotto> findAllByRistorante(int idRistorante);
+
+	@Query(
+			value="SELECT * FROM prodotto WHERE id_ristorante = ?1 AND soglia>quantita",
+			nativeQuery = true
+			)
+	ArrayList<Prodotto> findInScadenza(int idRistorante);
+
 }

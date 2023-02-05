@@ -1,5 +1,6 @@
 package com.fpsteam.ratatouille2023.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,5 +14,9 @@ public interface RepositoryUtente extends JpaRepository<Utente,Integer>{
 	
 	@Query(value = "SELECT * FROM utente WHERE id_ristorante = ?1", nativeQuery = true)
 	List<Utente> findByRistorante(int idRistorante);
+	
+	@Query(value = "SELECT * FROM utente WHERE id_ristorante = ?2 AND ruolo = ?1", nativeQuery = true)
+	ArrayList<Utente> findByRank(String string, int id_ristorante);
+
 
 }
