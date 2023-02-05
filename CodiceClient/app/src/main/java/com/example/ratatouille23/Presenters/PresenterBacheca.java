@@ -83,7 +83,7 @@ public class PresenterBacheca extends PresenterBase {
         daoBacheca.insertAvviso(handler, new DAOAvvisoImpl.BachecaCallbacks() {
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {
-                mostraAlertErroreHTTP(context.getBaseContext(), response);
+                mostraAlertErroreHTTP(context, response);
             }
 
             @Override
@@ -142,14 +142,14 @@ public class PresenterBacheca extends PresenterBase {
 
             public void onCaricamentoAvvisi(ArrayList<Avviso> avvisiUtenteNuovi, ArrayList<Avviso> avvisiUtenteLetti, ArrayList<Avviso> avvisiutenteNascosti){ }
 
-        public void onAggiuntaAvviso(Boolean added) { }
+            public void onAggiuntaAvviso(Boolean added) { }
 
-        public void onVisualizzaAvviso()
-        {
-            context.getActivity().startActivity(intentFromBachecaToVisualizzaAvviso);
-        }
+            public void onVisualizzaAvviso()
+            {
+                context.getActivity().startActivity(intentFromBachecaToVisualizzaAvviso);
+            }
 
-        public void onNascondiAvviso() { }
+            public void onNascondiAvviso() { }
 
         });
     }

@@ -84,12 +84,12 @@ public class PresenterLogin extends PresenterBase {
         daoUtente.modificaPasswordPrimoLogin(utente, sessione, nuovaPassword, new DAOUtenteImpl.ModificaPasswordPrimoLoginCallbacks() {
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {
-                mostraAlertErroreHTTP(context.getBaseContext(), response);
+                mostraAlertErroreHTTP(context, response);
             }
 
             @Override
             public void onErroreConnessioneGenerico() {
-                mostraAlertErroreConnessione(context.getBaseContext());
+                mostraAlertErroreConnessione(context);
             }
 
             @Override
@@ -129,12 +129,12 @@ public class PresenterLogin extends PresenterBase {
         daoUtente.recuperaPassword(utente, new DAOUtenteImpl.RecuperaPasswordCallbacks() {
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {
-                mostraAlertErroreHTTP(context.getBaseContext(), response);
+                mostraAlertErroreHTTP(context, response);
             }
 
             @Override
             public void onErroreConnessioneGenerico() {
-                mostraAlertErroreConnessione(context.getBaseContext());
+                mostraAlertErroreConnessione(context);
             }
 
             @Override
@@ -168,12 +168,12 @@ public class PresenterLogin extends PresenterBase {
         daoUtente.confermaPassword(handle, new DAOUtenteImpl.RecuperaPasswordCallbacks() {
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {
-                mostraAlertErroreHTTP(context.getBaseContext(), response);
+                mostraAlertErroreHTTP(context, response);
             }
 
             @Override
             public void onErroreConnessioneGenerico() {
-                mostraAlertErroreConnessione(context.getBaseContext());
+                mostraAlertErroreConnessione(context);
             }
 
             @Override

@@ -134,6 +134,7 @@ public class DAOUtenteImpl implements DAOUtente {
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.i("ERRORE", t.getMessage());
                     callback.onErroreConnessioneGenerico();
                 }
             });

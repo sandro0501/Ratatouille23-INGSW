@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ratatouille23.Models.Elemento;
 import com.example.ratatouille23.Models.SezioneMenu;
+import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Presenters.PresenterMenu;
 import com.example.ratatouille23.R;
 
@@ -30,6 +31,7 @@ public class SezioneMenuRecyclerViewAdapter extends RecyclerView.Adapter<Sezione
     private Context context;
     private ArrayList<SezioneMenu> listaSezioni;
     private ElementoMenuRecyclerViewAdapter elementoMenuAdapter;
+    private Utente utenteCorrente;
 
     private MyViewHolder holder;
 
@@ -41,10 +43,11 @@ public class SezioneMenuRecyclerViewAdapter extends RecyclerView.Adapter<Sezione
         this.elementoMenuAdapter = elementoMenuAdapter;
     }
 
-    public SezioneMenuRecyclerViewAdapter(Context context, ArrayList<SezioneMenu> sezioni, RecyclerViewSezioneMenuInterface recyclerViewInterfaceSezioni){
+    public SezioneMenuRecyclerViewAdapter(Context context, ArrayList<SezioneMenu> sezioni, RecyclerViewSezioneMenuInterface recyclerViewInterfaceSezioni, Utente utenteCorrente){
         this.context = context;
         this.listaSezioni = sezioni;
         this.recyclerViewInterfaceSezioni = recyclerViewInterfaceSezioni;
+        this.utenteCorrente = utenteCorrente;
     }
 
     @NonNull
@@ -59,13 +62,18 @@ public class SezioneMenuRecyclerViewAdapter extends RecyclerView.Adapter<Sezione
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.sezioneCorrente = listaSezioni.get(position);
         holder.editTextTitoloSezione.setText(holder.sezioneCorrente.getTitolo());
-        elementoMenuAdapter = new ElementoMenuRecyclerViewAdapter(context, holder.sezioneCorrente.getAppartenente(), (RecyclerViewElementoMenuInterface) recyclerViewInterfaceSezioni);
+        elementoMenuAdapter = new ElementoMenuRecyclerViewAdapter(context, holder.sezioneCorrente.getAppartenente(), (RecyclerViewElementoMenuInterface) recyclerViewInterfaceSezioni, utenteCorrente);
         holder.recyclerViewElementiMenu.setAdapter(elementoMenuAdapter);
         holder.recyclerViewElementiMenu.setLayoutManager(new LinearLayoutManager(((MenuFragment)(recyclerViewInterfaceSezioni)).getContext()));
         elementoMenuAdapter.notifyDataSetChanged();
         holder.titoloCorrente = holder.editTextTitoloSezione.getText().toString();
 
         this.holder = holder;
+
+        if (utenteCorrente.getRuoloUtente().equals("Addetto alla cucina") || utenteCorrente.getRuoloUtente().equals("Addetto al servizio"))
+            holder.iconaMatitaModificaSezione.setVisibility(View.INVISIBLE);
+        else
+            holder.iconaMatitaModificaSezione.setVisibility(View.VISIBLE);
 
         impostaGraficamenteModalitaModifica(holder, holder.sezioneCorrente);
 
@@ -96,8 +104,10 @@ public class SezioneMenuRecyclerViewAdapter extends RecyclerView.Adapter<Sezione
             public boolean onTouch(View view, MotionEvent motionEvent) {
 
                 if (!((MenuFragment)recyclerViewInterfaceSezioni).isModalitaEliminazione()) {
-                    if (motionEvent.getActionMasked() == MotionEvent.ACTION_DOWN) {
-                        ((MenuFragment) recyclerViewInterfaceSezioni).getItemTouchHelper().startDrag(holder);
+                    if (utenteCorrente.getRuoloUtente().equals("Amministratore") || utenteCorrente.getRuoloUtente().equals("Supervisore")) {
+                        if (motionEvent.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                            ((MenuFragment) recyclerViewInterfaceSezioni).getItemTouchHelper().startDrag(holder);
+                        }
                     }
                 }
                 return false;
@@ -106,7 +116,10 @@ public class SezioneMenuRecyclerViewAdapter extends RecyclerView.Adapter<Sezione
         });
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallbackElementi);
-        itemTouchHelper.attachToRecyclerView(holder.recyclerViewElementiMenu);
+        if (utenteCorrente.getRuoloUtente().equals("Amministratore") || utenteCorrente.getRuoloUtente().equals("Supervisore"))
+            itemTouchHelper.attachToRecyclerView(holder.recyclerViewElementiMenu);
+        else
+            itemTouchHelper.attachToRecyclerView(null);
 
     }
 

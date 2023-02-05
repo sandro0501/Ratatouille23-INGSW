@@ -238,6 +238,7 @@ public class DipendenteFragment extends Fragment implements RecyclerViewDipenden
         dipendenti.clear();
 
         for (Utente dipendente : listaDipendenti) {
+            if (dipendente.getRuoloUtente().equals("Sistema")) continue;
             if (dipendente.getRuoloUtente().equals("Amministratore")) {
                 if (!((Amministratore)dipendente).isSuperA()) {
                     if (utenteCorrente.getRuoloUtente().equals("Amministratore") && ((Amministratore)utenteCorrente).isSuperA())

@@ -171,7 +171,7 @@ public class RistoranteFragment extends Fragment {
                 path,
                 new File(fragmentCorrente.getContext().getFilesDir() + "/" + path),
                 result -> setImmagine(result.getFile(), path),
-                error -> PresenterRistorante.getInstance().mostraAlert(RistoranteFragment.this.getContext(), "Errore!", "L'immagine non è stata scaricata correttamente, riprovare")
+                error -> PresenterRistorante.getInstance().mostraAlert(RistoranteFragment.this.getActivity(), "Errore!", "Un'immagine non è stata scaricata correttamente, riprovare")
 
         );
     }

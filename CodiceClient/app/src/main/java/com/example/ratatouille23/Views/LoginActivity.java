@@ -153,10 +153,9 @@ public class LoginActivity extends AppCompatActivity {
                         setIndirizzoIP(indirizzoIP);
                         fileReader.close();
                     } catch (FileNotFoundException e) {
-                        PresenterLogin.getInstance().mostraAlertErroreConnessione(LoginActivity.this);
                     }
                 },
-                error -> PresenterLogin.getInstance().mostraAlertErroreConnessione(LoginActivity.this)
+                error -> Log.i("Controllo fatto altrove", "")
 
         );
     }

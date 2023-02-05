@@ -106,8 +106,10 @@ public class DAOElementoImpl implements DAOElemento {
                 {
                     callback.onImpostati();
                 }
-                else
+                else {
+                    Log.i("ERRORE ALLERGENI", "");
                     callback.onErroreDiHTTP(response);
+                }
             }
 
             @Override
@@ -227,6 +229,7 @@ public class DAOElementoImpl implements DAOElemento {
                     }
                 }
                 else {
+                    Log.i("ERRORE INSERT", "");
                     callback.onErroreDiHTTP(response);
                 }
             }

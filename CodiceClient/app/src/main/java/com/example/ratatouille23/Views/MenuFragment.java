@@ -189,7 +189,9 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         adapterAutoComplete = new ArrayAdapter<Elemento>(getContext(), R.layout.spinner_layout, new ArrayList<>());
         adapterAutoComplete.setNotifyOnChange(true);
 
-        adapterSezioni = new SezioneMenuRecyclerViewAdapter(getContext(), listaSezioni, this);
+        utenteCorrente = (Utente)getActivity().getIntent().getSerializableExtra("Utente");
+
+        adapterSezioni = new SezioneMenuRecyclerViewAdapter(getContext(), listaSezioni, this, utenteCorrente);
         recyclerViewMenu.setAdapter(adapterSezioni);
         recyclerViewMenu.setLayoutManager(new LinearLayoutManager(getContext()));
         adapterSezioni.notifyDataSetChanged();
@@ -208,8 +210,9 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         spinnerSceltaAggiunta.setSelection(2, false);
         Log.i("CREATE", "CREATE");
 
-        utenteCorrente = (Utente)getActivity().getIntent().getSerializableExtra("Utente");
         ristoranteCorrente = utenteCorrente.getIdRistorante();
+
+        mascheraInterfaccia();
 
         iconaCestino.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -254,6 +257,17 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
 
          itemTouchHelper = new ItemTouchHelper(simpleCallbackSezioni);
          itemTouchHelper.attachToRecyclerView(recyclerViewMenu);
+
+    }
+
+    private void mascheraInterfaccia() {
+
+        if (utenteCorrente.getRuoloUtente().equals("Addetto alla cucina") || utenteCorrente.getRuoloUtente().equals("Addetto al servizio")) {
+            spinnerSceltaAggiunta.setVisibility(View.INVISIBLE);
+            textViewSpinner.setVisibility(View.INVISIBLE);
+            iconaCestino.setVisibility(View.INVISIBLE);
+        }
+
 
     }
 
@@ -391,8 +405,10 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
                         Double.parseDouble(prezzoElementoEditText.getText().toString()),
                         sezioneScelta.getAppartenente().size()
                         );
-                piattoDaAggiungere.setDenominazioneSecondaria(titoloSecondarioElementoEditText.getText().toString());
-                piattoDaAggiungere.setDescrizioneSecondaria(descrizioneSecondariaElementoEditText.getText().toString());
+                String denominazioneSecondaria = titoloSecondarioElementoEditText.getText().toString();
+                String descrizioneSecondaria = descrizioneSecondariaElementoEditText.getText().toString();
+                piattoDaAggiungere.setDenominazioneSecondaria(denominazioneSecondaria.isEmpty() ? null : denominazioneSecondaria);
+                piattoDaAggiungere.setDescrizioneSecondaria(descrizioneSecondaria.isEmpty() ? null : descrizioneSecondaria);
                 piattoDaAggiungere.setAppartiene(sezioneScelta);
                 ArrayList<Allergene> allergeniPiattoCorrente = new ArrayList<>();
                 for (CheckBox checkBox : checkBoxAllergeni) {
@@ -830,15 +846,6 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         dialogElemento.dismiss();
         PresenterMenu.getInstance().mostraAlert(getContext(), "Piatto modificato!", "Il piatto e' stato correttamente aggiornato.");
         PresenterMenu.getInstance().estraiMenu(this, ristoranteCorrente);
-    }
-
-    public void setListaSezioniPerAggiungereNuovoLogo(ArrayList<SezioneMenu> listaSezioni, Elemento elemento) {
-        setListaSezioni(listaSezioni);
-        SezioneMenu sezioneNellaLista = listaSezioni.get(elemento.getAppartiene().getPosizione());
-        Elemento elementoConId = sezioneNellaLista.getAppartenente().get(elemento.getPosizione());
-
-
-
     }
 
     private void uploadS3Aggiunta(InputStream streamLogo, Uri uriLogoCorrente, Elemento elemento) {
