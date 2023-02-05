@@ -91,7 +91,8 @@ public class PresenterDispensa extends PresenterBase {
         });
     }
 
-    public void AggiungiProdottoInDispensa(DispensaFragment context, Prodotto prodottoAggiunto){
+    public void AggiungiProdottoInDispensa(DispensaFragment context, Prodotto prodottoAggiunto) {
+
         daoProdotto.aggiungiProdotto(prodottoAggiunto, new DAOProdottoImpl.AggiuntaProdottoCallbacks() {
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {

@@ -24,12 +24,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.ratatouille23.Handlers.AggiornaRuoloHandler;
+import com.example.ratatouille23.Handlers.EliminaProdottiHandler;
 import com.example.ratatouille23.Handlers.UtenteHandler;
 import com.example.ratatouille23.Models.Amministratore;
 import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Models.UtenteFactory;
 import com.example.ratatouille23.Presenters.PresenterDipendenti;
+import com.example.ratatouille23.Presenters.PresenterDispensa;
 import com.example.ratatouille23.R;
 
 import java.util.ArrayList;
@@ -62,6 +64,12 @@ public class DipendenteFragment extends Fragment implements RecyclerViewDipenden
     private TextView textViewEmailDipendente;
     private Spinner spinnerRuoloDipendente;
     private Button bottoneLicenzia;
+
+    private AlertDialog.Builder builderDialogLicenziaDipendente;
+    private Dialog dialogLicenziaDipendente;
+    private TextView textViewLicenziaDipendente;
+    private Button bottoneAnnullaLicenziaDipendente;
+    private Button bottoneConfermaLicenziaDipendente;
 
     private Utente utenteCorrente;
     private Ristorante ristoranteCorrente;
@@ -188,7 +196,33 @@ public class DipendenteFragment extends Fragment implements RecyclerViewDipenden
         bottoneLicenzia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PresenterDipendenti.getInstance().rimuoviDipendente(DipendenteFragment.this, new UtenteHandler(dipendenteScelto));
+                final View viewLicenziaDipendente = getLayoutInflater().inflate(R.layout.layout_elimina_prodotto_dialog, null);
+                builderDialogLicenziaDipendente= new AlertDialog.Builder(getContext());
+                builderDialogLicenziaDipendente.setView(viewLicenziaDipendente);
+                builderDialogLicenziaDipendente.setCancelable(true);
+                textViewLicenziaDipendente = (TextView) viewLicenziaDipendente.findViewById(R.id.textViewEliminaProdottoDescrizioneDialog);
+                textViewLicenziaDipendente.setText("Si è sicuri di voler licenziare il dipendente selezionato?");
+
+                bottoneAnnullaLicenziaDipendente = (Button) viewLicenziaDipendente.findViewById(R.id.bottoneAnnullaEliminaProdotto);
+                bottoneAnnullaLicenziaDipendente.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialogLicenziaDipendente.dismiss();
+                    }
+                });
+
+                bottoneConfermaLicenziaDipendente = (Button) viewLicenziaDipendente.findViewById(R.id.bottoneEliminaProdotto);
+                bottoneConfermaLicenziaDipendente.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        PresenterDipendenti.getInstance().rimuoviDipendente(DipendenteFragment.this, new UtenteHandler(dipendenteScelto));
+                    }
+                });
+
+                dialogLicenziaDipendente = builderDialogLicenziaDipendente.create();
+                dialogLicenziaDipendente.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
+                dialogLicenziaDipendente.show();
+
             }
         });
 
@@ -222,6 +256,8 @@ public class DipendenteFragment extends Fragment implements RecyclerViewDipenden
     }
 
     public void dipendenteLicenziato() {
+        PresenterDipendenti.getInstance().mostraAlert(getContext(), "Eliminazione effettuata", "Dipendente licenziato correttamente");
+        dialogLicenziaDipendente.dismiss();
         dialogVisualizzaDipendente.dismiss();
         PresenterDipendenti.getInstance().recuperaDipendentiDaRistorante(this, ristoranteCorrente);
     }
