@@ -30,25 +30,6 @@ public class RatatouilleApp extends Application {
         super.onCreate();
         configuraS3();
 
-        Amplify.Storage.downloadFile(
-                "INDIRIZZO_IP_SERVER.txt",
-                new File((getFilesDir() + "/" + "INDIRIZZO_IP_SERVER.txt")),
-                result -> {
-                    File fileIP = result.getFile();
-                    try {
-                        Scanner fileReader = new Scanner(fileIP);
-                        String indirizzoIP = fileReader.nextLine();
-                        Log.i("STringa", indirizzoIP);
-                        setIndirizzoIP(indirizzoIP);
-                        fileReader.close();
-                    } catch (FileNotFoundException e) {
-
-                    }
-                },
-                error -> PresenterLogin.getInstance().mostraAlertErroreConnessione(this)
-
-        );
-
     }
 
     private void setIndirizzoIP(String indirizzoIP) {
@@ -61,8 +42,27 @@ public class RatatouilleApp extends Application {
             Amplify.addPlugin(new AWSApiPlugin());
             Amplify.addPlugin(new AWSCognitoAuthPlugin());
             Amplify.configure(getApplicationContext());
+            Amplify.Storage.downloadFile(
+                    "INDIRIZZO_IP_SERVER.txt",
+                    new File((getFilesDir() + "/" + "INDIRIZZO_IP_SERVER.txt")),
+                    result -> {
+                        File fileIP = result.getFile();
+                        try {
+                            Scanner fileReader = new Scanner(fileIP);
+                            String indirizzoIP = fileReader.nextLine();
+                            Log.i("Stringa", indirizzoIP);
+                            setIndirizzoIP(indirizzoIP);
+                            fileReader.close();
+                        } catch (FileNotFoundException e) {
+                            System.out.println("Stocazzo");
+                        }
+                    },
+                    error -> PresenterLogin.getInstance().mostraAlertErroreConnessione(this)
+
+            );
         } catch (AmplifyException e) {
             PresenterLogin.getInstance().mostraAlert(this, "Errore!", "C'è stato un errore nella configurazione dell'applicazione.\nSi prega di chiudere l'applicazione.");
+            System.out.println(e.getMessage());
         }
     }
 

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fpsteam.ratatouille2023.entity.Avviso;
+import com.fpsteam.ratatouille2023.entity.Bacheca;
 import com.fpsteam.ratatouille2023.entity.Ristorante;
 import com.fpsteam.ratatouille2023.entity.Utente;
 import com.fpsteam.ratatouille2023.repository.RepositoryAvviso;
@@ -53,6 +54,14 @@ public class ServiceUtente {
 					repBac.deleteAll(repBac.findByAid(x.getIdAvviso()));
 				}
 				repAvv.deleteAll(avvisi);
+				ArrayList<Bacheca> avvisiDaSistema = repBac.findByUid(utente.getIdUtente());
+				for(Bacheca x : avvisiDaSistema)
+				{
+					if(x.getIdAvviso().getAutore().getRuolo().equals("Sistema"))
+					{
+						repBac.delete(x);
+					}
+				}
 			}
 		mod = utente;
 		repository.save(mod);

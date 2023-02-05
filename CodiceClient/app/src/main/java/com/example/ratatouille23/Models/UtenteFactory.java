@@ -19,6 +19,8 @@ public class UtenteFactory {
             utenteCorrente = new Supervisore(nome, cognome, email);
         else if (ruolo.equals("Addetto alla cucina"))
             utenteCorrente = new Addetto(nome, cognome, email, ruoliPersonale.addettoAllaCucina);
+        else if (ruolo.equals("Sistema"))
+            utenteCorrente = new Sistema(nome);
         else
             utenteCorrente = new Addetto(nome, cognome, email, ruoliPersonale.addettoAlServizio);
 
