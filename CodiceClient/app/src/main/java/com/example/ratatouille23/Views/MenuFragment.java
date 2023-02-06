@@ -46,6 +46,7 @@ import com.example.ratatouille23.Models.listaAllergeni;
 import com.example.ratatouille23.Presenters.PresenterMenu;
 import com.example.ratatouille23.Presenters.PresenterRistorante;
 import com.example.ratatouille23.R;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -112,6 +113,8 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
     private Uri uriLogoCorrente;
     private boolean fotoModificata = false;
 
+    private FirebaseAnalytics analytics;
+
     public MenuFragment() {
         // Required empty public constructor
     }
@@ -174,6 +177,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         // Inflate the layout for this fragment
 
         fragmentCorrente = inflater.inflate(R.layout.fragment_menu, container, false);
+        analytics = FirebaseAnalytics.getInstance(getActivity());
         primoAccessoSpinner = true;
         return fragmentCorrente;
     }
@@ -258,6 +262,14 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
          itemTouchHelper = new ItemTouchHelper(simpleCallbackSezioni);
          itemTouchHelper.attachToRecyclerView(recyclerViewMenu);
 
+    }
+
+    @Override
+    public void onResume() {
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Fragment Menu");
+        analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle);
+        super.onResume();
     }
 
     private void mascheraInterfaccia() {

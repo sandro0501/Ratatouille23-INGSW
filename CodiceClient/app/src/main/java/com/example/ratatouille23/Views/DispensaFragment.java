@@ -34,6 +34,7 @@ import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Presenters.PresenterBacheca;
 import com.example.ratatouille23.Presenters.PresenterDispensa;
 import com.example.ratatouille23.R;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -88,6 +89,8 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
 
     private boolean modalitaEliminazione = false;
 
+    private FirebaseAnalytics analytics;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -135,6 +138,8 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
         //return inflater.inflate(R.layout.fragment_dispensa, container, false);
 
         View view = inflater.inflate(R.layout.fragment_dispensa, container, false);
+
+        analytics = FirebaseAnalytics.getInstance(this.getActivity());
 
         return view;
 
@@ -222,6 +227,14 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
             }
         });
 
+    }
+
+    @Override
+    public void onResume() {
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Fragment Dispensa");
+        analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle);
+        super.onResume();
     }
 
     private void disattivaModalitaEliminazione() {

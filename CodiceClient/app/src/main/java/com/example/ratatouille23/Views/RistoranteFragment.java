@@ -20,6 +20,7 @@ import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Presenters.PresenterRistorante;
 import com.example.ratatouille23.R;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.io.File;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -55,6 +56,8 @@ public class RistoranteFragment extends Fragment {
     private Ristorante ristoranteCorrente;
 
     private static final int RICEZIONE_RISTORANTE = 2;
+
+    private FirebaseAnalytics analytics;
 
     public RistoranteFragment() {
         // Required empty public constructor
@@ -92,6 +95,8 @@ public class RistoranteFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         fragmentCorrente = inflater.inflate(R.layout.fragment_ristorante, container, false);
+
+        analytics = FirebaseAnalytics.getInstance(getActivity());
 
         bottoneModifica = fragmentCorrente.findViewById(R.id.bottoneAnnullaModificaRistorante);
         textViewNome = fragmentCorrente.findViewById(R.id.textViewNomeRistoranteVisualizza);
@@ -133,6 +138,13 @@ public class RistoranteFragment extends Fragment {
         super.onStart();
     }
 
+    @Override
+    public void onResume() {
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Fragment Ristorante");
+        analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle);
+        super.onResume();
+    }
 
     private void setImmagine(File file, String path) {
         fileLogo = file;

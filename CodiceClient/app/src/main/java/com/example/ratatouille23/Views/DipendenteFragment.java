@@ -33,6 +33,7 @@ import com.example.ratatouille23.Models.UtenteFactory;
 import com.example.ratatouille23.Presenters.PresenterDipendenti;
 import com.example.ratatouille23.Presenters.PresenterDispensa;
 import com.example.ratatouille23.R;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 
@@ -74,6 +75,8 @@ public class DipendenteFragment extends Fragment implements RecyclerViewDipenden
     private Utente utenteCorrente;
     private Ristorante ristoranteCorrente;
 
+    private FirebaseAnalytics analytics;
+
     public DipendenteFragment() {
         // Required empty public constructor
     }
@@ -111,6 +114,8 @@ public class DipendenteFragment extends Fragment implements RecyclerViewDipenden
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View fragmentCorrente = inflater.inflate(R.layout.fragment_dipendente, container, false);
+
+        analytics = FirebaseAnalytics.getInstance(this.getActivity());
         iconaAggiungiDipendente = fragmentCorrente.findViewById(R.id.iconaAggiungiDipendente);
 
         iconaAggiungiDipendente.setOnClickListener(new View.OnClickListener() {
@@ -138,6 +143,14 @@ public class DipendenteFragment extends Fragment implements RecyclerViewDipenden
         utenteCorrente = (Utente)getActivity().getIntent().getSerializableExtra("Utente");
         ristoranteCorrente = utenteCorrente.getIdRistorante();
 
+    }
+
+    @Override
+    public void onResume() {
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Fragment Dipendenti");
+        analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle);
+        super.onResume();
     }
 
     @Override

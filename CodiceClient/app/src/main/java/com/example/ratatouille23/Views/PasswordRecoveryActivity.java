@@ -10,6 +10,9 @@ import android.widget.EditText;
 
 import com.example.ratatouille23.Presenters.PresenterLogin;
 import com.example.ratatouille23.R;
+import com.google.firebase.analytics.FirebaseAnalytics;
+
+import java.io.FileReader;
 
 public class PasswordRecoveryActivity extends AppCompatActivity {
 
@@ -18,10 +21,14 @@ public class PasswordRecoveryActivity extends AppCompatActivity {
     private EditText editTextEmail;
     private PasswordRecoveryActivity context;
 
+    private FirebaseAnalytics analytics;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password_recovery);
+
+        analytics = FirebaseAnalytics.getInstance(this);
 
         context = this;
         bottoneAnnulla = findViewById(R.id.annullaButton);
@@ -31,6 +38,12 @@ public class PasswordRecoveryActivity extends AppCompatActivity {
         bottoneAnnulla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Annulla");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Bottone");
+                analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 finish();
             }
         });

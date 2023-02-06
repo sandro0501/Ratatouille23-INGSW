@@ -13,6 +13,7 @@ import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Presenters.PresenterBacheca;
 import com.example.ratatouille23.R;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class CreazioneAvvisoActivity extends AppCompatActivity {
 
@@ -20,9 +21,15 @@ public class CreazioneAvvisoActivity extends AppCompatActivity {
     private Button bottoneCreazioneAvviso;
     private Utente utenteCorrente;
     private CreazioneAvvisoActivity context = this;
+
+    private FirebaseAnalytics analytics;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        analytics = FirebaseAnalytics.getInstance(this);
+
         setContentView(R.layout.activity_creazione_avviso);
         utenteCorrente = (Utente) getIntent().getSerializableExtra("Utente");
         bottoneAnnullaCreazioneAvvisoPremuto();
@@ -35,6 +42,12 @@ public class CreazioneAvvisoActivity extends AppCompatActivity {
         bottoneAnnullaCreazioneAvviso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Annulla");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Bottone");
+                analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 finish();
             }
         });

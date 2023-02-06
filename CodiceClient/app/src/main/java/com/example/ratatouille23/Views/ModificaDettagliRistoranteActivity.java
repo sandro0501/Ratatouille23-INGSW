@@ -20,6 +20,7 @@ import com.amplifyframework.core.Amplify;
 import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Presenters.PresenterRistorante;
 import com.example.ratatouille23.R;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -48,10 +49,14 @@ public class ModificaDettagliRistoranteActivity extends AppCompatActivity {
     private boolean immagineModificata = false;
     private Uri uriLogo;
 
+    private FirebaseAnalytics analytics;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modifica_dettagli_ristorante);
+
+        analytics = FirebaseAnalytics.getInstance(this);
 
         bottoneAnnulla = findViewById(R.id.bottoneAnnullaModificaRistorante);
         bottoneConferma = findViewById(R.id.bottoneConfermaModificaRistorante);
@@ -92,6 +97,12 @@ public class ModificaDettagliRistoranteActivity extends AppCompatActivity {
         bottoneAnnulla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Annulla");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Bottone");
+                analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 finish();
             }
         });

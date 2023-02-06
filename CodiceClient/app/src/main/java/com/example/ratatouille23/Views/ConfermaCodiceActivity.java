@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.example.ratatouille23.Exceptions.PasswordNonAdeguataException;
 import com.example.ratatouille23.Presenters.PresenterLogin;
 import com.example.ratatouille23.R;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class ConfermaCodiceActivity extends AppCompatActivity {
 
@@ -31,10 +32,15 @@ public class ConfermaCodiceActivity extends AppCompatActivity {
     private String email;
     private ConfermaCodiceActivity context;
 
+    private FirebaseAnalytics analytics;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conferma_codice);
+
+        analytics = FirebaseAnalytics.getInstance(this);
+
         context = this;
         email = (String) getIntent().getSerializableExtra("email");
         textViewPromptColorato = findViewById(R.id.textViewPromptColorato);
@@ -50,6 +56,12 @@ public class ConfermaCodiceActivity extends AppCompatActivity {
         bottoneAnnulla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Annulla");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Bottone");
+                analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 finish();
             }
         });

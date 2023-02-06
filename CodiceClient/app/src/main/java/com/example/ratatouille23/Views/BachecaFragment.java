@@ -23,6 +23,7 @@ import com.example.ratatouille23.Presenters.PresenterBacheca;
 import com.example.ratatouille23.R;
 
 import com.example.ratatouille23.Models.Avviso;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,6 +44,8 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
     private TextView textViewNumeroAvvisi;
     private BachecaFragment context = this;
     private ArrayList<Utente> utentiCorrenti = new ArrayList<Utente>();
+
+    private FirebaseAnalytics analytics;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -103,10 +106,19 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
     }
 
     @Override
+    public void onResume() {
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Fragment Bacheca");
+        analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle);
+        super.onResume();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_bacheca, container, false);
+        analytics = FirebaseAnalytics.getInstance(this.getActivity());
         textViewNumeroAvvisi = view.findViewById(R.id.textViewNumeroAvvisi);
         bottoneCreazioneAvviso = (ImageView) view.findViewById(R.id.imageViewIconAddAvviso);
         bottoneReloadAvvisi = view.findViewById(R.id.imageViewIconReloadAvvisi);
