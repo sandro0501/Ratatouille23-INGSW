@@ -52,6 +52,10 @@ public class ProdottoRecyclerViewAdapter extends RecyclerView.Adapter<ProdottoRe
         if(isProdottoSottoSoglia){
             holder.quantitaProdotto.setTextColor(Color.RED);
         }
+        else {
+            holder.quantitaProdotto.setTextColor(Color.parseColor("#4CAF50"));
+
+        }
 
         holder.unitaProdotto.setText(dispensa.get(position).getUnita());
         holder.costoAcquistoProdotto.setText(dispensa.get(position).getCostoAcquisto());

@@ -12,17 +12,24 @@ import android.text.Spanned;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.text.style.StyleSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amplifyframework.core.Amplify;
+import com.example.ratatouille23.DAO.DAOBaseUrl;
 import com.example.ratatouille23.Exceptions.CampiVuotiException;
 import com.example.ratatouille23.Exceptions.CaratteriIllecitiException;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Presenters.PresenterLogin;
 import com.example.ratatouille23.R;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -37,6 +44,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        downloadIP();
 
         benvenuto = findViewById(R.id.benvenuto);
 
@@ -62,14 +71,20 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email = editTextEmail.getText().toString();
                 String password = editTextPass.getText().toString();
-                try {
-                    PresenterLogin.getInstance().bottoneLoginPremuto(LoginActivity.this, email, password);
+                if (DAOBaseUrl.getBaseUrl() == null) {
+                    PresenterLogin.mostraAlert(LoginActivity.this, "Errore di connessione!", "Verificare se la connessione è attiva e riprovare");
+                    downloadIP();
                 }
-                catch (CampiVuotiException e) {
-                    PresenterLogin.getInstance().mostraAlert(LoginActivity.this, "Attenzione!", e.getMessage());
-                }
-                catch(CaratteriIllecitiException e) {
-                    PresenterLogin.getInstance().mostraAlert(LoginActivity.this, "Errore!", e.getMessage());
+                else {
+
+                    try {
+                        PresenterLogin.getInstance().bottoneLoginPremuto(LoginActivity.this, email, password);
+                    } catch (CampiVuotiException e) {
+                        PresenterLogin.getInstance().mostraAlert(LoginActivity.this, "Attenzione!", e.getMessage());
+                    } catch (CaratteriIllecitiException e) {
+                        PresenterLogin.getInstance().mostraAlert(LoginActivity.this, "Errore!", e.getMessage());
+                    }
+
                 }
 
             }
@@ -125,4 +140,29 @@ public class LoginActivity extends AppCompatActivity {
         i.putExtra("Session", session);
         startActivity(i);
     }
+
+    private void downloadIP() {
+        Amplify.Storage.downloadFile(
+                "INDIRIZZO_IP_SERVER.txt",
+                new File((getFilesDir() + "/" + "INDIRIZZO_IP_SERVER.txt")),
+                result -> {
+                    File fileIP = result.getFile();
+                    try {
+                        Scanner fileReader = new Scanner(fileIP);
+                        String indirizzoIP = fileReader.nextLine();
+                        setIndirizzoIP(indirizzoIP);
+                        fileReader.close();
+                    } catch (FileNotFoundException e) {
+                    }
+                },
+                error -> Log.i("Controllo fatto altrove", "")
+
+        );
+    }
+
+    private void setIndirizzoIP(String indirizzoIP) {
+        Log.i("IP", indirizzoIP);
+        DAOBaseUrl.setBaseUrl(indirizzoIP);
+    }
+
 }

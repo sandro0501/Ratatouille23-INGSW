@@ -36,8 +36,8 @@ public class DAOAvvisoImpl implements DAOAvviso
         public void onNascondiAvviso();
     }
 
+
     Retrofit retrofitBacheca =  new Retrofit.Builder().baseUrl(DAOBaseUrl.getBaseUrl()).addConverterFactory(GsonConverterFactory.create(new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create())).build();
-    Retrofit retrofitAvviso = new Retrofit.Builder().baseUrl(DAOBaseUrl.getBaseUrl()).addConverterFactory(GsonConverterFactory.create()).build();
     BachecaService bachecaService = retrofitBacheca.create(BachecaService.class);
 
     AvvisoService avvisoService = retrofitBacheca.create(AvvisoService.class);

@@ -18,6 +18,7 @@ import com.amplifyframework.core.Amplify;
 import com.example.ratatouille23.Models.Allergene;
 import com.example.ratatouille23.Models.Elemento;
 import com.example.ratatouille23.Models.SezioneMenu;
+import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Models.listaAllergeni;
 import com.example.ratatouille23.Presenters.PresenterRistorante;
 import com.example.ratatouille23.R;
@@ -32,11 +33,13 @@ public class ElementoMenuRecyclerViewAdapter extends RecyclerView.Adapter<Elemen
     private Context context;
 
     private ArrayList<Elemento> listaElementi;
+    private Utente utenteCorrente;
 
-    public ElementoMenuRecyclerViewAdapter(Context context, ArrayList<Elemento> listaElementi, RecyclerViewElementoMenuInterface recyclerViewInterfaceElemento){
+    public ElementoMenuRecyclerViewAdapter(Context context, ArrayList<Elemento> listaElementi, RecyclerViewElementoMenuInterface recyclerViewInterfaceElemento, Utente utente){
         this.context = context;
         this.listaElementi = listaElementi;
         this.recyclerViewInterfaceElemento = recyclerViewInterfaceElemento;
+        utenteCorrente = utente;
     }
 
     @NonNull
@@ -56,6 +59,11 @@ public class ElementoMenuRecyclerViewAdapter extends RecyclerView.Adapter<Elemen
         holder.textViewTitoloSecondario.setText(elementoCorrente.getDenominazioneSecondaria());
         holder.textViewDescrizionePrincipale.setText(elementoCorrente.getDescrizionePrincipale());
         holder.textViewDescrizioneSecondaria.setText(elementoCorrente.getDescrizioneSecondaria());
+
+        if (utenteCorrente.getRuoloUtente().equals("Addetto al servizio"))
+            holder.iconaVediIngredienti.setVisibility(View.INVISIBLE);
+        else
+            holder.iconaVediIngredienti.setVisibility(View.VISIBLE);
 
         holder.textViewCosto.setText("€" + elementoCorrente.getCosto().toString());
         boolean iconaDaMostrare;
@@ -189,11 +197,12 @@ public class ElementoMenuRecyclerViewAdapter extends RecyclerView.Adapter<Elemen
                 @Override
                 public void onClick(View view) {
                     if (recyclerViewInterfaceElemento != null) {
-                        int posizioneElemento = getAdapterPosition();
-                        if(posizioneElemento!=RecyclerView.NO_POSITION){
-                            recyclerViewInterfaceElemento.onElementoClicked(listaElementi.get(posizioneElemento), fileImmagine, view);
+                        if (utenteCorrente.getRuoloUtente().equals("Amministratore") || utenteCorrente.getRuoloUtente().equals("Supervisore")) {
+                            int posizioneElemento = getAdapterPosition();
+                            if (posizioneElemento != RecyclerView.NO_POSITION) {
+                                recyclerViewInterfaceElemento.onElementoClicked(listaElementi.get(posizioneElemento), fileImmagine, view);
+                            }
                         }
-
                     }
                 }
             });

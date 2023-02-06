@@ -59,6 +59,7 @@ public class Utente implements Serializable {
             {
                 try{
                     Sistema sist = (Sistema) this;
+                    return "Sistema";
                 }
                 catch(ClassCastException i) {
                     return "Supervisore";

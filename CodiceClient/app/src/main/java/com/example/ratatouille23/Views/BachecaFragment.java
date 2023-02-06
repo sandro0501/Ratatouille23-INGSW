@@ -111,6 +111,7 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
         bottoneCreazioneAvviso = (ImageView) view.findViewById(R.id.imageViewIconAddAvviso);
         bottoneReloadAvvisi = view.findViewById(R.id.imageViewIconReloadAvvisi);
         bottoneOcchioAvvisi = view.findViewById(R.id.imageViewIconViewAvvisiNascosti);
+
         bottoneCreazioneAvviso.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -151,6 +152,9 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
         tuttiAvvisiAdapter = new AvvisoRecyclerViewAdapter(getContext(), tuttiAvvisi, this);
         recyclerView.setAdapter(avvisiVisibiliAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        if (utenteCorrente.getRuoloUtente().equals("Addetto alla cucina") || utenteCorrente.getRuoloUtente().equals("Addetto al servizio"))
+            bottoneCreazioneAvviso.setVisibility(View.INVISIBLE);
 
     }
 

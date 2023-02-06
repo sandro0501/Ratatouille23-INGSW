@@ -10,7 +10,7 @@ import retrofit2.Response;
 
 public class PresenterBase {
 
-    public void mostraAlert(Context context, String titolo, String messaggio) {
+    public static void mostraAlert(Context context, String titolo, String messaggio) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         dialog.setCancelable(false);
         dialog.setTitle(titolo);
@@ -20,11 +20,11 @@ public class PresenterBase {
         alert.show();
     }
 
-    public void mostraAlertErroreHTTP(Context context, Response<ResponseBody> body) {
+    public static void mostraAlertErroreHTTP(Context context, Response<ResponseBody> body) {
         mostraAlert(context, "Errore di comunicazione con il server!", body.message() + "\nCodice: " + body.code());
     }
 
-    public void mostraAlertFinishActivity(Activity context, String titolo, String messaggio) {
+    public static void mostraAlertFinishActivity(Activity context, String titolo, String messaggio) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         dialog.setCancelable(false);
         dialog.setTitle(titolo);
@@ -39,7 +39,7 @@ public class PresenterBase {
         alert.show();
     }
 
-    public void mostraAlertErroreConnessione(Context context) {
+    public static void mostraAlertErroreConnessione(Context context) {
         mostraAlert(context, "Errore di connessione!", "Verificare la propria connessione alla rete e riprovare");
     }
 }

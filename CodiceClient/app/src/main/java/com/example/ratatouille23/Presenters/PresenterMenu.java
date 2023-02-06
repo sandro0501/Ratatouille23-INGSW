@@ -3,6 +3,7 @@ package com.example.ratatouille23.Presenters;
 import android.util.Log;
 import android.view.Menu;
 
+import com.amplifyframework.core.Amplify;
 import com.example.ratatouille23.DAO.DAOElemento;
 import com.example.ratatouille23.DAO.DAOElementoImpl;
 import com.example.ratatouille23.DAO.DAOFactory;
@@ -23,6 +24,7 @@ import com.example.ratatouille23.Models.listaAllergeni;
 import com.example.ratatouille23.Views.MenuFragment;
 import com.example.ratatouille23.Views.VisualizzazioneIngredientiElementoActivity;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import okhttp3.ResponseBody;
@@ -55,12 +57,10 @@ public class PresenterMenu extends PresenterBase {
         daoRistorante.getRistorante(idRistorante, new DAORistoranteImpl.RistoranteRiceviCallbacks() {
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {
-                mostraAlertErroreHTTP(menuFragment.getActivity(), response);
             }
 
             @Override
             public void onErroreConnessioneGenerico() {
-                mostraAlertErroreConnessione(menuFragment.getActivity());
             }
 
             @Override
@@ -151,6 +151,10 @@ public class PresenterMenu extends PresenterBase {
     }
 
     public void rimuoviSezione(MenuFragment context, SezioneMenu sezione) {
+
+        for (Elemento elemento : sezione.getAppartenente())
+            rimuoviImmagine(context, elemento);
+
         EliminaSezioniHandler handler = new EliminaSezioniHandler();
         ArrayList<SezioneMenu> listaSezioni = new ArrayList<>();
         listaSezioni.add(sezione);
@@ -171,6 +175,23 @@ public class PresenterMenu extends PresenterBase {
                 context.aggiornaMenu();
             }
         });
+    }
+
+    private void rimuoviImmagine(MenuFragment context, Elemento elemento) {
+
+        Amplify.Storage.remove(
+                ((Integer)elemento.getIdElemento()).toString()+"_LogoElemento.jpg",
+                result -> Log.i("MyAmplifyApp", "Successfully removed"),
+                error -> Log.e("MyAmplifyApp", "Remove failure", error)
+        );
+
+        String pathLocale = (context.getContext().getFilesDir() + "/" + ((Integer)elemento.getIdElemento()).toString()+"_LogoElemento.jpg");
+
+        File fdelete = new File(pathLocale);
+        if (fdelete.exists()) {
+            fdelete.delete();
+        }
+
     }
 
     public void aggiungiElemento(MenuFragment context, Elemento elemento) {
@@ -243,12 +264,12 @@ public class PresenterMenu extends PresenterBase {
         daoElemento.impostaPreparazione(handle, new DAOElementoImpl.ImpostaPreparazioneCallbacks() {
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {
-                mostraAlertErroreHTTP(context.getBaseContext(), response);
+                mostraAlertErroreHTTP(context, response);
             }
 
             @Override
             public void onErroreConnessioneGenerico() {
-                mostraAlertErroreConnessione(context.getBaseContext());
+                mostraAlertErroreConnessione(context);
             }
 
             @Override
@@ -265,12 +286,10 @@ public class PresenterMenu extends PresenterBase {
             daoSezioneMenu.modificaSezioneMenu(sezione, new DAOSezioneMenuImpl.ModificaSezioneCallbacks() {
                 @Override
                 public void onErroreDiHTTP(Response<ResponseBody> response) {
-                    mostraAlertErroreHTTP(context.getActivity(), response);
                 }
 
                 @Override
                 public void onErroreConnessioneGenerico() {
-                    mostraAlertErroreConnessione(context.getActivity());
                 }
 
                 @Override
@@ -283,12 +302,10 @@ public class PresenterMenu extends PresenterBase {
                 daoElemento.modificaElemento(elemento, new DAOElementoImpl.ModificaElementoCallbacks() {
                     @Override
                     public void onErroreDiHTTP(Response<ResponseBody> response) {
-                        mostraAlertErroreHTTP(context.getActivity(), response);
                     }
 
                     @Override
                     public void onErroreConnessioneGenerico() {
-                        mostraAlertErroreConnessione(context.getActivity());
                     }
 
                     @Override
@@ -302,6 +319,10 @@ public class PresenterMenu extends PresenterBase {
     }
 
     public void eliminaElementi(MenuFragment context, ArrayList<Elemento> listaElementi) {
+
+        for (Elemento elemento : listaElementi)
+            rimuoviImmagine(context, elemento);
+
         EliminaElementiHandler handler = new EliminaElementiHandler(listaElementi);
         daoElemento.deleteElementi(handler, new DAOElementoImpl.EliminaElementiCallbacks() {
             @Override
@@ -326,12 +347,12 @@ public class PresenterMenu extends PresenterBase {
         daoElemento.eliminaPreparazione(handle, new DAOElementoImpl.EliminapreparazioneCallbacks() {
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {
-                mostraAlertErroreHTTP(context.getBaseContext(), response);
+                mostraAlertErroreHTTP(context, response);
             }
 
             @Override
             public void onErroreConnessioneGenerico() {
-                mostraAlertErroreConnessione(context.getBaseContext());
+                mostraAlertErroreConnessione(context);
             }
 
             @Override

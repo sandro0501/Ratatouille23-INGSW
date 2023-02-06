@@ -46,12 +46,12 @@ public class PresenterAreaPersonale extends PresenterBase {
         daoUtente.modificaPassword(handler, new DAOUtenteImpl.ModificaPasswordCallbacks() {
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {
-                mostraAlertErroreHTTP(context.getBaseContext(), response);
+                mostraAlertErroreHTTP(context, response);
             }
 
             @Override
             public void onErroreConnessioneGenerico() {
-                mostraAlertErroreConnessione(context.getBaseContext());
+                mostraAlertErroreConnessione(context);
             }
 
             @Override
