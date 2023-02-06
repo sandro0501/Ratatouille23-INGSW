@@ -48,7 +48,7 @@ public class ServiceAvviso{
 		
 		for(Utente x : gestori)
 		{
-			ArrayList<Bacheca> avvisiDaSistema = repBach.findByUid(a.getAutore().getIdUtente());
+			ArrayList<Bacheca> avvisiDaSistema = repBach.findByUid(x.getIdUtente());
 			boolean associato = false;
 			for(Bacheca y : avvisiDaSistema)
 			{
@@ -93,7 +93,7 @@ public class ServiceAvviso{
 		
 		for(Utente x : gestori)
 		{
-			ArrayList<Bacheca> avvisiDaSistema = repBach.findByUid(a.getAutore().getIdUtente());
+			ArrayList<Bacheca> avvisiDaSistema = repBach.findByUid(x.getIdUtente());
 			boolean associato = false;
 			for(Bacheca y : avvisiDaSistema)
 			{
@@ -108,8 +108,8 @@ public class ServiceAvviso{
 			if(!associato)
 			{
 				Bacheca bacheca = new Bacheca(avvisoSistema,x);
-				bacheca.setVisibile(true);
-				bacheca.setVisualizzato(false);
+				bacheca.setVisibile(false);
+				bacheca.setVisualizzato(true);
 				repBach.save(bacheca);
 			}
 			

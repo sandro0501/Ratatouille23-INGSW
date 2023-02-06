@@ -97,6 +97,7 @@ public class ControllerBacheca {
 				{
 					corpoAvviso += x.getNome()+";\n";
 				}
+				corpoAvviso = corpoAvviso.substring(0, corpoAvviso.length()-2) + ".";
 			}
 			else
 			{
@@ -126,7 +127,8 @@ public class ControllerBacheca {
 			else
 			{
 				avvisoSistema = new Avviso("Monitorazione dispensa",corpoAvviso,new Date(System.currentTimeMillis()));
-			}
+			} 
+			avvisoSistema.setAutore(utenteFormato);
 			if(corpoAvviso.equals("Nessun prodotto in scadenza!")) servAvv.saveAvvisoSistemaTransiente(avvisoSistema);
 			else servAvv.saveAvvisoSistemaUrgente(avvisoSistema);
 		}
