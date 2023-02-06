@@ -97,6 +97,7 @@ public class ControllerBacheca {
 				{
 					corpoAvviso += x.getNome()+";\n";
 				}
+				corpoAvviso = corpoAvviso.substring(0, corpoAvviso.length()-2) + ".";
 			}
 			else
 			{
