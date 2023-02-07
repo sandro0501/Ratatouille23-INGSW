@@ -207,25 +207,21 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
     }
 
     private void mostraRicercaProdottiInDispensa(){
+        PresenterDispensa.getInstance().ottieniDispensaPerInserimentoIngredientiElementoRistorante(VisualizzazioneIngredientiElementoActivity.this ,elemento.getAppartiene().getRistorante());
         final View viewAggiuntaIngrediente = getLayoutInflater().inflate(R.layout.layout_ricerca_prodotto_per_elemento, null);
         builderDialogAggiuntaIngrediente = new AlertDialog.Builder(VisualizzazioneIngredientiElementoActivity.this, R.style.WrapContentDialog);
         builderDialogAggiuntaIngrediente.setView(viewAggiuntaIngrediente);
         builderDialogAggiuntaIngrediente.setCancelable(true);
-
         pannelloProdottiInDispensa = viewAggiuntaIngrediente.findViewById(R.id.recyclerViewDispensaElemento);
         ricercaProdottiVuota = viewAggiuntaIngrediente.findViewById(R.id.textViewRicercaVuotaProdottoInDispensa);
-        PresenterDispensa.getInstance().ottieniDispensaRistorante(VisualizzazioneIngredientiElementoActivity.this ,elemento.getAppartiene().getRistorante());
-    }
 
-    public void riempiDispensa(ArrayList<Prodotto> lista){
-        dispensa = new ArrayList<>();
-        dispensa.addAll(lista);
-
-        final View viewAggiuntaIngrediente = getLayoutInflater().inflate(R.layout.layout_ricerca_prodotto_per_elemento, null);
-        prodottiInDispensaAdapter = new AggiuntaIngredientiRecyclerViewAdapter(viewAggiuntaIngrediente.getContext(), dispensa, this);
-        pannelloProdottiInDispensa.setAdapter(prodottiInDispensaAdapter);
-        pannelloProdottiInDispensa.setLayoutManager(new LinearLayoutManager(viewAggiuntaIngrediente.getContext()));
-        prodottiInDispensaAdapter.notifyDataSetChanged();
+        bottoneAnnullaAggiungiProdottoPerElemento = (Button) viewAggiuntaIngrediente.findViewById(R.id.bottoneAnnullaAggiungiProdottoPerElemento);
+        bottoneAnnullaAggiungiProdottoPerElemento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogAggiuntaIngrediente.dismiss();
+            }
+        });
 
         searchViewRicercaProdotti = viewAggiuntaIngrediente.findViewById(R.id.searchViewRicercaProdottoInDispensa);
         TextView searchText = (TextView) searchViewRicercaProdotti.findViewById(androidx.appcompat.R.id.search_src_text);
@@ -249,17 +245,19 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
             }
         });
 
-        bottoneAnnullaAggiungiProdottoPerElemento = (Button) viewAggiuntaIngrediente.findViewById(R.id.bottoneAnnullaAggiungiProdottoPerElemento);
-        bottoneAnnullaAggiungiProdottoPerElemento.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialogAggiuntaIngrediente.dismiss();
-            }
-        });
-
         dialogAggiuntaIngrediente = builderDialogAggiuntaIngrediente.create();
         dialogAggiuntaIngrediente.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
         dialogAggiuntaIngrediente.show();
+    }
+
+    public void riempiDispensa(ArrayList<Prodotto> lista){
+        dispensa = new ArrayList<>();
+        dispensa.addAll(lista);
+        final View viewAggiuntaIngrediente = getLayoutInflater().inflate(R.layout.layout_ricerca_prodotto_per_elemento, null);
+        prodottiInDispensaAdapter = new AggiuntaIngredientiRecyclerViewAdapter(viewAggiuntaIngrediente.getContext(), dispensa, this);
+        pannelloProdottiInDispensa.setAdapter(prodottiInDispensaAdapter);
+        pannelloProdottiInDispensa.setLayoutManager(new LinearLayoutManager(viewAggiuntaIngrediente.getContext()));
+        prodottiInDispensaAdapter.notifyDataSetChanged();
     }
 
     private void filtraProdottiInDispensa(String nomeProdotto) {
@@ -365,10 +363,6 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
             PresenterMenu.getInstance().mostraAlert(VisualizzazioneIngredientiElementoActivity.this, "Prodotto selezionato aggiunto",
                     "Hai aggiunto correttamente all'elemento del menù " + quantitaProdottoSelezionato.getText() + " " +
                             unitaMisuraProdottoCorrente + " del prodotto " + nomeProdottoCorrente);
-                    /*
-                    Preparazione p = new Preparazione(prodottoCorrente, Double.parseDouble(quantitaProdottoSelezionato.getText().toString()));
-                    elemento.getPreparazione().add(p); */
-
             dialogAggiuntaIngredienteSelezionato.dismiss();
             dialogAggiuntaIngrediente.dismiss();
         }
