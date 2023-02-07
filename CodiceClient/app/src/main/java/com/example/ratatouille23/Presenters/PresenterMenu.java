@@ -173,6 +173,7 @@ public class PresenterMenu extends PresenterBase {
             @Override
             public void onRimozioneSezione() {
                 context.aggiornaMenu();
+                context.mostraAlertEliminazioneSezioneEffettuata();
             }
         });
     }
@@ -338,6 +339,7 @@ public class PresenterMenu extends PresenterBase {
             @Override
             public void onEliminazioneElementi() {
                 context.aggiornaMenu();
+                context.mostraAlertEliminazioneElementoEffettuata();
             }
         });
     }

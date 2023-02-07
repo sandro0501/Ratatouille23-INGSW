@@ -35,14 +35,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amplifyframework.core.Amplify;
+import com.example.ratatouille23.Handlers.EliminaProdottiHandler;
 import com.example.ratatouille23.Models.Allergene;
 import com.example.ratatouille23.Models.Elemento;
 import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Models.SezioneMenu;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Models.listaAllergeni;
+import com.example.ratatouille23.Presenters.PresenterDispensa;
 import com.example.ratatouille23.Presenters.PresenterMenu;
 import com.example.ratatouille23.Presenters.PresenterRistorante;
 import com.example.ratatouille23.R;
@@ -112,6 +115,12 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
     private ImageView logoElemento;
     private Uri uriLogoCorrente;
     private boolean fotoModificata = false;
+
+    private AlertDialog.Builder builderDialogEliminaElemento;
+    private Dialog dialogEliminaElemento;
+    private Button bottoneConfermaEliminazioneElemento;
+    private Button bottoneAnnullaEliminazioneElemento;
+    private TextView textViewEliminazioneElemento;
 
     private FirebaseAnalytics analytics;
 
@@ -459,8 +468,41 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
     }
 
     private void eliminaProdottiSelezionati() {
-        PresenterMenu.getInstance().eliminaElementi(this, listaElementiSelezionati);
-        attivaDisattivaModalitaEliminazione();
+        final View viewEliminaElemento = getLayoutInflater().inflate(R.layout.layout_elimina_prodotto_dialog, null);
+        builderDialogEliminaElemento = new AlertDialog.Builder(getContext());
+        builderDialogEliminaElemento.setView(viewEliminaElemento);
+        builderDialogEliminaElemento.setCancelable(true);
+
+        textViewEliminazioneElemento = (TextView) viewEliminaElemento.findViewById(R.id.textViewEliminaProdottoDescrizioneDialog);
+        if (listaElementiSelezionati.size() == 1) {
+            textViewEliminazioneElemento.setText("Si è sicuri di voler eliminare l'elemento selezionato dalla sezione del menù?");
+        } else {
+            textViewEliminazioneElemento.setText("Si è sicuri di voler eliminare i " + listaElementiSelezionati.size() + " elementi selezionati dalla sezione del menù?");
+        }
+
+        bottoneAnnullaEliminazioneElemento = (Button) viewEliminaElemento.findViewById(R.id.bottoneAnnullaEliminaProdotto);
+        bottoneAnnullaEliminazioneElemento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attivaDisattivaModalitaEliminazione();
+                deselezionaTuttiElementi();
+                dialogEliminaElemento.dismiss();
+            }
+        });
+
+        bottoneConfermaEliminazioneElemento = (Button) viewEliminaElemento.findViewById(R.id.bottoneEliminaProdotto);
+        bottoneConfermaEliminazioneElemento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PresenterMenu.getInstance().eliminaElementi(MenuFragment.this, listaElementiSelezionati);
+                attivaDisattivaModalitaEliminazione();
+                dialogEliminaElemento.dismiss();
+            }
+        });
+
+        dialogEliminaElemento = builderDialogEliminaElemento.create();
+        dialogEliminaElemento.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
+        dialogEliminaElemento.show();
     }
 
     private void attivaDisattivaModalitaEliminazione() {
@@ -479,6 +521,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         }
         else {
             modalitaEliminazione = true;
+            Toast.makeText(getContext(), "Modalità eliminazione attiva", Toast.LENGTH_LONG).show();
             iconaCestino.setImageResource(R.drawable.icon_rimuovi_elemento_selected);
             iconaCestino.requestLayout();
             iconaCestino.getLayoutParams().height = height;
@@ -878,5 +921,12 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
                 }
         );
 
+    }
+
+    public void mostraAlertEliminazioneSezioneEffettuata(){
+        PresenterMenu.getInstance().mostraAlert(getContext(), "Eliminazione effettuata", "Eliminazione della sezione effettuata correttamente!");
+    }
+    public void mostraAlertEliminazioneElementoEffettuata(){
+        PresenterMenu.getInstance().mostraAlert(getContext(), "Eliminazione effettuata", "Eliminazione degli elementi selezionati effettuata correttamente!");
     }
 }
