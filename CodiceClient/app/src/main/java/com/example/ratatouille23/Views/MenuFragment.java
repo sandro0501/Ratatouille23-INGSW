@@ -38,14 +38,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amplifyframework.core.Amplify;
-import com.example.ratatouille23.Handlers.EliminaProdottiHandler;
 import com.example.ratatouille23.Models.Allergene;
 import com.example.ratatouille23.Models.Elemento;
 import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Models.SezioneMenu;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Models.listaAllergeni;
-import com.example.ratatouille23.Presenters.PresenterDispensa;
+import com.example.ratatouille23.Presenters.PresenterBacheca;
 import com.example.ratatouille23.Presenters.PresenterMenu;
 import com.example.ratatouille23.Presenters.PresenterRistorante;
 import com.example.ratatouille23.R;
@@ -419,26 +418,33 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         bottoneConferma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SezioneMenu sezioneScelta = (SezioneMenu)sezioneElementoSpinner.getSelectedItem();
-                Elemento piattoDaAggiungere = new Elemento(
-                        titoloPrincipaleElementoEditText.getText().toString(),
-                        descrizionePrincipaleElementoEditText.getText().toString(),
-                        Double.parseDouble(prezzoElementoEditText.getText().toString()),
-                        sezioneScelta.getAppartenente().size()
-                        );
-                String denominazioneSecondaria = titoloSecondarioElementoEditText.getText().toString();
-                String descrizioneSecondaria = descrizioneSecondariaElementoEditText.getText().toString();
-                piattoDaAggiungere.setDenominazioneSecondaria(denominazioneSecondaria.isEmpty() ? null : denominazioneSecondaria);
-                piattoDaAggiungere.setDescrizioneSecondaria(descrizioneSecondaria.isEmpty() ? null : descrizioneSecondaria);
-                piattoDaAggiungere.setAppartiene(sezioneScelta);
-                ArrayList<Allergene> allergeniPiattoCorrente = new ArrayList<>();
-                for (CheckBox checkBox : checkBoxAllergeni) {
-                    if (checkBox.isChecked()) {
-                        allergeniPiattoCorrente.add(new Allergene((listaAllergeni) checkBox.getTag()));
-                    }
+
+                if(areEditTextInserimentoModificaEmpty()){
+                    mostraDialogErroreInserimentoElemento();
                 }
-                piattoDaAggiungere.setPresenta(allergeniPiattoCorrente);
-                PresenterMenu.getInstance().aggiungiElemento(MenuFragment.this, piattoDaAggiungere);
+                else {
+                    SezioneMenu sezioneScelta = (SezioneMenu)sezioneElementoSpinner.getSelectedItem();
+                    Elemento piattoDaAggiungere = new Elemento(
+                            titoloPrincipaleElementoEditText.getText().toString(),
+                            descrizionePrincipaleElementoEditText.getText().toString(),
+                            Double.parseDouble(prezzoElementoEditText.getText().toString()),
+                            sezioneScelta.getAppartenente().size()
+                    );
+                    String denominazioneSecondaria = titoloSecondarioElementoEditText.getText().toString();
+                    String descrizioneSecondaria = descrizioneSecondariaElementoEditText.getText().toString();
+                    piattoDaAggiungere.setDenominazioneSecondaria(denominazioneSecondaria.isEmpty() ? null : denominazioneSecondaria);
+                    piattoDaAggiungere.setDescrizioneSecondaria(descrizioneSecondaria.isEmpty() ? null : descrizioneSecondaria);
+                    piattoDaAggiungere.setAppartiene(sezioneScelta);
+                    ArrayList<Allergene> allergeniPiattoCorrente = new ArrayList<>();
+                    for (CheckBox checkBox : checkBoxAllergeni) {
+                        if (checkBox.isChecked()) {
+                            allergeniPiattoCorrente.add(new Allergene((listaAllergeni) checkBox.getTag()));
+                        }
+                    }
+                    piattoDaAggiungere.setPresenta(allergeniPiattoCorrente);
+                    PresenterMenu.getInstance().aggiungiElemento(MenuFragment.this, piattoDaAggiungere);
+                }
+
             }
         });
 
@@ -723,37 +729,43 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         bottoneConferma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                elementoDaModificare.setDenominazionePrincipale(titoloPrincipaleElementoEditText.getText().toString());
-                elementoDaModificare.setDescrizionePrincipale(descrizionePrincipaleElementoEditText.getText().toString());
-                if (ristoranteCorrente.isTuristico()) {
-                    elementoDaModificare.setDenominazioneSecondaria(titoloSecondarioElementoEditText.getText().toString());
-                    elementoDaModificare.setDescrizioneSecondaria(descrizioneSecondariaElementoEditText.getText().toString());
-                }
-                elementoDaModificare.setCosto(Double.parseDouble(prezzoElementoEditText.getText().toString()));
-                elementoDaModificare.setAppartiene((SezioneMenu) sezioneElementoSpinner.getSelectedItem());
 
-                ArrayList<Allergene> allergeniPiattoCorrente = new ArrayList<>();
-                for (CheckBox checkBox : checkBoxAllergeni) {
-                    if (checkBox.isChecked()) {
-                        allergeniPiattoCorrente.add(new Allergene((listaAllergeni) checkBox.getTag()));
+                if(areEditTextInserimentoModificaEmpty()){
+                    mostraDialogErroreModificaElemento();
+                }
+                else {
+                    elementoDaModificare.setDenominazionePrincipale(titoloPrincipaleElementoEditText.getText().toString());
+                    elementoDaModificare.setDescrizionePrincipale(descrizionePrincipaleElementoEditText.getText().toString());
+                    if (ristoranteCorrente.isTuristico()) {
+                        elementoDaModificare.setDenominazioneSecondaria(titoloSecondarioElementoEditText.getText().toString());
+                        elementoDaModificare.setDescrizioneSecondaria(descrizioneSecondariaElementoEditText.getText().toString());
                     }
-                }
-                elementoDaModificare.setPresenta(allergeniPiattoCorrente);
+                    elementoDaModificare.setCosto(Double.parseDouble(prezzoElementoEditText.getText().toString()));
+                    elementoDaModificare.setAppartiene((SezioneMenu) sezioneElementoSpinner.getSelectedItem());
 
-                if (fotoModificata) {
-
-                    InputStream streamLogo = null;
-                    try {
-                        streamLogo = getActivity().getContentResolver().openInputStream(uriLogoCorrente);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
+                    ArrayList<Allergene> allergeniPiattoCorrente = new ArrayList<>();
+                    for (CheckBox checkBox : checkBoxAllergeni) {
+                        if (checkBox.isChecked()) {
+                            allergeniPiattoCorrente.add(new Allergene((listaAllergeni) checkBox.getTag()));
+                        }
                     }
-                    uploadS3Modifica(streamLogo, uriLogoCorrente, elementoDaModificare);
-                    fotoModificata = false;
+                    elementoDaModificare.setPresenta(allergeniPiattoCorrente);
+
+                    if (fotoModificata) {
+
+                        InputStream streamLogo = null;
+                        try {
+                            streamLogo = getActivity().getContentResolver().openInputStream(uriLogoCorrente);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        uploadS3Modifica(streamLogo, uriLogoCorrente, elementoDaModificare);
+                        fotoModificata = false;
+
+                    } else
+                        PresenterMenu.getInstance().modificaElemento(elementoDaModificare, elementoDaModificare.getPresenta(), MenuFragment.this);
 
                 }
-                else
-                    PresenterMenu.getInstance().modificaElemento(elementoDaModificare, elementoDaModificare.getPresenta(),MenuFragment.this);
             }
         });
 
@@ -928,5 +940,22 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
     }
     public void mostraAlertEliminazioneElementoEffettuata(){
         PresenterMenu.getInstance().mostraAlert(getContext(), "Eliminazione effettuata", "Eliminazione degli elementi selezionati effettuata correttamente!");
+    }
+
+    public void mostraDialogErroreInserimentoElemento() {
+        PresenterBacheca.getInstance().mostraAlert(getContext(), "Attenzione!", "C'è stato un errore durante l'inserimento dell' elemento.\nSi controlli che i campi contrassegnati dall'asterisco non siano vuoti e si riprovi.");
+    }
+
+    public void mostraDialogErroreModificaElemento() {
+        PresenterBacheca.getInstance().mostraAlert(getContext(), "Attenzione!", "C'è stato un errore durante la modifica dell'elemento.\nSi controlli che i campi contrassegnati dall'asterisco non siano vuoti e si riprovi.");
+    }
+
+    public Boolean areEditTextInserimentoModificaEmpty() {
+        if (titoloPrincipaleElementoEditText.getText().toString().matches("") ||
+                descrizionePrincipaleElementoEditText.getText().toString().matches("") ||
+                prezzoElementoEditText.getText().toString().matches("")) {
+            return  true;
+        }
+        return false;
     }
 }
