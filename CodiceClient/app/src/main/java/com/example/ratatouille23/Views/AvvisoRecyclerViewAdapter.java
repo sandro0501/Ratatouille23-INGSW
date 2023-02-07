@@ -54,7 +54,10 @@ public class AvvisoRecyclerViewAdapter extends RecyclerView.Adapter<AvvisoRecycl
         holder.oggettoAvviso.setText(avvisi.get(position).getAvvisoAssociato().getOggetto());
         holder.corpoAvviso.setText(avvisi.get(position).getAvvisoAssociato().getCorpo());
         LocalDate data = avvisi.get(position).getAvvisoAssociato().getDataCreazione();
-        holder.dataAvviso.setText(data.toString());
+        if (!avvisi.get(position).getAvvisoAssociato().getAutore().getRuoloUtente().equals("Sistema"))
+            holder.dataAvviso.setText(data.toString());
+        else
+            holder.dataAvviso.setText("");
         holder.ruoloAutoreAvviso.setText(avvisi.get(position).getAvvisoAssociato().getAutore().getRuoloUtente());
 
         Typeface verdanaFace = ResourcesCompat.getFont(context, R.font.verdana_font);
@@ -79,6 +82,9 @@ public class AvvisoRecyclerViewAdapter extends RecyclerView.Adapter<AvvisoRecycl
             holder.imageViewAvvisi.setImageResource(R.drawable.icon_avviso_da_vedere);
             holder.imageViewNascondiAvviso.setVisibility(View.INVISIBLE);
         }
+
+        if (((BachecaFragment)recyclerViewInterfaceAvviso).getModalitaVediNascosti())
+            holder.imageViewNascondiAvviso.setVisibility(View.INVISIBLE);
 
         holder.imageViewNascondiAvviso.setOnClickListener(new View.OnClickListener() {
             @Override
