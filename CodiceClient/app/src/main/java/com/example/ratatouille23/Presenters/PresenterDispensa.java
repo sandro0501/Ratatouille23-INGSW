@@ -71,7 +71,7 @@ public class PresenterDispensa extends PresenterBase {
 
     }
 
-    public void ottieniDispensaRistorante(VisualizzazioneIngredientiElementoActivity context, Ristorante ristorante)
+    public void ottieniDispensaPerInserimentoIngredientiElementoRistorante(VisualizzazioneIngredientiElementoActivity context, Ristorante ristorante)
     {
         daoProdotto.getDispensa(ristorante, new DAOProdottoImpl.OttenimentoDispensaCallbacks() {
             @Override

@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.ratatouille23.Exceptions.CampiVuotiException;
 import com.example.ratatouille23.Handlers.RegistraUtenteHandler;
 import com.example.ratatouille23.Handlers.UtenteHandler;
 import com.example.ratatouille23.Models.Amministratore;
@@ -81,18 +82,28 @@ public class AggiuntaDipendenteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Utente utenteInCostruzione = UtenteFactory.getInstance().getNuovoUtente(
-                        editTextNome.getText().toString(),
-                        editTextCognome.getText().toString(),
-                        editTextEmail.getText().toString(),
-                        sceltaRuoli.getSelectedItem().toString(),
-                        false);
+                try {
 
-                RegistraUtenteHandler handler = new RegistraUtenteHandler();
-                handler.utente = new UtenteHandler(utenteInCostruzione);
-                handler.ristorante = ristoranteCorrente;
-                handler.password = "Password" + utenteInCostruzione.getCognome() + "123!@";
-                PresenterDipendenti.getInstance().aggiungiDipendente(AggiuntaDipendenteActivity.this, handler);
+                    if (editTextNome.getText().toString().isEmpty() ||
+                        editTextCognome.getText().toString().isEmpty() ||
+                        editTextEmail.getText().toString().isEmpty()) throw new CampiVuotiException();
+
+                    Utente utenteInCostruzione = UtenteFactory.getInstance().getNuovoUtente(
+                            editTextNome.getText().toString(),
+                            editTextCognome.getText().toString(),
+                            editTextEmail.getText().toString(),
+                            sceltaRuoli.getSelectedItem().toString(),
+                            false);
+
+                    RegistraUtenteHandler handler = new RegistraUtenteHandler();
+                    handler.utente = new UtenteHandler(utenteInCostruzione);
+                    handler.ristorante = ristoranteCorrente;
+                    handler.password = "Password" + utenteInCostruzione.getCognome() + "123!@";
+                    PresenterDipendenti.getInstance().aggiungiDipendente(AggiuntaDipendenteActivity.this, handler);
+                }
+                catch (CampiVuotiException e) {
+                    PresenterDipendenti.mostraAlert(AggiuntaDipendenteActivity.this, "Attenzione!", e.getMessage());
+                }
             }
         });
 

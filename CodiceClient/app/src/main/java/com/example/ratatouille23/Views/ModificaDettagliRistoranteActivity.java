@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amplifyframework.core.Amplify;
+import com.example.ratatouille23.Exceptions.CampiVuotiException;
 import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Presenters.PresenterRistorante;
 import com.example.ratatouille23.R;
@@ -111,26 +112,37 @@ public class ModificaDettagliRistoranteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (immagineModificata) {
-                    InputStream streamLogo = null;
-                    try {
-                        streamLogo = getContentResolver().openInputStream(uriLogo);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
+                try {
+
+                    if (textViewNome.getText().toString().isEmpty() ||
+                        textViewTelefono.getText().toString().isEmpty() ||
+                        textViewIndirizzo.getText().toString().isEmpty() ||
+                        textViewCitta.getText().toString().isEmpty()) throw new CampiVuotiException();
+
+                    if (immagineModificata) {
+                        InputStream streamLogo = null;
+                        try {
+                            streamLogo = getContentResolver().openInputStream(uriLogo);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        uploadS3(streamLogo, uriLogo);
+                    } else {
+                        Ristorante ristoranteTemporaneo = new Ristorante(
+                                ristoranteCorrente.getIdRistorante(),
+                                textViewNome.getText().toString(),
+                                textViewTelefono.getText().toString(),
+                                textViewIndirizzo.getText().toString(),
+                                textViewCitta.getText().toString(),
+                                checkBoxTuristico.isChecked(),
+                                ((Integer) ristoranteCorrente.getIdRistorante()).toString() + "_LogoRistorante.jpg"
+                        );
+                        PresenterRistorante.getInstance().confermaModifichePremuto(ModificaDettagliRistoranteActivity.this, ristoranteTemporaneo);
                     }
-                    uploadS3(streamLogo, uriLogo);
+
                 }
-                else {
-                    Ristorante ristoranteTemporaneo = new Ristorante(
-                            ristoranteCorrente.getIdRistorante(),
-                            textViewNome.getText().toString(),
-                            textViewTelefono.getText().toString(),
-                            textViewIndirizzo.getText().toString(),
-                            textViewCitta.getText().toString(),
-                            checkBoxTuristico.isChecked(),
-                            ((Integer)ristoranteCorrente.getIdRistorante()).toString()+"_LogoRistorante.jpg"
-                    );
-                    PresenterRistorante.getInstance().confermaModifichePremuto(ModificaDettagliRistoranteActivity.this, ristoranteTemporaneo);
+                catch (CampiVuotiException e) {
+                    PresenterRistorante.mostraAlert(ModificaDettagliRistoranteActivity.this, "Attenzione!", e.getMessage());
                 }
 
             }
