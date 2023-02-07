@@ -455,6 +455,12 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         bottoneAnnulla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Annulla");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Bottone");
+                analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 dialogElemento.dismiss();
             }
         });
@@ -484,6 +490,12 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         bottoneAnnullaEliminazioneElemento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Annulla");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Bottone");
+                analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 attivaDisattivaModalitaEliminazione();
                 deselezionaTuttiElementi();
                 dialogEliminaElemento.dismiss();
@@ -760,6 +772,12 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         bottoneAnnulla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Annulla");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Bottone");
+                analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 dialogElemento.dismiss();
             }
         });

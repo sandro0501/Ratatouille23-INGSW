@@ -76,6 +76,11 @@ public class DipendenteFragment extends Fragment implements RecyclerViewDipenden
     private Ristorante ristoranteCorrente;
 
     private FirebaseAnalytics analytics;
+    private AlertDialog.Builder builderDialogDeclassamentoDipendente;
+    private TextView textViewDeclassaDipendente;
+    private Button bottoneAnnullaDeclassaDipendente;
+    private Button bottoneConfermaDeclassaDipendente;
+    private AlertDialog dialogDeclassamentoDipendente;
 
     public DipendenteFragment() {
         // Required empty public constructor
@@ -196,12 +201,53 @@ public class DipendenteFragment extends Fragment implements RecyclerViewDipenden
         dialogVisualizzaDipendente.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
+
                 UtenteHandler handlerUtente = new UtenteHandler(dipendenteScelto);
                 handlerUtente.ruolo = ruoli[spinnerRuoloDipendente.getSelectedItemPosition()];
                 AggiornaRuoloHandler handler = new AggiornaRuoloHandler();
                 handler.utente = handlerUtente;
                 handler.ristorante = utenteCorrente.getIdRistorante();
-                PresenterDipendenti.getInstance().modificaDipendente(DipendenteFragment.this, handler);
+
+                if (handlerUtente.ruolo.equals("Addetto alla cucina") || handlerUtente.ruolo.equals("Addetto al servizio")){
+                    if (dipendenteScelto.getRuoloUtente().equals("Amministratore") || dipendenteScelto.getRuoloUtente().equals("Supervisore")) {
+                        final View viewDeclassaDipendente = getLayoutInflater().inflate(R.layout.layout_elimina_prodotto_dialog, null);
+                        builderDialogDeclassamentoDipendente= new AlertDialog.Builder(getContext());
+                        builderDialogDeclassamentoDipendente.setView(viewDeclassaDipendente);
+                        builderDialogDeclassamentoDipendente.setCancelable(true);
+                        textViewDeclassaDipendente = (TextView) viewDeclassaDipendente.findViewById(R.id.textViewEliminaProdottoDescrizioneDialog);
+                        textViewDeclassaDipendente.setText("Si è sicuri di voler declassare il dipendente selezionato?\n(Tutti i suoi avvisi verranno eliminati.)");
+
+                        bottoneAnnullaDeclassaDipendente = (Button) viewDeclassaDipendente.findViewById(R.id.bottoneAnnullaEliminaProdotto);
+                        bottoneAnnullaDeclassaDipendente.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                                Bundle bundle = new Bundle();
+                                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Annulla");
+                                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Bottone");
+                                analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+                                dialogDeclassamentoDipendente.dismiss();
+                            }
+                        });
+
+                        bottoneConfermaDeclassaDipendente = (Button) viewDeclassaDipendente.findViewById(R.id.bottoneEliminaProdotto);
+                        bottoneConfermaDeclassaDipendente.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                PresenterDipendenti.getInstance().modificaDipendente(DipendenteFragment.this, handler);
+                            }
+                        });
+
+                        dialogDeclassamentoDipendente = builderDialogDeclassamentoDipendente.create();
+                        dialogDeclassamentoDipendente.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
+                        dialogDeclassamentoDipendente.show();
+
+                    }
+                }
+                else
+                    PresenterDipendenti.getInstance().modificaDipendente(DipendenteFragment.this, handler);
+
             }
         });
 
@@ -214,12 +260,18 @@ public class DipendenteFragment extends Fragment implements RecyclerViewDipenden
                 builderDialogLicenziaDipendente.setView(viewLicenziaDipendente);
                 builderDialogLicenziaDipendente.setCancelable(true);
                 textViewLicenziaDipendente = (TextView) viewLicenziaDipendente.findViewById(R.id.textViewEliminaProdottoDescrizioneDialog);
-                textViewLicenziaDipendente.setText("Si è sicuri di voler licenziare il dipendente selezionato?");
+                textViewLicenziaDipendente.setText("Si è sicuri di voler licenziare il dipendente selezionato?\n(Tutti i suoi avvisi verranno eliminati.)");
 
                 bottoneAnnullaLicenziaDipendente = (Button) viewLicenziaDipendente.findViewById(R.id.bottoneAnnullaEliminaProdotto);
                 bottoneAnnullaLicenziaDipendente.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Annulla");
+                        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Bottone");
+                        analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                         dialogLicenziaDipendente.dismiss();
                     }
                 });
@@ -277,7 +329,9 @@ public class DipendenteFragment extends Fragment implements RecyclerViewDipenden
     }
 
     public void ruoloDipendenteModificato() {
+        PresenterDipendenti.getInstance().mostraAlert(getContext(), "Modifica effettuata", "Il ruolo del dipendente è stato cambiato correttamente");
         PresenterDipendenti.getInstance().recuperaDipendentiDaRistorante(this, ristoranteCorrente);
+        dialogDeclassamentoDipendente.dismiss();
     }
 
 

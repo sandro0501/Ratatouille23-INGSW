@@ -194,6 +194,12 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
                         bottoneAnnullaEliminazioneProdotto.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+
+                                Bundle bundle = new Bundle();
+                                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Annulla");
+                                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Bottone");
+                                analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                                 disattivaModalitaEliminazione();
                                 deselezionaTuttiProdotti();
                                 dialogEliminaProdotto.dismiss();
@@ -324,6 +330,12 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
         bottoneAnnullaAggiungiProdotto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Annulla");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Bottone");
+                analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 dialogAggiungiProdotto.dismiss();
             }
         });
@@ -428,6 +440,12 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
         bottoneAnnullaModificaProdotto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Annulla");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Bottone");
+                analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 dialogModificaProdotto.dismiss();
             }
         });

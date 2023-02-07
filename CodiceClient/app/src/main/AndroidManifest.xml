@@ -21,14 +21,16 @@
         <meta-data android:name="google_analytics_automatic_screen_reporting_enabled" android:value="true" />
         <activity
             android:name=".Views.PrimoLoginModificaPasswordActivity"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="landscape">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".Views.ModificaDettagliRistoranteActivity"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="landscape">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -106,7 +108,8 @@
         <activity
             android:name=".Views.VisualizzazioneIngredientiElementoActivity"
             android:exported="true"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

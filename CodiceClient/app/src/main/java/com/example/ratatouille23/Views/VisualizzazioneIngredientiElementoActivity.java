@@ -28,6 +28,7 @@ import com.example.ratatouille23.Models.Prodotto;
 import com.example.ratatouille23.Presenters.PresenterDispensa;
 import com.example.ratatouille23.Presenters.PresenterMenu;
 import com.example.ratatouille23.R;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -70,11 +71,14 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
     private ArrayList<CardView> listaCardProdottiSelezionati = new ArrayList<>();
     private boolean modalitaEliminazione = false;
     private boolean esito;
+    private FirebaseAnalytics analytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizzazione_ingredienti_elemento);
+
+        analytics = FirebaseAnalytics.getInstance(this);
 
         elemento = ((Elemento)getIntent().getExtras().get("Elemento selezionato"));
 
@@ -142,6 +146,12 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
                         bottoneAnnullaEliminazioneIngrediente.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+
+                                Bundle bundle = new Bundle();
+                                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Annulla");
+                                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Bottone");
+                                analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                                 disattivaModalitaEliminazione();
                                 deselezionaTuttiProdotti();
                                 dialogEliminaIngrediente.dismiss();
@@ -253,6 +263,12 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
         bottoneAnnullaAggiungiProdottoPerElemento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Annulla");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Bottone");
+                analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 dialogAggiuntaIngrediente.dismiss();
             }
         });
@@ -304,6 +320,12 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
                 bottoneAnnullaAggiuntaProdottoSelezionato.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Annulla");
+                        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Bottone");
+                        analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                         dialogAggiuntaIngredienteSelezionato.dismiss();
                         dialogAggiuntaIngrediente.show();
                     }

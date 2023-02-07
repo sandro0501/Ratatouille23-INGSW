@@ -98,7 +98,6 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
         PresenterBacheca.getInstance().setUtentiCorrenti(utenteCorrente.getIdRistorante(), context, utenteCorrente);
         //Devi estrarre gli avvisi dell'utente
         PresenterBacheca.getInstance().setBachecaAttiva(true);
-        setNumeroAvvisiDaLeggere();
         setModalitaVediNascosti(false);
     }
 
@@ -153,6 +152,7 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
             @Override
             public void onClick(View view) {
                 PresenterBacheca.getInstance().setAvvisi(BachecaFragment.this, utenteCorrente);
+
             }
         });
 
@@ -254,8 +254,9 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
             tuttiAvvisi.add(new Bacheca(avviso, false, true));
         }
 
-        for (Bacheca avviso : avvisiVisibili) {
+        for (Bacheca avviso : tuttiAvvisi) {
             if (avviso.getAvvisoAssociato().getAutore().getRuoloUtente().equals("Sistema")) {
+                Log.i("CIAO", "PROVA");
                 avvisoDispensaVuoto = avviso;
             }
         }
@@ -290,13 +291,14 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
 
         avvisiVisibiliAdapter.notifyDataSetChanged();
         tuttiAvvisiAdapter.notifyDataSetChanged();
+        setNumeroAvvisiDaLeggere();
     }
 
 
     private void setNumeroAvvisiDaLeggere() {
         int numeroAvvisi = 0;
         for (Bacheca avviso : avvisiVisibili) {
-            if (!avviso.isVisualizzato()) numeroAvvisi++;
+            if (!avviso.isVisualizzato() && !(avviso.getAvvisoAssociato().getAutore().getRuoloUtente().equals("Sistema"))) numeroAvvisi++;
         }
         if (numeroAvvisi == 0) {
             textViewNumeroAvvisi.setVisibility(View.INVISIBLE);
