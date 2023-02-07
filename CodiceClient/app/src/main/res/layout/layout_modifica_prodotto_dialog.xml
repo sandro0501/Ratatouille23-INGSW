@@ -15,108 +15,108 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/verdanab"
         android:text="Modifica prodotto"
         android:textColor="@color/colorGrey"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.025"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.024" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textViewNomeProdottoLabelModifica"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/verdana_font"
         android:text="* Nome:"
         android:textColor="#5F5959"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewModificaProdottoTitoloDialog"
-        app:layout_constraintHorizontal_bias="0.597"
-        app:layout_constraintStart_toStartOf="@+id/textViewModificaProdottoTitoloDialog"
-        app:layout_constraintTop_toBottomOf="@+id/textViewModificaProdottoTitoloDialog" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewModificaProdottoTitoloDialog"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textViewDescrizioneProdottoLabelModifica"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="40dp"
         android:fontFamily="@font/verdana_font"
         android:text="* Descrizione:"
         android:textColor="#5F5959"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewModificaProdottoTitoloDialog"
-        app:layout_constraintHorizontal_bias="0.438"
-        app:layout_constraintStart_toStartOf="@+id/textViewModificaProdottoTitoloDialog"
+        app:layout_constraintEnd_toEndOf="@+id/textViewNomeProdottoLabelModifica"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewNomeProdottoLabelModifica"
         app:layout_constraintTop_toBottomOf="@+id/textViewNomeProdottoLabelModifica" />
 
     <TextView
         android:id="@+id/textViewQuantitaProdottoProdottoLabelModifica"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/verdana_font"
         android:text="* Quantità:"
         android:textColor="#5F5959"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewModificaProdottoTitoloDialog"
-        app:layout_constraintHorizontal_bias="0.52"
-        app:layout_constraintStart_toStartOf="@+id/textViewModificaProdottoTitoloDialog"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDescrizioneProdottoLabelModifica" />
+        app:layout_constraintEnd_toEndOf="@+id/textViewDescrizioneProdottoLabelModifica"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewDescrizioneProdottoLabelModifica"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutDescrizioneProdottoModifica" />
 
     <TextView
         android:id="@+id/textViewUnitaProdottoProdottoLabelModifica"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/verdana_font"
         android:text="* Unità di misura:"
         android:textColor="#5F5959"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewModificaProdottoTitoloDialog"
-        app:layout_constraintHorizontal_bias="0.191"
-        app:layout_constraintStart_toStartOf="@+id/textViewModificaProdottoTitoloDialog"
+        app:layout_constraintEnd_toEndOf="@+id/textViewQuantitaProdottoProdottoLabelModifica"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewQuantitaProdottoProdottoLabelModifica"
         app:layout_constraintTop_toBottomOf="@+id/textViewQuantitaProdottoProdottoLabelModifica" />
 
     <TextView
         android:id="@+id/textViewCostoAcquistoProdottoLabelModifica"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/verdana_font"
         android:text="* Costo d'acquisto:"
         android:textColor="#5F5959"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewModificaProdottoTitoloDialog"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textViewModificaProdottoTitoloDialog"
+        app:layout_constraintEnd_toEndOf="@+id/textViewUnitaProdottoProdottoLabelModifica"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewUnitaProdottoProdottoLabelModifica"
         app:layout_constraintTop_toBottomOf="@+id/textViewUnitaProdottoProdottoLabelModifica" />
 
     <TextView
         android:id="@+id/textViewEuroModifica"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="12dp"
+        android:layout_marginStart="10dp"
         android:fontFamily="@font/verdana_font"
         android:text="€"
         android:textColor="#5F5959"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/constraintLayoutCostoAcquistoProdottoModifica"
-        app:layout_constraintEnd_toStartOf="@+id/constraintLayoutCostoAcquistoProdottoModifica"
-        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewCostoAcquistoProdottoLabelModifica"
         app:layout_constraintStart_toEndOf="@+id/textViewCostoAcquistoProdottoLabelModifica"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayoutCostoAcquistoProdottoModifica" />
+        app:layout_constraintTop_toTopOf="@+id/textViewCostoAcquistoProdottoLabelModifica" />
 
     <TextView
         android:id="@+id/textViewUnitaMisuraLabelModifica"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="10dp"
         android:fontFamily="@font/verdana_font"
         android:text="/"
         android:textColor="#5F5959"
@@ -129,28 +129,26 @@
         android:id="@+id/textViewSogliaLimiteProdottoLabelModifica"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/verdana_font"
         android:text="* Soglia limite:"
         android:textColor="#5F5959"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/bottoneAnnullaModificaProdotto"
-        app:layout_constraintEnd_toEndOf="@+id/textViewModificaProdottoTitoloDialog"
-        app:layout_constraintHorizontal_bias="0.362"
-        app:layout_constraintStart_toStartOf="@+id/textViewModificaProdottoTitoloDialog"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCostoAcquistoProdottoLabelModifica"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toEndOf="@+id/textViewCostoAcquistoProdottoLabelModifica"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewCostoAcquistoProdottoLabelModifica"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCostoAcquistoProdottoLabelModifica" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayoutNomeProdottoModifica"
         android:layout_width="500dp"
         android:layout_height="32dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="30dp"
         android:background="@drawable/dummy_for_shadows"
         android:elevation="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewNomeProdottoLabelModifica"
         app:layout_constraintStart_toEndOf="@+id/textViewNomeProdottoLabelModifica"
-        app:layout_constraintTop_toBottomOf="@+id/textViewModificaProdottoTitoloDialog">
+        app:layout_constraintTop_toTopOf="@+id/textViewNomeProdottoLabelModifica">
 
         <AutoCompleteTextView
             android:id="@+id/EditTextNomeProdottoModifica"
@@ -180,12 +178,13 @@
         android:id="@+id/constraintLayoutDescrizioneProdottoModifica"
         android:layout_width="500dp"
         android:layout_height="80dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginStart="30dp"
         android:background="@drawable/dummy_for_shadows"
         android:elevation="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewDescrizioneProdottoLabelModifica"
         app:layout_constraintStart_toEndOf="@+id/textViewDescrizioneProdottoLabelModifica"
-        app:layout_constraintTop_toBottomOf="@+id/textViewModificaProdottoTitoloDialog">
+        app:layout_constraintTop_toTopOf="@+id/textViewDescrizioneProdottoLabelModifica"
+        app:layout_constraintVertical_bias="0.24000001">
 
         <EditText
             android:id="@+id/EditTextDescrizioneProdottoModifica"
@@ -223,12 +222,12 @@
         android:id="@+id/constraintLayoutQuantitaProdottoModifica"
         android:layout_width="180dp"
         android:layout_height="32dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="164dp"
+        android:layout_marginStart="30dp"
         android:background="@drawable/dummy_for_shadows"
         android:elevation="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewQuantitaProdottoProdottoLabelModifica"
         app:layout_constraintStart_toEndOf="@+id/textViewQuantitaProdottoProdottoLabelModifica"
-        app:layout_constraintTop_toBottomOf="@+id/textViewModificaProdottoTitoloDialog">
+        app:layout_constraintTop_toTopOf="@+id/textViewQuantitaProdottoProdottoLabelModifica">
 
         <EditText
             android:id="@+id/EditTextQuantitaProdottoModifica"
@@ -258,12 +257,12 @@
         android:id="@+id/constraintLayoutUnitaMisuraProdottoModifica"
         android:layout_width="180dp"
         android:layout_height="32dp"
-        android:layout_marginStart="23dp"
-        android:layout_marginTop="212dp"
+        android:layout_marginStart="30dp"
         android:background="@drawable/dummy_for_shadows"
         android:elevation="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewUnitaProdottoProdottoLabelModifica"
         app:layout_constraintStart_toEndOf="@+id/textViewUnitaProdottoProdottoLabelModifica"
-        app:layout_constraintTop_toBottomOf="@+id/textViewModificaProdottoTitoloDialog">
+        app:layout_constraintTop_toTopOf="@+id/textViewUnitaProdottoProdottoLabelModifica">
 
         <EditText
             android:id="@+id/EditTextUnitaMisuraProdottoModifica"
@@ -294,17 +293,12 @@
         android:id="@+id/constraintLayoutUnitaMisuraCostoAcquistoModifica"
         android:layout_width="180dp"
         android:layout_height="32dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="10dp"
         android:background="@drawable/dummy_for_shadows"
         android:elevation="5dp"
-        app:layout_constraintBottom_toBottomOf="@+id/constraintLayoutCostoAcquistoProdottoModifica"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewUnitaMisuraLabelModifica"
         app:layout_constraintStart_toEndOf="@+id/textViewUnitaMisuraLabelModifica"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayoutCostoAcquistoProdottoModifica"
-        app:layout_constraintVertical_bias="0.022">
+        app:layout_constraintTop_toTopOf="@+id/textViewUnitaMisuraLabelModifica">
 
         <EditText
             android:id="@+id/EditTextUnitaMisuraCostoAcquistoModifica"
@@ -334,12 +328,13 @@
         android:id="@+id/constraintLayoutCostoAcquistoProdottoModifica"
         android:layout_width="160dp"
         android:layout_height="32dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="256dp"
+        android:layout_marginStart="20dp"
         android:background="@drawable/dummy_for_shadows"
         android:elevation="5dp"
-        app:layout_constraintStart_toEndOf="@+id/textViewCostoAcquistoProdottoLabelModifica"
-        app:layout_constraintTop_toBottomOf="@+id/textViewModificaProdottoTitoloDialog">
+        app:layout_constraintBottom_toBottomOf="@+id/textViewCostoAcquistoProdottoLabelModifica"
+        app:layout_constraintStart_toEndOf="@+id/textViewEuroModifica"
+        app:layout_constraintStart_toStartOf="@+id/textViewEuroModifica"
+        app:layout_constraintTop_toTopOf="@+id/textViewCostoAcquistoProdottoLabelModifica">
 
         <EditText
             android:id="@+id/EditTextCostoAcquistoProdottoModifica"
@@ -369,11 +364,11 @@
         android:id="@+id/constraintLayoutSogliaLimiteProdottoModifica"
         android:layout_width="180dp"
         android:layout_height="32dp"
+        android:layout_marginStart="30dp"
         android:background="@drawable/dummy_for_shadows"
         android:elevation="5dp"
         app:layout_constraintBottom_toBottomOf="@+id/textViewSogliaLimiteProdottoLabelModifica"
-        app:layout_constraintEnd_toEndOf="@+id/constraintLayoutUnitaMisuraProdottoModifica"
-        app:layout_constraintStart_toStartOf="@+id/constraintLayoutUnitaMisuraProdottoModifica"
+        app:layout_constraintStart_toEndOf="@+id/textViewSogliaLimiteProdottoLabelModifica"
         app:layout_constraintTop_toTopOf="@+id/textViewSogliaLimiteProdottoLabelModifica">
 
         <EditText
@@ -404,8 +399,6 @@
         android:id="@+id/bottoneModificaProdotto"
         android:layout_width="136dp"
         android:layout_height="47dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="60dp"
         android:background="@drawable/login_box_border"
         android:backgroundTint="#F2A726"
         android:fontFamily="@font/verdana_font"
@@ -414,17 +407,18 @@
         android:textColor="#000000"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/bottoneAnnullaModificaProdotto"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutUnitaMisuraCostoAcquistoModifica"
-        app:layout_constraintVertical_bias="0.90999997" />
+        app:layout_constraintBottom_toBottomOf="@+id/bottoneAnnullaModificaProdotto"
+        app:layout_constraintEnd_toEndOf="@+id/constraintLayoutDescrizioneProdottoModifica"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bottoneAnnullaModificaProdotto" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bottoneAnnullaModificaProdotto"
         android:layout_width="139dp"
         android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="60dp"
         android:background="@drawable/login_box_border"
         android:backgroundTint="#D1CBC1"
         android:fontFamily="@font/verdana_font"
@@ -433,12 +427,11 @@
         android:textColor="#000000"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/bottoneModificaProdotto"
-        app:layout_constraintEnd_toEndOf="@+id/constraintLayoutDescrizioneProdottoModifica"
-        app:layout_constraintHorizontal_bias="0.676"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/bottoneModificaProdotto"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/bottoneModificaProdotto"
-        app:layout_constraintVertical_bias="0.784" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutSogliaLimiteProdottoModifica" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
