@@ -41,8 +41,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText editTextPass;
     private EditText editTextEmail;
 
-    private Button bottoneCRASH;
-
     private FirebaseAnalytics analytics;
 
     @Override
@@ -150,22 +148,27 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void downloadIP() {
-        Amplify.Storage.downloadFile(
-                "INDIRIZZO_IP_SERVER.txt",
-                new File((getFilesDir() + "/" + "INDIRIZZO_IP_SERVER.txt")),
-                result -> {
-                    File fileIP = result.getFile();
-                    try {
-                        Scanner fileReader = new Scanner(fileIP);
-                        String indirizzoIP = fileReader.nextLine();
-                        setIndirizzoIP(indirizzoIP);
-                        fileReader.close();
-                    } catch (FileNotFoundException e) {
-                    }
-                },
-                error -> Log.i("Controllo fatto altrove", "")
+        try {
+            Amplify.Storage.downloadFile(
+                    "INDIRIZZO_IP_SERVER.txt",
+                    new File((getFilesDir() + "/" + "INDIRIZZO_IP_SERVER.txt")),
+                    result -> {
+                        File fileIP = result.getFile();
+                        try {
+                            Scanner fileReader = new Scanner(fileIP);
+                            String indirizzoIP = fileReader.nextLine();
+                            setIndirizzoIP(indirizzoIP);
+                            fileReader.close();
+                        } catch (FileNotFoundException e) {
+                        }
+                    },
+                    error -> Log.i("Controllo fatto altrove", "")
 
-        );
+            );
+        }
+        catch (IllegalStateException e) {
+            PresenterLogin.mostraAlert(this, "Errore!", "C'è stato un errore nella configurazione dell'applicazione.\nSi prega di chiudere l'applicazione.");
+        }
     }
 
     private void setIndirizzoIP(String indirizzoIP) {
