@@ -1,6 +1,8 @@
 package com.example.ratatouille23.Presenters;
 
 import com.example.ratatouille23.DAO.DAOFactory;
+import com.example.ratatouille23.DAO.DAORistorante;
+import com.example.ratatouille23.DAO.DAORistoranteImpl;
 import com.example.ratatouille23.DAO.DAOUtente;
 import com.example.ratatouille23.DAO.DAOUtenteImpl;
 import com.example.ratatouille23.Handlers.AggiornaRuoloHandler;
@@ -20,9 +22,11 @@ public class PresenterDipendenti extends PresenterBase {
 
     private static PresenterDipendenti instance;
     private DAOUtente daoUtente;
+    private DAORistorante daoRistorante;
 
     private PresenterDipendenti() {
         daoUtente = DAOFactory.getInstance().getDAOUtente();
+        daoRistorante = DAOFactory.getInstance().getDAORistorante();
     };
 
     public static PresenterDipendenti getInstance(){
@@ -116,6 +120,25 @@ public class PresenterDipendenti extends PresenterBase {
             @Override
             public void onModificaDipendente() {
                 context.ruoloDipendenteModificato();
+            }
+        });
+    }
+
+    public void aggiornaRistorante(DipendenteFragment context, int idRistorante) {
+        daoRistorante.getRistorante(idRistorante, new DAORistoranteImpl.RistoranteRiceviCallbacks() {
+            @Override
+            public void onRicezioneRistorante(Ristorante ristorante) {
+                context.setRistoranteCorrente(ristorante);
+            }
+
+            @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+
             }
         });
     }

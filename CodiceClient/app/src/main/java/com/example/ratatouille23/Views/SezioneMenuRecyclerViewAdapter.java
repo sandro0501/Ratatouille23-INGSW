@@ -79,10 +79,14 @@ public class SezioneMenuRecyclerViewAdapter extends RecyclerView.Adapter<Sezione
 
         this.holder = holder;
 
-        if (utenteCorrente.getRuoloUtente().equals("Addetto alla cucina") || utenteCorrente.getRuoloUtente().equals("Addetto al servizio"))
+        if (utenteCorrente.getRuoloUtente().equals("Addetto alla cucina") || utenteCorrente.getRuoloUtente().equals("Addetto al servizio")) {
             holder.iconaMatitaModificaSezione.setVisibility(View.INVISIBLE);
-        else
+            holder.iconaDragNDrop.setVisibility(View.INVISIBLE);
+        }
+        else {
             holder.iconaMatitaModificaSezione.setVisibility(View.VISIBLE);
+            holder.iconaDragNDrop.setVisibility(View.VISIBLE);
+        }
 
         impostaGraficamenteModalitaModifica(holder, holder.sezioneCorrente);
 

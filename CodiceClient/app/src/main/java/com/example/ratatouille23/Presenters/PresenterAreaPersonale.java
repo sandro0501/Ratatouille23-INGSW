@@ -1,6 +1,8 @@
 package com.example.ratatouille23.Presenters;
 
 import com.example.ratatouille23.DAO.DAOFactory;
+import com.example.ratatouille23.DAO.DAORistorante;
+import com.example.ratatouille23.DAO.DAORistoranteImpl;
 import com.example.ratatouille23.DAO.DAOUtente;
 import com.example.ratatouille23.DAO.DAOUtenteImpl;
 import com.example.ratatouille23.Exceptions.CampiVuotiException;
@@ -8,7 +10,9 @@ import com.example.ratatouille23.Exceptions.ConfermaPasswordErrataException;
 import com.example.ratatouille23.Exceptions.PasswordNonAdeguataException;
 import com.example.ratatouille23.Exceptions.PasswordUgualeException;
 import com.example.ratatouille23.Handlers.ModificaPasswordHandler;
+import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Views.ModificaPasswordActivity;
+import com.example.ratatouille23.Views.ProfiloFragment;
 
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -17,9 +21,11 @@ public class PresenterAreaPersonale extends PresenterBase {
 
     private static PresenterAreaPersonale instance;
     private DAOUtente daoUtente;
+    private DAORistorante daoRistorante;
 
     private PresenterAreaPersonale() {
         daoUtente = DAOFactory.getInstance().getDAOUtente();
+        daoRistorante = DAOFactory.getInstance().getDAORistorante();
     };
 
     public static PresenterAreaPersonale getInstance(){
@@ -67,4 +73,22 @@ public class PresenterAreaPersonale extends PresenterBase {
 
     }
 
+    public void aggiornaRistorante(ProfiloFragment context, int idRistorante) {
+        daoRistorante.getRistorante(idRistorante, new DAORistoranteImpl.RistoranteRiceviCallbacks() {
+            @Override
+            public void onRicezioneRistorante(Ristorante ristorante) {
+                context.setRistoranteCorrente(ristorante);
+            }
+
+            @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+
+            }
+        });
+    }
 }

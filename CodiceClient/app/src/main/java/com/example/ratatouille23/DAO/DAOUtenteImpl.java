@@ -324,14 +324,14 @@ public class DAOUtenteImpl implements DAOUtente {
                     try {
                         JSONObject bodyJSON = new JSONObject(response.body().string());
                         String messaggio = bodyJSON.getString("messaggio");
-                        if (messaggio.equals("Tutto bene"))
-                            callback.onAggiuntaDipendente();
-                        else if (messaggio.equals("could not execute statement; SQL [n/a]; constraint [utente.UK_gxvq4mjswnupehxnp35vawmo2]")){
+                        if (messaggio.equals("could not execute statement; SQL [n/a]; constraint [utente.UK_gxvq4mjswnupehxnp35vawmo2]")){
                             callback.onUtenteGiaPresente();
                         }
                         else if (messaggio.equals("UsernameExistsException")) {
                             callback.onUtenteLicenziatoPrecedentemente();
                         }
+                        else
+                            callback.onAggiuntaDipendente();
                     }
                     catch (Exception e) {
                     }
@@ -423,7 +423,7 @@ public class DAOUtenteImpl implements DAOUtente {
                             callback.onVecchiaPasswordErrata();
                         }
                         else {
-                            Log.i("MESSAGGIO", messaggio);
+                            callback.onVecchiaPasswordErrata();
                         }
                     }
                     catch (Exception e) {

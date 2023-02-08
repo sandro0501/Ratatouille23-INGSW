@@ -3,6 +3,7 @@ package com.example.ratatouille23.Views;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -110,6 +111,7 @@ public class AggiuntaDipendenteActivity extends AppCompatActivity {
     }
 
     public void dipendenteAggiunto() {
-        finish();
+        Log.i("DIPENDENTE AGGIUNTO", "");
+        PresenterDipendenti.getInstance().mostraAlertFinishActivity(this, "Successo!", "Il dipendente è stato registrato correttamente!");
     }
 }

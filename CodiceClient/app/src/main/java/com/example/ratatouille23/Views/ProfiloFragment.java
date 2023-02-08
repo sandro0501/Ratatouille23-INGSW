@@ -15,7 +15,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Models.Utente;
+import com.example.ratatouille23.Presenters.PresenterAreaPersonale;
 import com.example.ratatouille23.R;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -65,6 +67,7 @@ public class ProfiloFragment extends Fragment {
         textViewRuoloContenuto = fragmentCorrente.findViewById(R.id.textViewNumeroRistoranteVisualizza);
 
         utenteCorrente = (Utente) getActivity().getIntent().getSerializableExtra("Utente");
+        PresenterAreaPersonale.getInstance().aggiornaRistorante(this, utenteCorrente.getIdRistorante().getIdRistorante());
 
         textViewNomeContenuto.setText(utenteCorrente.getNomeCompleto());
         textViewRuoloContenuto.setText(utenteCorrente.getRuoloUtente());
@@ -106,4 +109,7 @@ public class ProfiloFragment extends Fragment {
         super.onResume();
     }
 
+    public void setRistoranteCorrente(Ristorante ristorante) {
+        utenteCorrente.setIdRistorante(ristorante);
+    }
 }

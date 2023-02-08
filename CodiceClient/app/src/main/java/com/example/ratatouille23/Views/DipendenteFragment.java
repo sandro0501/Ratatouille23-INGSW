@@ -32,6 +32,7 @@ import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Models.UtenteFactory;
 import com.example.ratatouille23.Presenters.PresenterDipendenti;
 import com.example.ratatouille23.Presenters.PresenterDispensa;
+import com.example.ratatouille23.Presenters.PresenterMenu;
 import com.example.ratatouille23.R;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -147,6 +148,7 @@ public class DipendenteFragment extends Fragment implements RecyclerViewDipenden
 
         utenteCorrente = (Utente)getActivity().getIntent().getSerializableExtra("Utente");
         ristoranteCorrente = utenteCorrente.getIdRistorante();
+        PresenterDipendenti.getInstance().aggiornaRistorante(DipendenteFragment.this, ristoranteCorrente.getIdRistorante());
 
     }
 
@@ -208,10 +210,12 @@ public class DipendenteFragment extends Fragment implements RecyclerViewDipenden
                 handler.utente = handlerUtente;
                 handler.ristorante = utenteCorrente.getIdRistorante();
 
-                if (handlerUtente.ruolo.equals("Addetto alla cucina") || handlerUtente.ruolo.equals("Addetto al servizio")){
-                    if (dipendenteScelto.getRuoloUtente().equals("Amministratore") || dipendenteScelto.getRuoloUtente().equals("Supervisore")) {
+                if (!handlerUtente.ruolo.equals(dipendenteScelto.getRuoloUtente())) {
+
+                    if ((handlerUtente.ruolo.equals("Addetto alla cucina") || handlerUtente.ruolo.equals("Addetto al servizio")) &&
+                            (dipendenteScelto.getRuoloUtente().equals("Amministratore") || dipendenteScelto.getRuoloUtente().equals("Supervisore"))) {
                         final View viewDeclassaDipendente = getLayoutInflater().inflate(R.layout.layout_elimina_prodotto_dialog, null);
-                        builderDialogDeclassamentoDipendente= new AlertDialog.Builder(getContext());
+                        builderDialogDeclassamentoDipendente = new AlertDialog.Builder(getContext());
                         builderDialogDeclassamentoDipendente.setView(viewDeclassaDipendente);
                         builderDialogDeclassamentoDipendente.setCancelable(true);
                         textViewDeclassaDipendente = (TextView) viewDeclassaDipendente.findViewById(R.id.textViewEliminaProdottoDescrizioneDialog);
@@ -243,11 +247,9 @@ public class DipendenteFragment extends Fragment implements RecyclerViewDipenden
                         dialogDeclassamentoDipendente.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
                         dialogDeclassamentoDipendente.show();
 
-                    }
+                    } else
+                        PresenterDipendenti.getInstance().modificaDipendente(DipendenteFragment.this, handler);
                 }
-                else
-                    PresenterDipendenti.getInstance().modificaDipendente(DipendenteFragment.this, handler);
-
             }
         });
 
@@ -335,4 +337,8 @@ public class DipendenteFragment extends Fragment implements RecyclerViewDipenden
     }
 
 
+    public void setRistoranteCorrente(Ristorante ristorante) {
+        ristoranteCorrente = ristorante;
+        utenteCorrente.setIdRistorante(ristorante);
+    }
 }
