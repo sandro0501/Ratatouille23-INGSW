@@ -92,17 +92,16 @@ public class ControllerBacheca {
 			String corpoAvviso;
 			if(prodottiMancanti.size()>0)
 			{
-				corpoAvviso = "Alcuni prodotti sono in scadenza!:\n";
+				corpoAvviso = "Alcuni prodotti sono sotto soglia:\n";
 				for(Prodotto x : prodottiMancanti)
 				{
 					corpoAvviso += x.getNome()+";\n";
 				}
-				corpoAvviso = corpoAvviso.substring(0, corpoAvviso.length()-2) + ".";
+				corpoAvviso = corpoAvviso.substring(0, corpoAvviso.length()-2) + ".";	
 			}
 			else
 			{
-				//Sottostringa da controllare 0-15
-				corpoAvviso = "Nessun prodotto in scadenza!";
+				corpoAvviso = "Tutti i prodotti sono al di sopra della soglia limite.";
 			}
 			ArrayList<Utente> utenteSistema = repUt.findByRank("Sistema", utente.getidRistorante().getIdRistorante());
 			Utente utenteFormato;
@@ -122,14 +121,15 @@ public class ControllerBacheca {
 			{
 				avvisoSistema = avvisiSistema.get(0);
 				avvisoSistema.setCorpo(corpoAvviso);
+				avvisoSistema.setOggetto("Monitoraggio dispensa");
 				avvisoSistema.setData(new Date(System.currentTimeMillis()));
 			}
 			else
 			{
-				avvisoSistema = new Avviso("Monitorazione dispensa",corpoAvviso,new Date(System.currentTimeMillis()));
+				avvisoSistema = new Avviso("Monitoraggio dispensa",corpoAvviso,new Date(System.currentTimeMillis()));
 			} 
 			avvisoSistema.setAutore(utenteFormato);
-			if(corpoAvviso.equals("Nessun prodotto in scadenza!")) servAvv.saveAvvisoSistemaTransiente(avvisoSistema);
+			if(corpoAvviso.equals("Tutti i prodotti sono al di sopra della soglia limite.")) servAvv.saveAvvisoSistemaTransiente(avvisoSistema);
 			else servAvv.saveAvvisoSistemaUrgente(avvisoSistema);
 		}
 			
