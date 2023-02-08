@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Presenters.PresenterLogin;
 import com.example.ratatouille23.R;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class PrimoLoginModificaPasswordActivity extends AppCompatActivity {
 
@@ -31,11 +32,15 @@ public class PrimoLoginModificaPasswordActivity extends AppCompatActivity {
     private Button bottoneAnnulla;
     private ConstraintLayout constraintLayoutVecchiaPassword;
 
+    private FirebaseAnalytics analytics;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modifica_password);
+
+        analytics = FirebaseAnalytics.getInstance(this);
 
         editTextVecchiaPassword = findViewById(R.id.editTextCittaRistoranteModifica);
         editTextNuovaPassword = findViewById(R.id.editTextNuovaPassword);
@@ -59,6 +64,12 @@ public class PrimoLoginModificaPasswordActivity extends AppCompatActivity {
         bottoneAnnulla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Annulla");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Bottone");
+                analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 finish();
             }
         });

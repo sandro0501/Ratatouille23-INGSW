@@ -1,13 +1,17 @@
 package com.example.ratatouille23.Views;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -32,6 +36,11 @@ public class SezioneMenuRecyclerViewAdapter extends RecyclerView.Adapter<Sezione
     private ArrayList<SezioneMenu> listaSezioni;
     private ElementoMenuRecyclerViewAdapter elementoMenuAdapter;
     private Utente utenteCorrente;
+    private AlertDialog.Builder builderDialogEliminaSezione;
+    private Dialog dialogEliminaSezione;
+    private TextView textViewEliminaSezione;
+    private Button bottoneConfermaEliminazioneSezione;
+    private Button bottoneAnnullaEliminazioneSezione;
 
     private MyViewHolder holder;
 
@@ -95,7 +104,33 @@ public class SezioneMenuRecyclerViewAdapter extends RecyclerView.Adapter<Sezione
         holder.iconaEliminaSezione.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PresenterMenu.getInstance().rimuoviSezione(((MenuFragment)recyclerViewInterfaceSezioni), listaSezioni.get(holder.getAdapterPosition()));
+                final View viewEliminaSezione = ((MenuFragment) recyclerViewInterfaceSezioni).getLayoutInflater().inflate(R.layout.layout_elimina_prodotto_dialog, null);
+                builderDialogEliminaSezione = new AlertDialog.Builder(context);
+                builderDialogEliminaSezione.setView(viewEliminaSezione);
+                builderDialogEliminaSezione.setCancelable(true);
+                textViewEliminaSezione = (TextView) viewEliminaSezione.findViewById(R.id.textViewEliminaProdottoDescrizioneDialog);
+                textViewEliminaSezione.setText("Si è sicuri di voler eliminare questa sezione del menù?\nVerranno eliminati tutti gli elementi associati");
+                bottoneAnnullaEliminazioneSezione = (Button) viewEliminaSezione.findViewById(R.id.bottoneAnnullaEliminaProdotto);
+                bottoneConfermaEliminazioneSezione = (Button) viewEliminaSezione.findViewById(R.id.bottoneEliminaProdotto);
+
+                bottoneAnnullaEliminazioneSezione.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialogEliminaSezione.dismiss();
+                    }
+                });
+
+                bottoneConfermaEliminazioneSezione.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        PresenterMenu.getInstance().rimuoviSezione(((MenuFragment)recyclerViewInterfaceSezioni), listaSezioni.get(holder.getAdapterPosition()));
+                        dialogEliminaSezione.dismiss();
+                    }
+                });
+
+                dialogEliminaSezione = builderDialogEliminaSezione.create();
+                dialogEliminaSezione.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
+                dialogEliminaSezione.show();
             }
         });
 

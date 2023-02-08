@@ -23,11 +23,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.ratatouille23.Handlers.EliminaPreparazioniHandler;
 import com.example.ratatouille23.Handlers.HandlePreparazione;
 import com.example.ratatouille23.Models.Elemento;
-import com.example.ratatouille23.Models.Preparazione;
 import com.example.ratatouille23.Models.Prodotto;
 import com.example.ratatouille23.Presenters.PresenterDispensa;
 import com.example.ratatouille23.Presenters.PresenterMenu;
 import com.example.ratatouille23.R;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -70,18 +70,21 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
     private ArrayList<CardView> listaCardProdottiSelezionati = new ArrayList<>();
     private boolean modalitaEliminazione = false;
     private boolean esito;
+    private FirebaseAnalytics analytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizzazione_ingredienti_elemento);
 
+        analytics = FirebaseAnalytics.getInstance(this);
+
         elemento = ((Elemento)getIntent().getExtras().get("Elemento selezionato"));
 
-        onIndietroPremuto();
+        inizializzaBottoneIndietro();
         inizializzaPannelloIngredienti();
-        bottoneAggiuntaIngredientePremuto();
-        bottoneEliminaIngredientePremuto();
+        inizializzaBottoneAggiungiIngrediente();
+        inizializzaBottoneEliminaIngrediente();
 
 
     }
@@ -106,7 +109,7 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
         titoloElemento.append(elemento.getDenominazionePrincipale());
     }
 
-    private void onIndietroPremuto() {
+    private void inizializzaBottoneIndietro() {
         iconaIndietro = getResources().getDrawable(R.drawable.icon_back_arrow);
         toolbarNavigazione = (Toolbar) findViewById(R.id.toolbarVisualizzazioneIngredientiElemento);
         toolbarNavigazione.setNavigationIcon(iconaIndietro);
@@ -118,7 +121,7 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
         });
     }
 
-    private void bottoneEliminaIngredientePremuto() {
+    private void inizializzaBottoneEliminaIngrediente() {
         iconaCestino = findViewById(R.id.imageViewIconEliminaProdottoPreparazioneElemento);
         iconaCestino.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,6 +145,12 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
                         bottoneAnnullaEliminazioneIngrediente.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+
+                                Bundle bundle = new Bundle();
+                                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Annulla");
+                                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Bottone");
+                                analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                                 disattivaModalitaEliminazione();
                                 deselezionaTuttiProdotti();
                                 dialogEliminaIngrediente.dismiss();
@@ -196,7 +205,7 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
         iconaCestino.setImageResource(R.drawable.icon_elimina_prodotto_elemento);
     }
 
-    private void bottoneAggiuntaIngredientePremuto(){
+    private void inizializzaBottoneAggiungiIngrediente(){
         iconaAggiuntaIngrediente = findViewById(R.id.imageViewIconAddProdottoPreparazioneElemento);
         iconaAggiuntaIngrediente.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,25 +216,21 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
     }
 
     private void mostraRicercaProdottiInDispensa(){
+        PresenterDispensa.getInstance().ottieniDispensaPerInserimentoIngredientiElementoRistorante(VisualizzazioneIngredientiElementoActivity.this ,elemento.getAppartiene().getRistorante());
         final View viewAggiuntaIngrediente = getLayoutInflater().inflate(R.layout.layout_ricerca_prodotto_per_elemento, null);
         builderDialogAggiuntaIngrediente = new AlertDialog.Builder(VisualizzazioneIngredientiElementoActivity.this, R.style.WrapContentDialog);
         builderDialogAggiuntaIngrediente.setView(viewAggiuntaIngrediente);
         builderDialogAggiuntaIngrediente.setCancelable(true);
-
         pannelloProdottiInDispensa = viewAggiuntaIngrediente.findViewById(R.id.recyclerViewDispensaElemento);
         ricercaProdottiVuota = viewAggiuntaIngrediente.findViewById(R.id.textViewRicercaVuotaProdottoInDispensa);
-        PresenterDispensa.getInstance().ottieniDispensaRistorante(VisualizzazioneIngredientiElementoActivity.this ,elemento.getAppartiene().getRistorante());
-    }
 
-    public void riempiDispensa(ArrayList<Prodotto> lista){
-        dispensa = new ArrayList<>();
-        dispensa.addAll(lista);
-
-        final View viewAggiuntaIngrediente = getLayoutInflater().inflate(R.layout.layout_ricerca_prodotto_per_elemento, null);
-        prodottiInDispensaAdapter = new AggiuntaIngredientiRecyclerViewAdapter(viewAggiuntaIngrediente.getContext(), dispensa, this);
-        pannelloProdottiInDispensa.setAdapter(prodottiInDispensaAdapter);
-        pannelloProdottiInDispensa.setLayoutManager(new LinearLayoutManager(viewAggiuntaIngrediente.getContext()));
-        prodottiInDispensaAdapter.notifyDataSetChanged();
+        bottoneAnnullaAggiungiProdottoPerElemento = (Button) viewAggiuntaIngrediente.findViewById(R.id.bottoneAnnullaAggiungiProdottoPerElemento);
+        bottoneAnnullaAggiungiProdottoPerElemento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogAggiuntaIngrediente.dismiss();
+            }
+        });
 
         searchViewRicercaProdotti = viewAggiuntaIngrediente.findViewById(R.id.searchViewRicercaProdottoInDispensa);
         TextView searchText = (TextView) searchViewRicercaProdotti.findViewById(androidx.appcompat.R.id.search_src_text);
@@ -253,6 +258,12 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
         bottoneAnnullaAggiungiProdottoPerElemento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Annulla");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Bottone");
+                analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 dialogAggiuntaIngrediente.dismiss();
             }
         });
@@ -260,6 +271,16 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
         dialogAggiuntaIngrediente = builderDialogAggiuntaIngrediente.create();
         dialogAggiuntaIngrediente.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
         dialogAggiuntaIngrediente.show();
+    }
+
+    public void riempiDispensa(ArrayList<Prodotto> lista){
+        dispensa = new ArrayList<>();
+        dispensa.addAll(lista);
+        final View viewAggiuntaIngrediente = getLayoutInflater().inflate(R.layout.layout_ricerca_prodotto_per_elemento, null);
+        prodottiInDispensaAdapter = new AggiuntaIngredientiRecyclerViewAdapter(viewAggiuntaIngrediente.getContext(), dispensa, this);
+        pannelloProdottiInDispensa.setAdapter(prodottiInDispensaAdapter);
+        pannelloProdottiInDispensa.setLayoutManager(new LinearLayoutManager(viewAggiuntaIngrediente.getContext()));
+        prodottiInDispensaAdapter.notifyDataSetChanged();
     }
 
     private void filtraProdottiInDispensa(String nomeProdotto) {
@@ -304,6 +325,12 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
                 bottoneAnnullaAggiuntaProdottoSelezionato.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Annulla");
+                        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Bottone");
+                        analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                         dialogAggiuntaIngredienteSelezionato.dismiss();
                         dialogAggiuntaIngrediente.show();
                     }
@@ -359,16 +386,13 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
     }
 
 
-    public void tentativoImpostato(boolean esito)
+    public void tentativoAggiuntaIngrediente(boolean esito)
     {
         if(esito) {
             PresenterMenu.getInstance().mostraAlert(VisualizzazioneIngredientiElementoActivity.this, "Prodotto selezionato aggiunto",
                     "Hai aggiunto correttamente all'elemento del menù " + quantitaProdottoSelezionato.getText() + " " +
                             unitaMisuraProdottoCorrente + " del prodotto " + nomeProdottoCorrente);
-                    /*
-                    Preparazione p = new Preparazione(prodottoCorrente, Double.parseDouble(quantitaProdottoSelezionato.getText().toString()));
-                    elemento.getPreparazione().add(p); */
-
+            PresenterMenu.getInstance().estraiIngredientiElemento(this, elemento);
             dialogAggiuntaIngredienteSelezionato.dismiss();
             dialogAggiuntaIngrediente.dismiss();
         }
@@ -384,23 +408,21 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
         {
             dialogEliminaIngrediente.dismiss();
             PresenterDispensa.getInstance().mostraAlert(VisualizzazioneIngredientiElementoActivity.this, "Eliminazione effettuata", "Eliminazione dei prodotti selezionati effettuata correttamente!");
+            PresenterMenu.getInstance().estraiIngredientiElemento(this, elemento);
             disattivaModalitaEliminazione();
-            ArrayList<Preparazione> toRemove = new ArrayList<Preparazione>();
-            for(Prodotto x : listaProdottiSelezionati)
-            {
-                for(int y = 0; y<elemento.getPreparazione().size(); y++)
-                {
-                    if(elemento.getPreparazione().get(y).getProdottoAssociato().getIdProdotto() == x.getIdProdotto())
-                        toRemove.add(elemento.getPreparazione().get(y));
-                }
-            }
-            elemento.getPreparazione().removeAll(toRemove);
-            ingredientiElementoAdapter.notifyDataSetChanged();
             deselezionaTuttiProdotti();
         }
         else{
             PresenterMenu.getInstance().mostraAlert(VisualizzazioneIngredientiElementoActivity.this, "Prodotto non rimosso",
                     "C'e' stato un problema durante la comunicazione al server, si consiglia di riprovare.");
+        }
+    }
+
+    public void aggiornaIngredientiElemento(Elemento elementoAggiornato) {
+        if (elementoAggiornato != null) {
+            elemento.getPreparazione().clear();
+            elemento.getPreparazione().addAll(elementoAggiornato.getPreparazione());
+            ingredientiElementoAdapter.notifyDataSetChanged();
         }
     }
 

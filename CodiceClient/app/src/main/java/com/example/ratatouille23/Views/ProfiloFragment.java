@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.R;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,6 +38,8 @@ public class ProfiloFragment extends Fragment {
     private String emailCorrente;
     private Utente utenteCorrente;
 
+    private FirebaseAnalytics analytics;
+
 
     public ProfiloFragment() {
         // Required empty public constructor
@@ -48,6 +51,8 @@ public class ProfiloFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View fragmentCorrente = inflater.inflate(R.layout.fragment_profilo, container, false);
+
+        analytics = FirebaseAnalytics.getInstance(this.getActivity());
 
         textViewNome = fragmentCorrente.findViewById(R.id.textViewNomeRistorantePromptModifica);
         textViewEmail = fragmentCorrente.findViewById(R.id.textViewIndirizzoRistorantePromptModifica);
@@ -80,11 +85,25 @@ public class ProfiloFragment extends Fragment {
             public void onClick(View view) {
                 Intent i = new Intent(fragmentCorrente.getContext(), LoginActivity.class);
                 i.addFlags(FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+
+
+                analytics.setUserProperty("Ruolo", null);
+                analytics.setUserProperty("Nome", null);
+                analytics.setUserProperty("Ristorante", null);
+
                 startActivity(i);
             }
         });
 
         return fragmentCorrente;
+    }
+
+    @Override
+    public void onResume() {
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Fragment Profilo");
+        analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle);
+        super.onResume();
     }
 
 }

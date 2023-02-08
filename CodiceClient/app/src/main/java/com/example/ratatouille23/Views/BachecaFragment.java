@@ -23,6 +23,7 @@ import com.example.ratatouille23.Presenters.PresenterBacheca;
 import com.example.ratatouille23.R;
 
 import com.example.ratatouille23.Models.Avviso;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,6 +44,10 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
     private TextView textViewNumeroAvvisi;
     private BachecaFragment context = this;
     private ArrayList<Utente> utentiCorrenti = new ArrayList<Utente>();
+
+    private FirebaseAnalytics analytics;
+
+    private boolean modalitaVediNascosti = false;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -93,7 +98,17 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
         PresenterBacheca.getInstance().setUtentiCorrenti(utenteCorrente.getIdRistorante(), context, utenteCorrente);
         //Devi estrarre gli avvisi dell'utente
         PresenterBacheca.getInstance().setBachecaAttiva(true);
-        setNumeroAvvisiDaLeggere();
+        setModalitaVediNascosti(false);
+    }
+
+    private void setModalitaVediNascosti(boolean b) {
+        modalitaVediNascosti = b;
+        bottoneOcchioAvvisi.setImageResource((modalitaVediNascosti ? R.drawable.icon_mostra_avvisi_nascosti : R.drawable.icon_view_avvisi_nascosti));
+        recyclerView.setAdapter(modalitaVediNascosti ? tuttiAvvisiAdapter : avvisiVisibiliAdapter);
+    }
+
+    public boolean getModalitaVediNascosti () {
+        return modalitaVediNascosti;
     }
 
     @Override
@@ -103,10 +118,19 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
     }
 
     @Override
+    public void onResume() {
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Fragment Bacheca");
+        analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle);
+        super.onResume();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_bacheca, container, false);
+        analytics = FirebaseAnalytics.getInstance(this.getActivity());
         textViewNumeroAvvisi = view.findViewById(R.id.textViewNumeroAvvisi);
         bottoneCreazioneAvviso = (ImageView) view.findViewById(R.id.imageViewIconAddAvviso);
         bottoneReloadAvvisi = view.findViewById(R.id.imageViewIconReloadAvvisi);
@@ -128,14 +152,14 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
             @Override
             public void onClick(View view) {
                 PresenterBacheca.getInstance().setAvvisi(BachecaFragment.this, utenteCorrente);
+
             }
         });
 
         bottoneOcchioAvvisi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                recyclerView.setAdapter(tuttiAvvisiAdapter);
-                bottoneOcchioAvvisi.setVisibility(View.INVISIBLE);
+                setModalitaVediNascosti(!modalitaVediNascosti);
             }
         });
 
@@ -213,11 +237,31 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
             avvisiVisibili.add(new Bacheca(avviso, true, true));
         }
 
+        Bacheca avvisoDispensaPieno = null;
+        Bacheca avvisoDispensaVuoto = null;
+
+        for (Bacheca avviso : avvisiVisibili) {
+            if (avviso.getAvvisoAssociato().getAutore().getRuoloUtente().equals("Sistema")) {
+                avvisoDispensaPieno = avviso;
+            }
+        }
+
+        avvisiVisibili.remove(avvisoDispensaPieno);
+
         tuttiAvvisi.addAll(avvisiVisibili);
 
         for (Avviso avviso : avvisiUtenteNascosti){
             tuttiAvvisi.add(new Bacheca(avviso, false, true));
         }
+
+        for (Bacheca avviso : tuttiAvvisi) {
+            if (avviso.getAvvisoAssociato().getAutore().getRuoloUtente().equals("Sistema")) {
+                Log.i("CIAO", "PROVA");
+                avvisoDispensaVuoto = avviso;
+            }
+        }
+
+        tuttiAvvisi.remove(avvisoDispensaVuoto);
 
         Collections.sort(avvisiVisibili,new Comparator<Bacheca>() {
             public int compare (Bacheca a1, Bacheca a2)
@@ -237,15 +281,24 @@ public class BachecaFragment extends Fragment implements RecyclerViewAvvisoInter
         Collections.reverse(avvisiVisibili);
         Collections.reverse(tuttiAvvisi);
 
+        if (avvisoDispensaPieno != null) {
+            avvisiVisibili.add(0, avvisoDispensaPieno);
+            tuttiAvvisi.add(0, avvisoDispensaPieno);
+        }
+        if (avvisoDispensaVuoto != null) {
+            tuttiAvvisi.add(0, avvisoDispensaVuoto);
+        }
+
         avvisiVisibiliAdapter.notifyDataSetChanged();
         tuttiAvvisiAdapter.notifyDataSetChanged();
+        setNumeroAvvisiDaLeggere();
     }
 
 
     private void setNumeroAvvisiDaLeggere() {
         int numeroAvvisi = 0;
         for (Bacheca avviso : avvisiVisibili) {
-            if (!avviso.isVisualizzato()) numeroAvvisi++;
+            if (!avviso.isVisualizzato() && !(avviso.getAvvisoAssociato().getAutore().getRuoloUtente().equals("Sistema"))) numeroAvvisi++;
         }
         if (numeroAvvisi == 0) {
             textViewNumeroAvvisi.setVisibility(View.INVISIBLE);

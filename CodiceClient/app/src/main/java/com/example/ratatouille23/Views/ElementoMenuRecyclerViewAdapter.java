@@ -212,7 +212,7 @@ public class ElementoMenuRecyclerViewAdapter extends RecyclerView.Adapter<Elemen
                 public void onClick(View view) {
                     if (recyclerViewInterfaceElemento != null) {
                         int posizioneElemento = getAdapterPosition();
-                        if(posizioneElemento!=RecyclerView.NO_POSITION){
+                        if(posizioneElemento!=RecyclerView.NO_POSITION && !(((MenuFragment)recyclerViewInterfaceElemento).isModalitaEliminazione())){
                             recyclerViewInterfaceElemento.onVediIngredientiElementoClicked(listaElementi.get(posizioneElemento), view);
                         }
 

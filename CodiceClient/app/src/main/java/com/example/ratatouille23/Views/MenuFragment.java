@@ -35,6 +35,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amplifyframework.core.Amplify;
 import com.example.ratatouille23.Models.Allergene;
@@ -43,9 +44,11 @@ import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Models.SezioneMenu;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Models.listaAllergeni;
+import com.example.ratatouille23.Presenters.PresenterBacheca;
 import com.example.ratatouille23.Presenters.PresenterMenu;
 import com.example.ratatouille23.Presenters.PresenterRistorante;
 import com.example.ratatouille23.R;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -112,6 +115,14 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
     private Uri uriLogoCorrente;
     private boolean fotoModificata = false;
 
+    private AlertDialog.Builder builderDialogEliminaElemento;
+    private Dialog dialogEliminaElemento;
+    private Button bottoneConfermaEliminazioneElemento;
+    private Button bottoneAnnullaEliminazioneElemento;
+    private TextView textViewEliminazioneElemento;
+
+    private FirebaseAnalytics analytics;
+
     public MenuFragment() {
         // Required empty public constructor
     }
@@ -174,6 +185,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         // Inflate the layout for this fragment
 
         fragmentCorrente = inflater.inflate(R.layout.fragment_menu, container, false);
+        analytics = FirebaseAnalytics.getInstance(getActivity());
         primoAccessoSpinner = true;
         return fragmentCorrente;
     }
@@ -258,6 +270,14 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
          itemTouchHelper = new ItemTouchHelper(simpleCallbackSezioni);
          itemTouchHelper.attachToRecyclerView(recyclerViewMenu);
 
+    }
+
+    @Override
+    public void onResume() {
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Fragment Menu");
+        analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle);
+        super.onResume();
     }
 
     private void mascheraInterfaccia() {
@@ -398,26 +418,33 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         bottoneConferma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SezioneMenu sezioneScelta = (SezioneMenu)sezioneElementoSpinner.getSelectedItem();
-                Elemento piattoDaAggiungere = new Elemento(
-                        titoloPrincipaleElementoEditText.getText().toString(),
-                        descrizionePrincipaleElementoEditText.getText().toString(),
-                        Double.parseDouble(prezzoElementoEditText.getText().toString()),
-                        sezioneScelta.getAppartenente().size()
-                        );
-                String denominazioneSecondaria = titoloSecondarioElementoEditText.getText().toString();
-                String descrizioneSecondaria = descrizioneSecondariaElementoEditText.getText().toString();
-                piattoDaAggiungere.setDenominazioneSecondaria(denominazioneSecondaria.isEmpty() ? null : denominazioneSecondaria);
-                piattoDaAggiungere.setDescrizioneSecondaria(descrizioneSecondaria.isEmpty() ? null : descrizioneSecondaria);
-                piattoDaAggiungere.setAppartiene(sezioneScelta);
-                ArrayList<Allergene> allergeniPiattoCorrente = new ArrayList<>();
-                for (CheckBox checkBox : checkBoxAllergeni) {
-                    if (checkBox.isChecked()) {
-                        allergeniPiattoCorrente.add(new Allergene((listaAllergeni) checkBox.getTag()));
-                    }
+
+                if(areEditTextInserimentoModificaEmpty()){
+                    mostraDialogErroreInserimentoElemento();
                 }
-                piattoDaAggiungere.setPresenta(allergeniPiattoCorrente);
-                PresenterMenu.getInstance().aggiungiElemento(MenuFragment.this, piattoDaAggiungere);
+                else {
+                    SezioneMenu sezioneScelta = (SezioneMenu)sezioneElementoSpinner.getSelectedItem();
+                    Elemento piattoDaAggiungere = new Elemento(
+                            titoloPrincipaleElementoEditText.getText().toString(),
+                            descrizionePrincipaleElementoEditText.getText().toString(),
+                            Double.parseDouble(prezzoElementoEditText.getText().toString()),
+                            sezioneScelta.getAppartenente().size()
+                    );
+                    String denominazioneSecondaria = titoloSecondarioElementoEditText.getText().toString();
+                    String descrizioneSecondaria = descrizioneSecondariaElementoEditText.getText().toString();
+                    piattoDaAggiungere.setDenominazioneSecondaria(denominazioneSecondaria.isEmpty() ? null : denominazioneSecondaria);
+                    piattoDaAggiungere.setDescrizioneSecondaria(descrizioneSecondaria.isEmpty() ? null : descrizioneSecondaria);
+                    piattoDaAggiungere.setAppartiene(sezioneScelta);
+                    ArrayList<Allergene> allergeniPiattoCorrente = new ArrayList<>();
+                    for (CheckBox checkBox : checkBoxAllergeni) {
+                        if (checkBox.isChecked()) {
+                            allergeniPiattoCorrente.add(new Allergene((listaAllergeni) checkBox.getTag()));
+                        }
+                    }
+                    piattoDaAggiungere.setPresenta(allergeniPiattoCorrente);
+                    PresenterMenu.getInstance().aggiungiElemento(MenuFragment.this, piattoDaAggiungere);
+                }
+
             }
         });
 
@@ -434,6 +461,12 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         bottoneAnnulla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Annulla");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Bottone");
+                analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 dialogElemento.dismiss();
             }
         });
@@ -447,8 +480,47 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
     }
 
     private void eliminaProdottiSelezionati() {
-        PresenterMenu.getInstance().eliminaElementi(this, listaElementiSelezionati);
-        attivaDisattivaModalitaEliminazione();
+        final View viewEliminaElemento = getLayoutInflater().inflate(R.layout.layout_elimina_prodotto_dialog, null);
+        builderDialogEliminaElemento = new AlertDialog.Builder(getContext());
+        builderDialogEliminaElemento.setView(viewEliminaElemento);
+        builderDialogEliminaElemento.setCancelable(true);
+
+        textViewEliminazioneElemento = (TextView) viewEliminaElemento.findViewById(R.id.textViewEliminaProdottoDescrizioneDialog);
+        if (listaElementiSelezionati.size() == 1) {
+            textViewEliminazioneElemento.setText("Si è sicuri di voler eliminare l'elemento selezionato dalla sezione del menù?");
+        } else {
+            textViewEliminazioneElemento.setText("Si è sicuri di voler eliminare i " + listaElementiSelezionati.size() + " elementi selezionati dalla sezione del menù?");
+        }
+
+        bottoneAnnullaEliminazioneElemento = (Button) viewEliminaElemento.findViewById(R.id.bottoneAnnullaEliminaProdotto);
+        bottoneAnnullaEliminazioneElemento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Annulla");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Bottone");
+                analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+                attivaDisattivaModalitaEliminazione();
+                deselezionaTuttiElementi();
+                dialogEliminaElemento.dismiss();
+            }
+        });
+
+        bottoneConfermaEliminazioneElemento = (Button) viewEliminaElemento.findViewById(R.id.bottoneEliminaProdotto);
+        bottoneConfermaEliminazioneElemento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PresenterMenu.getInstance().eliminaElementi(MenuFragment.this, listaElementiSelezionati);
+                attivaDisattivaModalitaEliminazione();
+                dialogEliminaElemento.dismiss();
+            }
+        });
+
+        dialogEliminaElemento = builderDialogEliminaElemento.create();
+        dialogEliminaElemento.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
+        dialogEliminaElemento.show();
     }
 
     private void attivaDisattivaModalitaEliminazione() {
@@ -467,6 +539,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         }
         else {
             modalitaEliminazione = true;
+            Toast.makeText(getContext(), "Modalità eliminazione attiva", Toast.LENGTH_LONG).show();
             iconaCestino.setImageResource(R.drawable.icon_rimuovi_elemento_selected);
             iconaCestino.requestLayout();
             iconaCestino.getLayoutParams().height = height;
@@ -668,43 +741,55 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         bottoneConferma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                elementoDaModificare.setDenominazionePrincipale(titoloPrincipaleElementoEditText.getText().toString());
-                elementoDaModificare.setDescrizionePrincipale(descrizionePrincipaleElementoEditText.getText().toString());
-                if (ristoranteCorrente.isTuristico()) {
-                    elementoDaModificare.setDenominazioneSecondaria(titoloSecondarioElementoEditText.getText().toString());
-                    elementoDaModificare.setDescrizioneSecondaria(descrizioneSecondariaElementoEditText.getText().toString());
-                }
-                elementoDaModificare.setCosto(Double.parseDouble(prezzoElementoEditText.getText().toString()));
-                elementoDaModificare.setAppartiene((SezioneMenu) sezioneElementoSpinner.getSelectedItem());
 
-                ArrayList<Allergene> allergeniPiattoCorrente = new ArrayList<>();
-                for (CheckBox checkBox : checkBoxAllergeni) {
-                    if (checkBox.isChecked()) {
-                        allergeniPiattoCorrente.add(new Allergene((listaAllergeni) checkBox.getTag()));
+                if(areEditTextInserimentoModificaEmpty()){
+                    mostraDialogErroreModificaElemento();
+                }
+                else {
+                    elementoDaModificare.setDenominazionePrincipale(titoloPrincipaleElementoEditText.getText().toString());
+                    elementoDaModificare.setDescrizionePrincipale(descrizionePrincipaleElementoEditText.getText().toString());
+                    if (ristoranteCorrente.isTuristico()) {
+                        elementoDaModificare.setDenominazioneSecondaria(titoloSecondarioElementoEditText.getText().toString());
+                        elementoDaModificare.setDescrizioneSecondaria(descrizioneSecondariaElementoEditText.getText().toString());
                     }
-                }
-                elementoDaModificare.setPresenta(allergeniPiattoCorrente);
+                    elementoDaModificare.setCosto(Double.parseDouble(prezzoElementoEditText.getText().toString()));
+                    elementoDaModificare.setAppartiene((SezioneMenu) sezioneElementoSpinner.getSelectedItem());
 
-                if (fotoModificata) {
-
-                    InputStream streamLogo = null;
-                    try {
-                        streamLogo = getActivity().getContentResolver().openInputStream(uriLogoCorrente);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
+                    ArrayList<Allergene> allergeniPiattoCorrente = new ArrayList<>();
+                    for (CheckBox checkBox : checkBoxAllergeni) {
+                        if (checkBox.isChecked()) {
+                            allergeniPiattoCorrente.add(new Allergene((listaAllergeni) checkBox.getTag()));
+                        }
                     }
-                    uploadS3Modifica(streamLogo, uriLogoCorrente, elementoDaModificare);
-                    fotoModificata = false;
+                    elementoDaModificare.setPresenta(allergeniPiattoCorrente);
+
+                    if (fotoModificata) {
+
+                        InputStream streamLogo = null;
+                        try {
+                            streamLogo = getActivity().getContentResolver().openInputStream(uriLogoCorrente);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        uploadS3Modifica(streamLogo, uriLogoCorrente, elementoDaModificare);
+                        fotoModificata = false;
+
+                    } else
+                        PresenterMenu.getInstance().modificaElemento(elementoDaModificare, elementoDaModificare.getPresenta(), MenuFragment.this);
 
                 }
-                else
-                    PresenterMenu.getInstance().modificaElemento(elementoDaModificare, elementoDaModificare.getPresenta(),MenuFragment.this);
             }
         });
 
         bottoneAnnulla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Annulla");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Bottone");
+                analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 dialogElemento.dismiss();
             }
         });
@@ -866,5 +951,29 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
                 }
         );
 
+    }
+
+    public void mostraAlertEliminazioneSezioneEffettuata(){
+        PresenterMenu.getInstance().mostraAlert(getContext(), "Eliminazione effettuata", "Eliminazione della sezione effettuata correttamente!");
+    }
+    public void mostraAlertEliminazioneElementoEffettuata(){
+        PresenterMenu.getInstance().mostraAlert(getContext(), "Eliminazione effettuata", "Eliminazione degli elementi selezionati effettuata correttamente!");
+    }
+
+    public void mostraDialogErroreInserimentoElemento() {
+        PresenterBacheca.getInstance().mostraAlert(getContext(), "Attenzione!", "C'è stato un errore durante l'inserimento dell' elemento.\nSi controlli che i campi contrassegnati dall'asterisco non siano vuoti e si riprovi.");
+    }
+
+    public void mostraDialogErroreModificaElemento() {
+        PresenterBacheca.getInstance().mostraAlert(getContext(), "Attenzione!", "C'è stato un errore durante la modifica dell'elemento.\nSi controlli che i campi contrassegnati dall'asterisco non siano vuoti e si riprovi.");
+    }
+
+    public Boolean areEditTextInserimentoModificaEmpty() {
+        if (titoloPrincipaleElementoEditText.getText().toString().matches("") ||
+                descrizionePrincipaleElementoEditText.getText().toString().matches("") ||
+                prezzoElementoEditText.getText().toString().matches("")) {
+            return  true;
+        }
+        return false;
     }
 }

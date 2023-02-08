@@ -26,6 +26,7 @@ import com.example.ratatouille23.Exceptions.CaratteriIllecitiException;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Presenters.PresenterLogin;
 import com.example.ratatouille23.R;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -40,10 +41,14 @@ public class LoginActivity extends AppCompatActivity {
     private EditText editTextPass;
     private EditText editTextEmail;
 
+    private FirebaseAnalytics analytics;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        analytics = FirebaseAnalytics.getInstance(this);
 
         downloadIP();
 
@@ -98,8 +103,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
     @Override
@@ -127,6 +130,9 @@ public class LoginActivity extends AppCompatActivity {
     public void effettuaAccesso(Utente utente) {
         Intent i = new Intent(getApplicationContext(), BachecaActivity.class);
         i.putExtra("Utente", utente);
+        analytics.setUserProperty("Ruolo", utente.getRuoloUtente());
+        analytics.setUserProperty("Nome", utente.getNomeCompleto());
+        analytics.setUserProperty("Ristorante", utente.getIdRistorante().getDenominazione());
         startActivity(i);
     }
 
@@ -142,22 +148,27 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void downloadIP() {
-        Amplify.Storage.downloadFile(
-                "INDIRIZZO_IP_SERVER.txt",
-                new File((getFilesDir() + "/" + "INDIRIZZO_IP_SERVER.txt")),
-                result -> {
-                    File fileIP = result.getFile();
-                    try {
-                        Scanner fileReader = new Scanner(fileIP);
-                        String indirizzoIP = fileReader.nextLine();
-                        setIndirizzoIP(indirizzoIP);
-                        fileReader.close();
-                    } catch (FileNotFoundException e) {
-                    }
-                },
-                error -> Log.i("Controllo fatto altrove", "")
+        try {
+            Amplify.Storage.downloadFile(
+                    "INDIRIZZO_IP_SERVER.txt",
+                    new File((getFilesDir() + "/" + "INDIRIZZO_IP_SERVER.txt")),
+                    result -> {
+                        File fileIP = result.getFile();
+                        try {
+                            Scanner fileReader = new Scanner(fileIP);
+                            String indirizzoIP = fileReader.nextLine();
+                            setIndirizzoIP(indirizzoIP);
+                            fileReader.close();
+                        } catch (FileNotFoundException e) {
+                        }
+                    },
+                    error -> Log.i("Controllo fatto altrove", "")
 
-        );
+            );
+        }
+        catch (IllegalStateException e) {
+            PresenterLogin.mostraAlert(this, "Errore!", "C'è stato un errore nella configurazione dell'applicazione.\nSi prega di chiudere l'applicazione.");
+        }
     }
 
     private void setIndirizzoIP(String indirizzoIP) {

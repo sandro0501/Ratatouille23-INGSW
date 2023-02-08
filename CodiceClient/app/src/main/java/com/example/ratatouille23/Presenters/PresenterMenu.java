@@ -1,7 +1,6 @@
 package com.example.ratatouille23.Presenters;
 
 import android.util.Log;
-import android.view.Menu;
 
 import com.amplifyframework.core.Amplify;
 import com.example.ratatouille23.DAO.DAOElemento;
@@ -20,7 +19,6 @@ import com.example.ratatouille23.Models.Elemento;
 import com.example.ratatouille23.Models.Prodotto;
 import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Models.SezioneMenu;
-import com.example.ratatouille23.Models.listaAllergeni;
 import com.example.ratatouille23.Views.MenuFragment;
 import com.example.ratatouille23.Views.VisualizzazioneIngredientiElementoActivity;
 
@@ -173,6 +171,7 @@ public class PresenterMenu extends PresenterBase {
             @Override
             public void onRimozioneSezione() {
                 context.aggiornaMenu();
+                context.mostraAlertEliminazioneSezioneEffettuata();
             }
         });
     }
@@ -274,7 +273,7 @@ public class PresenterMenu extends PresenterBase {
 
             @Override
             public void onImpostata(boolean esito) {
-                context.tentativoImpostato(esito);
+                context.tentativoAggiuntaIngrediente(esito);
             }
         });
     }
@@ -338,6 +337,7 @@ public class PresenterMenu extends PresenterBase {
             @Override
             public void onEliminazioneElementi() {
                 context.aggiornaMenu();
+                context.mostraAlertEliminazioneElementoEffettuata();
             }
         });
     }
@@ -362,4 +362,31 @@ public class PresenterMenu extends PresenterBase {
         });
     }
 
+    public void estraiIngredientiElemento(VisualizzazioneIngredientiElementoActivity context, Elemento elemento) {
+        daoSezioneMenu.estraiMenu(elemento.getAppartiene().getRistorante().getIdRistorante(), new DAOSezioneMenuImpl.EstraiMenuCallbacks() {
+            @Override
+            public void onErroreDiHTTP(Response<ResponseBody> response) {
+                mostraAlertErroreHTTP(context, response);
+            }
+
+            @Override
+            public void onErroreConnessioneGenerico() {
+                mostraAlertErroreConnessione(context);
+            }
+
+            @Override
+            public void onEstratto(ArrayList<SezioneMenu> listaSezioni) {
+                Elemento elementoAggiornato = null;
+                for (SezioneMenu sezione : listaSezioni) {
+                    for (Elemento elementoCorrente : sezione.getAppartenente()) {
+                        if (elementoCorrente.getIdElemento() == elemento.getIdElemento())
+                            elementoAggiornato = elementoCorrente;
+                    }
+                }
+
+                context.aggiornaIngredientiElemento(elementoAggiornato);
+
+            }
+        });
+    }
 }

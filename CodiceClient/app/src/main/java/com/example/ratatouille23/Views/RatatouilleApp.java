@@ -39,7 +39,6 @@ public class RatatouilleApp extends Application {
             Amplify.addPlugin(new AWSCognitoAuthPlugin());
             Amplify.configure(getApplicationContext());
         } catch (AmplifyException e) {
-            PresenterLogin.getInstance().mostraAlert(this, "Errore!", "C'è stato un errore nella configurazione dell'applicazione.\nSi prega di chiudere l'applicazione.");
             System.out.println(e.getMessage());
         }
     }
