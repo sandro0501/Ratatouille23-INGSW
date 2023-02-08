@@ -25,6 +25,7 @@ import com.example.ratatouille23.R;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class ElementoMenuRecyclerViewAdapter extends RecyclerView.Adapter<ElementoMenuRecyclerViewAdapter.MyViewHolder>{
 
@@ -65,7 +66,7 @@ public class ElementoMenuRecyclerViewAdapter extends RecyclerView.Adapter<Elemen
         else
             holder.iconaVediIngredienti.setVisibility(View.VISIBLE);
 
-        holder.textViewCosto.setText("€" + elementoCorrente.getCosto().toString());
+        holder.textViewCosto.setText("€" + String.format(Locale.US, "%.2f", elementoCorrente.getCosto()));
         boolean iconaDaMostrare;
 
         if (!listaElementi.isEmpty()) holder.sezioneCorrente = listaElementi.get(0).getAppartiene();

@@ -181,7 +181,7 @@ public class ModificaDettagliRistoranteActivity extends AppCompatActivity {
                 ((Integer)ristoranteCorrente.getIdRistorante()).toString()+"_LogoRistorante.jpg",
                 streamLogo,
                 result -> effettuaModifiche(uri),
-                storageFailure -> PresenterRistorante.getInstance().mostraAlert(ModificaDettagliRistoranteActivity.this.getApplicationContext(), "Errore!", "L'immagine non è stata caricata correttamente, riprovare")
+                storageFailure -> PresenterRistorante.getInstance().mostraAlert(ModificaDettagliRistoranteActivity.this, "Errore!", "L'immagine non è stata caricata correttamente, riprovare")
         );
     }
 
