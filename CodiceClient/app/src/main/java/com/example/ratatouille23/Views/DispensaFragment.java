@@ -463,7 +463,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
                     prodottoDaModificare.setNome(editTextModificaNomeProdotto.getText().toString());
                     prodottoDaModificare.setDescrizione(editTextModificaDescrizioneProdotto.getText().toString());
                     prodottoDaModificare.setUnita(editTextModificaUnitaMisuraProdotto.getText().toString());
-                    String costoModificato = "€"+editTextModificaCostoAcquistoProdotto.getText().toString()+"/"+editTextModificaUnitaMisuraProdotto.getText().toString();
+                    String costoModificato = "€"+editTextModificaCostoAcquistoProdotto.getText().toString()+"/"+editTextModificaUnitaMisuraCostoAcquistoProdotto.getText().toString();
                     prodottoDaModificare.setCostoAcquisto(costoModificato);
                     prodottoDaModificare.setQuantita(Double.parseDouble(editTextModificaQuantitaProdotto.getText().toString()));
                     prodottoDaModificare.setSoglia(Double.parseDouble(editTextModificaSogliaProdotto.getText().toString()));
