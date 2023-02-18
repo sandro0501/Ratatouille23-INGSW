@@ -15,7 +15,7 @@ public class ControllerAllergene {
 	private ServiceAllergene service;
 	
 	@GetMapping("")
-	public void aggiungiUtente() 
+	public void aggiungiAllergeni()
 	{
 		service.createIfNotThere();
 	}
