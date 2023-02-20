@@ -11,13 +11,15 @@ import retrofit2.Response;
 public class PresenterBase {
 
     public static void mostraAlert(Context context, String titolo, String messaggio) {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-        dialog.setCancelable(false);
-        dialog.setTitle(titolo);
-        dialog.setMessage(messaggio);
-        dialog.setPositiveButton("Ok", null);
-        final AlertDialog alert = dialog.create();
-        alert.show();
+        if (context != null) {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+            dialog.setCancelable(false);
+            dialog.setTitle(titolo);
+            dialog.setMessage(messaggio);
+            dialog.setPositiveButton("Ok", null);
+            final AlertDialog alert = dialog.create();
+            alert.show();
+        }
     }
 
     public static void mostraAlertErroreHTTP(Context context, Response<ResponseBody> body) {
@@ -25,18 +27,20 @@ public class PresenterBase {
     }
 
     public static void mostraAlertFinishActivity(Activity context, String titolo, String messaggio) {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-        dialog.setCancelable(false);
-        dialog.setTitle(titolo);
-        dialog.setMessage(messaggio);
-        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                context.finish();
-            }
-        });
-        final AlertDialog alert = dialog.create();
-        alert.show();
+        if (context != null) {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+            dialog.setCancelable(false);
+            dialog.setTitle(titolo);
+            dialog.setMessage(messaggio);
+            dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    context.finish();
+                }
+            });
+            final AlertDialog alert = dialog.create();
+            alert.show();
+        }
     }
 
     public static void mostraAlertErroreConnessione(Context context) {
