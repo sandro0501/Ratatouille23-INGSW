@@ -261,7 +261,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
 
         builderDialogAggiungiProdotto = new AlertDialog.Builder(getContext(), R.style.WrapContentDialog);
         builderDialogAggiungiProdotto.setView(viewAggiungiProdotto);
-        builderDialogAggiungiProdotto.setCancelable(true);
+        builderDialogAggiungiProdotto.setCancelable(false);
 
         editTextNomeProdotto = (AutoCompleteTextView) viewAggiungiProdotto.findViewById(R.id.EditTextNomeProdotto);
         editTextDescrizioneProdotto = (EditText) viewAggiungiProdotto.findViewById(R.id.EditTextDescrizioneProdotto);
@@ -385,7 +385,7 @@ public class DispensaFragment extends Fragment implements RecyclerViewProdottoIn
 
         builderDialogModificaProdotto = new AlertDialog.Builder(getContext(), R.style.WrapContentDialog);
         builderDialogModificaProdotto.setView(viewModificaProdotto);
-        builderDialogModificaProdotto.setCancelable(true);
+        builderDialogModificaProdotto.setCancelable(false);
 
         editTextModificaNomeProdotto = (AutoCompleteTextView) viewModificaProdotto.findViewById(R.id.EditTextNomeProdottoModifica);
         editTextModificaDescrizioneProdotto = (EditText) viewModificaProdotto.findViewById(R.id.EditTextDescrizioneProdottoModifica);

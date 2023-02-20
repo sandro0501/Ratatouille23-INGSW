@@ -310,8 +310,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
 
         builderDialogElemento = new AlertDialog.Builder(getContext(), R.style.WrapContentDialog);
         builderDialogElemento.setView(viewAggiungiElemento);
-        builderDialogElemento.setCancelable(true);
-
+        builderDialogElemento.setCancelable(false);
 
         ArrayList<CheckBox> checkBoxAllergeni = new ArrayList<>();
 
@@ -490,7 +489,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         final View viewEliminaElemento = getLayoutInflater().inflate(R.layout.layout_elimina_prodotto_dialog, null);
         builderDialogEliminaElemento = new AlertDialog.Builder(getContext());
         builderDialogEliminaElemento.setView(viewEliminaElemento);
-        builderDialogEliminaElemento.setCancelable(true);
+        builderDialogEliminaElemento.setCancelable(false);
 
         textViewEliminazioneElemento = (TextView) viewEliminaElemento.findViewById(R.id.textViewEliminaProdottoDescrizioneDialog);
         if (listaElementiSelezionati.size() == 1) {
@@ -605,7 +604,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
 
         builderDialogElemento = new AlertDialog.Builder(getContext(), R.style.WrapContentDialog);
         builderDialogElemento.setView(viewModificaElemento);
-        builderDialogElemento.setCancelable(true);
+        builderDialogElemento.setCancelable(false);
 
         ArrayList<CheckBox> checkBoxAllergeni = new ArrayList<>();
 

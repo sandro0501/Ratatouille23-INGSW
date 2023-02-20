@@ -220,7 +220,7 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
         final View viewAggiuntaIngrediente = getLayoutInflater().inflate(R.layout.layout_ricerca_prodotto_per_elemento, null);
         builderDialogAggiuntaIngrediente = new AlertDialog.Builder(VisualizzazioneIngredientiElementoActivity.this, R.style.WrapContentDialog);
         builderDialogAggiuntaIngrediente.setView(viewAggiuntaIngrediente);
-        builderDialogAggiuntaIngrediente.setCancelable(true);
+        builderDialogAggiuntaIngrediente.setCancelable(false);
         pannelloProdottiInDispensa = viewAggiuntaIngrediente.findViewById(R.id.recyclerViewDispensaElemento);
         ricercaProdottiVuota = viewAggiuntaIngrediente.findViewById(R.id.textViewRicercaVuotaProdottoInDispensa);
 
@@ -355,7 +355,7 @@ public class VisualizzazioneIngredientiElementoActivity extends AppCompatActivit
                 });
 
                 builderDialogAggiuntaIngrediente.setView(viewAggiuntaIngredienteSelezionato);
-                builderDialogAggiuntaIngrediente.setCancelable(true);
+                builderDialogAggiuntaIngrediente.setCancelable(false);
                 dialogAggiuntaIngredienteSelezionato = builderDialogAggiuntaIngrediente.create();
                 dialogAggiuntaIngredienteSelezionato.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
                 dialogAggiuntaIngredienteSelezionato.show();
