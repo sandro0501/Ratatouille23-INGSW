@@ -23,6 +23,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -63,6 +64,42 @@ import java.util.Collections;
  * create an instance of this fragment.
  */
 public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInterface, RecyclerViewElementoMenuInterface {
+
+    public class SpinnerInteractionListener implements AdapterView.OnItemSelectedListener, View.OnTouchListener {
+
+        boolean userSelect = false;
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            userSelect = true;
+            return false;
+        }
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+            if (userSelect) {
+                if (pos == 0) {
+                    SezioneMenu nuovaSezione = new SezioneMenu("Nuova sezione", listaSezioni.size());
+                    nuovaSezione.setRistorante(ristoranteCorrente);
+                    PresenterMenu.getInstance().aggiungiSezione(MenuFragment.this, nuovaSezione);
+                    spinnerSceltaAggiunta.setSelection(2, false);
+
+                } else if (pos == 1) {
+                    mostraDialogAggiuntaElemento();
+                    spinnerSceltaAggiunta.setSelection(2, false);
+                }
+                userSelect = false;
+            }
+            else
+                spinnerSceltaAggiunta.setSelection(2, false);
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+
+        }
+
+    }
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -105,7 +142,6 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
     private Ristorante ristoranteCorrente;
 
     private boolean modalitaEliminazione = false;
-    private boolean primoAccessoSpinner;
 
     private ArrayAdapter<Elemento> adapterAutoComplete;
 
@@ -186,7 +222,6 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
 
         fragmentCorrente = inflater.inflate(R.layout.fragment_menu, container, false);
         analytics = FirebaseAnalytics.getInstance(getActivity());
-        primoAccessoSpinner = true;
         return fragmentCorrente;
     }
 
@@ -219,7 +254,6 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
 
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_item_layout);
         spinnerSceltaAggiunta.setAdapter(spinnerAdapter);
-        spinnerSceltaAggiunta.setSelection(2, false);
         Log.i("CREATE", "CREATE");
 
         ristoranteCorrente = utenteCorrente.getIdRistorante();
@@ -236,36 +270,9 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
             }
         });
 
-        spinnerSceltaAggiunta.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-                if (primoAccessoSpinner) {
-                    primoAccessoSpinner = false;
-                    spinnerSceltaAggiunta.setSelection(2, false);
-                }
-                else {
-
-                    if (spinnerAdapter.getItem(i).equals("Aggiungi una sezione")) {
-                        SezioneMenu nuovaSezione = new SezioneMenu("Nuova sezione", listaSezioni.size());
-                        nuovaSezione.setRistorante(ristoranteCorrente);
-                        PresenterMenu.getInstance().aggiungiSezione(MenuFragment.this, nuovaSezione);
-                        spinnerSceltaAggiunta.setSelection(2, false);
-
-                    } else if (spinnerAdapter.getItem(i).equals("Aggiungi un piatto")) {
-                        mostraDialogAggiuntaElemento();
-                        spinnerSceltaAggiunta.setSelection(2, false);
-                    }
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-
-        });
+        SpinnerInteractionListener listener = new SpinnerInteractionListener();
+        spinnerSceltaAggiunta.setOnTouchListener(listener);
+        spinnerSceltaAggiunta.setOnItemSelectedListener(listener);
 
          itemTouchHelper = new ItemTouchHelper(simpleCallbackSezioni);
          itemTouchHelper.attachToRecyclerView(recyclerViewMenu);
@@ -921,7 +928,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
         }
         else {
             dialogElemento.dismiss();
-            PresenterMenu.getInstance().mostraAlert(getContext(), "Piatto aggiunto", "Piatto aggiunto correttamente al menù");
+            PresenterMenu.getInstance().mostraAlert(getActivity(), "Piatto aggiunto", "Piatto aggiunto correttamente al menù");
             PresenterMenu.getInstance().estraiMenu(this, ristoranteCorrente);
         }
 
@@ -929,7 +936,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
 
     public void elementoModificato() {
         dialogElemento.dismiss();
-        PresenterMenu.getInstance().mostraAlert(getContext(), "Piatto modificato!", "Il piatto e' stato correttamente aggiornato.");
+        PresenterMenu.getInstance().mostraAlert(getActivity(), "Piatto modificato!", "Il piatto e' stato correttamente aggiornato.");
         PresenterMenu.getInstance().estraiMenu(this, ristoranteCorrente);
     }
 
@@ -940,13 +947,13 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
                 result -> {
                     Log.i("SUCCESSO", "");
                     dialogElemento.dismiss();
-                    PresenterMenu.getInstance().mostraAlert(getContext(), "Piatto aggiunto", "Piatto aggiunto correttamente al menù");
+                    PresenterMenu.getInstance().mostraAlert(getActivity(), "Piatto aggiunto", "Piatto aggiunto correttamente al menù");
                     PresenterMenu.getInstance().estraiMenu(this, ristoranteCorrente);
                 } ,
                 storageFailure -> {
                     Log.i("FALLIMENTO", "");
                     dialogElemento.dismiss();
-                    PresenterRistorante.getInstance().mostraAlert(MenuFragment.this.getContext(), "Errore!", "Il piatto è stato aggiunto ma l'immagine non è stata caricata correttamente!");
+                    PresenterRistorante.getInstance().mostraAlert(MenuFragment.this.getActivity(), "Errore!", "Il piatto è stato aggiunto ma l'immagine non è stata caricata correttamente!");
                     PresenterMenu.getInstance().estraiMenu(this, ristoranteCorrente);
                 }
         );

@@ -233,7 +233,7 @@ public class ElementoMenuRecyclerViewAdapter extends RecyclerView.Adapter<Elemen
                         immagineElemento.setImageBitmap(bitmapLogo);
                         fileImmagine = fileLogo;
                     },
-                    error -> PresenterRistorante.getInstance().mostraAlert(((MenuFragment)recyclerViewInterfaceElemento).getContext(), "Errore!", "L'immagine non è stata scaricata correttamente, riprovare")
+                    error -> PresenterRistorante.getInstance().mostraAlert(((MenuFragment)recyclerViewInterfaceElemento).getActivity(), "Errore!", "L'immagine non è stata scaricata correttamente, riprovare")
 
             );
         }
