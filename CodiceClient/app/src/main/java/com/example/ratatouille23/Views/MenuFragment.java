@@ -151,11 +151,14 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
     private Uri uriLogoCorrente;
     private boolean fotoModificata = false;
 
+    private boolean erroreImmagini;
+
     private AlertDialog.Builder builderDialogEliminaElemento;
     private Dialog dialogEliminaElemento;
     private Button bottoneConfermaEliminazioneElemento;
     private Button bottoneAnnullaEliminazioneElemento;
     private TextView textViewEliminazioneElemento;
+
 
     private FirebaseAnalytics analytics;
 
@@ -302,6 +305,7 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
     public void onStart() {
         PresenterMenu.getInstance().aggiornaDatiRistorante(MenuFragment.this, ristoranteCorrente.getIdRistorante());
         PresenterMenu.getInstance().estraiMenu(this, ristoranteCorrente);
+        erroreImmagini = false;
         super.onStart();
     }
 
@@ -822,7 +826,11 @@ public class MenuFragment extends Fragment implements RecyclerViewSezioneMenuInt
                 result -> {
                     PresenterMenu.getInstance().modificaElemento(elemento, elemento.getPresenta(),MenuFragment.this);
                 } ,
-                storageFailure -> PresenterRistorante.getInstance().mostraAlert(MenuFragment.this.getContext(), "Errore!", "L'immagine non è stata caricata correttamente, riprovare")
+                storageFailure -> {
+                    if (!erroreImmagini)
+                        PresenterRistorante.getInstance().mostraAlert(MenuFragment.this.getContext(), "Errore!", "Una o più immagini non sono state caricate correttamente, riprovare");
+                    erroreImmagini = true;
+                }
         );
     }
 

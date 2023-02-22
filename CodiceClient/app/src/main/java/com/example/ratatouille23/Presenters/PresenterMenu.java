@@ -1,5 +1,6 @@
 package com.example.ratatouille23.Presenters;
 
+import android.media.audiofx.PresetReverb;
 import android.util.Log;
 
 import com.amplifyframework.core.Amplify;
@@ -69,19 +70,23 @@ public class PresenterMenu extends PresenterBase {
     }
 
     public void estraiMenu(MenuFragment context, Ristorante ristoranteCorrente) {
+        PresenterMenu.getInstance().mostraAlertAttesaCaricamento(context.getActivity());
         daoSezioneMenu.estraiMenu(ristoranteCorrente.getIdRistorante(), new DAOSezioneMenuImpl.EstraiMenuCallbacks() {
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {
+                PresenterMenu.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreHTTP(context.getActivity(), response);
             }
 
             @Override
             public void onErroreConnessioneGenerico() {
+                PresenterMenu.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreConnessione(context.getActivity());
             }
 
             @Override
             public void onEstratto(ArrayList<SezioneMenu> listaSezioni) {
+                PresenterMenu.getInstance().nascondiAlertAttesaCaricamento();
                 context.setListaSezioni(listaSezioni);
             }
         });
@@ -110,19 +115,23 @@ public class PresenterMenu extends PresenterBase {
     }
 
     public void aggiungiSezione(MenuFragment context, SezioneMenu sezione) {
+        PresenterMenu.getInstance().mostraAlertAttesaCaricamento(context.getActivity());
         daoSezioneMenu.aggiungiSezioneMenu(sezione, new DAOSezioneMenuImpl.AggiungiSezioneCallbacks() {
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {
+                PresenterMenu.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreHTTP(context.getActivity(), response);
             }
 
             @Override
             public void onErroreConnessioneGenerico() {
+                PresenterMenu.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreConnessione(context.getActivity());
             }
 
             @Override
             public void onAggiuntaSezione() {
+                PresenterMenu.getInstance().nascondiAlertAttesaCaricamento();
                 context.aggiornaMenu();
             }
         });
@@ -157,21 +166,25 @@ public class PresenterMenu extends PresenterBase {
         ArrayList<SezioneMenu> listaSezioni = new ArrayList<>();
         listaSezioni.add(sezione);
         handler.sezioni = listaSezioni;
+        PresenterMenu.getInstance().mostraAlertAttesaCaricamento(context.getActivity());
         daoSezioneMenu.rimuoviSezioneMenu(handler, new DAOSezioneMenuImpl.RimuoviSezioneCallbacks() {
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {
+                PresenterMenu.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreHTTP(context.getActivity(), response);
             }
 
             @Override
             public void onErroreConnessioneGenerico() {
+                PresenterMenu.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreConnessione(context.getActivity());
             }
 
             @Override
             public void onRimozioneSezione() {
-                context.aggiornaMenu();
+                PresenterMenu.getInstance().nascondiAlertAttesaCaricamento();
                 context.mostraAlertEliminazioneSezioneEffettuata();
+                context.aggiornaMenu();
             }
         });
     }
@@ -194,38 +207,46 @@ public class PresenterMenu extends PresenterBase {
     }
 
     public void aggiungiElemento(MenuFragment context, Elemento elemento) {
+        PresenterMenu.getInstance().mostraAlertAttesaCaricamento(context.getActivity());
         daoElemento.insertElemento(elemento, new DAOElementoImpl.AggiuntaElementiCallbacks() {
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {
+                PresenterMenu.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreHTTP(context.getActivity(), response);
             }
 
             @Override
             public void onErroreConnessioneGenerico() {
+                PresenterMenu.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreConnessione(context.getActivity());
             }
 
             @Override
             public void onAggiuntaElemento(Elemento elwithid) {
-               impostaAllergeni(elwithid, elemento.getPresenta(), context, false);
+                PresenterMenu.getInstance().nascondiAlertAttesaCaricamento();
+                impostaAllergeni(elwithid, elemento.getPresenta(), context, false);
             }
         });
     }
 
     public void modificaElemento(Elemento elemento, ArrayList<Allergene> allergeni, MenuFragment context){
+        PresenterMenu.getInstance().mostraAlertAttesaCaricamento(context.getActivity());
         daoElemento.modificaElemento(elemento, new DAOElementoImpl.ModificaElementoCallbacks() {
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {
+                PresenterMenu.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreHTTP(context.getActivity(), response);
             }
 
             @Override
             public void onErroreConnessioneGenerico() {
+                PresenterMenu.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreConnessione(context.getActivity());
             }
 
             @Override
             public void onModificato() {
+                PresenterMenu.getInstance().nascondiAlertAttesaCaricamento();
                 impostaAllergeni(elemento, allergeni, context, true);
             }
         });
@@ -260,19 +281,23 @@ public class PresenterMenu extends PresenterBase {
         handle.idElemento = elemento;
         handle.idProdotto = prodotto;
         handle.quantita = quantita;
+        PresenterMenu.getInstance().mostraAlertAttesaCaricamento(context);
         daoElemento.impostaPreparazione(handle, new DAOElementoImpl.ImpostaPreparazioneCallbacks() {
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {
+                PresenterMenu.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreHTTP(context, response);
             }
 
             @Override
             public void onErroreConnessioneGenerico() {
+                PresenterMenu.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreConnessione(context);
             }
 
             @Override
             public void onImpostata(boolean esito) {
+                PresenterMenu.getInstance().nascondiAlertAttesaCaricamento();
                 context.tentativoAggiuntaIngrediente(esito);
             }
         });
@@ -323,54 +348,65 @@ public class PresenterMenu extends PresenterBase {
             rimuoviImmagine(context, elemento);
 
         EliminaElementiHandler handler = new EliminaElementiHandler(listaElementi);
+        PresenterMenu.getInstance().mostraAlertAttesaCaricamento(context.getActivity());
         daoElemento.deleteElementi(handler, new DAOElementoImpl.EliminaElementiCallbacks() {
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {
+                PresenterMenu.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreHTTP(context.getActivity(), response);
             }
 
             @Override
             public void onErroreConnessioneGenerico() {
+                PresenterMenu.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreConnessione(context.getActivity());
             }
 
             @Override
             public void onEliminazioneElementi() {
-                context.aggiornaMenu();
+                PresenterMenu.getInstance().nascondiAlertAttesaCaricamento();
                 context.mostraAlertEliminazioneElementoEffettuata();
+                context.aggiornaMenu();
             }
         });
     }
 
     public void eliminaPreparazione(EliminaPreparazioniHandler handle, VisualizzazioneIngredientiElementoActivity context)
     {
+        PresenterMenu.getInstance().mostraAlertAttesaCaricamento(context);
         daoElemento.eliminaPreparazione(handle, new DAOElementoImpl.EliminapreparazioneCallbacks() {
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {
+                PresenterMenu.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreHTTP(context, response);
             }
 
             @Override
             public void onErroreConnessioneGenerico() {
+                PresenterMenu.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreConnessione(context);
             }
 
             @Override
             public void onEliminati(boolean esito) {
+                PresenterMenu.getInstance().nascondiAlertAttesaCaricamento();
                 context.tentativoRimozione(esito);
             }
         });
     }
 
     public void estraiIngredientiElemento(VisualizzazioneIngredientiElementoActivity context, Elemento elemento) {
+        PresenterMenu.getInstance().mostraAlertAttesaCaricamento(context);
         daoSezioneMenu.estraiMenu(elemento.getAppartiene().getRistorante().getIdRistorante(), new DAOSezioneMenuImpl.EstraiMenuCallbacks() {
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {
+                PresenterMenu.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreHTTP(context, response);
             }
 
             @Override
             public void onErroreConnessioneGenerico() {
+                PresenterMenu.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreConnessione(context);
             }
 
@@ -384,6 +420,7 @@ public class PresenterMenu extends PresenterBase {
                     }
                 }
 
+                PresenterMenu.getInstance().nascondiAlertAttesaCaricamento();
                 context.aggiornaIngredientiElemento(elementoAggiornato);
 
             }

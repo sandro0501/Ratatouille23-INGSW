@@ -43,7 +43,7 @@ public class PresenterAreaPersonale extends PresenterBase {
         if (!nuovaPassword.equals(confermaPassword)) throw new CampiVuotiException();
         if (vecchiaPassword.equals(nuovaPassword)) throw new PasswordUgualeException();
         if (!PresenterLogin.getInstance().soddisfaRequisiti(nuovaPassword)) throw new PasswordNonAdeguataException();
-
+        PresenterAreaPersonale.getInstance().mostraAlertAttesaCaricamento(context);
         ModificaPasswordHandler handler = new ModificaPasswordHandler();
         handler.accessToken = accessKey;
         handler.old = vecchiaPassword;
@@ -52,21 +52,25 @@ public class PresenterAreaPersonale extends PresenterBase {
         daoUtente.modificaPassword(handler, new DAOUtenteImpl.ModificaPasswordCallbacks() {
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {
+                PresenterAreaPersonale.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreHTTP(context, response);
             }
 
             @Override
             public void onErroreConnessioneGenerico() {
+                PresenterAreaPersonale.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreConnessione(context);
             }
 
             @Override
             public void onModificaPassword() {
+                PresenterAreaPersonale.getInstance().nascondiAlertAttesaCaricamento();
                 context.passwordModificataCorrettamente();
             }
 
             @Override
             public void onVecchiaPasswordErrata() {
+                PresenterAreaPersonale.getInstance().nascondiAlertAttesaCaricamento();
                 PresenterAreaPersonale.getInstance().mostraAlert(context, "Errore!", "La password inserita è errata!");
             }
         });

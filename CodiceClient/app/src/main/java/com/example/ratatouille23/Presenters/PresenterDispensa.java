@@ -50,7 +50,6 @@ public class PresenterDispensa extends PresenterBase {
     }
 
     public void settaProdottiDaIniziale(DispensaFragment context, String stringaIniziale) {
-
         daoProdotto.getProdottiOpenFoodFactsDaStringa(stringaIniziale, new DAOProdottoImpl.ProdottoCallbacks() {
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {
@@ -73,39 +72,46 @@ public class PresenterDispensa extends PresenterBase {
 
     public void ottieniDispensaPerInserimentoIngredientiElementoRistorante(VisualizzazioneIngredientiElementoActivity context, Ristorante ristorante)
     {
+        PresenterDispensa.getInstance().mostraAlertAttesaCaricamento(context);
         daoProdotto.getDispensa(ristorante, new DAOProdottoImpl.OttenimentoDispensaCallbacks() {
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {
+                PresenterDispensa.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreHTTP(context, response);
             }
 
             @Override
             public void onErroreConnessioneGenerico() {
+                PresenterDispensa.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreConnessione(context);
             }
 
             @Override
             public void onRichiestaDispensa(ArrayList<Prodotto> listaProdotti) {
+                PresenterDispensa.getInstance().nascondiAlertAttesaCaricamento();
                 context.riempiDispensa(listaProdotti);
             }
         });
     }
 
     public void AggiungiProdottoInDispensa(DispensaFragment context, Prodotto prodottoAggiunto) {
-
+        PresenterDispensa.getInstance().mostraAlertAttesaCaricamento(context.getActivity());
         daoProdotto.aggiungiProdotto(prodottoAggiunto, new DAOProdottoImpl.AggiuntaProdottoCallbacks() {
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {
+                PresenterDispensa.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreHTTP(context.getActivity(), response);
             }
 
             @Override
             public void onErroreConnessioneGenerico() {
+                PresenterDispensa.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreConnessione(context.getActivity());
             }
 
             @Override
             public void onAggiuntaProdotto(Boolean isAggiunto) {
+                PresenterDispensa.getInstance().nascondiAlertAttesaCaricamento();
                 if(isAggiunto){
                     context.mostraDialogConfermaInserimentoProdotto();
                 } else {
@@ -116,57 +122,69 @@ public class PresenterDispensa extends PresenterBase {
     }
 
     public void ModificaProdottoInDispensa (DispensaFragment context, Prodotto prodottoDaModificare){
+        PresenterDispensa.getInstance().mostraAlertAttesaCaricamento(context.getActivity());
         daoProdotto.modificaProdotto(prodottoDaModificare, new DAOProdottoImpl.ModificaProdottoCallbacks() {
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {
+                PresenterDispensa.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreHTTP(context.getActivity(), response);
             }
 
             @Override
             public void onErroreConnessioneGenerico() {
+                PresenterDispensa.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreConnessione(context.getActivity());
             }
 
             @Override
             public void onModificaProdotto() {
+                PresenterDispensa.getInstance().nascondiAlertAttesaCaricamento();
                 context.prodottoInDispensaModificato();
             }
         });
     }
 
     public void EliminaProdottoInDispensa (DispensaFragment context, EliminaProdottiHandler listaProdottiDaEliminare){
+        PresenterDispensa.getInstance().mostraAlertAttesaCaricamento(context.getActivity());
         daoProdotto.eliminaProdotto(listaProdottiDaEliminare, new DAOProdottoImpl.EliminazioneProdottoCallbacks() {
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {
+                PresenterDispensa.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreHTTP(context.getActivity(), response);
             }
 
             @Override
             public void onErroreConnessioneGenerico() {
+                PresenterDispensa.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreConnessione(context.getActivity());
             }
 
             @Override
             public void onEliminazioneProdotto() {
+                PresenterDispensa.getInstance().nascondiAlertAttesaCaricamento();
                 context.prodottoInDispensaEliminato();
             }
         });
     }
 
     public void ottieniDispensaDaRistorante(DispensaFragment context, Ristorante ristorante){
+        PresenterDispensa.getInstance().mostraAlertAttesaCaricamento(context.getActivity());
         daoProdotto.getDispensa(ristorante, new DAOProdottoImpl.OttenimentoDispensaCallbacks() {
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {
+                PresenterDispensa.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreHTTP(context.getActivity(), response);
             }
 
             @Override
             public void onErroreConnessioneGenerico() {
+                PresenterDispensa.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreConnessione(context.getActivity());
             }
 
             @Override
             public void onRichiestaDispensa(ArrayList<Prodotto> listaProdotti) {
+                PresenterDispensa.getInstance().nascondiAlertAttesaCaricamento();
                 context.riempiDispensa(listaProdotti);
             }
         });

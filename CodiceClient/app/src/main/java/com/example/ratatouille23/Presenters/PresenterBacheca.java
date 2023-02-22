@@ -53,19 +53,23 @@ public class PresenterBacheca extends PresenterBase {
 
     public void setAvvisi(BachecaFragment context, Utente utente)
     {
+        PresenterBacheca.getInstance().mostraAlertAttesaCaricamento(context.getActivity());
         daoBacheca.getAvvisi(utente, context,new DAOAvvisoImpl.BachecaCallbacks() {
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {
+                PresenterBacheca.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreHTTP(context.getActivity(), response);
             }
 
             @Override
             public void onErroreConnessioneGenerico() {
+                PresenterBacheca.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreConnessione(context.getActivity());
             }
 
             @Override
             public void onCaricamentoAvvisi(ArrayList<Avviso> avvisiUtenteNuovi, ArrayList<Avviso> avvisiUtenteLetti, ArrayList<Avviso> avvisiutenteNascosti) {
+                PresenterBacheca.getInstance().nascondiAlertAttesaCaricamento();
                 context.setAvvisiUtente(avvisiUtenteNuovi,avvisiUtenteLetti,avvisiutenteNascosti);
             }
 
@@ -80,20 +84,24 @@ public class PresenterBacheca extends PresenterBase {
 
     public void insertAvviso(CreazioneAvvisoActivity context, InserisciAvvisoHandler handler)
     {
+        PresenterBacheca.getInstance().mostraAlertAttesaCaricamento(context);
         daoBacheca.insertAvviso(handler, new DAOAvvisoImpl.BachecaCallbacks() {
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {
+                PresenterBacheca.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreHTTP(context, response);
             }
 
             @Override
             public void onErroreConnessioneGenerico() {
+                PresenterBacheca.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreConnessione(context);
             }
 
             public void onCaricamentoAvvisi(ArrayList<Avviso> avvisiUtenteNuovi, ArrayList<Avviso> avvisiUtenteLetti, ArrayList<Avviso> avvisiutenteNascosti){ }
 
             public void onAggiuntaAvviso(Boolean added) {
+                PresenterBacheca.getInstance().nascondiAlertAttesaCaricamento();
                 if (added) context.mostraConfermaCreazioneAvvisoDialog();
                 else context.mostraErroreCreazioneAvvisoDialog();
             }
@@ -128,15 +136,17 @@ public class PresenterBacheca extends PresenterBase {
 
     public void visualizzaAvviso(BachecaFragment context, Intent intentFromBachecaToVisualizzaAvviso, AggiornaAvvisoHandler handler)
     {
-
+        PresenterBacheca.getInstance().mostraAlertAttesaCaricamento(context.getActivity());
         daoBacheca.visualizzaAvviso(handler, new DAOAvvisoImpl.BachecaCallbacks() {
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {
+                PresenterBacheca.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreHTTP(context.getActivity(), response);
             }
 
             @Override
             public void onErroreConnessioneGenerico() {
+                PresenterBacheca.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreConnessione(context.getActivity());
             }
 
@@ -146,6 +156,7 @@ public class PresenterBacheca extends PresenterBase {
 
             public void onVisualizzaAvviso()
             {
+                PresenterBacheca.getInstance().nascondiAlertAttesaCaricamento();
                 context.getActivity().startActivity(intentFromBachecaToVisualizzaAvviso);
             }
 
@@ -156,14 +167,17 @@ public class PresenterBacheca extends PresenterBase {
 
     public void nascondiAvviso(BachecaFragment context, AggiornaAvvisoHandler handler)
     {
+        PresenterBacheca.getInstance().mostraAlertAttesaCaricamento(context.getActivity());
         daoBacheca.nascondiAvviso(handler, new DAOAvvisoImpl.BachecaCallbacks(){
             @Override
             public void onErroreDiHTTP(Response<ResponseBody> response) {
+                PresenterBacheca.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreHTTP(context.getActivity(), response);
             }
 
             @Override
             public void onErroreConnessioneGenerico() {
+                PresenterBacheca.getInstance().nascondiAlertAttesaCaricamento();
                 mostraAlertErroreConnessione(context.getActivity());
             }
 
@@ -175,6 +189,7 @@ public class PresenterBacheca extends PresenterBase {
 
             public void onNascondiAvviso()
             {
+                PresenterBacheca.getInstance().nascondiAlertAttesaCaricamento();
                 PresenterBacheca.getInstance().setAvvisi(context, handler.utente);
             }
 
