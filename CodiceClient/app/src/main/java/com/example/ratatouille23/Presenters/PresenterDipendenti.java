@@ -90,7 +90,7 @@ public class PresenterDipendenti extends PresenterBase {
 
             @Override
             public void onAggiuntaDipendente() {
-                context.dipendenteAggiunto();
+                context.dipendenteAggiunto(handler.utente);
             }
 
             @Override

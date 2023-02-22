@@ -110,8 +110,8 @@ public class AggiuntaDipendenteActivity extends AppCompatActivity {
 
     }
 
-    public void dipendenteAggiunto() {
+    public void dipendenteAggiunto(UtenteHandler utente) {
         Log.i("DIPENDENTE AGGIUNTO", "");
-        PresenterDipendenti.getInstance().mostraAlertFinishActivity(this, "Successo!", "Il dipendente è stato registrato correttamente!");
+        PresenterDipendenti.getInstance().mostraAlertFinishActivity(this, "Successo!", "Il dipendente è stato registrato correttamente!\nLa sua password sarà:\nPassword"+utente.cognome+"123!@");
     }
 }
