@@ -36,10 +36,9 @@ public class PresenterLogin extends PresenterBase {
 
     }
 
-    public void bottoneLoginPremuto (LoginActivity context, String email, String password) throws CampiVuotiException, CaratteriIllecitiException {
+    public void bottoneLoginPremuto (LoginActivity context, String email, String password) throws CampiVuotiException {
 
         if (email.isEmpty() || password.isEmpty()) throw new CampiVuotiException();
-        else if (email.contains("'") || password.contains("'")) throw new CaratteriIllecitiException();
 
         Utente utenteCorrente = new Utente();
         utenteCorrente.setEmail(email);
@@ -114,24 +113,6 @@ public class PresenterLogin extends PresenterBase {
                 PresenterLogin.getInstance().mostraAlertFinishActivity(context, "Errore!", "Sei stato licenziato, non puoi più accedere a questa applicazione!");
             }
         });
-    }
-
-    public boolean soddisfaRequisiti(String nuovaPassword) {
-        boolean flagMaiuscola = false;
-        boolean flagMinuscola = false;
-        boolean flagNumero = false;
-        boolean flagSimbolo = false;
-        String stringaSimboli = "^ $ * . [ ] { } ( ) ? @ # % & / , > < : ; | _ ~ = + - !";
-        if (nuovaPassword.length() < 8) return false;
-        for (int i = 0; i < nuovaPassword.length(); i++) {
-            char carattereCorrente = nuovaPassword.charAt(i);
-            if (Character.isUpperCase(carattereCorrente)) flagMaiuscola = true;
-            if (Character.isLowerCase(carattereCorrente)) flagMinuscola = true;
-            if (Character.isDigit(carattereCorrente)) flagNumero = true;
-            if (stringaSimboli.indexOf(carattereCorrente) >= 0) flagSimbolo = true;
-        }
-
-        return flagMaiuscola && flagMinuscola && flagNumero && flagSimbolo;
     }
 
     public void bottoneRichiediCodicePremuto(String email, PasswordRecoveryActivity context)
