@@ -39,10 +39,7 @@ public class PresenterAreaPersonale extends PresenterBase {
 
     public void modificaPasswordPremuto(ModificaPasswordActivity context, String accessKey, String vecchiaPassword, String nuovaPassword, String confermaPassword) throws ConfermaPasswordErrataException, CampiVuotiException, PasswordUgualeException, PasswordNonAdeguataException {
 
-        if (vecchiaPassword.isEmpty() || nuovaPassword.isEmpty() || confermaPassword.isEmpty()) throw new PasswordUgualeException();
-        if (!nuovaPassword.equals(confermaPassword)) throw new CampiVuotiException();
-        if (vecchiaPassword.equals(nuovaPassword)) throw new PasswordUgualeException();
-        if (!PresenterLogin.getInstance().soddisfaRequisiti(nuovaPassword)) throw new PasswordNonAdeguataException();
+        controllaPassword(vecchiaPassword, nuovaPassword, confermaPassword);
         PresenterAreaPersonale.getInstance().mostraAlertAttesaCaricamento(context);
         ModificaPasswordHandler handler = new ModificaPasswordHandler();
         handler.accessToken = accessKey;
@@ -75,6 +72,13 @@ public class PresenterAreaPersonale extends PresenterBase {
             }
         });
 
+    }
+
+    private void controllaPassword(String vecchiaPassword, String nuovaPassword, String confermaPassword) throws PasswordUgualeException, CampiVuotiException, PasswordNonAdeguataException, ConfermaPasswordErrataException {
+        if (vecchiaPassword.isEmpty() || nuovaPassword.isEmpty() || confermaPassword.isEmpty()) throw new CampiVuotiException();
+        if (!nuovaPassword.equals(confermaPassword)) throw new ConfermaPasswordErrataException();
+        if (vecchiaPassword.equals(nuovaPassword)) throw new PasswordUgualeException();
+        if (!soddisfaRequisiti(nuovaPassword)) throw new PasswordNonAdeguataException();
     }
 
     public void aggiornaRistorante(ProfiloFragment context, int idRistorante) {
