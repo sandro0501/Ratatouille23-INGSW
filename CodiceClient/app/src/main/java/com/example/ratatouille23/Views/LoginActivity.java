@@ -86,8 +86,6 @@ public class LoginActivity extends AppCompatActivity {
                         PresenterLogin.getInstance().bottoneLoginPremuto(LoginActivity.this, email, password);
                     } catch (CampiVuotiException e) {
                         PresenterLogin.getInstance().mostraAlert(LoginActivity.this, "Attenzione!", e.getMessage());
-                    } catch (CaratteriIllecitiException e) {
-                        PresenterLogin.getInstance().mostraAlert(LoginActivity.this, "Errore!", e.getMessage());
                     }
 
                 }
