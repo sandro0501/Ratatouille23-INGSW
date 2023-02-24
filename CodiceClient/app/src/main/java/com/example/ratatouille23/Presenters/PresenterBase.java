@@ -71,15 +71,19 @@ public class PresenterBase {
         boolean flagNumero = false;
         boolean flagSimbolo = false;
         String stringaSimboli = "^ $ * . [ ] { } ( ) ? @ # % & / , > < : ; | _ ~ = + - !";
-        if (nuovaPassword.length() < 8) return false;
+        if (nuovaPassword.length() < 8)
+            return false;
         for (int i = 0; i < nuovaPassword.length(); i++) {
             char carattereCorrente = nuovaPassword.charAt(i);
-            if (Character.isUpperCase(carattereCorrente)) flagMaiuscola = true;
-            if (Character.isLowerCase(carattereCorrente)) flagMinuscola = true;
-            if (Character.isDigit(carattereCorrente)) flagNumero = true;
-            if (stringaSimboli.indexOf(carattereCorrente) >= 0) flagSimbolo = true;
+            if (Character.isUpperCase(carattereCorrente))
+                flagMaiuscola = true;
+            if (Character.isLowerCase(carattereCorrente))
+                flagMinuscola = true;
+            if (Character.isDigit(carattereCorrente))
+                flagNumero = true;
+            if (stringaSimboli.indexOf(carattereCorrente) >= 0)
+                flagSimbolo = true;
         }
-
         return flagMaiuscola && flagMinuscola && flagNumero && flagSimbolo;
     }
 

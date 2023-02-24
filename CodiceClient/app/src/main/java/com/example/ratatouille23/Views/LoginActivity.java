@@ -22,7 +22,6 @@ import android.widget.TextView;
 import com.amplifyframework.core.Amplify;
 import com.example.ratatouille23.DAO.DAOBaseUrl;
 import com.example.ratatouille23.Exceptions.CampiVuotiException;
-import com.example.ratatouille23.Exceptions.CaratteriIllecitiException;
 import com.example.ratatouille23.Models.Utente;
 import com.example.ratatouille23.Presenters.PresenterLogin;
 import com.example.ratatouille23.R;

@@ -1,11 +1,12 @@
 package com.example.ratatouille23.Models;
 
+import com.example.ratatouille23.InterfacceMock.IProdotto;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Prodotto implements Serializable {
+public class Prodotto implements Serializable, IProdotto {
 
     @Expose
     private int idProdotto;

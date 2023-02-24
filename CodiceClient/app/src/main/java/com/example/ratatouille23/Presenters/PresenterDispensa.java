@@ -5,7 +5,9 @@ import android.util.Log;
 import com.example.ratatouille23.DAO.DAOFactory;
 import com.example.ratatouille23.DAO.DAOProdotto;
 import com.example.ratatouille23.DAO.DAOProdottoImpl;
+import com.example.ratatouille23.Exceptions.ProdottoMalFormatoException;
 import com.example.ratatouille23.Handlers.EliminaProdottiHandler;
+import com.example.ratatouille23.InterfacceMock.IProdotto;
 import com.example.ratatouille23.Models.Prodotto;
 import com.example.ratatouille23.Models.Ristorante;
 import com.example.ratatouille23.Views.DispensaFragment;
@@ -35,18 +37,16 @@ public class PresenterDispensa extends PresenterBase {
 
     }
 
-    public boolean controllaSogliaProdotto(ArrayList<Prodotto> dispensa, int posizioneProdottoInDispensa) {
+    public boolean controllaSogliaProdotto(ArrayList<? extends IProdotto> dispensa, int posizioneProdottoInDispensa) {
         double quantitaProdotto;
         double sogliaProdotto;
-        boolean isProdottoSottoSogliaLimite = false;
 
         quantitaProdotto = dispensa.get(posizioneProdottoInDispensa).getQuantita();
         sogliaProdotto = dispensa.get(posizioneProdottoInDispensa).getSoglia();
 
-        if(quantitaProdotto < sogliaProdotto){
-            isProdottoSottoSogliaLimite = true;
-        }
-        return isProdottoSottoSogliaLimite;
+        if (sogliaProdotto < 0 || quantitaProdotto < 0) throw new ProdottoMalFormatoException();
+
+        return quantitaProdotto < sogliaProdotto;
     }
 
     public void settaProdottiDaIniziale(DispensaFragment context, String stringaIniziale) {

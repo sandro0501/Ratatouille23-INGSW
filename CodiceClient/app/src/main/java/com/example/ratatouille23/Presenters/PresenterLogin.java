@@ -4,7 +4,6 @@ import com.example.ratatouille23.DAO.DAOFactory;
 import com.example.ratatouille23.DAO.DAOUtente;
 import com.example.ratatouille23.DAO.DAOUtenteImpl;
 import com.example.ratatouille23.Exceptions.CampiVuotiException;
-import com.example.ratatouille23.Exceptions.CaratteriIllecitiException;
 import com.example.ratatouille23.Exceptions.ConfermaPasswordErrataException;
 import com.example.ratatouille23.Exceptions.PasswordNonAdeguataException;
 import com.example.ratatouille23.Handlers.RecoverHandler;

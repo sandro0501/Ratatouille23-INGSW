@@ -75,10 +75,14 @@ public class PresenterAreaPersonale extends PresenterBase {
     }
 
     private void controllaPassword(String vecchiaPassword, String nuovaPassword, String confermaPassword) throws PasswordUgualeException, CampiVuotiException, PasswordNonAdeguataException, ConfermaPasswordErrataException {
-        if (vecchiaPassword.isEmpty() || nuovaPassword.isEmpty() || confermaPassword.isEmpty()) throw new CampiVuotiException();
-        if (!nuovaPassword.equals(confermaPassword)) throw new ConfermaPasswordErrataException();
-        if (vecchiaPassword.equals(nuovaPassword)) throw new PasswordUgualeException();
-        if (!soddisfaRequisiti(nuovaPassword)) throw new PasswordNonAdeguataException();
+        if (vecchiaPassword.isEmpty() || nuovaPassword.isEmpty() || confermaPassword.isEmpty())
+            throw new CampiVuotiException();
+        if (!nuovaPassword.equals(confermaPassword))
+            throw new ConfermaPasswordErrataException();
+        if (vecchiaPassword.equals(nuovaPassword))
+            throw new PasswordUgualeException();
+        if (!soddisfaRequisiti(nuovaPassword))
+            throw new PasswordNonAdeguataException();
     }
 
     public void aggiornaRistorante(ProfiloFragment context, int idRistorante) {
